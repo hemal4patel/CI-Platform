@@ -1,0 +1,42 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Noto Sans';
+}
+
+form label {
+    text-align: left;
+    font-size: 16px;
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+}
+
+form button {
+    width: inherit;
+    height: 48px;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    border-radius: 24px;
+    opacity: 1;
+}
+
+form button span {
+    text-align: left;
+    font-size: 17px;
+    letter-spacing: 0px;
+    color: #F88634;
+    opacity: 1;
+}
+
+.right a {
+    text-decoration: none;
+    text-align: center;
+}
+
+.right a span {
+    text-align: center;
+    letter-spacing: 0px;
+    color: #414141;
+    opacity: 1;
+}
