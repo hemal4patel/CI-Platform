@@ -13,7 +13,7 @@
 }
 
 form {
-    margin-top: 90%;
+    margin-top: 10%;
 }
 
 form label {
@@ -51,7 +51,7 @@ form button {
 }
 
 .right a,
-.no-acc,
+.login,
 .lost-pwd,
 .policy {
     text-decoration: none;
@@ -71,22 +71,19 @@ form button {
     opacity: 1;
 }
 
-@media (max-width: 1450px) {
-    form {
-        margin-top: 40%;
+@media (max-width: 1500px) {
+    .container-fluid {
+        flex-direction: column;
     }
 }
 
 @media (max-width: 1199.98px) {
-    .container-fluid {
-        flex-direction: column;
-    }
 
     form {
         margin-top: 20px;
     }
 
-    .no-acc {
+    .login {
         margin-bottom: 90px;
     }
 }

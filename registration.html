@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/registration.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.bundle.min.js"></script>
-    <title>Login</title>
+    <title>Registration</title>
 </head>
 
 <body>
@@ -80,25 +80,41 @@
                 <div class="d-flex align-items-center justify-content-center flex-column" style="height: 100%;">
                     <div class="mt-3">
                         <form action="" class="">
-                            <div class="e-add">
+                            <div class="f-name">
+                                <label for="fname" class="form-label">First Name</label>
+                                <input type="text" id="fname" class="form-control">
+                            </div>
+                            <div class="l-name mt-2">
+                                <label for="lname" class="form-label">Last Name</label>
+                                <input type="text" id="lname" class="form-control">
+                            </div>
+                            <div class="num mt-2">
+                                <label for="num" class="form-label">Phone Number</label>
+                                <input type="text" id="phn" class="form-control">
+                            </div>
+                            <div class="e-add mt-2">
                                 <label for="email" class="form-label">Email Address</label>
                                 <input type="email" id="email-address" class="form-control">
                             </div>
-                            <div class="pwd mt-4 mb-4">
+                            <div class="pwd mt-2">
                                 <label for="pswd" class="form-label">Password</label>
                                 <input type="password" id="password" class="form-control">
                             </div>
+                            <div class="cnf-pwd mt-2 mb-4">
+                                <label for="cnf-pwd" class="form-label">Confirm Password</label>
+                                <input type="password" id="cnf-password" class="form-control">
+                            </div>
 
-                            <button>Login</button>
+                            <button>Register</button>
                         </form>
 
                         <div class="lost-pwd mt-3">
                             <a href="">Lost your password?</a>
                         </div>
 
-                        <div class="no-acc mt-4">
-                            Don’t have an account?
-                            <a href="">Create an account</a>
+                        <div class="login mt-4">
+                            Already registered?
+                            <a href="">Login now</a>
                         </div>
                     </div>
                     <div class="mt-auto mt-5 mb-5">
