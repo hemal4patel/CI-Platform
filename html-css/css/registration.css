@@ -74,6 +74,7 @@ form button {
 @media (max-width: 1500px) {
     .container-fluid {
         flex-direction: column;
+        align-items: center;
     }
 }
 
