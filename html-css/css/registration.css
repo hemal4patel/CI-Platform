@@ -1,7 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800&family=Roboto:wght@100;500;700;900&display=swap');
+
 * {
     margin: 0%;
     padding: 0%;
     font-family: 'Noto Sans';
+}
+
+h5,
+p,
+label,
+input,
+button,
+form,
+input::placeholder,
+a,
+.login {
+    font-family: 'NotoSans';
 }
 
 .container-fluid {
@@ -10,10 +24,6 @@
 
 .row {
     width: 100%;
-}
-
-form {
-    margin-top: 10%;
 }
 
 form label {
@@ -71,20 +81,33 @@ form button {
     opacity: 1;
 }
 
-@media (max-width: 1500px) {
+.wide {
+    width: 362px;
+}
+
+@media (max-width: 1199.98px) {
     .container-fluid {
         flex-direction: column;
         align-items: center;
     }
-}
-
-@media (max-width: 1199.98px) {
 
     form {
         margin-top: 20px;
     }
 
-    .login {
-        margin-bottom: 90px;
+    .wide {
+        margin-bottom: 100px;
+    }
+}
+
+@media (max-width: 375.98px) {
+    .wide {
+        width: 327px;
+    }
+}
+
+@media (max-width: 320.98px) {
+    .wide {
+        width: 272px;
     }
 }
