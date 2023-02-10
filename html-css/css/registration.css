@@ -26,6 +26,13 @@ a,
     width: 100%;
 }
 
+.imgCarousel {
+    background-image: url("/html-css/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png");
+    background-size: cover;
+    height: 100vh;
+    background-position: center;
+}
+
 form label {
     text-align: left;
     font-size: 16px;
