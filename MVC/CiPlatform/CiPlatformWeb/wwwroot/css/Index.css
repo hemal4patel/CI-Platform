@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800&family=Roboto:wght@100;500;700;900&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800&family=Roboto:wght@100;500;700;900&display=swap');
+
 
 * {
     margin: 0%;
@@ -6,9 +7,7 @@
     font-family: 'Noto Sans';
 }
 
-h4,
 h5,
-h6,
 p,
 label,
 input,
@@ -35,44 +34,8 @@ a,
     background-position: center;
 }
 
-h4 {
-    text-align: center;
-    letter-spacing: 0px;
-    color: #414141;
-    opacity: 1;
-}
-
-h6 {
-    max-width: 362px;
-    text-align: center;
-    letter-spacing: 0px;
-    color: #414141;
-    opacity: 1;
-}
-
-.right a,
-.no-acc,
-.login,
-.lost-pwd,
-.policy {
-    text-decoration: none;
-    text-align: center;
-    font-size: 14px;
-}
-
-    .login a,
-    .policy a,
-    .lost-pwd a {
-        letter-spacing: 0px;
-        color: #414141;
-        opacity: 1;
-    }
-
-
 form {
-    width: 362px;
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: 40%;
 }
 
     form label {
@@ -109,7 +72,36 @@ form {
         opacity: 1;
     }
 
-/*RESPONSIVE*/
+.right a,
+.no-acc,
+.lost-pwd,
+.policy {
+    text-decoration: none;
+    text-align: center;
+    font-size: 14px;
+}
+
+    .lost-pwd a {
+        letter-spacing: 0px;
+        color: #414141;
+        opacity: 1;
+    }
+
+    .policy a {
+        letter-spacing: 0px;
+        color: #414141;
+        opacity: 1;
+    }
+
+.wide {
+    width: 362px;
+}
+
+@media (max-width: 1450px) {
+    form {
+        margin-top: 40%;
+    }
+}
 
 @media (max-width: 1199.98px) {
     .container-fluid {
@@ -118,28 +110,22 @@ form {
     }
 
     form {
-        margin-top: 50px;
+        margin-top: 20px;
     }
 
     .no-acc {
         margin-bottom: 90px;
     }
+}
 
-    .policy {
-        margin-bottom: 50px;
-    }
-
-    .login {
-        margin-bottom: 90px;
+@media (max-width: 375.98px) {
+    .wide {
+        width: 327px;
     }
 }
 
-@media (max-width: 424.98px) {
-    form {
-        max-width: 272px;
-    }
-
-    h6 {
-        max-width: 327px;
+@media (max-width: 320.98px) {
+    .wide {
+        width: 272px;
     }
 }

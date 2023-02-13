@@ -18,7 +18,7 @@ namespace CiPlatformWeb.Controllers
             return View();
         }
 
-        public IActionResult Privacy ()
+        public IActionResult ForgotPassword ()
         {
             return View();
         }

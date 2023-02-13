@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiPlatformWeb", "CiPlatformWeb\CiPlatformWeb.csproj", "{BD408642-B591-4A90-9AE4-096F335D969F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiPlatformWeb", "CiPlatformWeb\CiPlatformWeb.csproj", "{233C0101-A34B-4EE1-A290-BADEEACBD260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BD408642-B591-4A90-9AE4-096F335D969F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD408642-B591-4A90-9AE4-096F335D969F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD408642-B591-4A90-9AE4-096F335D969F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD408642-B591-4A90-9AE4-096F335D969F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{233C0101-A34B-4EE1-A290-BADEEACBD260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{233C0101-A34B-4EE1-A290-BADEEACBD260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{233C0101-A34B-4EE1-A290-BADEEACBD260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{233C0101-A34B-4EE1-A290-BADEEACBD260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FEE47831-A72E-47E2-B6DD-7A73CB77CA85}
+		SolutionGuid = {D81CA550-8842-4119-9E34-54BB0A3368AE}
 	EndGlobalSection
 EndGlobal
