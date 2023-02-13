@@ -1,0 +1,26 @@
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\appsettings.json
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\MVC CiPlatform.staticwebassets.runtime.json
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\MVC CiPlatform.exe
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\MVC CiPlatform.deps.json
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\MVC CiPlatform.runtimeconfig.json
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\MVC CiPlatform.dll
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\ref\MVC CiPlatform.dll
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\bin\Debug\net6.0\MVC CiPlatform.pdb
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.csproj.AssemblyReference.cache
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.AssemblyInfoInputs.cache
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.AssemblyInfo.cs
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.csproj.CoreCompileInputs.cache
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.RazorAssemblyInfo.cache
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.RazorAssemblyInfo.cs
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\scopedcss\bundle\MVC CiPlatform.styles.css
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\scopedcss\projectbundle\MVC CiPlatform.bundle.scp.css
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.dll
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\ref\MVC CiPlatform.dll
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.pdb
+C:\Users\pci94\Desktop\Project\CI Platform\CiPlatform\MVC CiPlatform\obj\Debug\net6.0\MVC CiPlatform.genruntimeconfig.cache
