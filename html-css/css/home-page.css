@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800&family=Roboto:wght@100;500;700;900&display=swap');
+
+* {
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Noto Sans';
+    background: transparent url('img/Layer 0.png') 0% 0% no-repeat padding-box;
+}
+
+a,
+a:link,
+a:visited {
+    color: #333333;
+    text-decoration: none;
+}
+
+.user-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border-color: none;
+}
+
+.search-icon {
+    width: 21px;
+    height: 22px;
+}
+
+input {
+    border: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+.filters li {
+    border-right: 1px solid #333333;
+}
