@@ -6,13 +6,14 @@
     <link rel="stylesheet" href="/html-css/css/home-page.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <title>Home</title>
 </head>
 
 <body>
 
     <!-- HEADER -->
-    <header>
+    <header class="sticky-top bg-white">
         <nav class="navbar navbar-expand-lg border-bottom">
             <div class="container">
                 <div>
@@ -22,7 +23,7 @@
                         <span><img src="/html-css/css/images/list.png"></span>
                     </button>
                     <a class="navbar-brand" href="#">
-                        <img src="/html-css/css/images/logo.png" alt="" class="me-5">
+                        <img src="/html-css/css/images/logo.png" alt="">
                     </a>
                 </div>
 
@@ -343,6 +344,7 @@
         </div>
     </div>
 
+
     <!-- HEADING -->
     <div class="container my-4">
         <div class="row">
@@ -377,7 +379,7 @@
     </div>
 
     <!-- CARDS -->
-    <div class="container my-4">
+    <div class="container my-4 mb-5">
 
         <!-- PSD -->
         <div class="card mb-5 border-light shadow-sm">
@@ -445,26 +447,22 @@
                                     <img src="/html-css/css/images/right-arrow.png" alt="" class="ms-3">
                                 </button>
                             </div>
-                            <div class="col-3 d-flex">
-                                <span class="mt-1">
-                                    <img src="/html-css/css/images/Seats-left.png" alt="">
-                                </span>
-                                <div class="ms-1">
-                                    <div class="d-flex">
-                                        <h6>10</h6>
+                            <div class="col-lg-6 d-flex justify-content-around mt-1">
+                                <div class="d-flex align-items-center">
+                                    <img src="/html-css/css/images/Already-volunteered.png" alt=""
+                                        style="margin-right: 10px; width: 30px; height: 30px" />
+                                    <div class="d-flex flex-column">
+                                        <span>250</span>
+                                        <span>Already Volunteered</span>
                                     </div>
-                                    <p class="mt-0 mb-0">Seats left</p>
                                 </div>
-                            </div>
-                            <div class="col-3 d-flex">
-                                <span class="mt-1">
-                                    <img src="/html-css/css/images/deadline.png" alt="">
-                                </span>
-                                <div class="ms-1">
-                                    <div class="d-flex">
-                                        <h6>09/01/2019</h6>
+                                <div class="d-flex align-items-center">
+                                    <img src="/html-css/css/images/Seats-left.png" alt=""
+                                        style="margin-right: 10px; width: 30px; height: 30px" />
+                                    <div class="d-flex flex-column">
+                                        <span>09/01/2019</span>
+                                        <span>Deadline</span>
                                     </div>
-                                    <p class="mt-0 mb-0">Deadline</p>
                                 </div>
                             </div>
                         </div>
@@ -539,26 +537,22 @@
                                     <img src="/html-css/css/images/right-arrow.png" alt="" class="ms-3">
                                 </button>
                             </div>
-                            <div class="col-3 d-flex">
-                                <span class="mt-1">
-                                    <img src="/html-css/css/images/Seats-left.png" alt="">
-                                </span>
-                                <div class="ms-1">
-                                    <div class="d-flex">
-                                        <h6>10</h6>
+                            <div class="col-lg-6 d-flex justify-content-around mt-1">
+                                <div class="d-flex align-items-center">
+                                    <img src="/html-css/css/images/Seats-left.png" alt=""
+                                        style="margin-right: 10px; width: 30px; height: 30px" />
+                                    <div class="d-flex flex-column">
+                                        <span>10</span>
+                                        <span>Seats left</span>
                                     </div>
-                                    <p class="mt-0 mb-0">Seats left</p>
                                 </div>
-                            </div>
-                            <div class="col-3 d-flex">
-                                <span class="mt-1">
-                                    <img src="/html-css/css/images/deadline.png" alt="">
-                                </span>
-                                <div class="ms-1">
-                                    <div class="d-flex">
-                                        <h6>09/01/2019</h6>
+                                <div class="d-flex align-items-center">
+                                    <img src="/html-css/css/images/Seats-left.png" alt=""
+                                        style="margin-right: 10px; width: 30px; height: 30px" />
+                                    <div class="d-flex flex-column">
+                                        <span>09/01/2019</span>
+                                        <span>Deadline</span>
                                     </div>
-                                    <p class="mt-0 mb-0">Deadline</p>
                                 </div>
                             </div>
                         </div>
@@ -593,6 +587,7 @@
                         Environment</div>
 
                 </div>
+
                 <div class="col-md-8">
                     <div class="card-body">
 
@@ -658,7 +653,13 @@
                             </div>
                             <div class="col d-flex">
                                 <span class="mt-1">
-                                    <img src="/html-css/css/images/info.png" alt="">
+                                    <div class="p-2 border border-secondary rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+                                            <path
+                                                d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0Zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708ZM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11Z" />
+                                        </svg>
+                                    </div>
                                 </span>
                                 <div class="ms-1">
                                     <div class="d-flex">
@@ -680,27 +681,52 @@
         </div>
     </div>
 
+
     <!-- FOOTER -->
-    <div class="border-top">
+    <footer class="bg-white border-top">
         <div class="container pt-3 pb-5">
-            <div class="row  d-flex">
+            <div class="row d-flex">
                 <div class="col-lg-6 links">
                     <div class="row pt-3">
                         <div class="col">
-                            <a href="" class="p-2 text-decoration-none text-secondary">Privacy Policy</a>
+                            <a href="" class="p-2 text-decoration-none" style="color: #212529;">Privacy Policy</a>
                         </div>
                         <div class="col">
-                            <a href="" class="p-2 text-decoration-none text-secondary">Cookie Policy</a>
+                            <a href="" class="p-2 text-decoration-none" style="color: #212529;">Cookie Policy</a>
                         </div>
                         <div class="col">
-                            <a href="" class="p-2 text-decoration-none text-secondary">Terms of Use</a>
+                            <a href="" class="p-2 text-decoration-none" style="color: #212529;">Terms of Use</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 copyright text-end pt-3">
+                <div class="col-lg-6 copyright pt-3">
                     <span>&copy; 2019 Optimy.com. All rights reserved.</span>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
+
 </body>
+
+<!-- PAGINATION -->
+<!-- <nav aria-label="Page navigation example" class="pb-5 pt-3">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link"><img src="/html-css/css/images/previous.png" alt="" class="py-2"></a>
+            </li>
+            <li class="page-item">
+                <a class="page-link ms-3"><img src="/html-css/css/images/left.png" alt="" class="py-2"></a>
+            </li>
+            <li class="page-item ms-3 active"><a class="page-link" href="">1</a></li>
+            <li class="page-item ms-3"><a class="page-link" href="">2</a></li>
+            <li class="page-item ms-3"><a class="page-link" href="">3</a></li>
+            <li class="page-item ms-3"><a class="page-link" href="">4</a></li>
+            <li class="page-item ms-3"><a class="page-link" href="">5</a></li>
+            <li class="page-item ms-3">
+                <a class="page-link" href=""><img src="/html-css/css/images/arrow.png" alt="" class="py-2"></a>
+            </li>
+            <li class="page-item ms-3">
+                <a class="page-link" href=""><img src="/html-css/css/images/next.png" alt="" class="py-2"></a>
+            </li>
+        </ul>
+    </nav> -->

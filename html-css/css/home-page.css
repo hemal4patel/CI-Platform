@@ -32,6 +32,32 @@
     opacity: 1;
 }
 
+.header-card {
+    border: 1px solid #E8E8E8;
+    width: 120px;
+    height: 130px;
+}
+
+.copyright {
+    text-align: end;
+}
+
+.nav-tabs button {
+    color: black;
+}
+
+@media (max-width: 991.98px) {
+
+    .copyright,
+    .links {
+        text-align: center;
+    }
+
+    .text {
+        text-align: center;
+    }
+}
+
 @media (max-width:767.98px) {
     #profileText {
         display: none !important;
@@ -55,5 +81,17 @@
 
     .d-flex a .temp {
         display: none;
+    }
+
+    .btns {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 424.98px) {
+    .cards {
+        flex-direction: column;
+        align-items: center;
     }
 }

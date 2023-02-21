@@ -7,8 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
     <link rel="stylesheet" href="/html-css/css/home-page.css">
+    <link rel="stylesheet" href="/html-css/css/slider.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <title>Home</title>
 </head>
 
@@ -346,309 +350,225 @@
         </div>
     </div>
 
-    <!-- HEADING -->
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-9">
-                <h3>Explore 72 missions</h3>
-            </div>
-            <div class="col-2 sort">
-                <div class="dropdown">
-                    <div class="p-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="border:1px solid black">
-                        Sort By
+    <!-- CONTENT -->
+    <div class="container">
+        <div class="row d-flex">
+
+            <!-- SLIDER -->
+            <div class="col-lg-6">
+                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/img1.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                                src="/html-css/css/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/img1.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/image1.png" />
+                        </div>
                     </div>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Newest</a></li>
-                        <li><a class="dropdown-item" href="#">Oldest</a></li>
-                        <li><a class="dropdown-item" href="#">Lowest available seats</a></li>
-                        <li><a class="dropdown-item" href="#">Highest available seats</a></li>
-                        <li><a class="dropdown-item" href="#">Sort by my favourite</a></li>
-                        <li><a class="dropdown-item" href="#">Sort by deadline</a></li>
-                    </ul>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <div thumbsSlider="" class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/img1.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                                src="/html-css/css/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/img11.png" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/html-css/css/images/image1.png" />
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
-            <div class="col-1 d-flex">
-                <a href="/html-css/home-page.html">
-                    <img src="/html-css/css/images/grid.png" alt="gridlogo" class="temp">
-                </a>
-                <a href="/html-css/home-page-list.html">
-                    <img src="/html-css/css/images/list.png" alt="gridlogo" class="temp">
-                </a>
+
+            <!-- COL2 -->
+            <div class="col-lg-6">
+                <div class="text">
+                    <h2 class="mt-4">CSR initiative stands for Coffee & Farmer Equity</h2>
+                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut
+                        labore
+                        et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                </div>
+
+                <div class="mt-4 row gx-0">
+                    <div class="col-3">
+                        <hr>
+                    </div>
+                    <div class="col-6 text-center border border-secondary rounded-pill">
+                        <span style="font-size: 15px;">Plant 10,000 Trees</span>
+                    </div>
+                    <div class="col-3">
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-around mt-4">
+                    <div class="d-flex align-items-center">
+                        <img src="/html-css/css/images/Seats-left.png" alt=""
+                            style="margin-right: 10px; width: 30px; height: 30px">
+                        <div class="d-flex flex-column">
+                            <span>10</span>
+                            <span>Seats Left</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <img src="/html-css/css/images/mission.png" alt=""
+                            style="margin-right: 10px; width: 30px; height: 30px">
+                        <div class="d-flex flex-column">
+                            <div class="progress" style="width: 150px; height: 12px;">
+                                <div class="progress-bar" role="progressbar"
+                                    style="width: 80%; background-color: #F88634;" aria-valuenow="80" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                            </div>
+                            <span>Achieved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="row gy-4 d-flex btns">
+                    <div class="col-md-6">
+                        <button class="btn-share rounded-pill p-2 w-100">
+                            <img src=" /html-css/css/images/heart1.png" alt="">
+                            Add to Favourite
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn-share rounded-pill p-2 w-100">
+                            <img src="/html-css/css/images/add1.png" alt="">
+                            Recommend to a Co-Worker
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-4 row gx-0">
+                    <div class="col-3">
+                        <hr>
+                    </div>
+                    <div class="col-6 text-center border border-secondary rounded-pill">
+                        <img src="/html-css/css/images/star-empty.png" alt="" style="height: 24px;">
+                        <img src="/html-css/css/images/star-empty.png" alt="" style="height: 24px;">
+                        <img src="/html-css/css/images/star-empty.png" alt="" style="height: 24px;">
+                        <img src="/html-css/css/images/star-empty.png" alt="" style="height: 24px;">
+                        <img src="/html-css/css/images/star-empty.png" alt="" style="height: 24px;">
+                    </div>
+                    <div class="col-3">
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="d-flex cards justify-content-between mt-4">
+                    <div class="d-flex flex-column header-card justify-content-around p-2">
+                        <div>
+                            <img src="/html-css/css/images/pin1.png" alt="">
+                        </div>
+                        <div class="mt-4">
+                            <span>City</span>
+                            <p><strong>London</strong></p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column header-card justify-content-around p-2">
+                        <div>
+                            <img src="/html-css/css/images/web.png" alt="">
+                        </div>
+                        <div class="mt-4">
+                            <span>Theme</span>
+                            <p><strong>Environment</strong></p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column header-card justify-content-around p-2">
+                        <div>
+                            <img src="/html-css/css/images/calender.png" alt="">
+                        </div>
+                        <div class="mt-4">
+                            <span>Date</span>
+                            <p><strong>Ongoing Opportunity</strong></p>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column header-card justify-content-around p-2">
+                        <div>
+                            <img src="/html-css/css/images/organization.png" alt="">
+                        </div>
+                        <div class="mt-4">
+                            <span>Organization</span>
+                            <p><strong>CSE Network </strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn-apply rounded-pill px-4 py-2">
+                        Apply Now
+                        <img src="/html-css/css/images/right-arrow.png" alt="" class="ms-3">
+                    </button>
+                </div>
+
             </div>
         </div>
-    </div>
 
 
-    <!-- CARDS -->
-    <div class="container my-3 pb-5">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <div class="col">
-                <div class="card h-100 shadow-sm border-light">
-                    <div class="position-relative">
-                        <img src="/html-css/css/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                            class="card-img-top" alt="...">
+        <div class="row mt-5 mb-5 d-flex">
+            <!-- TABS -->
+            <div class="col-lg-7">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="mission-tab" data-bs-toggle="tab" data-bs-target="#mission"
+                            type="button" role="tab" aria-controls="mission" aria-selected="true">Mission</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="organization-tab" data-bs-toggle="tab"
+                            data-bs-target="#organization" type="button" role="tab" aria-controls="organization"
+                            aria-selected="false">Organization</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments"
+                            type="button" role="tab" aria-controls="comments" aria-selected="false">Comments</button>
+                    </li>
+                </ul>
 
-                        <button
-                            class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="/html-css/css/images/pin.png" alt="" class="img-fluid"> &nbsp; Toronto
-                            </a>
-                        </button>
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="/html-css/css/images/heart.png" alt="" class="img-fluid">
-                            </a>
-                        </button>
-                        <button
-                            class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src=" /html-css/css/images/user.png" alt="" class="img-fluid">
-                            </a>
-                        </button>
-                        <div
-                            class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                            Environment</div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active mt-3" id="mission" role="tabpanel"
+                        aria-labelledby="mission-tab">
+                        introduction
                     </div>
 
-                    <div class="card-body pt-4">
-                        <h4 class="card-title">Grow Trees - On the path to environment sustainability</h4>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content.</p>
-
-                        <div class="row d-flex">
-                            <div class="col">
-                                <h6>Tree Canada</h6>
-                            </div>
-                            <div class="col text-end">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/star.png" alt="">
-                                <img src="/html-css/css/images/star.png" alt="">
-                            </div>
-                        </div>
-
-                        <div class="row d-flex py-3 g-0 items-align-center">
-                            <div class="col-2">
-                                <hr>
-                            </div>
-                            <div class="col-8 text-center border border-secondary rounded-pill">
-                                <span style="font-size: 15px;">From 10/01/2019 until 25/02/2019</span>
-                            </div>
-                            <div class="col-2">
-                                <hr>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-around mt-1">
-                            <div class="d-flex align-items-center">
-                                <img src="/html-css/css/images/Seats-left.png" alt=""
-                                    style="margin-right: 10px; width: 30px; height: 30px" />
-                                <div class="d-flex flex-column">
-                                    <span>10</span>
-                                    <span>Seats Left</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="/html-css/css/images/Seats-left.png" alt=""
-                                    style="margin-right: 10px; width: 30px; height: 30px" />
-                                <div class="d-flex flex-column">
-                                    <span>09/01/2019</span>
-                                    <span>Deadline</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn-apply rounded-pill px-4 py-2">
-                                Apply
-                                <img src="/html-css/css/images/right-arrow.png" alt="" class="ms-3">
-                            </button>
-                        </div>
+                    <div class="tab-pane fade mt-3" id="organization" role="tabpanel"
+                        aria-labelledby="organization-tab">
+                        organization details
+                    </div>
+                    <div class="tab-pane fade mt-3" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+                        comments
                     </div>
                 </div>
+
             </div>
 
-            <div class="col">
-                <div class="card h-100 shadow-sm border-light">
-                    <div class="position-relative">
-                        <img src="/html-css/css/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png"
-                            class="card-img-top" alt="...">
-
-                        <button
-                            class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="/html-css/css/images/pin.png" alt="" class="img-fluid"> &nbsp; Melbourne
-                            </a>
-                        </button>
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="/html-css/css/images/heart.png" alt="" class="img-fluid">
-                            </a>
-                        </button>
-                        <button
-                            class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src=" /html-css/css/images/user.png" alt="" class="img-fluid">
-                            </a>
-                        </button>
-                        <div
-                            class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                            Children</div>
-                    </div>
-
-                    <div class="card-body pt-4">
-                        <h4 class="card-title">Education Supplies for Every Pair of Sold Shoes</h4>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content.</p>
-
-                        <div class="row d-flex">
-                            <div class="col">
-                                <h6>Australian Paradise</h6>
-                            </div>
-                            <div class="col text-end">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/star.png" alt="">
-                            </div>
-                        </div>
-
-                        <div class="row d-flex py-3 g-0 items-align-center">
-                            <div class="col-2">
-                                <hr>
-                            </div>
-                            <div class="col-8 text-center border border-secondary rounded-pill">
-                                <span style="font-size: 15px;">From 10/01/2019 until 25/02/2019</span>
-                            </div>
-                            <div class="col-2">
-                                <hr>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-around mt-1">
-                            <div class="d-flex align-items-center">
-                                <img src="/html-css/css/images/Already-volunteered.png" alt=""
-                                    style="margin-right: 10px; width: 30px; height: 30px" />
-                                <div class="d-flex flex-column">
-                                    <span>250</span>
-                                    <span>Already Volunteered</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="/html-css/css/images/Seats-left.png" alt=""
-                                    style="margin-right: 10px; width: 30px; height: 30px" />
-                                <div class="d-flex flex-column">
-                                    <span>09/01/2019</span>
-                                    <span>Deadline</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn-apply rounded-pill px-4 py-2">
-                                Apply
-                                <img src="/html-css/css/images/right-arrow.png" alt="" class="ms-3">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 shadow-sm border-light">
-                    <div class="position-relative">
-                        <img src="/html-css/css/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png"
-                            class="card-img-top" alt="...">
-
-                        <button
-                            class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="/html-css/css/images/pin.png" alt="" class="img-fluid"> &nbsp; Melbourne
-                            </a>
-                        </button>
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="/html-css/css/images/heart.png" alt="" class="img-fluid">
-                            </a>
-                        </button>
-                        <button
-                            class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src=" /html-css/css/images/user.png" alt="" class="img-fluid">
-                            </a>
-                        </button>
-                        <div
-                            class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                            Children</div>
-                    </div>
-
-                    <div class="card-body pt-4">
-                        <h4 class="card-title">Education Supplies for Every Pair of Sold Shoes</h4>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content.</p>
-
-                        <div class="row d-flex">
-                            <div class="col">
-                                <h6>Australian Paradise</h6>
-                            </div>
-                            <div class="col text-end">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/selected-star.png" alt="">
-                                <img src="/html-css/css/images/star.png" alt="">
-                            </div>
-                        </div>
-
-                        <div class="row d-flex py-3 g-0 items-align-center">
-                            <div class="col-2">
-                                <hr>
-                            </div>
-                            <div class="col-8 text-center border border-secondary rounded-pill">
-                                <span style="font-size: 15px;">From 10/01/2019 until 25/02/2019</span>
-                            </div>
-                            <div class="col-2">
-                                <hr>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-around mt-1">
-                            <div class="d-flex align-items-center">
-                                <img src="/html-css/css/images/Already-volunteered.png" alt=""
-                                    style="margin-right: 10px; width: 30px; height: 30px" />
-                                <div class="d-flex flex-column">
-                                    <span>250</span>
-                                    <span>Already Volunteered</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <img src="/html-css/css/images/Seats-left.png" alt=""
-                                    style="margin-right: 10px; width: 30px; height: 30px" />
-                                <div class="d-flex flex-column">
-                                    <span>09/01/2019</span>
-                                    <span>Deadline</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-                        <div class="text-center">
-                            <button class="btn-apply rounded-pill px-4 py-2">
-                                Apply
-                                <img src="/html-css/css/images/right-arrow.png" alt="" class="ms-3">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="col-lg-5"></div>
         </div>
     </div>
-
 
     <!-- FOOTER -->
     <footer class="bg-white border-top">
@@ -674,6 +594,27 @@
         </div>
     </footer>
 
+    <!-- SLIDER SCRIPT -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            loop: true,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
+    </script>
 </body>
 
 </html>
