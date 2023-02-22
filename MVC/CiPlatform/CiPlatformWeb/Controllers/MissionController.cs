@@ -8,10 +8,5 @@ namespace CiPlatformWeb.Controllers
         {
             return View();
         }
-
-        public IActionResult ListView ()
-        {
-            return View();
-        }
     }
 }

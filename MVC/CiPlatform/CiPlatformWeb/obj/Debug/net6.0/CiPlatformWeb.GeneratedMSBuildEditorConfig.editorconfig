@@ -35,16 +35,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Mission/ListView.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxMaXN0Vmlldy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/_LayoutFilter.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRGaWx0ZXIuY3NodG1s
+[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/FilterBarPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEZpbHRlckJhclBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/GridViewPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEdyaWRWaWV3UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/ListViewPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXExpc3RWaWV3UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/_LayoutMission.cshtml]
