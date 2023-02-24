@@ -8,5 +8,10 @@ namespace CiPlatformWeb.Controllers
         {
             return View();
         }
+
+        public IActionResult VolunteeringMission()
+        {
+            return View();
+        }
     }
 }

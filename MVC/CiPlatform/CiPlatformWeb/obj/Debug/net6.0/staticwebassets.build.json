@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mFflsJ3u8UWokcarcKw0mll55VJOk366Ohs3a6mM0xw=",
+  "Hash": "n5qOxRx+9cIps7ROE+TCdK1l07hsfj6k7v9xkFCm04U=",
   "Source": "CiPlatformWeb",
   "BasePath": "_content/CiPlatformWeb",
   "Mode": "Default",
@@ -83,6 +83,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\css\\slider.css",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "css/slider.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\slider.css"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\css\\story.css",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "css/story.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\story.css"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\favicon.ico",

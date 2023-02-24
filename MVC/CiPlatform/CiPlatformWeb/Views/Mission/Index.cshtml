@@ -5,6 +5,61 @@
 
 <partial name="FilterBarPartial" />
 
+<!-- PILLS -->
+<div class="container my-4" id="filter-pills">
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Tree Plantation &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Canada &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Toronto &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Montreal &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Environment &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Nutrition &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Anthrapology &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
+        Environental Science &nbsp;
+        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
+            <img src="~/images/cancel.png" alt="">
+        </button>
+    </div>
+    <div class="alert px-2 py-0 m-2">
+        <button type="submit" class="border-none" onclick="removeFilters()">Clear All</button>
+    </div>
+</div>
+
 <!-- HEADING -->
 <div class="container my-4">
     <div class="row">
@@ -28,14 +83,40 @@
             </div>
         </div>
         <div class="col-1 d-flex">
-            <button class="border-none">
-                <img src="~/images/grid.png" alt="gridlogo" class="temp">
+            <button class="btn border-none view-btn" type="submit" id="grid-btn" onclick="show_grid()">
+                <img src="images/grid.png" alt="">
             </button>
-            <button class="border-none">
-                <img src="~/images/list.png" alt="listlogo" class="temp">
+            <button class="btn border-none ms-2 view-btn" type="submit" id="list-btn" onclick="show_list()">
+                <img src="images/list.png" alt="">
             </button>
         </div>
     </div>
 </div>
 
-<partial name="GridViewPartial" />
+<!-- GRID OR LIST -->
+<!-- GRID PARTIAL -->
+<div id="grid-view">
+    <partial name="GridViewPartial" />
+</div>
+
+<!-- LIST PARTIAL -->
+<div id="list-view">
+    <partial name="ListViewPartial" />
+</div>
+
+
+<script>
+    function show_grid() {
+        document.getElementById("grid-view").style.display = "block";
+        document.getElementById("list-view").style.display = "none";
+    }
+
+    function show_list() {
+        document.getElementById("list-view").style.display = "block";
+        document.getElementById("grid-view").style.display = "none";
+    }
+
+    function removeFilters() {
+        document.getElementById("filter-pills").style.display = "none";
+    }
+</script>

@@ -11,6 +11,18 @@
     display: none;
 }
 
+#filter-pills {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    color: #757575;
+}
+
+#filter-pills img {
+    height: 10px;
+    padding-bottom: 2px;
+}
+
 .border-none {
     border: none !important;
     border-radius: 0px !important;
@@ -20,6 +32,11 @@
     background-color: #ff6a00 !important;
     border-color: #ff6a00 !important;
     margin-bottom: 28px;
+}
+
+.cross {
+    height: 5px;
+    width: 5px;
 }
 
 .btn-apply {

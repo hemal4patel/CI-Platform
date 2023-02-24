@@ -1,10 +1,17 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800&family=Roboto:wght@100;500;700;900&display=swap');
 
 * {
+    font-family: 'NotoSans' !important;
+}
+
+* {
     margin: 0%;
     padding: 0%;
-    font-family: 'Noto Sans' !important;
     background: transparent url('img/Layer 0.png') 0% 0% no-repeat padding-box;
+}
+
+div {
+    font-family: 'Noto Sans' !important;
 }
 
 .nav-link {
@@ -14,6 +21,18 @@
 .img-filter {
     display: none;
 }
+
+#filter-pills {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    color: #757575;
+}
+
+    #filter-pills img {
+        height: 10px;
+        padding-bottom: 2px;
+    }
 
 .border-none {
     border: none !important;
@@ -45,9 +64,9 @@
     opacity: 1;
 }
 
-.header-card {
+.box-card {
     border: 1px solid #E8E8E8;
-    width: 120px;
+    width: 150px;
     height: 130px;
     margin-top: 5px;
 }
@@ -73,16 +92,39 @@
     background-color: #e9ecef;
 }
 
-
 .vol-img {
     height: 70px;
     width: 70px;
 }
 
-@media (max-width: 991.98px) {
+#grid-view {
+    display: block;
+}
 
-    .copyright,
-    .links {
+#list-view {
+    display: none;
+}
+
+@media (max-width: 1024.98px) {
+    #grid-view {
+        display: block !important;
+    }
+
+    #list-view {
+        display: none !important;
+    }
+
+    #grid-btn {
+        display: none;
+    }
+
+    #list-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .copyright, .links {
         text-align: center;
     }
 
@@ -92,11 +134,6 @@
 }
 
 @media (max-width: 425.98px) {
-    .cards {
-        flex-direction: column;
-        align-items: center;
-    }
-
     .comment-box .vol-img {
         margin-top: 15px;
     }
@@ -104,6 +141,22 @@
     .comment-box .card-body h5 {
         text-align: center;
     }
+}
+
+@media (max-width: 374.98px) {
+    .seats-left {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .seats-left .d-flex {
+            padding-bottom: 10px;
+        }
+
+        .seats-left .col {
+            text-align: center !important;
+            padding-bottom: 10px;
+        }
 }
 
 @media (max-width:767.98px) {
@@ -125,10 +178,6 @@
 
     .view {
         display: none !important;
-    }
-
-    .d-flex a .temp {
-        display: none;
     }
 
     .btns {

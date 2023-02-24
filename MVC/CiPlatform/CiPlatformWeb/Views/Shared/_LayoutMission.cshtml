@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="~/css/mission.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/CiPlatformWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
     <!-- HEADER -->
     <header class="sticky-top bg-white">
         <nav class="navbar navbar-expand-lg border-bottom">
             <div class="container">
                 <div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#headerContent" aria-controls="headerContent" aria-expanded="false"
-                        aria-label="Toggle navigation" style="border:none">
+                            data-bs-target="#headerContent" aria-controls="headerContent" aria-expanded="false"
+                            aria-label="Toggle navigation" style="border:none">
                         <span><img src="~/images/list.png"></span>
                     </button>
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" asp-controller="Mission" asp-action="Index">
                         <img src="~/images/logo.png" alt="">
                     </a>
                 </div>
@@ -27,12 +28,12 @@
                 <div class="offcanvas offcanvas-start" id="headerContent">
                     <div class="offcanvas-header flex-row-reverse">
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
+                                aria-label="Close"></button>
                     </div>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 offcanvas-body">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 Explore
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -41,14 +42,14 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page">Stories</a>
+                            <a asp-controller="Story" asp-action="StoryListing" class="nav-link" aria-current="page">Stories</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page">News</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 Policy
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -59,15 +60,15 @@
                     </ul>
                 </div>
 
-                <div class="right-div d-flex">
+                <div class="d-flex">
                     <div class="dropdown">
                         <a class="nav-link" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                           aria-expanded="false">
                             <span>
-                                <img src="~/images/bell.png" alt="" class="m-2 me-4">
+                                <img src="~/images/bell.png" alt="" class="m-2">
                             </span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="notificationDropdown">
                             <li><a class="dropdown-item" href="#">Dashboard</a></li>
                             <li><a class="dropdown-item" href="#">My Account</a></li>
                             <li><a class="dropdown-item" href="#">Help Center</a></li>
@@ -76,10 +77,10 @@
                     </div>
                     <div class="dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                           data-bs-toggle="dropdown" aria-expanded="false">
                             <span>
                                 <img src="~/images/user-img.png" alt="" class="rounded-circle me-2"
-                                    width="40" height="40">
+                                     width="40" height="40">
                             </span>
                             <p class="d-inline" id="profileText">
                                 Evan Donohue

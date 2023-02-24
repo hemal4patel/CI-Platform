@@ -5,7 +5,6 @@ C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debu
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\CiPlatformWeb.deps.json
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\CiPlatformWeb.runtimeconfig.json
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\CiPlatformWeb.dll
-C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\ref\CiPlatformWeb.dll
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\CiPlatformWeb.pdb
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\CiPlatformWeb.csproj.AssemblyReference.cache
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\CiPlatformWeb.GeneratedMSBuildEditorConfig.editorconfig
@@ -24,3 +23,9 @@ C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debu
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\ref\CiPlatformWeb.dll
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\CiPlatformWeb.pdb
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\CiPlatformWeb.genruntimeconfig.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\staticwebassets\msbuild.CiPlatformWeb.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\staticwebassets\msbuild.build.CiPlatformWeb.props
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.CiPlatformWeb.props
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.CiPlatformWeb.props
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\refint\CiPlatformWeb.dll
