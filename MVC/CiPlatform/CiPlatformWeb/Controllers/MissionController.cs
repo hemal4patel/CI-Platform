@@ -4,7 +4,7 @@ namespace CiPlatformWeb.Controllers
 {
     public class MissionController : Controller
     {
-        public IActionResult Index ()
+        public IActionResult PlatformLanding ()
         {
             return View();
         }

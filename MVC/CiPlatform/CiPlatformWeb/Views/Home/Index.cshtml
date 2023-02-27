@@ -1,19 +1,21 @@
-﻿@{
+﻿@model CiPlatformWeb.Entities.DataModels.User
+@{
     ViewData["Title"] = "Login";
 }
 
-<form asp-controller="Mission" asp-action="Index" class="">
+<form method="post">
     <div class="e-add">
-        <label for="email" class="form-label">Email Address</label>
-        <input type="email" id="email-address" placeholder="Enter your email address..."
+        <label asp-for="Email" class="form-label">Email Address</label>
+        <input asp-for="Email" placeholder="Enter your email address..."
                class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="pwd mt-4 mb-4">
-        <label for="pswd" class="form-label">Password</label>
-        <input type="password" id="password" placeholder="Enter your password..."
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" type="password" placeholder="Enter your password..."
                class="form-control">
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
-
     <button>Login</button>
 </form>
 

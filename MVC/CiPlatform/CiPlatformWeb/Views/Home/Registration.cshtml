@@ -1,40 +1,46 @@
-﻿@{
+﻿@model CiPlatformWeb.Entities.DataModels.User
+@{
     ViewData["Title"] = "Registration";
 }
 
-<form action="" class="">
-    <div class="f-name">
-        <label for="fname" class="form-label">First Name</label>
-        <input type="text" id="fname" placeholder="Enter your first name..."
+<form method="post">
+    <div class="form-group">
+        <label asp-for="FirstName" class="form-label">First Name</label>
+        <input asp-for="FirstName" placeholder="Enter your first name..."
                class="form-control">
+        <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
-    <div class="l-name mt-3">
-        <label for="lname" class="form-label">Last Name</label>
-        <input type="text" id="lname" placeholder="Enter your last name..."
+    <div class="form-group mt-3">
+        <label asp-for="LastName" class="form-label">Last Name</label>
+        <input asp-for="LastName" placeholder="Enter your last name..."
                class="form-control">
+        <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
-    <div class="num mt-3">
-        <label for="num" class="form-label">Phone Number</label>
-        <input type="text" id="phn" placeholder="Enter your phone number..."
+    <div class="form-group mt-3">
+        <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+        <input asp-for="PhoneNumber" placeholder="Enter your phone number..."
                class="form-control">
-    </div>
-    <div class="e-add mt-3">
-        <label for="email" class="form-label">Email Address</label>
-        <input type="email" id="email-address" placeholder="Enter your email address..."
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+     </div>
+    <div class="form-group mt-3">
+        <label asp-for="Email" class="form-label">Email Address</label>
+        <input asp-for="Email" placeholder="Enter your email address..."
                class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <div class="pwd mt-3">
-        <label for="pswd" class="form-label">Password</label>
-        <input type="password" id="password" placeholder="Enter your password..."
+    <div class="form-group mt-3">
+        <label asp-for="Password" class="form-label">Password</label>
+        <input asp-for="Password" type="password" placeholder="Enter your password..."
                class="form-control">
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
-    <div class="cnf-pwd mt-3 mb-4">
-        <label for="cnf-pwd" class="form-label">Confirm Password</label>
-        <input type="password" id="cnf-password" placeholder="Enter your password again..."
+    @*<div class="form-group mt-3 mb-4">
+        <label asp-for="" class="form-label">Confirm Password</label>
+        <input asp-for="" placeholder="Enter your password again..."
                class="form-control">
-    </div>
+    </div>*@
 
-    <button>Register</button>
+    <button type="submit" class="mt-4">Register</button>
 </form>
 
 <div class="lost-pwd mt-3">

@@ -32,8 +32,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Mission/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxJbmRleC5jc2h0bWw=
+[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Mission/PlatformLanding.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxQbGF0Zm9ybUxhbmRpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Mission/VolunteeringMission.cshtml]
@@ -54,6 +54,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/ListViewPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXExpc3RWaWV3UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/NotificationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXE5vdGlmaWNhdGlvblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/_LayoutMission.cshtml]

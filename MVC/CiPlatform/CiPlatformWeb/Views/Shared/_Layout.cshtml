@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/CiPlatformWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
 <body>
 
@@ -81,6 +82,7 @@
             <div class="col-xl-4 right">
                 <div class="d-flex align-items-center justify-content-center flex-column" style="height: 100%;">
                     <main role="main" class="pb-3">
+                        <partial name="NotificationPartial" />
                         @RenderBody()
                     </main>
                 </div>

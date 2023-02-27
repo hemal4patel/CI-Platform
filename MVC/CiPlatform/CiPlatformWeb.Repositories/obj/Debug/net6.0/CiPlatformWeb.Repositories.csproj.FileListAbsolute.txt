@@ -1,0 +1,14 @@
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\bin\Debug\net6.0\CiPlatformWeb.Repositories.deps.json
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\bin\Debug\net6.0\CiPlatformWeb.Repositories.runtimeconfig.json
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\bin\Debug\net6.0\CiPlatformWeb.Repositories.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\bin\Debug\net6.0\CiPlatformWeb.Repositories.pdb
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.csproj.AssemblyReference.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.AssemblyInfoInputs.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.AssemblyInfo.cs
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.csproj.CoreCompileInputs.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\refint\CiPlatformWeb.Repositories.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.pdb
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.genruntimeconfig.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\ref\CiPlatformWeb.Repositories.dll

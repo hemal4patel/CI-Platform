@@ -1,0 +1,14 @@
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\bin\Debug\net6.0\CiPlatformWeb.Entities.deps.json
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\bin\Debug\net6.0\CiPlatformWeb.Entities.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\bin\Debug\net6.0\CiPlatformWeb.Entities.pdb
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.csproj.AssemblyReference.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.AssemblyInfoInputs.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.AssemblyInfo.cs
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.csproj.CoreCompileInputs.cache
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\refint\CiPlatformWeb.Entities.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.pdb
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\ref\CiPlatformWeb.Entities.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\bin\Debug\net6.0\CiPlatformWeb.Entities.runtimeconfig.json
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatform.Entities\obj\Debug\net6.0\CiPlatformWeb.Entities.genruntimeconfig.cache

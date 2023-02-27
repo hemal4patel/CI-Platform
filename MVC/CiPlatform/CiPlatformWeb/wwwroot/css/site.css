@@ -6,20 +6,8 @@
     font-family: 'Noto Sans';
 }
 
-h3,
-h4,
-h5,
-h6,
-p,
-label,
-input,
-form,
-button,
-input::placeholder,
-a,
-.no-acc,
-.login {
-    font-family: 'NotoSans';
+* {
+    font-family: 'NotoSans' !important;
 }
 
 .container-fluid {
