@@ -1,5 +1,6 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Models;
+using CiPlatformWeb.Repositories.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,17 +9,14 @@ namespace CiPlatformWeb.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
-        //public HomeController (ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
+        private readonly ILogger<HomeController> _logger;
+        private readonly IUserRepository _userRepository;
 
-        private readonly ApplicationDbContext _db;
 
-        public HomeController (ApplicationDbContext db)
+        public HomeController (ILogger<HomeController> logger, IUserRepository userRepository)
         {
-            _db = db;
+            _logger = logger;
+            _userRepository = userRepository;
         }
 
 
@@ -35,10 +33,18 @@ namespace CiPlatformWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Users.Add(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Registered!!!";
-                return RedirectToAction("PlatformLanding", "Mission");
+                var user = _userRepository.CheckUser(obj);
+                if (user == null)
+                {
+                    _userRepository.RegisterUser(obj);
+                    TempData["success"] = "Registered!!!";
+                    return RedirectToAction("PlatformLanding", "Mission");
+                }
+                else
+                {
+                    TempData["error"] = "User already exists!!!";
+                    return View(obj);
+                }
             }
             return View(obj);
         }
@@ -56,8 +62,7 @@ namespace CiPlatformWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _db.Users.FirstOrDefault(u => u.Email == obj.Email);
-
+                var user = _userRepository.CheckUser(obj);
                 if (user == null)
                 {
                     TempData["error"] = "User does not exist!!!";
@@ -88,6 +93,26 @@ namespace CiPlatformWeb.Controllers
         public IActionResult ResetPassword ()
         {
             return View();
+        }
+
+        //POST
+        [HttpPost]
+        public IActionResult ForgotPassword (User obj)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = _userRepository.CheckUser(obj);
+                if(user == null)
+                {
+                    TempData["error"] = "User does not exist!!!";
+                    return View(obj);
+                }
+                else
+                {
+
+                }
+            }
+            return View(obj);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

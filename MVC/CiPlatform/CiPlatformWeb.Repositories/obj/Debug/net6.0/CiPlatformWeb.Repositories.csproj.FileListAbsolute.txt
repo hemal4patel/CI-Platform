@@ -12,3 +12,6 @@ C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Reposito
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.pdb
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.genruntimeconfig.cache
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\ref\CiPlatformWeb.Repositories.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\bin\Debug\net6.0\CiPlatformWeb.Entities.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\bin\Debug\net6.0\CiPlatformWeb.Entities.pdb
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb.Repositories\obj\Debug\net6.0\CiPlatformWeb.Repositories.csproj.CopyComplete
