@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace CiPlatformWeb.Entities.DataModels;
 
@@ -50,7 +49,7 @@ public partial class User
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
 
-    [ValidateNever] 
+    [ValidateNever]
     public virtual Country Country { get; set; } = null!;
 
     public virtual ICollection<FavouriteMission> FavouriteMissions { get; } = new List<FavouriteMission>();

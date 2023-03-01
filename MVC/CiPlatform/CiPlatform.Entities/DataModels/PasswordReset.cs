@@ -10,4 +10,6 @@ public partial class PasswordReset
     public string Token { get; set; } = null!;
 
     public DateTime? CreatedAt { get; set; }
+
+    public long Id { get; set; }
 }

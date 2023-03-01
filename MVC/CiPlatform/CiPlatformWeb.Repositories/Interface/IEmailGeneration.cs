@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,9 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IEmailGeneration
     {
+        
+        User CheckUser (ForgotPasswordValidation obj);
+        void GenerateEmail (ForgotPasswordValidation obj);
 
-        string GenerateToken ();
-
-        string GenerateLink (User obj, string token);
-
-        void ResetPasswordAdd (User obj, string token);
-
-        void GenerateEmail (User obj, string token, string PasswordResetLink);
     }
 }

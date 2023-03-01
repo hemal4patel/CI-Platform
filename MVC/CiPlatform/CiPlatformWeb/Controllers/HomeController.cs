@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Models;
 using CiPlatformWeb.Repositories.Interface;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +12,14 @@ namespace CiPlatformWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUserRepository _userRepository;
+        private readonly IEmailGeneration _emailGeneration;
 
 
-        public HomeController (ILogger<HomeController> logger, IUserRepository userRepository)
+        public HomeController (ILogger<HomeController> logger, IUserRepository userRepository, IEmailGeneration emailGeneration)
         {
             _logger = logger;
             _userRepository = userRepository;
+            _emailGeneration = emailGeneration;
         }
 
 
@@ -29,16 +32,24 @@ namespace CiPlatformWeb.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Registration (User obj)
+        public IActionResult Registration (User obj, IFormCollection form)
         {
             if (ModelState.IsValid)
             {
                 var user = _userRepository.CheckUser(obj);
                 if (user == null)
                 {
-                    _userRepository.RegisterUser(obj);
-                    TempData["success"] = "Registered!!!";
-                    return RedirectToAction("PlatformLanding", "Mission");
+                    if (form["cnf-password"] == obj.Password)
+                    {
+                        _userRepository.RegisterUser(obj);
+                        TempData["success"] = "Registered!!!";
+                        return RedirectToAction("PlatformLanding", "Mission");
+                    }
+                    else
+                    {
+                        TempData["error"] = "Password doesn't match!!!";
+                        return View(obj);
+                    }
                 }
                 else
                 {
@@ -90,29 +101,50 @@ namespace CiPlatformWeb.Controllers
             return View();
         }
 
-        public IActionResult ResetPassword ()
-        {
-            return View();
-        }
-
         //POST
         [HttpPost]
-        public IActionResult ForgotPassword (User obj)
+        public IActionResult ForgotPassword (ForgotPasswordValidation obj)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var user = _userRepository.CheckUser(obj);
-                if(user == null)
+                var user = _emailGeneration.CheckUser(obj);
+                if (user == null)
                 {
                     TempData["error"] = "User does not exist!!!";
                     return View(obj);
                 }
                 else
                 {
-
+                    _emailGeneration.GenerateEmail(obj);
+                    TempData["success"] = "Link sent to the registered email!!!";
                 }
             }
             return View(obj);
+        }
+
+        public IActionResult ResetPassword ()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword (ResetPasswordValidation obj, IFormCollection form)
+        {
+            if (ModelState.IsValid)
+            {
+                if (form["cnf-password"] == obj.Password)
+                {
+                    _userRepository.UpdatePassword(obj);
+                    TempData["success"] = "Password updated!!!";
+                    return RedirectToAction("PlatformLanding", "Mission");
+                }
+                else
+                {
+                    TempData["error"] = "Password doesn't match!!!";
+                    return View(obj);
+                }
+            }
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

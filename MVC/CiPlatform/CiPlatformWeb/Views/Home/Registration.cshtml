@@ -31,17 +31,17 @@
     <div class="form-group mt-3">
         <label asp-for="Password" class="form-label">Password</label>
         <input asp-for="Password" type="password" id="password" placeholder="Enter your password..."
-               class="form-control" onkeyup="check()">
+               class="form-control">
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group mt-3 mb-4">
         <label class="form-label">Confirm Password</label>
-        <input type="password" id="cnf-password" placeholder="Enter your password again..."
-               class="form-control" onkeyup="check()">
+        <input type="password" name="cnf-password" placeholder="Enter your password again..."
+               class="form-control" required>
         <span id="cnf-msg" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="mt-4">Register</button>
+    <button type="submit" class="mt-4" id="reg-btn">Register</button>
 </form>
 
 <div class="lost-pwd mt-3">
@@ -56,15 +56,3 @@
 <div class="policy mt-xl-0.5">
     <a href="">Privacy Policy</a>
 </div>
-
-
-<script>
-    var check = function () {
-        if (document.getElementById('password').value ==
-            document.getElementById('cnf-password').value) {
-            document.getElementById('cnf-msg').style.display = 'none';
-        } else {
-            document.getElementById('cnf-msg').innerHTML = 'The password does not match.';
-        }
-    }
-</script>

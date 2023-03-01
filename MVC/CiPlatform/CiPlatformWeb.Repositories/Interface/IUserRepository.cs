@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace CiPlatformWeb.Repositories.Interface
         void RegisterUser (User obj);
 
         User CheckUser (User obj);
+
+        void UpdatePassword (ResetPasswordValidation obj);
     }
 }

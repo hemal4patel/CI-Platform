@@ -8,6 +8,10 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using CiPlatformWeb.Entities.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+//using System.Security.Policy;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -19,9 +23,14 @@ namespace CiPlatformWeb.Repositories.Repository
         public EmailGeneration (ApplicationDbContext db)
         {
             _db = db;
-        }
+        }  
 
-        string IEmailGeneration.GenerateToken ()
+        User IEmailGeneration.CheckUser (ForgotPasswordValidation obj)
+        {
+            return _db.Users.Where(e => e.Email == obj.Email).FirstOrDefault();
+
+        }
+        void IEmailGeneration.GenerateEmail (ForgotPasswordValidation obj)
         {
             Random random = new Random();
 
@@ -40,18 +49,15 @@ namespace CiPlatformWeb.Repositories.Repository
             token += randomint.ToString();
             token += randomChar.ToString();
 
-            return token;
-        }
+            UriBuilder uriBuilder = new UriBuilder();
+            uriBuilder.Scheme = "https";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 44395;
+            uriBuilder.Path = "Home/ResetPassword";
+            uriBuilder.Query = "token=" + token;
 
-        string IEmailGeneration.GenerateLink (User obj, string token)
-        {
-            var PasswordResetLink = Url.Action("ResetPassword", "Home", new { Email = obj.Email, Token = token }, Request.Scheme);
-            return PasswordResetLink;
-        }
+            var PasswordResetLink = uriBuilder.ToString();
 
-
-        void IEmailGeneration.ResetPasswordAdd (User obj, string token)
-        {
             var ResetPasswordInfo = new PasswordReset()
             {
                 Email = obj.Email,
@@ -59,13 +65,10 @@ namespace CiPlatformWeb.Repositories.Repository
             };
             _db.Add(ResetPasswordInfo);
             _db.SaveChanges();
-        }
 
-        void IEmailGeneration.GenerateEmail (User obj, string token, string PasswordResetLink)
-        {
             var fromEmail = new MailAddress("hemal04121@gmail.com");
             var toEmail = new MailAddress(obj.Email);
-            var fromEmailPassword = "Pratham@2211";
+            var fromEmailPassword = "orwgqohhtojovpvr";
             string subject = "Reset Password";
             string body = PasswordResetLink;
 
