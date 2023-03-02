@@ -25,12 +25,7 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }  
 
-        User IEmailGeneration.CheckUser (ForgotPasswordValidation obj)
-        {
-            return _db.Users.Where(e => e.Email == obj.Email).FirstOrDefault();
-
-        }
-        void IEmailGeneration.GenerateEmail (ForgotPasswordValidation obj)
+        public string GenerateToken ()
         {
             Random random = new Random();
 
@@ -49,15 +44,10 @@ namespace CiPlatformWeb.Repositories.Repository
             token += randomint.ToString();
             token += randomChar.ToString();
 
-            UriBuilder uriBuilder = new UriBuilder();
-            uriBuilder.Scheme = "https";
-            uriBuilder.Host = "localhost";
-            uriBuilder.Port = 44395;
-            uriBuilder.Path = "Home/ResetPassword";
-            uriBuilder.Query = "token=" + token;
-
-            var PasswordResetLink = uriBuilder.ToString();
-
+            return token;
+        }
+        public void GenerateEmail (string token, string PasswordResetLink, ForgotPasswordValidation obj)
+        {            
             var ResetPasswordInfo = new PasswordReset()
             {
                 Email = obj.Email,
@@ -66,9 +56,9 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.Add(ResetPasswordInfo);
             _db.SaveChanges();
 
-            var fromEmail = new MailAddress("hemal04121@gmail.com");
+            var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
             var toEmail = new MailAddress(obj.Email);
-            var fromEmailPassword = "orwgqohhtojovpvr";
+            var fromEmailPassword = "pmbqpeqxflbwwyjt";
             string subject = "Reset Password";
             string body = PasswordResetLink;
 

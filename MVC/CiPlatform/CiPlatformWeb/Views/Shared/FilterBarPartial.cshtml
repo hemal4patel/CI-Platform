@@ -1,4 +1,9 @@
-﻿
+﻿@model CiPlatformWeb.Entities.ViewModels.FiltersModel
+@{
+    var CountryList = ViewBag.CountryList; 
+    var ThemeList = ViewBag.ThemeList;
+    var SkillList = ViewBag.SkillList;
+}
 <!-- FILTERS -->
 <div class="border-bottom border-3">
     <div class="container">
@@ -25,10 +30,10 @@
                                 Country
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                                <li><a class="dropdown-item" href="#">country1</a></li>
-                                <li><a class="dropdown-item" href="#">country2</a></li>
-                                <li><a class="dropdown-item" href="#">country3</a></li>
-                                <li><a class="dropdown-item" href="#">country4</a></li>
+                                @foreach(var obj in CountryList)
+                                {
+                                    <li><a class="dropdown-item" href="#">@obj.Text</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -53,10 +58,10 @@
                                 Theme
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
-                                <li><a class="dropdown-item" href="#">theme1</a></li>
-                                <li><a class="dropdown-item" href="#">theme2</a></li>
-                                <li><a class="dropdown-item" href="#">theme3</a></li>
-                                <li><a class="dropdown-item" href="#">theme4</a></li>
+                                @foreach (var obj in ThemeList)
+                                {
+                                    <li><a class="dropdown-item" href="#">@obj.Text</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -67,10 +72,10 @@
                                 Skills
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="skillsDropdown">
-                                <li><a class="dropdown-item" href="#">skill1</a></li>
-                                <li><a class="dropdown-item" href="#">skill2</a></li>
-                                <li><a class="dropdown-item" href="#">skill3</a></li>
-                                <li><a class="dropdown-item" href="#">skill4</a></li>
+                                @foreach (var obj in SkillList)
+                                {
+                                        <li><a class="dropdown-item" href="#">@obj.Text</a></li>
+                                }
                             </ul>
                         </div>
                     </div>

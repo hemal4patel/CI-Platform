@@ -12,7 +12,7 @@ namespace CiPlatformWeb.Repositories.Interface
     {
         void RegisterUser (User obj);
 
-        User CheckUser (User obj);
+        User CheckUser (string email);
 
         void UpdatePassword (ResetPasswordValidation obj);
     }

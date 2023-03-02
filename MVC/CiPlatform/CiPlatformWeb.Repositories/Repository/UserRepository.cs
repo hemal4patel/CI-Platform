@@ -15,7 +15,7 @@ namespace CiPlatformWeb.Repositories.Repository
     {
         private readonly ApplicationDbContext _db;
 
-        public UserRepository (ApplicationDbContext db) 
+        public UserRepository (ApplicationDbContext db)
         {
             _db = db;
         }
@@ -26,18 +26,16 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-        public User CheckUser (User obj)
+        public User CheckUser (string email)
         {
-            return _db.Users.FirstOrDefault(u => u.Email == obj.Email);
+            return _db.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public void UpdatePassword (ResetPasswordValidation obj)
         {
-            PasswordReset LastData = _db.PasswordResets.OrderBy(i => i.Id).Last();
-            User Change = _db.Users.FirstOrDefault(u => u.Email == LastData.Email);
-            Change.Password = obj.Password;
-            Change.UpdatedAt = DateTime.Now;
-            _db.Update(Change);
+            var x = _db.Users.FirstOrDefault(e => e.Email == obj.Email);
+            x.Password = obj.Password;
+            _db.Users.Update(x);
             _db.SaveChanges();
         }
 

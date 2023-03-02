@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@model CiPlatformWeb.Entities.DataModels.Mission
+
+@{
+    string Email = ViewBag.Email;
+    string UserName = ViewBag.UserName;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,6 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
+
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
     <!-- HEADER -->
     <header class="sticky-top bg-white">
@@ -84,14 +92,14 @@
                                      width="40" height="40">
                             </span>
                             <p class="d-inline" id="profileText">
-                                Evan Donohue
+                                @UserName
                             </p>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                             <li><a class="dropdown-item" href="#">Dashboard</a></li>
                             <li><a class="dropdown-item" href="#">My Account</a></li>
                             <li><a class="dropdown-item" href="#">Help Center</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
                         </ul>
                     </div>
                 </div>

@@ -10,9 +10,10 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IEmailGeneration
     {
-        
-        User CheckUser (ForgotPasswordValidation obj);
-        void GenerateEmail (ForgotPasswordValidation obj);
+
+        public string GenerateToken ();
+
+        public void GenerateEmail (string token, string PasswordResetLink, ForgotPasswordValidation obj);
 
     }
 }

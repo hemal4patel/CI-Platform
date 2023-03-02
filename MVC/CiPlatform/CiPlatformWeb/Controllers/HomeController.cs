@@ -2,6 +2,7 @@
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Models;
 using CiPlatformWeb.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -13,13 +14,14 @@ namespace CiPlatformWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IUserRepository _userRepository;
         private readonly IEmailGeneration _emailGeneration;
+        private readonly ApplicationDbContext _db;
 
-
-        public HomeController (ILogger<HomeController> logger, IUserRepository userRepository, IEmailGeneration emailGeneration)
+        public HomeController (ILogger<HomeController> logger, IUserRepository userRepository, IEmailGeneration emailGeneration, ApplicationDbContext db)
         {
             _logger = logger;
             _userRepository = userRepository;
             _emailGeneration = emailGeneration;
+            _db = db;
         }
 
 
@@ -36,14 +38,14 @@ namespace CiPlatformWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _userRepository.CheckUser(obj);
+                var user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
                     if (form["cnf-password"] == obj.Password)
                     {
                         _userRepository.RegisterUser(obj);
                         TempData["success"] = "Registered!!!";
-                        return RedirectToAction("PlatformLanding", "Mission");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
@@ -73,7 +75,7 @@ namespace CiPlatformWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _userRepository.CheckUser(obj);
+                var user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
                     TempData["error"] = "User does not exist!!!";
@@ -84,6 +86,9 @@ namespace CiPlatformWeb.Controllers
                     if (user.Password == obj.Password)
                     {
                         TempData["success"] = "Logged In!!!";
+
+                        HttpContext.Session.SetString("Email", user.Email);
+                        HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
                         return RedirectToAction("PlatformLanding", "Mission");
                     }
                     else
@@ -96,6 +101,7 @@ namespace CiPlatformWeb.Controllers
             return View(obj);
         }
 
+        //GET
         public IActionResult ForgotPassword ()
         {
             return View();
@@ -103,11 +109,12 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ForgotPassword (ForgotPasswordValidation obj)
         {
             if (ModelState.IsValid)
             {
-                var user = _emailGeneration.CheckUser(obj);
+                var user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
                     TempData["error"] = "User does not exist!!!";
@@ -115,36 +122,65 @@ namespace CiPlatformWeb.Controllers
                 }
                 else
                 {
-                    _emailGeneration.GenerateEmail(obj);
+                    string token = _emailGeneration.GenerateToken();
+                    string PasswordResetLink = Url.Action("ResetPassword", "Home", new { Email = obj.Email, Token = token }, Request.Scheme);
+                    _emailGeneration.GenerateEmail(token, PasswordResetLink, obj);
                     TempData["success"] = "Link sent to the registered email!!!";
                 }
             }
             return View(obj);
         }
 
-        public IActionResult ResetPassword ()
+        //GET
+        public IActionResult ResetPassword (string email, string token)
         {
-            return View();
+            ResetPasswordValidation obj = new ResetPasswordValidation()
+            {
+                Email = email,
+                Token = token
+            };
+            return View(obj);
         }
 
+        //POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ResetPassword (ResetPasswordValidation obj, IFormCollection form)
         {
             if (ModelState.IsValid)
             {
-                if (form["cnf-password"] == obj.Password)
+                var ResetPasswordData = _db.PasswordResets.Any(e => e.Email == obj.Email && e.Token == obj.Token);
+
+                if (ResetPasswordData)
                 {
-                    _userRepository.UpdatePassword(obj);
-                    TempData["success"] = "Password updated!!!";
-                    return RedirectToAction("PlatformLanding", "Mission");
+                    if (form["ConfirmPassword"] != obj.Password)
+                    {
+                        TempData["error"] = "Password doesn't match!!!";
+                        return View(obj);
+                    }
+                    else
+                    {
+                        _userRepository.UpdatePassword(obj);
+                        TempData["success"] = "Password updated!!!";
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
-                    TempData["error"] = "Password doesn't match!!!";
-                    return View(obj);
+                    TempData["error"] = "Link is not valid!!!";
+                    return View("ForgotPassword");
                 }
             }
             return View();
+        }
+
+
+        //Logout
+        public IActionResult Logout ()
+        {
+            HttpContext.Session.SetString("Email", "");
+            HttpContext.Session.SetString("UserName", "");
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
