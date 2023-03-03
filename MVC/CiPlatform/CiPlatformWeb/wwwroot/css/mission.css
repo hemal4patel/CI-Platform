@@ -39,10 +39,19 @@ div {
     border-radius: 0px !important;
 }
 
+.scroll-menu {
+    height: auto;
+    max-height: 30vh;
+    overflow-y: scroll;
+}
+
+.dropdown-item {
+    width: auto !important;
+}
+
 .form-check-input:checked {
     background-color: #ff6a00 !important;
     border-color: #ff6a00 !important;
-    margin-bottom: 28px;
 }
 
 .btn-apply {

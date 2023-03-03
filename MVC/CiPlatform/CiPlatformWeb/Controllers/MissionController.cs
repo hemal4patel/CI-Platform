@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -7,10 +8,12 @@ namespace CiPlatformWeb.Controllers
     public class MissionController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly IMissionList _missionlist;
 
-        public MissionController (ApplicationDbContext db)
+        public MissionController (ApplicationDbContext db, IMissionList missionlist)
         {
             _db = db;
+            _missionlist = missionlist;
         }
 
         public IActionResult PlatformLanding ()
@@ -37,8 +40,18 @@ namespace CiPlatformWeb.Controllers
             var themeall = new SelectList(theme, "MissionThemeId", "Title");
             ViewBag.ThemeList = themeall;
 
+            IEnumerable<Mission> MissionList = _missionlist.GetMissions();
+            ViewBag.MissionList = MissionList;
+
             return View();
         }
+
+        public IActionResult GetCitiesByCountry (int countryId)
+        {
+            var cities = _db.Cities.Where(c => c.CountryId == countryId).ToList();
+            return Json(cities);
+        }
+
 
         public IActionResult VolunteeringMission()
         {

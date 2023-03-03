@@ -453,6 +453,10 @@
       "PackagePath": "staticwebassets\\images\\xlsx.png"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\js\\Filters.js",
+      "PackagePath": "staticwebassets\\js\\Filters.js"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

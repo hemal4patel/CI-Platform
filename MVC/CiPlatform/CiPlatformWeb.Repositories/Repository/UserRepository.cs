@@ -35,6 +35,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             var x = _db.Users.FirstOrDefault(e => e.Email == obj.Email);
             x.Password = obj.Password;
+            x.UpdatedAt = DateTime.Now;
             _db.Users.Update(x);
             _db.SaveChanges();
         }

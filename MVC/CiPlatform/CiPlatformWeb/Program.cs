@@ -13,7 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IEmailGeneration, EmailGeneration>();
+builder.Services.AddScoped<IEmailGeneration, EmailGeneration>(); 
+builder.Services.AddScoped<IMissionList, MissionList> ();
 
 builder.Services.AddSession();
 builder.Services.AddMemoryCache();
@@ -39,6 +40,6 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Mission}/{action=PlatformLanding}/{id?}");
 
 app.Run();
