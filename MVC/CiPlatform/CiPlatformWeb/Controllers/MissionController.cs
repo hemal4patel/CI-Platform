@@ -1,7 +1,9 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Repositories.Interface;
+using CiPlatformWeb.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -40,8 +42,8 @@ namespace CiPlatformWeb.Controllers
             var themeall = new SelectList(theme, "MissionThemeId", "Title");
             ViewBag.ThemeList = themeall;
 
-            IEnumerable<Mission> MissionList = _missionlist.GetMissions();
-            ViewBag.MissionList = MissionList;
+            IEnumerable<Mission> MissionAll = _missionlist.GetMissions();
+            ViewBag.MissionList = MissionAll;
 
             return View();
         }

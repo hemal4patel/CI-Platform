@@ -5,10 +5,11 @@
 
 <!-- GRID VIEW -->
 <div class="container my-3 pb-5">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="missions">
         @foreach (var obj in MissionList)
         {
-            <div class="col">
+            <div class="col card-div">
+                <span class="d-none mission-country">@obj.Country.CountryId</span>
                 <div class="card h-100 shadow-sm border-light">
                     <div class="position-relative">
                         <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
@@ -35,7 +36,7 @@
                     </div>
 
                     <div class="card-body pt-4">
-                        <h4 class="card-title">@obj.Title</h4>
+                        <h4 class="card-title" id="card-title">@obj.Title</h4>
                         <p class="card-text">
                             @obj.ShortDescription
                         </p>
@@ -52,6 +53,8 @@
                                 <img src="~/images/selected-star.png" alt="">
                                 <img src="~/images/star.png" alt="">
                                 <img src="~/images/star.png" alt="">
+
+                                @*@obj.MissionRatings.Rating*@
                             </div>
                         </div>
 
@@ -60,7 +63,16 @@
                                 <hr>
                             </div>
                             <div class="col-8 text-center border border-secondary rounded-pill">
-                                <span style="font-size: 15px;">From 10/01/2019 until 25/02/2019</span>
+                                @*<span style="font-size: 15px;">From @obj.StartDate.ToShortDateString() until @obj.EndDate.ToShortDateString()</span>*@
+
+                                @if (obj.MissionType.Equals("Time"))
+                                {
+                                    <span style="font-size: 15px;">From @obj.StartDate.ToShortDateString() until @obj.EndDate.ToShortDateString()</span>
+                                }
+                                @if (obj.MissionType.Equals("Goal"))
+                                {
+                                    <span style="font-size: 15px;"> GoalMissions.GoalValue </span>
+                                }
                             </div>
                             <div class="col-2">
                                 <hr>
@@ -80,7 +92,7 @@
                                 <img src="~/images/Seats-left.png" alt=""
                                  style="margin-right: 10px; width: 30px; height: 30px" />
                                 <div class="d-flex flex-column">
-                                    <span>09/01/2019</span>
+                                    <span>@obj.StartDate.AddDays(-1).ToShortDateString() </span>
                                     <span>Deadline</span>
                                 </div>
                             </div>

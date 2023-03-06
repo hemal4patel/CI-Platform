@@ -6,11 +6,11 @@
         <div class="row">
             <div class="col-md-4 col-sm-12 p-3 border-start border-end d-inline-flex">
                 <div class="input-group">
-                    <span class="input-group-text bg-white border-none" id="seacrhIcon">
+                    <span class="input-group-text bg-white border-none" id="searchIcon">
                         <img src="~/images/search.png" />
                     </span>
                     <input type="text" class="form-control border-none" placeholder="Search" aria-label="Search"
-                           aria-describedby="seacrhIcon">
+                           aria-describedby="seacrhIcon" id="search" onkeyup="search()">
                 </div>
                 <button class="img-filter border-none bg-white">
                     <img src="~/images/filter.png" type="button" data-bs-toggle="offcanvas"

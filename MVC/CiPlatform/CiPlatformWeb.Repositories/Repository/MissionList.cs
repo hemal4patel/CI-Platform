@@ -19,9 +19,11 @@ namespace CiPlatformWeb.Repositories.Repository
         }
         public IEnumerable<Mission> GetMissions ()
         {
-            IEnumerable<Mission> MissionList = _db.Missions.Include(m => m.City).Include(m => m.Country)
-                .Include(m => m.MissionSkills).Include(m => m.Theme).Include(m => m.MissionRatings)
-                .Include(m => m.GoalMissions);
+            //IEnumerable<Mission> MissionListTime = _db.Missions.Where(m => m.MissionType.Equals("Time")).Include(m => m.City).Include(m => m.Country).Include(m => m.MissionSkills).Include(m => m.Theme).Include(m => m.MissionRatings).Include(m => m.GoalMissions);
+
+            //IEnumerable<Mission> MissionList = _db.Missions.Where(m => m.MissionType.Equals("Goal")).Include(m => m.City).Include(m => m.Country).Include(m => m.MissionSkills).Include(m => m.Theme).Include(m => m.MissionRatings).Include(m => m.GoalMissions);
+
+            IEnumerable<Mission> MissionList = _db.Missions.Include(m => m.City).Include(m => m.Country).Include(m => m.MissionSkills).Include(m => m.Theme).Include(m => m.MissionRatings).Include(m => m.GoalMissions);
             return MissionList;
         }
     }
