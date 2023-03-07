@@ -1,4 +1,4 @@
-﻿@model CiPlatformWeb.Entities.ViewModels.FiltersModel
+﻿@*@model CiPlatformWeb.Entities.ViewModels.FiltersModel*@
 
 <!-- FILTERS -->
 <div class="border-bottom border-3">
@@ -41,7 +41,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 City
                             </button>
-                            <ul class="dropdown-menu scroll-menu" id="CityList" aria-labelledby="cityDropdown">
+                            <ul class="dropdown-menu scroll-menu CityList CardsFilter" id="CityList" aria-labelledby="cityDropdown">
                             </ul>
                         </div>
                     </div>
@@ -51,12 +51,12 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 Theme
                             </button>
-                            <ul class="dropdown-menu scroll-menu" aria-labelledby="themeDropdown">
+                            <ul class="dropdown-menu scroll-menu CardsFilter" id="ThemeList" aria-labelledby="themeDropdown">
                                 @foreach (var obj in ViewBag.ThemeList)
                                 {
                                     <li class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@obj.Value">
+                                        <label class="form-check-label" value="@obj.Value">
                                             @obj.Text
                                         </label>
                                     </li>
@@ -71,11 +71,11 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                     Skill
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end scroll-menu" aria-labelledby="skillDropdown">
+                                <ul class="dropdown-menu dropdown-menu-end scroll-menu skillDropdown" id="SkillList" aria-labelledby="skillDropdown">
                                     @foreach (var obj in ViewBag.SkillList)
                                     {
                                         <li class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" value="">
+                                            <input class="form-check-input" type="checkbox" value="@obj.Value">
                                             <label class="form-check-label">
                                                 @obj.Text
                                             </label>

@@ -1,15 +1,17 @@
-﻿@model CiPlatformWeb.Entities.DataModels.Mission
+﻿@*@model CiPlatformWeb.Entities.DataModels.Mission*@
 @{
     var MissionList = ViewBag.MissionList;
 }
 
+@model IEnumerable<CiPlatformWeb.Entities.ViewModels.MissionListingModel>
+
 <!-- GRID VIEW -->
 <div class="container my-3 pb-5">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="missions">
-        @foreach (var obj in MissionList)
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 missions" id="missions">
+        @foreach (var obj in Model)
         {
             <div class="col card-div">
-                <span class="d-none mission-country">@obj.Country.CountryId</span>
+                <span class="d-none mission-country">@obj.CountryId</span>
                 <div class="card h-100 shadow-sm border-light">
                     <div class="position-relative">
                         <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
@@ -17,7 +19,8 @@
 
                         <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
                             <a href="" class="text-decoration-none text-white">
-                                <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp; @obj.City.Name
+                                <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
+                                <span class="mission-city">@obj.CityName</span>
                             </a>
                         </button>
                         <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
@@ -31,12 +34,12 @@
                             </a>
                         </button>
                         <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                            <span>@obj.Theme.Title</span>
+                            <span class="mission-theme">@obj.ThemeName</span>
                         </div>
                     </div>
 
                     <div class="card-body pt-4">
-                        <h4 class="card-title" id="card-title">@obj.Title</h4>
+                        <h4 class="card-title" id="card-title">@obj.MissionTitle</h4>
                         <p class="card-text">
                             @obj.ShortDescription
                         </p>
@@ -67,11 +70,11 @@
 
                                 @if (obj.MissionType.Equals("Time"))
                                 {
-                                    <span style="font-size: 15px;">From @obj.StartDate.ToShortDateString() until @obj.EndDate.ToShortDateString()</span>
+                                    <span style="font-size: 15px;">From @obj.StartDate.Value.ToShortDateString() until @obj.EndDate.Value.ToShortDateString()</span>
                                 }
                                 @if (obj.MissionType.Equals("Goal"))
                                 {
-                                    <span style="font-size: 15px;"> GoalMissions.GoalValue </span>
+                                    <span style="font-size: 15px;"> .GoalObjectiveText </span>
                                 }
                             </div>
                             <div class="col-2">
@@ -92,7 +95,7 @@
                                 <img src="~/images/Seats-left.png" alt=""
                                  style="margin-right: 10px; width: 30px; height: 30px" />
                                 <div class="d-flex flex-column">
-                                    <span>@obj.StartDate.AddDays(-1).ToShortDateString() </span>
+                                    <span>@obj.StartDate.Value.AddDays(-1).ToShortDateString() </span>
                                     <span>Deadline</span>
                                 </div>
                             </div>

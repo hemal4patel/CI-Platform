@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using CiPlatformWeb.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -42,10 +43,30 @@ namespace CiPlatformWeb.Controllers
             var themeall = new SelectList(theme, "MissionThemeId", "Title");
             ViewBag.ThemeList = themeall;
 
-            IEnumerable<Mission> MissionAll = _missionlist.GetMissions();
-            ViewBag.MissionList = MissionAll;
+            //IEnumerable<Mission> MissionAll = _missionlist.GetMissions();
+            //ViewBag.MissionList = MissionAll;
 
-            return View();
+            var list = from m in _db.Missions
+                       join cn in _db.Countries on m.CountryId equals cn.CountryId
+                       join ct in _db.Cities on m.CityId equals ct.CityId
+                       join t in _db.MissionThemes on m.ThemeId equals t.MissionThemeId
+                       join g in _db.GoalMissions on m.MissionId equals g.MissionId
+                       select new MissionListingModel
+                       {
+                           MissionId = m.MissionId,
+                           MissionTitle = m.Title,
+                           ShortDescription = m.ShortDescription,
+                           MissionType = m.MissionType,
+                           OrganizationName = m.OrganizationName,
+                           StartDate = m.StartDate,
+                           EndDate = m.EndDate,
+                           ThemeName = t.Title,
+                           CityName = ct.Name,
+                           CountryId = cn.CountryId,
+                           GoalObjectiveText = g.GoalObjectiveText
+                       };
+
+            return View(list);
         }
 
         public IActionResult GetCitiesByCountry (int countryId)
