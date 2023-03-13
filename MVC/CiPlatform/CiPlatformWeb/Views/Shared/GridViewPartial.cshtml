@@ -22,6 +22,7 @@
                                 <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
                                 <span class="mission-city">@obj.CityName</span>
                             </a>
+
                         </button>
                         <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
                             <a href="" class="text-decoration-none text-white">
@@ -74,7 +75,7 @@
                                 }
                                 @if (obj.MissionType.Equals("Goal"))
                                 {
-                                    <span style="font-size: 15px;"> .GoalObjectiveText </span>
+                                    <span style="font-size: 15px;"> @obj.GoalObjectiveText </span>
                                 }
                             </div>
                             <div class="col-2">

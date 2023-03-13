@@ -1,4 +1,14 @@
 ﻿
+//$(document).ready(function () {
+//    $.ajax({
+//        url: "database/update.html",
+//        context: document.body,
+//        success: function () {
+//            alert("done");
+//        }
+//    });
+//});
+
 $("#CountryList li").click(function () {
 
     var countryId = $(this).val();

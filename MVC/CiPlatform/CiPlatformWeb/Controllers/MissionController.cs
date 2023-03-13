@@ -50,7 +50,11 @@ namespace CiPlatformWeb.Controllers
                        join cn in _db.Countries on m.CountryId equals cn.CountryId
                        join ct in _db.Cities on m.CityId equals ct.CityId
                        join t in _db.MissionThemes on m.ThemeId equals t.MissionThemeId
-                       join g in _db.GoalMissions on m.MissionId equals g.MissionId
+                       join goal in _db.GoalMissions on m.MissionId equals goal.MissionId into x
+                       from g in x.DefaultIfEmpty()
+                       join img in _db.MissionMedia on m.MissionId equals img.MissionId into y
+                       from i in y.DefaultIfEmpty()
+
                        select new MissionListingModel
                        {
                            MissionId = m.MissionId,
@@ -63,7 +67,8 @@ namespace CiPlatformWeb.Controllers
                            ThemeName = t.Title,
                            CityName = ct.Name,
                            CountryId = cn.CountryId,
-                           GoalObjectiveText = g.GoalObjectiveText
+                           GoalObjectiveText = g.GoalObjectiveText,
+                           MediaPath = i.MediaPath
                        };
 
             return View(list);

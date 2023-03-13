@@ -29,5 +29,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string? OrganizationName { get; set; }
 
         public string GoalObjectiveText { get; set; }
+
+        public string? MediaPath { get; set; }
     }
 }
