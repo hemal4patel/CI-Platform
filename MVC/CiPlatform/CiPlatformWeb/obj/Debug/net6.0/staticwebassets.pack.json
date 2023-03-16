@@ -461,6 +461,10 @@
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\js\\volunteeringMission.js",
+      "PackagePath": "staticwebassets\\js\\volunteeringMission.js"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },

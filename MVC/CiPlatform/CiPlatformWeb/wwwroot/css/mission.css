@@ -65,6 +65,11 @@ div {
     opacity: 1;
 }
 
+.btn-apply:hover {
+    background: #F88634;
+    color: white;
+}
+
 .btn-share {
     color: #757575;
     font-size: 17px;
@@ -107,13 +112,13 @@ div {
     width: 70px;
 }
 
-#grid-view {
+/*#grid-view {
     display: block;
-}
+}*/
 
-#list-view {
+/*#list-view {
     display: none;
-}
+}*/
 
 @media (max-width: 1024.98px) {
     #grid-view {

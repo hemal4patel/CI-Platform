@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CiPlatformWeb.Entities.DataModels;
@@ -39,6 +38,8 @@ public partial class Mission
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public int? TotalSeats { get; set; }
 
     public virtual City City { get; set; } = null!;
 

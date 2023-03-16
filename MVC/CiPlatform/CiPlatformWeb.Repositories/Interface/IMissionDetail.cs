@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CiPlatformWeb.Repositories.Interface
 {
-    public interface IMissionList
+    public interface IMissionDetail
     {
-        public IEnumerable<Mission> GetMissions (List<long> MissionIds);
+        public Mission GetMissionDetails (long MissionId);
     }
 }

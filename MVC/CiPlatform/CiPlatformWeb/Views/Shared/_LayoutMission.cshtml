@@ -3,7 +3,13 @@
 @{
     string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
+    string UserId = ViewBag.UserId;
+    long Id = long.Parse(UserId);
 }
+
+<script>
+    var UserId = @Id;
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +98,8 @@
                                      width="40" height="40">
                             </span>
                             <p class="d-inline" id="profileText">
-                                @UserName
+                                @UserName 
+                                <span class="d-none">@UserId</span>
                             </p>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
@@ -141,6 +148,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script src="~/js/Filters.js" asp-append-version="true"></script>
+    <script src="~/js/volunteeringMission.js" asp-append-version="true"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

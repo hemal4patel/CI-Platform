@@ -10,7 +10,7 @@
                         <img src="~/images/search.png" />
                     </span>
                     <input type="text" class="form-control border-none" placeholder="Search" aria-label="Search"
-                           aria-describedby="seacrhIcon" id="search" onkeyup="search()">
+                           aria-describedby="seacrhIcon" id="searchText" onkeyup="spFilterSortSearchPagination()">
                 </div>
                 <button class="img-filter border-none bg-white">
                     <img src="~/images/filter.png" type="button" data-bs-toggle="offcanvas"
@@ -76,7 +76,7 @@
                                     {
                                         <li class="form-check mb-3">
                                             <input class="form-check-input" type="checkbox" value="@obj.Value">
-                                            <label class="form-check-label">
+                                            <label class="form-check-label" value="@obj.Value">
                                                 @obj.Text
                                             </label>
                                         </li>

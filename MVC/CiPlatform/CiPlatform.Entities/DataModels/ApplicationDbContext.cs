@@ -367,6 +367,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(128)
                 .IsUnicode(false)
                 .HasColumnName("title");
+            entity.Property(e => e.TotalSeats).HasColumnName("total_seats");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
@@ -902,12 +903,10 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.City).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CityId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__user__city_id__6A30C649");
 
             entity.HasOne(d => d.Country).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CountryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__user__country_id__6B24EA82");
         });
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bS2ZzC/0O2pRva42pnoisJYAXkj17CB7SJ6VfBS70sM=",
+  "Hash": "zOR0bqaeSNRkbTjAjGr6QjCu292311XbCQHbzBA5E/I=",
   "Source": "CiPlatformWeb",
   "BasePath": "_content/CiPlatformWeb",
   "Mode": "Default",
@@ -1987,6 +1987,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\js\\volunteeringMission.js",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "js/volunteeringMission.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\volunteeringMission.js"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

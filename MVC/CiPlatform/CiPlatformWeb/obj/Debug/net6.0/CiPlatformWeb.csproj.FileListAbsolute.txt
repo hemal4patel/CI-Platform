@@ -84,7 +84,6 @@ C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debu
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\CiPlatformWeb.Repositories.dll
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\CiPlatformWeb.Entities.pdb
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\CiPlatformWeb.Repositories.pdb
-C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\obj\Debug\net6.0\CiPlatformWeb.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\MessagePack.dll
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\MessagePack.Annotations.dll
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll

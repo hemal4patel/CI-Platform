@@ -7,57 +7,6 @@
 
 <!-- PILLS -->
 <div class="container my-4 filter-pills" id="filter-pills">
-    @*<div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Tree Plantation</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Canada</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Toronto</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Montreal</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Environment</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Nutrition</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Anthrapology</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="rounded-pill alert border-dark px-2 py-0 m-2">
-        <span>Environental Science</span> &nbsp;
-        <button type="button" class="border-none" data-bs-dismiss="alert" aria-label="Close">
-            <img src="~/images/cancel.png" alt="">
-        </button>
-    </div>
-    <div class="alert px-2 py-0 m-2">
-        <button type="submit" class="border-none" onclick="removeFilters()">Clear All</button>
-    </div>*@
 </div>
 
 <!-- HEADING -->
@@ -72,13 +21,13 @@
                      aria-expanded="false" style="border:1px solid black">
                     <span>Sort By</span>
                 </div>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Newest</a></li>
-                    <li><a class="dropdown-item" href="#">Oldest</a></li>
-                    <li><a class="dropdown-item" href="#">Lowest available seats</a></li>
-                    <li><a class="dropdown-item" href="#">Highest available seats</a></li>
-                    <li><a class="dropdown-item" href="#">Sort by my favourite</a></li>
-                    <li><a class="dropdown-item" href="#">Sort by deadline</a></li>
+                <ul class="dropdown-menu" id="sortList">
+                    <li value="1"><a class="dropdown-item" href="#">Newest</a></li>
+                    <li value="2"><a class="dropdown-item" href="#">Oldest</a></li>
+                    <li value="3"><a class="dropdown-item" href="#">Lowest available seats</a></li>
+                    <li value="4"><a class="dropdown-item" href="#">Highest available seats</a></li>
+                    <li value="5"><a class="dropdown-item" href="#">Sort by deadline</a></li>
+                    <li value="6"><a class="dropdown-item" href="#">Sort by my favourite</a></li>
                 </ul>
             </div>
         </div>
@@ -95,14 +44,20 @@
 
 <!-- GRID OR LIST -->
 <!-- GRID PARTIAL -->
-<div id="grid-view">
+@*<div id="grid-view">
     <partial name="GridViewPartial" />
-</div>
+</div>*@
+
+    @*<partial name="_MissionDisplayPartial" />*@
+
+
+<div class="partialViews"></div>
+
 
 <!-- LIST PARTIAL -->
-<div id="list-view">
+@*<div id="list-view">
     <partial name="ListViewPartial" />
-</div>
+</div>*@
 
 
 <script>

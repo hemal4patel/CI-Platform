@@ -11,7 +11,7 @@ public partial class MissionRating
 
     public long MissionId { get; set; }
 
-    public int Rating { get; set; } 
+    public int Rating { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

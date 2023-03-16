@@ -3,11 +3,23 @@
     Layout = "~/Views/Shared/_LayoutMission.cshtml";
 }
 
+@{
+    string Email = ViewBag.Email;
+    string UserName = ViewBag.UserName;
+    string UserId = ViewBag.UserId;
+    long Id = long.Parse(UserId);
+}
+
+@model CiPlatformWeb.Entities.ViewModels.VolunteeringMissionViewModel
+
 <link rel="stylesheet" href="~/css/slider.css" asp-append-version="true" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 
-<partial name="FilterBarPartial" />
+@{
+    var RegisteredUsers = Model.MissionDetails.MissionApplications.Count(m => m.ApprovalStatus.Contains("APPROVE"));
+    var SeatsLeft = Model.MissionDetails.TotalSeats - RegisteredUsers;
+}
 
 <!-- CONTENT -->
 <div class="container">
@@ -64,12 +76,9 @@
         <div class="col-lg-6">
             <!-- HEADING -->
             <div class="text" style="color: #414141;">
-                <h2 class="mt-4">CSR initiative stands for Coffee & Farmer Equity</h2>
+                <h2 class="mt-4"> @Model.MissionDetails.Title </h2>
                 <p class="mt-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut
-                    labore
-                    et dolore magna aliqua. Ut enim ad minim veniam.
+                    @Model.MissionDetails.ShortDescription
                 </p>
             </div>
 
@@ -79,7 +88,20 @@
                     <hr>
                 </div>
                 <div class="col-6 text-center border border-secondary rounded-pill">
-                    <span style="font-size: 15px; color: #414141;">Plant 10,000 Trees</span>
+
+                    @if (Model.MissionDetails.MissionType.Equals("Time"))
+                    {
+                        <span style="font-size: 15px; color: #414141;">From @Model.MissionDetails.StartDate.Value.ToShortDateString() until @Model.MissionDetails.EndDate.Value.ToShortDateString()</span>
+                    }
+
+                    @if (Model.MissionDetails.MissionType.Equals("Goal"))
+                    {
+                        @foreach (var goal in Model.MissionDetails.GoalMissions)
+                        {
+                            <span style="font-size: 15pxfont-size: 15px; color: #414141;"> @goal.GoalObjectiveText </span>
+                        }
+                    }
+
                 </div>
                 <div class="col-3">
                     <hr>
@@ -92,7 +114,7 @@
                     <img src="~/images/Seats-left.png" alt=""
                          style="margin-right: 10px; width: 30px; height: 30px">
                     <div class="d-flex flex-column">
-                        <span>10</span>
+                        <span>@SeatsLeft</span>
                         <span>Seats Left</span>
                     </div>
                 </div>
@@ -101,12 +123,35 @@
                     <img src="~/images/mission.png" alt=""
                          style="margin-right: 10px; width: 30px; height: 30px">
                     <div class="d-flex flex-column">
-                        <div class="progress" style="width: 150px; height: 12px;">
-                            <div class="progress-bar" role="progressbar"
-                                 style="width: 80%; background-color: #F88634;" aria-valuenow="80" aria-valuemin="0"
-                                 aria-valuemax="100"></div>
+                        @*<div class="progress" style="width: 150px; height: 12px;">
+                        <div class="progress-bar" role="progressbar"
+                        style="width: 80%; background-color: #F88634;" aria-valuenow="80" aria-valuemin="0"
+                        aria-valuemax="100"></div>
                         </div>
-                        <span>8000 Achieved</span>
+                        <span>8000 Achieved</span>*@
+                        @if (Model.MissionDetails.MissionType.Equals("Time"))
+                        {
+                            <div class="ms-1">
+                                <div class="d-flex">
+                                    <h6>
+                                        @Model.MissionDetails.StartDate.Value.AddDays(-1).ToShortDateString()
+                                    </h6>
+                                </div>
+                                <p class="mt-0 mb-0">Registration Deadline</p>
+                            </div>
+                        }
+                        @if (Model.MissionDetails.MissionType.Equals("Goal"))
+                        {
+                            @foreach (var goal in Model.MissionDetails.GoalMissions)
+                            {
+                                <div class="ms-1">
+                                    <div class="d-flex">
+                                        <h6>@goal.GoalValue</h6>
+                                    </div>
+                                    <p class="mt-0 mb-0">Achieved</p>
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -115,8 +160,15 @@
             <!-- BUTTONS -->
             <div class="row gy-4 d-flex">
                 <div class="col-md-6">
-                    <button class="btn-share rounded-pill p-2 w-100">
-                        <img src=" ~/images/heart1.png" alt="">
+                    <button class="btn-share rounded-pill p-2 w-100" onclick="addToFavourites(@Model.MissionDetails.MissionId)">
+                        @if (Model.MissionDetails.FavouriteMissions.Any(fm => fm.UserId == Id))
+                        {
+                            <i class="bi bi-heart-fill text-danger @Model.MissionDetails.MissionId" data-mission-id="@Model.MissionDetails.MissionId"></i>
+                        }
+                        else
+                        {
+                            <i class="bi bi-heart text-light @Model.MissionDetails.MissionId" data-mission-id="@Model.MissionDetails.MissionId"></i>
+                        }
                         Add to Favourite
                     </button>
                 </div>
@@ -154,7 +206,7 @@
                         </div>
                         <div class="mt-4">
                             <span>City</span>
-                            <p><strong>London</strong></p>
+                            <p><strong>@Model.MissionDetails.City.Name</strong></p>
                         </div>
                     </div>
                 </div>
@@ -166,7 +218,7 @@
                         </div>
                         <div class="mt-4">
                             <span>Theme</span>
-                            <p><strong>Environment</strong></p>
+                            <p><strong>@Model.MissionDetails.Theme.Title</strong></p>
                         </div>
                     </div>
                 </div>
@@ -178,7 +230,7 @@
                         </div>
                         <div class="mt-4">
                             <span>Date</span>
-                            <p><strong>Ongoing Opportunity</strong></p>
+                            <p><strong>@Model.MissionDetails.StartDate.Value.ToShortDateString()</strong></p>
                         </div>
                     </div>
                 </div>
@@ -190,7 +242,7 @@
                         </div>
                         <div class="mt-4">
                             <span>Organization</span>
-                            <p><strong>CSE Network </strong></p>
+                            <p><strong>@Model.MissionDetails.OrganizationName </strong></p>
                         </div>
                     </div>
                 </div>
@@ -200,7 +252,7 @@
             <div class="text-center mt-4">
                 <button class="btn-apply rounded-pill px-4 py-2">
                     Apply Now
-                    <img src="~/images/right-arrow.png" alt="" class="ms-3">
+                    <i class="bi bi-arrow-right ms-3"></i>
                 </button>
             </div>
 
@@ -299,6 +351,9 @@
                 <div class="tab-pane fade mt-4" id="organization" role="tabpanel"
                      aria-labelledby="organization-tab">
                     <h4 class="mb-3">About Organization</h4>
+                    <p style="font: 15px;">
+                        @Model.MissionDetails.OrganizationDetail
+                    </p>
                     <p style="font: 15px;">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco

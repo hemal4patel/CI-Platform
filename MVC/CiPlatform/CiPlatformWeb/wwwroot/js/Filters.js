@@ -1,33 +1,46 @@
 ﻿
-//$(document).ready(function () {
-//    $.ajax({
-//        url: "database/update.html",
-//        context: document.body,
-//        success: function () {
-//            alert("done");
-//        }
-//    });
-//});
+var selectedCountry = null;
+var selectedSortCase = null;
+spFilterSortSearchPagination();
+
+function spFilterSortSearchPagination() {
+    var CountryId = selectedCountry;
+    var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var searchText = $("#searchText").val();
+    var sortCase = selectedSortCase;
+    console.log(UserId);
+    $.ajax({
+        type: 'POST',
+        url: '/Mission/PlatformLanding',
+        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, sortCase: sortCase, UserId: UserId },
+        success: function (data) {
+            console.log("Done");
+            var view = $(".partialViews");
+            view.empty();
+            view.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+}
+
+$("#sortList li").click(function () {
+    selectedSortCase = $(this).val();
+    spFilterSortSearchPagination();
+});
 
 $("#CountryList li").click(function () {
 
     var countryId = $(this).val();
-    //console.log(countryId);
-
-    $('.card-div').each(function () {
-        var cardCountry = $(this).find('.mission-country').text();
-        //console.log(cardCountry);
-
-        if (countryId == cardCountry) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        }
-    });
+    selectedCountry = countryId;
+    console.log(selectedCountry);
 
     GetCitiesByCountry(countryId);
+    spFilterSortSearchPagination();
 });
-
 
 function GetCitiesByCountry(countryId) {
     $.ajax({
@@ -58,7 +71,6 @@ function GetCitiesByCountry(countryId) {
         }
     });
 }
-
 
 let filterPills = $('.filter-pills');
 let allDropdowns = $('.dropdown ul');
@@ -91,6 +103,7 @@ allDropdowns.each(function () {
                 // Uncheck the corresponding checkbox
                 const checkboxElement = dropdown.find(`input[type="checkbox"][value="${selectedOptionValue}"]`);
                 checkboxElement.prop('checked', false);
+                spFilterSortSearchPagination();
                 if (filterPills.children('.pill').length === 1) {
                     filterPills.children('.closeAll').remove();
                 }
@@ -102,6 +115,7 @@ allDropdowns.each(function () {
                 filterPills.children('.closeAll').click(function () {
                     allDropdowns.find('input[type="checkbox"]').prop('checked', false);
                     filterPills.empty();
+                    spFilterSortSearchPagination();
                 });
 
                 //add the pill before the close icon
@@ -128,112 +142,60 @@ allDropdowns.each(function () {
             }
         }
 
-        //FilterMissions();
+        spFilterSortSearchPagination();
     });
-
-})
-
-
-$(".dropdown .CardsFilter").on('change', 'input[type="checkbox"]', function () {
-
-    var selectedCities = $('#CityList input[type="checkbox"]:checked').map(function () {
-        return $(this).next('label').text();
-    }).get();
-    console.log(selectedCities);
-
-    var selectedThemes = $('#ThemeList input[type="checkbox"]:checked').map(function () {
-        return $(this).next('label').text();
-    }).get();
-    console.log(selectedThemes);
-
-    if (selectedCities.length === 0 && selectedThemes.length === 0) {
-        $('.card-div').show();
-    } else {
-        //console.log(selectedCities);
-
-        $('.card-div').each(function () {
-            var cardCity = $(this).find('.mission-city').text();
-            var cardTheme = $(this).find('.mission-theme').text();
-
-            var cityFlag = selectedCities.some(function (selectedCity) {
-                return selectedCity.trim().toUpperCase() == cardCity.trim().toUpperCase();
-            });
-            var themeFlag = selectedThemes.some(function (selectedTheme) {
-                return selectedTheme.trim().toUpperCase() == cardTheme.trim().toUpperCase();
-            });
-            console.log(selectedThemes.length);
-
-            if (selectedThemes.length === 0) {
-                if (cityFlag) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            } else {
-                if (cityFlag && themeFlag) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            }
-        });
-    }
 });
 
+//$(document).on('click', '.favouriteButton', function () {
+//    console.log("Hello");
 
-//$(".dropdown #ThemeList").on('change', 'input[type="checkbox"]', function () {
-//    console.log('hello');
-//    var selectedThemes = $('input[type="checkbox"]:checked').map(function () {
-//        return $(this).next('label').text();
-//    }).get();
-//    console.log(selectedThemes);
-
-//    $('.card-div').each(function () {
-//        var cardTheme = $(this).find('.mission-theme').text();
-//        var flag = selectedThemes.some(function (selectedTheme) {
-//            return selectedTheme.trim().toUpperCase() == cardTheme.trim().toUpperCase();
-//        });
-//        if (flag) {
-//            $(this).show();
-//        } else {
-//            $(this).hide();
+//    var button = $(this);
+//    var missionId = $(this).data('mission-id');
+//    console.log(missionId);
+//    $.ajax({
+//        url: '/Mission/AddToFavorites',
+//        type: 'POST',
+//        data: { missionId: missionId },
+//        success: function (result) {
+//            console.log(missionId)
+//            var allMissionId = $('.favouriteButton')
+//            allMissionId.each(function () {
+//                if ($(this).data('mission-id') === missionId) {
+//                    if ($(this).hasClass('bi-heart')) {
+//                        $(this).addClass('bi-heart-fill text-danger')
+//                        $(this).removeClass('bi-heart text-light')
+//                        console.log("added")
+//                    }
+//                    else {
+//                        $(this).addClass('bi-heart text-light')
+//                        $(this).removeClass('bi-heart-fill text-danger')
+//                        console.log("remove")
+//                    }
+//                }
+//            })
+//        },
+//        error: function (error) {
+//            console.log("error")
 //        }
 //    });
 //});
 
-//$(".dropdown #SkillList").on('change', 'input[type="checkbox"]', function () {
-//    console.log('hello');
-//    var selectedSkills = $('input[type="checkbox"]:checked').map(function () {
-//        return $(this).next('label').text();
-//    }).get();
-//    console.log(selectedSkills);
+function addToFavourites(missionId) {
+    $.ajax({
+        url: '/Mission/AddToFavorites',
+        type: 'POST',
+        data: { missionId: missionId },
+        success: function (result) {
+            var icon = $("i." + missionId);
+            if (icon.hasClass("bi-heart")) {
+                icon.removeClass("text-light bi-heart").addClass("text-danger bi-heart-fill");
+            } else {
+                icon.removeClass("text-danger bi-heart-fill").addClass("text-light bi-heart");
 
-//    $('.card-div').each(function () {
-//        var cardSkill = $(this).find('.mission-skill').text();
-
-//        var flag = selectedSkills.some(function (selectedSkill) {
-//            return selectedSkill.toUpperCase() == cardSkill.toUpperCase();
-//        });
-//        console.log(flag);
-//        if (flag) {
-//            $(this).show();
-//        } else {
-//            $(this).hide();
-//        }
-//    });
-//});
-
-function search() {
-    var searchString = document.getElementById("search");
-    filter = searchString.value.toUpperCase();
-    cards = document.getElementsByClassName("card-div");
-    titles = document.getElementsByClassName("card-title");
-    for (i = 0; i < cards.length; i++) {
-        a = titles[i];
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            cards[i].classList.remove("d-none");
-        } else {
-            cards[i].classList.add("d-none");
+            }
+        },
+        error: function (error) {
+            console.log("error")
         }
-    }
+    });
 }

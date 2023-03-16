@@ -3,7 +3,7 @@
     var MissionList = ViewBag.MissionList;
 }
 
-@model IEnumerable<CiPlatformWeb.Entities.ViewModels.MissionListingModel>
+@*@model IEnumerable<CiPlatformWeb.Entities.ViewModels.MissionListingModel>*@
 
 <!-- GRID VIEW -->
 <div class="container my-3 pb-5">
@@ -12,6 +12,7 @@
         {
             <div class="col card-div">
                 <span class="d-none mission-country">@obj.CountryId</span>
+                <span class="mission-id">@obj.MissionId</span>
                 <div class="card h-100 shadow-sm border-light">
                     <div class="position-relative">
                         <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
@@ -115,7 +116,11 @@
                 </div>
             </div>
         }
-        @*<div class="col">
+        
+    </div>
+</div>
+
+@*<div class="col">
         <div class="card h-100 shadow-sm border-light">
         <div class="position-relative">
         <img src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png"
@@ -290,5 +295,3 @@
         </div>
         </div>
         </div>*@
-    </div>
-</div>
