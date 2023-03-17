@@ -9,9 +9,13 @@ namespace CiPlatformWeb.Entities.ViewModels
 {
     public class VolunteeringMissionViewModel
     {
-        //public List<Country> Country { get; set; } = null;
-
         //to store data
         public Mission MissionDetails { get; set; }
+
+        public List<Mission> RelatedMissions { get; set; }
+
+        public List<MissionApplication> RecentVolunteers { get; set; }
+
+        public List<Comment> ApprovedComments { get; set; }
     }
 }

@@ -51,9 +51,7 @@ function GetCitiesByCountry(countryId) {
             var dropdown = $("#CityList");
             dropdown.empty();
             var items = "";
-            //console.log(data);
             $(data).each(function (i, item) {
-                //console.log(item);
                 items += `<li> <div class="dropdown-item mb-1 ms-3 form-check"> <input type="checkbox" class="form-check-input" id="exampleCheck1" value =` + item.cityId + `><label class="form-check-label" for="exampleCheck1" value=` + item.cityId + `>` + item.name + `</label></div></li>`
             })
             dropdown.html(items);
@@ -146,40 +144,6 @@ allDropdowns.each(function () {
     });
 });
 
-//$(document).on('click', '.favouriteButton', function () {
-//    console.log("Hello");
-
-//    var button = $(this);
-//    var missionId = $(this).data('mission-id');
-//    console.log(missionId);
-//    $.ajax({
-//        url: '/Mission/AddToFavorites',
-//        type: 'POST',
-//        data: { missionId: missionId },
-//        success: function (result) {
-//            console.log(missionId)
-//            var allMissionId = $('.favouriteButton')
-//            allMissionId.each(function () {
-//                if ($(this).data('mission-id') === missionId) {
-//                    if ($(this).hasClass('bi-heart')) {
-//                        $(this).addClass('bi-heart-fill text-danger')
-//                        $(this).removeClass('bi-heart text-light')
-//                        console.log("added")
-//                    }
-//                    else {
-//                        $(this).addClass('bi-heart text-light')
-//                        $(this).removeClass('bi-heart-fill text-danger')
-//                        console.log("remove")
-//                    }
-//                }
-//            })
-//        },
-//        error: function (error) {
-//            console.log("error")
-//        }
-//    });
-//});
-
 function addToFavourites(missionId) {
     $.ajax({
         url: '/Mission/AddToFavorites',
@@ -191,7 +155,6 @@ function addToFavourites(missionId) {
                 icon.removeClass("text-light bi-heart").addClass("text-danger bi-heart-fill");
             } else {
                 icon.removeClass("text-danger bi-heart-fill").addClass("text-light bi-heart");
-
             }
         },
         error: function (error) {

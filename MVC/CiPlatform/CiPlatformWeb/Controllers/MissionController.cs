@@ -136,6 +136,7 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("PlatformLanding", "Mission");
         }
 
+
         //GET
         public IActionResult VolunteeringMission (long MissionId)
         {
@@ -146,10 +147,58 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
             }
 
+            string Id = HttpContext.Session.GetString("UserId");
+            long userId = long.Parse(Id);
+
             var vm = new VolunteeringMissionViewModel();
+
             vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId);
+            vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId);
+            vm.RecentVolunteers = _missiondetail.GetRecentVolunteers(MissionId, userId);
+            vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
 
             return View(vm);
+        }
+
+
+        [HttpPost]
+        public IActionResult RateMission (int rating, long missionId)
+        {
+            string Id = HttpContext.Session.GetString("UserId");
+            long userId = long.Parse(Id);
+
+            var alredyRated = _db.MissionRatings.SingleOrDefault(mr => mr.MissionId == missionId && mr.UserId == userId);
+
+            if (alredyRated != null)
+            {
+                alredyRated.Rating = rating;
+                _db.SaveChanges();
+            }
+            else
+            {
+                var newRating = new MissionRating { UserId = userId, MissionId = missionId, Rating = rating };
+                _db.MissionRatings.Add(newRating);
+                _db.SaveChanges();
+            }
+
+            return Json(missionId);
+        }
+
+
+        [HttpPost]
+        public IActionResult PostComment (string comment, long missionId)
+        {
+            string Id = HttpContext.Session.GetString("UserId");
+            long userId = long.Parse(Id);
+
+            if (comment != null)
+            {
+                var newComment = new Comment { UserId = userId, MissionId = missionId, CommentText = comment };
+                _db.Comments.Add(newComment);
+                _db.SaveChanges();
+            }
+
+            return Ok();
         }
 
     }

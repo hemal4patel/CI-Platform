@@ -16,15 +16,36 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 
-@{
-    var RegisteredUsers = Model.MissionDetails.MissionApplications.Count(m => m.ApprovalStatus.Contains("APPROVE"));
-    var SeatsLeft = Model.MissionDetails.TotalSeats - RegisteredUsers;
-}
-
 <!-- CONTENT -->
 <div class="container">
     <!-- SLIDE AND DATA -->
-    <div class="row d-flex">
+    <div class="row d-flex mt-5">
+        @{
+            //var MissionId = Model.MissionDetails.MissionId;
+            //double missionRating = 0;
+            //@if (Model.MissionDetails.MissionRatings.Any())
+            //{
+            //    missionRating = Math.Round(Model.MissionDetails.MissionRatings.Average(r => r.Rating));
+            //}
+            //var hasApplied = Model.MissionDetails.MissionApplications.Any(m => m.UserId == Id && m.MissionId == Model.MissionDetails.MissionId);
+            //var RegisteredUsers = Model.MissionDetails.MissionApplications.Count(m => m.ApprovalStatus.Contains("APPROVE"));
+            //var SeatsLeft = Model.MissionDetails.TotalSeats - RegisteredUsers;
+
+            var RegisteredUsers = Model.MissionDetails.MissionApplications.Count(m => m.ApprovalStatus.Contains("APPROVE"));
+            var SeatsLeft = Model.MissionDetails.TotalSeats - RegisteredUsers;
+            var MissionId = Model.MissionDetails.MissionId;
+            double missionRating = 0;
+            @if (Model.MissionDetails.MissionRatings.Any())
+            {
+                missionRating = Math.Round(Model.MissionDetails.MissionRatings.Average(r => r.Rating));
+            }
+            DateTime? CurrentDate = @DateTime.Now;
+            var deadline = @Model.MissionDetails.StartDate.Value.AddDays(-1);
+            bool hasDeadlinePassed = CurrentDate > deadline;
+            bool haEndDatePassed = CurrentDate > Model.MissionDetails.EndDate;
+            bool isOngoing = CurrentDate > Model.MissionDetails.StartDate;
+            bool hasApplied = Model.MissionDetails.MissionApplications.Any(m => m.UserId == Id);
+        }
 
         <!-- SLIDER -->
         <div class="col-lg-6">
@@ -98,7 +119,7 @@
                     {
                         @foreach (var goal in Model.MissionDetails.GoalMissions)
                         {
-                            <span style="font-size: 15pxfont-size: 15px; color: #414141;"> @goal.GoalObjectiveText </span>
+                            <span style="font-size: 15px; color: #414141;"> @goal.GoalObjectiveText </span>
                         }
                     }
 
@@ -163,11 +184,11 @@
                     <button class="btn-share rounded-pill p-2 w-100" onclick="addToFavourites(@Model.MissionDetails.MissionId)">
                         @if (Model.MissionDetails.FavouriteMissions.Any(fm => fm.UserId == Id))
                         {
-                            <i class="bi bi-heart-fill text-danger @Model.MissionDetails.MissionId" data-mission-id="@Model.MissionDetails.MissionId"></i>
+                            <i class="bi bi-heart-fill text-danger @Model.MissionDetails.MissionId"></i>
                         }
                         else
                         {
-                            <i class="bi bi-heart text-light @Model.MissionDetails.MissionId" data-mission-id="@Model.MissionDetails.MissionId"></i>
+                            <i class="bi bi-heart text-light @Model.MissionDetails.MissionId"></i>
                         }
                         Add to Favourite
                     </button>
@@ -185,12 +206,16 @@
                 <div class="col-3">
                     <hr>
                 </div>
-                <div class="col-6 text-center border border-secondary rounded-pill">
-                    <img src="~/images/star-empty.png" alt="" style="height: 24px;">
-                    <img src="~/images/star-empty.png" alt="" style="height: 24px;">
-                    <img src="~/images/star-empty.png" alt="" style="height: 24px;">
-                    <img src="~/images/star-empty.png" alt="" style="height: 24px;">
-                    <img src="~/images/star-empty.png" alt="" style="height: 24px;">
+                <div class="col-6 text-center border border-secondary rounded-pill rateMission">
+                    @for (var i = 0; i < missionRating; i++)
+                    {
+                        <i class="bi bi-star-fill text-warning m-1" data-mission-Id="@Model.MissionDetails.MissionId"></i>
+
+                    }
+                    @for (var i = 5; i > missionRating; i--)
+                    {
+                        <i class="bi bi-star m-1" data-mission-Id="@Model.MissionDetails.MissionId"></i>
+                    }
                 </div>
                 <div class="col-3">
                     <hr>
@@ -293,21 +318,7 @@
                      aria-labelledby="mission-tab">
                     <h4 class="mb-3">Introduction</h4>
                     <p style="font: 15px;">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                    <p style="font: 15px;">
-                        Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <p style="font: 15px;">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        @Model.MissionDetails.Description
                     </p>
 
                     <h4 class="mb-3 mt-4">Challenge</h4>
@@ -359,101 +370,42 @@
                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
-                    <p style="font: 15px;">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                        mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
                 </div>
 
                 <!-- COMMENTS -->
                 <div class="tab-pane fade mt-4" id="comments" role="tabpanel" aria-labelledby="comments-tab">
 
-                    <form action="">
-                        <div class="mb-3">
-                            <textarea name="" id="" class="form-control" placeholder="Enter your comments..."
-                                      rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn-apply rounded-pill px-4 py-2">
-                            Post Comment
-                        </button>
-                    </form>
+                    <div class="mb-3">
+                        <textarea class="form-control newComment" placeholder="Enter your comments..."
+                                  rows="3"></textarea>
+                    </div>
+                    <button class="btn-apply rounded-pill px-4 py-2 commentButton" data-mission-Id="@Model.MissionDetails.MissionId">
+                        Post Comment
+                    </button>
 
-                    <div class="comment-box mt-4">
+                    <div class="comment-box mt-4" style=" height: auto; max-height: 70vh; overflow-y: scroll;">
                         <div class="p-4">
-                            <div class="card mb-3">
-                                <div class="row g-0">
-                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
-                                        <img src="~/images/volunteer1.png" alt=""
-                                             class="rounded-circle vol-img">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="card-body">
-                                            <h5>Margaret Walsh</h5>
-                                            <p>
-                                                Monday, October 21, 2019, 4:57 PM
-                                            </p>
-                                            <p>Nice mission great opportunity for people</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="card mb-3">
-                                <div class="row g-0">
-                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
-                                        <img src="~/images/volunteer2.png" alt=""
+                            @foreach (var com in Model.ApprovedComments)
+                            {
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                            <img src="~/images/volunteer1.png" alt=""
                                              class="rounded-circle vol-img">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="card-body">
-                                            <h5>Margaret Walsh</h5>
-                                            <p>
-                                                Monday, October 21, 2019, 4:57 PM
-                                            </p>
-                                            <p>Nice mission great opportunity for people</p>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="card-body">
+                                                <h5>@com.User.FirstName @com.User.LastName</h5>
+                                                <p>
+                                                    @com.CreatedAt.Value.ToString("dddd, MMMM dd, yyyy, h:mm tt")
+                                                </p>
+                                                <p>@com.CommentText</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="card mb-3">
-                                <div class="row g-0">
-                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
-                                        <img src="~/images/volunteer2.png" alt=""
-                                             class="rounded-circle vol-img">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="card-body">
-                                            <h5>Margaret Walsh</h5>
-                                            <p>
-                                                Monday, October 21, 2019, 4:57 PM
-                                            </p>
-                                            <p>Nice mission great opportunity for people</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card mb-3">
-                                <div class="row g-0">
-                                    <div class="col-md-2 d-flex align-items-center justify-content-center">
-                                        <img src="~/images/volunteer9.png" alt=""
-                                             class="rounded-circle vol-img">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="card-body">
-                                            <h5>Margaret Walsh</h5>
-                                            <p>
-                                                Monday, October 21, 2019, 4:57 PM
-                                            </p>
-                                            <p>Nice mission great opportunity for people</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -473,24 +425,33 @@
                                style="font-size: 22px;">Information</a>
                         </li>
                     </ul>
-                    <div class="d-flex justify-content-start mt-3">
+                    <div class="d-flex justify-content-start mt-4">
                         <p>Skills</p>
-                        <p class="ms-5">Cool, Easy going, Math, Computer</p>
+                        <p class="ms-5">
+                            @foreach (var skill in Model.MissionDetails.MissionSkills)
+                            {
+                                @skill.Skill.SkillName <br />
+                            }
+                        </p>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-start mt-3">
                         <p>Days</p>
-                        <p class="ms-5">Weekend only</p>
+                        <p class="ms-5">@Model.MissionDetails.Availability</p>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-start mt-3 mb-3">
                         <p>Rating</p>
-                        <div class="ms-5">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
+                        <div class="ms-5 missionRating">
+                            @for (var i = 0; i < missionRating; i++)
+                            {
+                                <i class="bi bi-star-fill text-warning m-1" data-mission-Id="@Model.MissionDetails.MissionId"></i>
+
+                            }
+                            @for (var i = 5; i > missionRating; i--)
+                            {
+                                <i class="bi bi-star m-1" data-mission-Id="@Model.MissionDetails.MissionId"></i>
+                            }
                         </div>
                     </div>
                     <!-- <hr> -->
@@ -506,48 +467,20 @@
                                style="font-size: 22px;">Recent Volunteers</a>
                         </li>
                     </ul>
-                    <div class="d-flex justify-content-around mt-3">
-                        <div class="text-center">
-                            <img src="~/images/volunteer1.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                        <div class="text-center">
-                            <img src="~/images/volunteer2.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                        <div class="text-center">
-                            <img src="~/images/volunteer3.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
+
+
+                    <div class="row mt-3">
+                        @foreach (var v in Model.RecentVolunteers)
+                        {
+                            <div class="col-4">
+                                <div class="text-center">
+                                    <img src="~/images/volunteer1.png" alt="" class="rounded-circle vol-img">
+                                    <p>@v.User.FirstName @v.User.LastName</p>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    <div class="d-flex justify-content-around mt-3">
-                        <div class="text-center">
-                            <img src="~/images/volunteer4.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                        <div class="text-center">
-                            <img src="~/images/volunteer5.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                        <div class="text-center">
-                            <img src="~/images/volunteer6.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-around mt-3">
-                        <div class="text-center">
-                            <img src="~/images/volunteer7.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                        <div class="text-center">
-                            <img src="~/images/volunteer8.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                        <div class="text-center">
-                            <img src="~/images/volunteer9.png" alt="" class="rounded-circle vol-img">
-                            <p>Andrew Johnson</p>
-                        </div>
-                    </div>
+
                 </div>
 
                 <hr class="mb-0">
@@ -574,271 +507,176 @@
     <!-- RALATED MISSION CARDS -->
     <h2 class="text-center mt-5" style="color: #414141;">Related Missions</h2>
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-        <div class="col">
-            <div class="card h-100 shadow-sm border-light">
-                <div class="position-relative">
-                    <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+       
+        @foreach(var m in Model.RelatedMissions) {            
+            var mRegisteredUsers = Model.MissionDetails.MissionApplications.Count(m => m.ApprovalStatus.Contains("APPROVE"));
+            var mSeatsLeft = Model.MissionDetails.TotalSeats - mRegisteredUsers;
+            var mMissionId = Model.MissionDetails.MissionId;
+            double mmissionRating = 0;
+            @if (Model.MissionDetails.MissionRatings.Any())
+            {
+                mmissionRating = Math.Round(Model.MissionDetails.MissionRatings.Average(r => r.Rating));
+            }
+            DateTime? mCurrentDate = @DateTime.Now;
+            var mdeadline = @Model.MissionDetails.StartDate.Value.AddDays(-1);
+            bool mhasDeadlinePassed = mCurrentDate > mdeadline;
+            bool mhaEndDatePassed = mCurrentDate > Model.MissionDetails.EndDate;
+            bool misOngoing = mCurrentDate > Model.MissionDetails.StartDate;
+            bool mhasApplied = Model.MissionDetails.MissionApplications.Any(m => m.UserId == Id);
+
+            <div class="col card-div mb-5">
+                <span class="d-none mission-country">@m.Country.Name</span>
+                <span class="mission-id">@m.MissionId</span>
+                @*<span>@hasApplied</span>*@
+                <div class="card h-100 shadow-sm border-light">
+                    <div class="position-relative">
+                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
                          class="card-img-top" alt="...">
 
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp; Toronto
-                        </a>
-                    </button>
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/heart.png" alt="" class="img-fluid">
-                        </a>
-                    </button>
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/user.png" alt="" class="img-fluid">
-                        </a>
-                    </button>
-                    <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                        Environment
-                    </div>
-                </div>
+                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                            <a class="text-decoration-none text-white">
+                                <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
+                                <span class="mission-city">@m.City.Name</span>
+                            </a>
 
-                <div class="card-body pt-4">
-                    <h4 class="card-title">Grow Trees - On the path to environment sustainability</h4>
-                    <p class="card-text">
-                        This is a wider card with supporting text below as a natural lead-in to
-                        additional content.
-                    </p>
-
-                    <div class="row d-flex seats-left">
-                        <div class="col">
-                            <h6>Tree Canada</h6>
-                        </div>
-                        <div class="col text-end">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/star.png" alt="">
-                            <img src="~/images/star.png" alt="">
-                        </div>
-                    </div>
-
-                    <div class="row d-flex py-3 g-0 items-align-center">
-                        <div class="col-2">
-                            <hr>
-                        </div>
-                        <div class="col-8 text-center border border-secondary rounded-pill">
-                            <span style="font-size: 15px;">From 10/01/2019 until 25/02/2019</span>
-                        </div>
-                        <div class="col-2">
-                            <hr>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-around mt-1 seats-left">
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                            <div class="d-flex flex-column">
-                                <span>10</span>
-                                <span>Seats Left</span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                            <div class="d-flex flex-column">
-                                <span>09/01/2019</span>
-                                <span>Deadline</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <div class="text-center">
-                        <form asp-controller="Mission" asp-action="VolunteeringMission">
-                            <button class="btn-apply rounded-pill px-4 py-2">
-                                Apply
-                                <img src="~/images/right-arrow.png" alt="" class="ms-3">
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100 shadow-sm border-light">
-                <div class="position-relative">
-                    <img src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png"
-                         class="card-img-top" alt="...">
-
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp; Melbourne
-                        </a>
-                    </button>
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/heart.png" alt="" class="img-fluid">
-                        </a>
-                    </button>
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/user.png" alt="" class="img-fluid">
-                        </a>
-                    </button>
-                    <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                        Children
-                    </div>
-                </div>
-
-                <div class="card-body pt-4">
-                    <h4 class="card-title">Education Supplies for Every Pair of Sold Shoes</h4>
-                    <p class="card-text">
-                        This is a wider card with supporting text below as a natural lead-in to
-                        additional content.
-                    </p>
-
-                    <div class="row d-flex seats-left">
-                        <div class="col">
-                            <h6>Australian Paradise</h6>
-                        </div>
-                        <div class="col text-end">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/star.png" alt="">
-                        </div>
-                    </div>
-
-                    <div class="row d-flex py-3 g-0 items-align-center">
-                        <div class="col-2">
-                            <hr>
-                        </div>
-                        <div class="col-8 text-center border border-secondary rounded-pill">
-                            <span style="font-size: 15px;">From 10/01/2019 until 25/02/2019</span>
-                        </div>
-                        <div class="col-2">
-                            <hr>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-around mt-1 seats-left">
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/Already-volunteered.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                            <div class="d-flex flex-column">
-                                <span>250</span>
-                                <span>Already Volunteered</span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                            <div class="d-flex flex-column">
-                                <span>09/01/2019</span>
-                                <span>Deadline</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <div class="text-center">
-                        <button class="btn-apply rounded-pill px-4 py-2">
-                            Apply
-                            <img src="~/images/right-arrow.png" alt="" class="ms-3">
                         </button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col">
-            <div class="card h-100 shadow-sm border-light">
-                <div class="position-relative">
-                    <img src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-2.png"
-                         class="card-img-top" alt="...">
-
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp; Melbourne
-                        </a>
-                    </button>
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/heart.png" alt="" class="img-fluid">
-                        </a>
-                    </button>
-                    <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
-                        <a href="" class="text-decoration-none text-white">
-                            <img src="~/images/user.png" alt="" class="img-fluid">
-                        </a>
-                    </button>
-                    <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                        Children
-                    </div>
-                </div>
-
-                <div class="card-body pt-4">
-                    <h4 class="card-title">Education Supplies for Every Pair of Sold Shoes</h4>
-                    <p class="card-text">
-                        This is a wider card with supporting text below as a natural lead-in to
-                        additional content.
-                    </p>
-
-                    <div class="row d-flex seats-left">
-                        <div class="col">
-                            <h6>Australian Paradise</h6>
-                        </div>
-                        <div class="col text-end">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/selected-star.png" alt="">
-                            <img src="~/images/star.png" alt="">
-                        </div>
-                    </div>
-
-                    <div class="row d-flex py-3 g-0 items-align-center">
-                        <div class="col-2">
-                            <hr>
-                        </div>
-                        <div class="col-8 text-center border border-secondary rounded-pill">
-                            <span style="font-size: 15px;">From 10/01/2019 until 25/02/2019</span>
-                        </div>
-                        <div class="col-2">
-                            <hr>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-around mt-1 seats-left">
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/Already-volunteered.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                            <div class="d-flex flex-column">
-                                <span>250</span>
-                                <span>Already Volunteered</span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                            <div class="d-flex flex-column">
-                                <span>09/01/2019</span>
-                                <span>Deadline</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <div class="text-center">
-                        <button class="btn-apply rounded-pill px-4 py-2">
-                            Apply
-                            <img src="~/images/right-arrow.png" alt="" class="ms-3">
+                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill" onclick="addToFavourites(@m.MissionId)">
+                            @if (m.FavouriteMissions.Any(fm => fm.UserId == Id))
+                            {
+                                <i class="bi bi-heart-fill text-danger @m.MissionId" data-mission-id="@m.MissionId"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-heart text-light @m.MissionId" data-mission-id="@m.MissionId"></i>
+                            }
                         </button>
+
+                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
+                            <a href="" class="text-decoration-none text-white">
+                                <img src="~/images/user.png" alt="" class="img-fluid">
+                            </a>
+                        </button>
+                        <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
+                            <span class="mission-theme">@m.Theme.Title</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body pt-4">
+                        <h4 class="card-title" id="card-title">@m.Title</h4>
+                        <p class="card-text">
+                            @m.ShortDescription
+                        </p>
+
+                        <div class="row d-flex seats-left">
+                            <div class="col">
+                                <h6>
+                                    @m.OrganizationName
+                                </h6>
+                            </div>
+                            <div class="col text-end">
+                                @for (var i = 0; i < mmissionRating; i++)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }
+                                @for (var i = 5; i > mmissionRating; i--)
+                                {
+                                    <i class="bi bi-star"></i>
+                                }
+                            </div>
+                        </div>
+
+                        @if (mhaEndDatePassed || mhasApplied)
+                        {
+                            <hr>
+                            <div class="text-center pt-3">
+                                <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
+                                    View Details
+                                    <i class="bi bi-arrow-right ms-3"></i>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row d-flex py-3 g-0 items-align-center">
+                                <div class="col-2">
+                                    <hr>
+                                </div>
+                                <div class="col-8 text-center border border-secondary rounded-pill">
+
+                                    @if (m.MissionType.Equals("Time"))
+                                    {
+
+                                        if (misOngoing)
+                                        {
+                                            <span style="font-size: 15px;">Ongoing opportunity</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="font-size: 15px;">From @m.StartDate.Value.ToShortDateString() until @m.EndDate.Value.ToShortDateString()</span>
+                                        }
+                                    }
+                                    @if (m.MissionType.Equals("Goal"))
+                                    {
+                                        @foreach (var goal in m.GoalMissions)
+                                        {
+                                            <span style="font-size: 15px;"> @goal.GoalObjectiveText </span>
+                                        }
+                                    }
+                                </div>
+                                <div class="col-2">
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-around mt-1 seats-left">
+                                <div class="d-flex align-items-center">
+                                    <img src="~/images/Seats-left.png" alt=""
+                                 style="margin-right: 10px; width: 30px; height: 30px" />
+                                    <div class="d-flex flex-column">
+                                        <span>@mSeatsLeft</span>
+                                        <span>Seats Left</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    @if (Model.MissionDetails.MissionType.Equals("Time"))
+                                    {
+                                        <img src="~/images/Seats-left.png" alt=""
+                                 style="margin-right: 10px; width: 30px; height: 30px" />
+                                        <div class="d-flex flex-column">
+                                            <span>@m.StartDate.Value.AddDays(-1).ToShortDateString() </span>
+                                            <span>Deadline</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var goal in m.GoalMissions)
+                                        {
+                                            <img src="~/images/achieved.png" alt="deadline"
+                                 style="margin-right: 10px; width: 30px; height: 30px;">
+                                            <div class="card-detail-text">
+                                                <div class="progress" style="width: 150px">
+                                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <span> @goal.GoalValue achieved </span>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="text-center pt-3">
+                                <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
+                                    Apply
+                                    <i class="bi bi-arrow-right ms-3"></i>
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 
 </div>
