@@ -114,10 +114,10 @@ div {
 
 /*#grid-view {
     display: block;
-}*/
+}
 
-/*#list-view {
-    display: none;
+#list-view {
+    display: block;
 }*/
 
 @media (max-width: 1024.98px) {

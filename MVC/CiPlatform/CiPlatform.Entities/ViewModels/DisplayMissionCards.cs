@@ -23,6 +23,10 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public List<GoalMission> GoalMissions { get; set; } = null;
 
+        public List<User> UserList { get; set; } = null;
+
+        public string? link { get; set; }
+
         //to store data
         public IEnumerable<Mission> MissionList { get; set; }
     }

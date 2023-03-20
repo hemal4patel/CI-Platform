@@ -93,7 +93,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionApplication> GetRecentVolunteers(long MissionId, long userId)
         {
-            var recentVolunteers = _db.MissionApplications.Include(u => u.User).Where(u => u.MissionId == MissionId && u.UserId != userId).OrderByDescending(u => u.CreatedAt).ToList();
+            var recentVolunteers = _db.MissionApplications.Include(u => u.User).Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt).ToList();
 
                 return recentVolunteers;
         }

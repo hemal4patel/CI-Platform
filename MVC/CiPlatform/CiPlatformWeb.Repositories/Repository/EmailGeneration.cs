@@ -76,6 +76,7 @@ namespace CiPlatformWeb.Repositories.Repository
             message.Subject = subject;
             message.Body = body;
             message.IsBodyHtml = true;
+
             smtp.Send(message);
         }
 

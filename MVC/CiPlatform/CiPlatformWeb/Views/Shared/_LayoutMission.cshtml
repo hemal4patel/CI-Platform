@@ -3,8 +3,8 @@
 @{
     string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
-    string UserId = ViewBag.UserId;
-    long Id = long.Parse(UserId);
+    var Id = Convert.ToInt64(ViewBag.UserId);
+
 }
 
 <script>
@@ -99,7 +99,7 @@
                             </span>
                             <p class="d-inline" id="profileText">
                                 @UserName 
-                                <span class="d-none">@UserId</span>
+                                <span class="d-none">@Id</span>
                             </p>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">

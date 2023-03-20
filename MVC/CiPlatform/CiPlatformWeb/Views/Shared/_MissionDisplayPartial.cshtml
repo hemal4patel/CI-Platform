@@ -59,11 +59,49 @@
                                 }
                             </button>
 
-                            <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
+                            <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                                 <a href="" class="text-decoration-none text-white">
                                     <img src="~/images/user.png" alt="" class="img-fluid">
                                 </a>
                             </button>
+
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Recommend to a Co-Worker</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @if (Model.UserList is not null)
+                                            {
+                                                foreach (var u in Model.UserList)
+                                                {
+
+                                                    <div class="mt-2" style="display : flex; justify-content : space-between;">
+
+                                                        <span class="me-4 ">@u.FirstName @u.LastName</span>
+
+
+                                                        <span style="margin-left : 6%;" class="invited-@u.UserId">
+                                                            <button onclick="recommendToCoWorker(@u.UserId, @obj.MissionId, @Id)" class="btn btn-primary model-button" data-mission-Id="@obj.MissionId">Invite</button>
+                                                        </span>
+
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
                             <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
                                 <span class="mission-theme">@obj.Theme.Title</span>
                             </div>
@@ -95,7 +133,29 @@
 
                             @if (haEndDatePassed || hasApplied)
                             {
-                            <hr>
+                                <hr>
+                                <div class="text-center pt-3">
+                                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
+                                        View Details
+                                        <i class="bi bi-arrow-right ms-3"></i>
+                                    </a>
+                                </div>
+                            }
+                            else if (isOngoing)
+                            {
+                                <div class="row d-flex py-3 g-0 items-align-center">
+                                    <div class="col-2">
+                                        <hr>
+                                    </div>
+                                    <div class="col-8 text-center border border-secondary rounded-pill">
+                                        <span style="font-size: 15px;">Ongoing opportunity</span>
+                                    </div>
+                                    <div class="col-2">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                @*<hr>*@
                                 <div class="text-center pt-3">
                                     <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
                                         View Details
@@ -113,15 +173,7 @@
 
                                         @if (obj.MissionType.Equals("Time"))
                                         {
-
-                                            if (isOngoing)
-                                            {
-                                                <span style="font-size: 15px;">Ongoing opportunity</span>
-                                            }
-                                            else
-                                            {
-                                                <span style="font-size: 15px;">From @obj.StartDate.Value.ToShortDateString() until @obj.EndDate.Value.ToShortDateString()</span>
-                                            }
+                                            <span style="font-size: 15px;">From @obj.StartDate.Value.ToShortDateString() until @obj.EndDate.Value.ToShortDateString()</span>
                                         }
                                         @if (obj.MissionType.Equals("Goal"))
                                         {
