@@ -10,10 +10,18 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IMissionList
     {
+        public List<Country> GetCountryList ();
+
+        public List<City> GetCityList (long countryId);
+
+        public List<MissionTheme> GetThemeList ();
+
+        public List<Skill> GetSkillList ();
+
         public IEnumerable<Mission> GetMissions (List<long> MissionIds);
 
-        public List<User> UserList (long userId);
+        public List<User> GetUserList (long userId);
 
-        public Task SendInvitationToCoWorker (long ToUserId, long FromUserId, DisplayMissionCards viewmodel);
+        public Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link);
     }
 }

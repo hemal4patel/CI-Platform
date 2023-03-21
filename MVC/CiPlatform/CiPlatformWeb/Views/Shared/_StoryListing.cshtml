@@ -1,0 +1,38 @@
+﻿@model CiPlatformWeb.Entities.ViewModels.StoryListingViewModel
+
+<div class="container my-5 pb-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var obj in Model.StoryList)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-img position-relative">
+                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
+                         class="card-img-top " alt="...">
+                        <button class="btn-share-story rounded-pill px-4 py-2 position-absolute top-50 start-50 translate-middle">
+                            View Details &nbsp;
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+                        <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2 text-center"
+                         style="color: #414141;">
+                            <span>@obj.Mission.Theme.Title</span>
+                        </div>
+                    </div>
+                    <div class="card-body" style="color: #414141;">
+                        <h4 class="card-title mt-3">@obj.Title</h4>
+                        <p class="card-text">
+                            @obj.Description
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <img src="~/images/volunteer1.png" alt="" class="rounded-circle"
+                             style="width: 50px; height: 50px;">
+                            <span class="ms-3">
+                                @obj.User.FirstName @obj.User.LastName
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

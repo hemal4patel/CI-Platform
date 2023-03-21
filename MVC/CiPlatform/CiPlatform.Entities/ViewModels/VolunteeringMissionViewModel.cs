@@ -10,7 +10,7 @@ namespace CiPlatformWeb.Entities.ViewModels
     public class VolunteeringMissionViewModel
     {
         //to store data
-        public Mission MissionDetails { get; set; }
+        public Mission MissionDetails { get; set; }        
 
         public List<Mission> RelatedMissions { get; set; }
 

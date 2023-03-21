@@ -1,6 +1,4 @@
-﻿@*@model CiPlatformWeb.Entities.ViewModels.FiltersModel*@
-
-<!-- FILTERS -->
+﻿<!-- FILTERS -->
 <div class="border-bottom border-3">
     <div class="container">
         <div class="row">
@@ -10,7 +8,7 @@
                         <img src="~/images/search.png" />
                     </span>
                     <input type="text" class="form-control border-none" placeholder="Search" aria-label="Search"
-                           aria-describedby="seacrhIcon" id="searchText" onkeyup="spFilterSortSearchPagination()">
+                           aria-describedby="seacrhIcon" id="searchText">
                 </div>
                 <button class="img-filter border-none bg-white">
                     <img src="~/images/filter.png" type="button" data-bs-toggle="offcanvas"
@@ -26,10 +24,10 @@
                                 Country
                             </button>
                             <ul class="dropdown-menu scroll-menu" id="CountryList" aria-labelledby="countryDropdown">
-                                @foreach (var obj in ViewBag.CountryList)
+                                @foreach (var obj in Model.CountryList)
                                 {
-                                    <li value="@obj.Value">
-                                        <a class="dropdown-item" value="@obj.Value">@obj.Text</a>
+                                    <li value="@obj.CountryId">
+                                        <a class="dropdown-item" value="@obj.CountryId">@obj.Name</a>
                                     </li>
                                 }
                             </ul>
@@ -52,13 +50,15 @@
                                 Theme
                             </button>
                             <ul class="dropdown-menu scroll-menu CardsFilter" id="ThemeList" aria-labelledby="themeDropdown">
-                                @foreach (var obj in ViewBag.ThemeList)
+                                @foreach (var obj in Model.ThemeList)
                                 {
-                                    <li class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" value="@obj.Value">
-                                        <label class="form-check-label" value="@obj.Value">
-                                            @obj.Text
-                                        </label>
+                                    <li>
+                                        <div class="dropdown-item mb-1 ms-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1" value="@obj.MissionThemeId">
+                                            <label class="form-check-label" for="exampleCheck1" value="@obj.MissionThemeId">
+                                                @obj.Title
+                                            </label>
+                                        </div>
                                     </li>
                                 }
                             </ul>
@@ -72,13 +72,15 @@
                                     Skill
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end scroll-menu skillDropdown" id="SkillList" aria-labelledby="skillDropdown">
-                                    @foreach (var obj in ViewBag.SkillList)
+                                    @foreach (var obj in Model.SkillList)
                                     {
-                                        <li class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" value="@obj.Value">
-                                            <label class="form-check-label" value="@obj.Value">
-                                                @obj.Text
-                                            </label>
+                                        <li>
+                                            <div class="dropdown-item mb-1 ms-3 form-check">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1" value="@obj.SkillId">
+                                                <label class="form-check-label" for="exampleCheck1" value="@obj.SkillId">
+                                                    @obj.SkillName
+                                                </label>
+                                            </div>
                                         </li>
                                     }
                                 </ul>
@@ -106,11 +108,11 @@
                             <div id="countriesAccordion" class="accordion-collapse collapse"
                                  aria-labelledby="country" data-bs-parent="#filters">
                                 <div class="accordion-body">
-                                    <ul class="scroll-menu" id="CountryList" style="list-style: none">
-                                        @foreach (var obj in ViewBag.CountryList)
+                                    <ul class="scroll-menu" id="CountryList" style="list-style: none; width: 100%;">
+                                        @foreach (var obj in Model.CountryList)
                                         {
-                                            <li value="@obj.Value" class="mb-3">
-                                                <a class="dropdown-item" value="@obj.Value">@obj.Text</a>
+                                            <li value="@obj.CountryId">
+                                                <a class="dropdown-item" value="@obj.CountryId">@obj.Name</a>
                                             </li>
                                         }
                                     </ul>
@@ -128,7 +130,7 @@
                             <div id="citiesAccordion" class="accordion-collapse collapse" aria-labelledby="city"
                                  data-bs-parent="#filters">
                                 <div class="accordion-body">
-                                    <ul class="scroll-menu" id="CityListAccordian" style="list-style: none">
+                                    <ul class="scroll-menu" id="CityListAccordian" style="list-style: none; width: 100%;">
                                     </ul>
                                 </div>
                             </div>
@@ -144,15 +146,17 @@
                             <div id="themesAccordion" class="accordion-collapse collapse" aria-labelledby="theme"
                                  data-bs-parent="#filters">
                                 <div class="accordion-body">
-                                    @foreach (var obj in ViewBag.ThemeList)
-                                    {
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="">
-                                            <label class="form-check-label">
-                                                @obj.Text
-                                            </label>
-                                        </div>
-                                    }
+                                    <ul class="scroll-menu" id="ThemeList" style="list-style: none; width: 100%;">
+                                        @foreach (var obj in Model.ThemeList)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="@obj.MissionThemeId">
+                                                <label class="form-check-label" value="@obj.MissionThemeId">
+                                                    @obj.Title
+                                                </label>
+                                            </div>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -167,15 +171,17 @@
                             <div id="skillsAccordion" class="accordion-collapse collapse" aria-labelledby="skill"
                                  data-bs-parent="#filters">
                                 <div class="accordion-body">
-                                    @foreach (var obj in ViewBag.SkillList)
-                                    {
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="">
-                                            <label class="form-check-label">
-                                                @obj.Text
-                                            </label>
-                                        </div>
-                                    }
+                                    <ul class="scroll-menu" id="SkillList" style="list-style: none; width: 100%;">
+                                        @foreach (var obj in Model.SkillList)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="@obj.SkillId">
+                                                <label class="form-check-label" value="@obj.SkillId">
+                                                    @obj.SkillName
+                                                </label>
+                                            </div>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                         </div>

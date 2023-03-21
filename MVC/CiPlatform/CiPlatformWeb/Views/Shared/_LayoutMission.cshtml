@@ -99,7 +99,7 @@
                             </span>
                             <p class="d-inline" id="profileText">
                                 @UserName 
-                                <span class="d-none">@Id</span>
+                                @*<span class="d-none">@Id</span>*@
                             </p>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
@@ -114,7 +114,7 @@
         </nav>
     </header>
 
-    <main role="main" class="pb-3">
+    <main role="main" class="pb-3" style="flex: auto;">
         <partial name="NotificationPartial" />
         @RenderBody()
     </main>

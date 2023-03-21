@@ -4,8 +4,11 @@ using CiPlatformWeb.Repositories.Interface;
 using CiPlatformWeb.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing.Printing;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -34,27 +37,19 @@ namespace CiPlatformWeb.Controllers
 
             var userId = Convert.ToInt64(ViewBag.UserId);
 
-            var country = _db.Countries.ToList();
-            var countryall = new SelectList(country, "CountryId", "Name");
-            ViewBag.CountryList = countryall;
+            var vm = new DisplayMissionCards();
 
-            var skill = _db.Skills.ToList();
-            var skillall = new SelectList(skill, "SkillId", "SkillName");
-            ViewBag.SkillList = skillall;
-
-            var theme = _db.MissionThemes.ToList();
-            var themeall = new SelectList(theme, "MissionThemeId", "Title");
-            ViewBag.ThemeList = themeall;
-
-            var vm = new VolunteeringMissionViewModel();
-            vm.UserList = _missionlist.UserList(userId);
+            vm.CountryList = _missionlist.GetCountryList();
+            vm.ThemeList = _missionlist.GetThemeList();
+            vm.SkillList = _missionlist.GetSkillList();
+            vm.UserList = _missionlist.GetUserList(userId);
 
             return View(vm);
         }
 
         public IActionResult GetCitiesByCountry (int countryId)
         {
-            var cities = _db.Cities.Where(c => c.CountryId == countryId).ToList();
+            var cities = _missionlist.GetCityList(countryId);
             return Json(cities);
         }
 
@@ -63,23 +58,66 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> PlatformLanding (string searchText, int? countryId, string? cityId, string? themeId, string? skillId, int? sortCase, string? userId)
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            //if (HttpContext.Session.GetString("Email") != null)
+            //{
+            //    ViewBag.Email = HttpContext.Session.GetString("Email");
+            //    ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            //    ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            //}
+
+            //var UserId = Convert.ToInt64(ViewBag.UserId);
+
+            //var response = _db.Missions.FromSql($"exec spFilterSortSearchPagination @searchText={searchText}, @countryId={countryId}, @cityId={cityId}, @themeId={themeId}, @skillId={skillId}, @sortCase = {sortCase}, @userId = {userId}");
+
+            //var items = await response.ToListAsync();
+
+            //var MissionIds = items.Select(m => m.MissionId).ToList();
+
+            IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                connection.Open();
+
+                // Call the stored procedure
+                SqlCommand command = new SqlCommand("spFilterSortSearchPagination", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@countryId", SqlDbType.VarChar).Value = countryId != null ? countryId : null;
+                command.Parameters.Add("@cityId", SqlDbType.VarChar).Value = cityId != null ? cityId : null;
+                command.Parameters.Add("@themeId", SqlDbType.VarChar).Value = themeId != null ? themeId : null;
+                command.Parameters.Add("@skillId", SqlDbType.VarChar).Value = skillId != null ? skillId : null;
+                command.Parameters.Add("@searchText", SqlDbType.VarChar).Value = searchText;
+                command.Parameters.Add("@sortCase", SqlDbType.VarChar).Value = sortCase;
+                command.Parameters.Add("@userId", SqlDbType.VarChar).Value = userId;
+                command.Parameters.Add("@pageSize", SqlDbType.Int).Value = 9;
+                command.Parameters.Add("@pageNo", SqlDbType.Int).Value = 1;
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<long> MissionIds = new List<long>();
+                while (reader.Read())
+                {
+                    long totalRecords = reader.GetInt32("TotalRecords");
+                    ViewBag.totalRecords = totalRecords;
+                }
+                reader.NextResult();
+
+                while (reader.Read())
+                {
+                    long missionId = reader.GetInt64("mission_id");
+                    MissionIds.Add(missionId);
+                }
+
+                var UserId = Convert.ToInt64(ViewBag.UserId);
+
+                var vm = new DisplayMissionCards();
+
+                vm.MissionList = _missionlist.GetMissions(MissionIds);
+                vm.UserList = _missionlist.GetUserList(UserId);
+
+                return PartialView("_MissionDisplayPartial", vm);
             }
-
-            var response = _db.Missions.FromSql($"exec spFilterSortSearchPagination @searchText={searchText}, @countryId={countryId}, @cityId={cityId}, @themeId={themeId}, @skillId={skillId}, @sortCase = {sortCase}, @userId = {userId}");
-
-            var items = await response.ToListAsync();
-
-            var MissionIds = items.Select(m => m.MissionId).ToList();
-
-            var vm = new DisplayMissionCards();
-            vm.MissionList = _missionlist.GetMissions(MissionIds);
-
-            return PartialView("_MissionDisplayPartial", vm);
         }
 
         [HttpPost]
@@ -116,7 +154,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
             }
-                var userId = Convert.ToInt64(ViewBag.UserId);
+            var userId = Convert.ToInt64(ViewBag.UserId);
 
             var vm = new VolunteeringMissionViewModel();
 
@@ -124,7 +162,7 @@ namespace CiPlatformWeb.Controllers
             vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId);
             vm.RecentVolunteers = _missiondetail.GetRecentVolunteers(MissionId, userId);
             vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
-            vm.UserList = _missionlist.UserList(userId);
+            vm.UserList = _missionlist.GetUserList(userId);
 
             return View(vm);
         }
@@ -172,7 +210,7 @@ namespace CiPlatformWeb.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId, DisplayMissionCards viewmodel)
+        public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
         {
             var missionInvite = new MissionInvite()
             {
@@ -185,9 +223,9 @@ namespace CiPlatformWeb.Controllers
             await _db.SaveChangesAsync();
 
             var MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
-            viewmodel.link = MissionLink;
+            string link = MissionLink;
 
-            await _missionlist.SendInvitationToCoWorker(ToUserId, FromUserId, viewmodel);
+            await _missionlist.SendInvitationToCoWorker(ToUserId, FromUserId, link);
 
             return Json(new { success = true });
         }

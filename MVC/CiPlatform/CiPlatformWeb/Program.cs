@@ -16,6 +16,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEmailGeneration, EmailGeneration>(); 
 builder.Services.AddScoped<IMissionList, MissionList> ();
 builder.Services.AddScoped<IMissionDetail, MissionDetail> ();
+builder.Services.AddScoped<IStoryList, StoryList> ();
 
 builder.Services.AddSession();
 builder.Services.AddMemoryCache();

@@ -1,7 +1,29 @@
 ﻿
 var selectedCountry = null;
 var selectedSortCase = null;
+var currentUrl = window.location.href;
+let allDropdowns = $('.dropdown ul');
+
 spFilterSortSearchPagination();
+spFilterStory();
+
+$('#searchText').on('keyup', function () {
+    if (currentUrl.includes("PlatformLanding")) {
+        spFilterSortSearchPagination();
+    }
+    else if (currentUrl.includes("StoryListing")) {
+        spFilterStory();
+    }
+});
+
+allDropdowns.on('change', function () {
+    if (currentUrl.includes("PlatformLanding")) {
+        spFilterSortSearchPagination();
+    }
+    else if (currentUrl.includes("StoryListing")) {
+        spFilterStory();
+    }
+});
 
 function spFilterSortSearchPagination() {
     var CountryId = selectedCountry;
@@ -27,6 +49,28 @@ function spFilterSortSearchPagination() {
     });
 }
 
+function spFilterStory() {
+    var CountryId = selectedCountry;
+    var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var searchText = $("#searchText").val();
+    $.ajax({
+        type: 'POST',
+        url: '/Story/StoryListing',
+        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText },
+        success: function (data) {
+            console.log("Done");
+            var view = $(".storyPartial");
+            view.empty();
+            view.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+}
+
 $("#sortList li").click(function () {
     selectedSortCase = $(this).val();
     spFilterSortSearchPagination();
@@ -39,7 +83,13 @@ $("#CountryList li").click(function () {
     console.log(selectedCountry);
 
     GetCitiesByCountry(countryId);
-    spFilterSortSearchPagination();
+
+    if (currentUrl.includes("PlatformLanding")) {
+        spFilterSortSearchPagination();
+    }
+    else if (currentUrl.includes("StoryListing")) {
+        spFilterStory();
+    }
 });
 
 function GetCitiesByCountry(countryId) {
@@ -62,7 +112,7 @@ function GetCitiesByCountry(countryId) {
             //console.log(data);
             $(data).each(function (i, item) {
                 //console.log(item);
-                items += `<li> <div class="dropdown-item mb-3 form-check"> <input type="checkbox"  class="form-check-input" id="exampleCheck1" value =` + item.cityId + `><label class="form-check-label" for="exampleCheck1" value=` + item.cityId + `>` + item.name + `</label></div></li>`
+                items += `<li> <div class="dropdown-item mb-1 form-check"> <input type="checkbox"  class="form-check-input" id="exampleCheck1" value =` + item.cityId + `><label class="form-check-label" for="exampleCheck1" value=` + item.cityId + `>` + item.name + `</label></div></li>`
 
             })
             dropdown.html(items);
@@ -71,7 +121,6 @@ function GetCitiesByCountry(countryId) {
 }
 
 let filterPills = $('.filter-pills');
-let allDropdowns = $('.dropdown ul');
 allDropdowns.each(function () {
     let dropdown = $(this);
     $(this).on('change', 'input[type="checkbox"]', function () {
@@ -150,7 +199,8 @@ function addToFavourites(missionId) {
         type: 'POST',
         data: { missionId: missionId },
         success: function (result) {
-            var icon = $("i." + missionId);
+            console.log(result)
+            var icon = $("#" + missionId);
             var text = $(".favText");
             if (icon.hasClass("bi-heart")) {
                 icon.removeClass("text-dark bi-heart").addClass("text-danger bi-heart-fill");
@@ -212,14 +262,14 @@ $('.commentButton').click(function () {
 });
 
 function recommendToCoWorker(ToUserId, MissionId, FromUserId) {
-    //var MissionId = $(this).data('mission-id');
-
+    console.log(MissionId);
+    debugger
     $.ajax({
         type: "POST",
         url: "/Mission/MissionInvite",
         data: { ToUserId: ToUserId, MissionId: MissionId, FromUserId: FromUserId },
         success: function () {
-            $('.Invited-' + ToUserId).html(' <button class="btn btn-outline-success" data-mission-Id="@Model.MissionDetails.MissionId">Invited</button>');
+            $('.Invited-' + ToUserId + '.Invited-' + MissionId).html(' <button class="btn btn-outline-success" data-mission-Id="@Model.MissionDetails.MissionId">Invited</button>');
         }
     });
 }

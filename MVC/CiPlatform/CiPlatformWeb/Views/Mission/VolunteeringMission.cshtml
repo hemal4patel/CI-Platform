@@ -91,7 +91,7 @@
         <!-- DATA -->
         <div class="col-lg-6">
             <!-- HEADING -->
-            <div class="text" style="color: #414141;">
+            <div class="text">
                 <h2 class="mt-4"> @Model.MissionDetails.Title </h2>
                 <p class="mt-3">
                     @Model.MissionDetails.ShortDescription
@@ -107,14 +107,14 @@
 
                     @if (Model.MissionDetails.MissionType.Equals("Time"))
                     {
-                        <span style="font-size: 15px; color: #414141;">From @Model.MissionDetails.StartDate.Value.ToShortDateString() until @Model.MissionDetails.EndDate.Value.ToShortDateString()</span>
+                        <span style="font-size: 15px;"> From @Model.MissionDetails.StartDate.Value.ToShortDateString() until @Model.MissionDetails.EndDate.Value.ToShortDateString() </span>
                     }
 
                     @if (Model.MissionDetails.MissionType.Equals("Goal"))
                     {
                         @foreach (var goal in Model.MissionDetails.GoalMissions)
                         {
-                            <span style="font-size: 15px; color: #414141;"> @goal.GoalObjectiveText </span>
+                            <span style="font-size: 15px;"> @goal.GoalObjectiveText </span>
                         }
                     }
 
@@ -125,7 +125,7 @@
             </div>
 
             <!-- SEATS LEFT -->
-            <div class="d-flex seats-left justify-content-around mt-4" style="color: #757575;">
+            <div class="d-flex seats-left justify-content-around mt-4">
                 <div class="d-flex align-items-center">
                     <img src="~/images/Seats-left.png" alt=""
                          style="margin-right: 10px; width: 30px; height: 30px">
@@ -136,39 +136,29 @@
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <img src="~/images/mission.png" alt=""
-                         style="margin-right: 10px; width: 30px; height: 30px">
-                    <div class="d-flex flex-column">
-                        @*<div class="progress" style="width: 150px; height: 12px;">
-                        <div class="progress-bar" role="progressbar"
-                        style="width: 80%; background-color: #F88634;" aria-valuenow="80" aria-valuemin="0"
-                        aria-valuemax="100"></div>
+                    @if (Model.MissionDetails.MissionType.Equals("Time"))
+                    {
+                        <img src="~/images/calender.png" alt=""
+                         style="margin-right: 10px; width: 30px; height: 30px" />
+                        <div class="d-flex flex-column">
+                            <span>@Model.MissionDetails.StartDate.Value.AddDays(-1).ToShortDateString() </span>
+                            <span>Deadline</span>
                         </div>
-                        <span>8000 Achieved</span>*@
-                        @if (Model.MissionDetails.MissionType.Equals("Time"))
+                    }
+                    else
+                    {
+                        @foreach (var goal in Model.MissionDetails.GoalMissions)
                         {
-                            <div class="ms-1">
-                                <div class="d-flex">
-                                    <h6>
-                                        @Model.MissionDetails.StartDate.Value.AddDays(-1).ToShortDateString()
-                                    </h6>
+                            <img src="~/images/achieved.png" alt="deadline"
+                         style="margin-right: 10px; width: 30px; height: 30px;">
+                            <div class="card-detail-text">
+                                <div class="progress" style="width: 150px">
+                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <p class="mt-0 mb-0">Registration Deadline</p>
+                                <span> @goal.GoalValue achieved </span>
                             </div>
                         }
-                        @if (Model.MissionDetails.MissionType.Equals("Goal"))
-                        {
-                            @foreach (var goal in Model.MissionDetails.GoalMissions)
-                            {
-                                <div class="ms-1">
-                                    <div class="d-flex">
-                                        <h6>@goal.GoalValue</h6>
-                                    </div>
-                                    <p class="mt-0 mb-0">Achieved</p>
-                                </div>
-                            }
-                        }
-                    </div>
+                    }
                 </div>
             </div>
 
@@ -179,13 +169,15 @@
                     <button class="btn-share rounded-pill p-2 w-100" onclick="addToFavourites(@Model.MissionDetails.MissionId)">
                         @if (Model.MissionDetails.FavouriteMissions.Any(fm => fm.UserId == Id))
                         {
-                            <i class="bi bi-heart-fill text-danger @Model.MissionDetails.MissionId"></i>
+                            <i class="bi bi-heart-fill text-danger " id="@Model.MissionDetails.MissionId"></i>
+                            <span class="favText">Added to Favourites</span>
                         }
                         else
                         {
                             <i class="bi bi-heart text-light @Model.MissionDetails.MissionId"></i>
+                            <span class="favText">Add to Favourites</span>
                         }
-                        Add to Favourite
+
                     </button>
                 </div>
                 <div class="col-md-6">
@@ -211,8 +203,10 @@
                                             <span class="me-4 ">@u.FirstName @u.LastName</span>
 
 
-                                            <span style="margin-left : 6%;" class="invited-@u.UserId">
-                                                <button onclick="recommendToCoWorker(@u.UserId, @Model.MissionDetails.MissionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@Model.MissionDetails.MissionId">Invite</button>
+                                            <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@Model.MissionDetails.MissionId">
+                                                <button onclick="recommendToCoWorker(@u.UserId, @Model.MissionDetails.MissionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@Model.MissionDetails.MissionId">
+                                                    Invite
+                                                </button>
                                             </span>
 
                                         </div>
@@ -247,7 +241,7 @@
             </div>
 
             <!-- 4 BOXES -->
-            <div class="row mt-4 gy-3 gx-0" style="color: #757575;">
+            <div class="row mt-4 gy-3 gx-0">
                 <div class="col d-flex justify-content-center">
                     <div class="d-flex flex-column box-card justify-content-around p-2">
                         <div>
@@ -291,7 +285,7 @@
                         </div>
                         <div class="mt-4">
                             <span>Organization</span>
-                            <p><strong>@Model.MissionDetails.OrganizationName </strong></p>
+                            <p><strong>@Model.MissionDetails.OrganizationName</strong></p>
                         </div>
                     </div>
                 </div>
@@ -299,10 +293,25 @@
 
             <!-- APPLY BTN -->
             <div class="text-center mt-4">
-                <button class="btn-apply rounded-pill px-4 py-2">
-                    Apply Now
-                    <i class="bi bi-arrow-right ms-3"></i>
-                </button>
+                @if (Model.MissionDetails.MissionApplications.Any(m => m.UserId == Id && m.ApprovalStatus == "APPROVE"))
+                {
+                    <button class="rounded-pill px-4 py-2" style="background: #F88634; color: white; border: 2px solid #F88634;">
+                        Applied Successfully
+                    </button>
+                }
+                else if (Model.MissionDetails.MissionApplications.Any(m => m.UserId == Id && m.ApprovalStatus == "PENDING"))
+                {
+                    <button class="rounded-pill px-4 py-2" style="background: #F88634; color: white; border: 2px solid #F88634;">
+                        Applied
+                    </button>
+                }
+                else
+                {
+                    <button class="btn-apply rounded-pill px-4 py-2">
+                        Apply Now
+                        <i class="bi bi-arrow-right ms-3"></i>
+                    </button>
+                }
             </div>
 
         </div>
@@ -336,7 +345,7 @@
             </ul>
 
             <!-- TAB CONTENT -->
-            <div class="tab-content" id="myTabContent" style="color: #414141">
+            <div class="tab-content" id="myTabContent">
                 <!-- MISSION -->
                 <div class="tab-pane fade show active mt-4" id="mission" role="tabpanel"
                      aria-labelledby="mission-tab">
@@ -494,42 +503,49 @@
 
 
                     <div class="row mt-3">
-                        @foreach (var v in Model.RecentVolunteers)
+                        @if (Model.RecentVolunteers.Any())
                         {
-                            <div class="col-4">
-                                <div class="text-center">
-                                    <img src="~/images/volunteer1.png" alt="" class="rounded-circle vol-img">
-                                    <p>@v.User.FirstName @v.User.LastName</p>
+                            @foreach (var v in Model.RecentVolunteers)
+                            {
+                                <div class="col-4">
+                                    <div class="text-center">
+                                        <img src="~/images/volunteer1.png" alt="" class="rounded-circle vol-img">
+                                        <p>@v.User.FirstName @v.User.LastName</p>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                        }
+                        else
+                        {
+                            <span class="mb-3 text-center" style="font-size: 25px;"> No recent volunteers </span>
                         }
                     </div>
 
                 </div>
 
-                <hr class="mb-0">
+                @*<hr class="mb-0">
                 <div class="mt-0 row g-0">
-                    <div class="col-1">
-                        <button class="border-end border-secondary p-2" style="border: none;">
-                            <img src="~/images/left.png" alt="">
-                        </button>
-                    </div>
-                    <div class="col-10 mt-2 text-center">
-                        1 - 9 of 25 Recent Volunteers
-                    </div>
-                    <div class="col-1 text-end">
-                        <button class="border-start border-secondary p-2" style="border: none;">
-                            <img src="~/images/right-arrow1.png" alt="">
-                        </button>
-                    </div>
+                <div class="col-1">
+                <button class="border-end border-secondary p-2" style="border: none;">
+                <img src="~/images/left.png" alt="">
+                </button>
                 </div>
+                <div class="col-10 mt-2 text-center">
+                1 - 9 of 25 Recent Volunteers
+                </div>
+                <div class="col-1 text-end">
+                <button class="border-start border-secondary p-2" style="border: none;">
+                <img src="~/images/right-arrow1.png" alt="">
+                </button>
+                </div>
+                </div>*@
             </div>
         </div>
     </div>
 
     <hr>
     <!-- RALATED MISSION CARDS -->
-    <h2 class="text-center mt-5" style="color: #414141;">Related Missions</h2>
+    <h2 class="text-center mt-5">Related Missions</h2>
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
 
         @foreach (var m in Model.RelatedMissions)

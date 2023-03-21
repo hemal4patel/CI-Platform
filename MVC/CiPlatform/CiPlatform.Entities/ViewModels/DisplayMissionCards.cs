@@ -9,13 +9,13 @@ namespace CiPlatformWeb.Entities.ViewModels
 {
     public class DisplayMissionCards
     {
-        public List<Country> Country { get; set; } = null;
+        public List<Country> CountryList { get; set; }
 
-        public List<City> City { get; set; } = null;
+        public List<City> CityList { get; set; }
 
-        public List<MissionTheme> Theme { get; set; } = null;
+        public List<MissionTheme> ThemeList { get; set; }
 
-        public List<Skill> Skill { get; set; } = null;
+        public List<Skill> SkillList { get; set; }
 
         public List<MissionApplication> Application { get; set; } = null;
 

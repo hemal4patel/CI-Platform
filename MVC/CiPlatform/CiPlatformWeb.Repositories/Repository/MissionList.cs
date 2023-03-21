@@ -20,6 +20,27 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             _db = db;
         }
+
+        public List<Country> GetCountryList ()
+        {
+            return _db.Countries.ToList ();
+        }
+
+        public List<City> GetCityList (long countryId)
+        {
+            return _db.Cities.Where(c => c.CountryId== countryId).ToList ();
+        }
+
+        public List<MissionTheme> GetThemeList ()
+        {
+            return _db.MissionThemes.ToList ();
+        }
+
+        public List<Skill> GetSkillList ()
+        {
+            return _db.Skills.ToList ();
+        }
+
         public IEnumerable<Mission> GetMissions (List<long> MissionIds)
         {
             var MissionList = _db.Missions.Where(m => MissionIds.Contains(m.MissionId))
@@ -36,24 +57,24 @@ namespace CiPlatformWeb.Repositories.Repository
             return MissionList;
         }
 
-        public List<User> UserList (long userId)
+        public List<User> GetUserList (long userId)
         {
             var list = _db.Users.Where(u => u.UserId != userId).ToList();
             return list;
         }
 
 
-        public async Task SendInvitationToCoWorker (long ToUserId, long FromUserId, DisplayMissionCards viewmodel)
+        public async Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link)
         {
             var Email = await _db.Users.Where(u => u.UserId == ToUserId).FirstOrDefaultAsync();
 
             var Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
+            var fromEmail = new MailAddress("hemal04121@gmail.com");
             var toEmail = new MailAddress(Email.Email);
-            var fromEmailPassword = "pmbqpeqxflbwwyjt";
+            var fromEmailPassword = "qmdbskpvcugmcztp";
             string subject = "Mission Invitation";
-            string body = "You Have Recieved Mission Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + viewmodel.link;
+            string body = "You Have Recieved Mission Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 
             var smtp = new SmtpClient
             {
