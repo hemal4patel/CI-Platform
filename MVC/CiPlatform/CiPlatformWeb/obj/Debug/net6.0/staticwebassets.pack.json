@@ -153,6 +153,10 @@
       "PackagePath": "staticwebassets\\images\\add1.png"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\animal-welfare-2.jpg",
+      "PackagePath": "staticwebassets\\images\\animal-welfare-2.jpg"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\arrow.png",
       "PackagePath": "staticwebassets\\images\\arrow.png"
     },
@@ -187,6 +191,10 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\cross.png",
       "PackagePath": "staticwebassets\\images\\cross.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\customer-engagement.jfif",
+      "PackagePath": "staticwebassets\\images\\customer-engagement.jfif"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\deadline.png",
@@ -289,6 +297,10 @@
       "PackagePath": "staticwebassets\\images\\info.png"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\laptop-working.jpg",
+      "PackagePath": "staticwebassets\\images\\laptop-working.jpg"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\left.png",
       "PackagePath": "staticwebassets\\images\\left.png"
     },
@@ -325,6 +337,10 @@
       "PackagePath": "staticwebassets\\images\\next.png"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\no-image-found.png",
+      "PackagePath": "staticwebassets\\images\\no-image-found.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\organization.png",
       "PackagePath": "staticwebassets\\images\\organization.png"
     },
@@ -343,6 +359,10 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\previous.png",
       "PackagePath": "staticwebassets\\images\\previous.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\reports-story.webp",
+      "PackagePath": "staticwebassets\\images\\reports-story.webp"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\images\\right-arrow.png",
@@ -459,10 +479,6 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\js\\volunteeringMission.js",
-      "PackagePath": "staticwebassets\\js\\volunteeringMission.js"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\lib\\bootstrap\\LICENSE",

@@ -79,6 +79,26 @@ div {
     opacity: 1;
 }
 
+.pagination li {
+    margin: 10px 5px;
+}
+
+    .pagination li a {
+        padding: 5px 11px;
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 4px;
+        color: #414141;
+        border: 1px solid #d0d0d0;
+        /*padding-bottom: 8px;*/
+    }
+
+.pagination .active a {
+    color: #fff;
+    background-color: #F88634 !important;
+    border-color: #F88634 !important;
+}
+
 .box-card {
     border: 1px solid #E8E8E8;
     width: 150px;
@@ -111,14 +131,6 @@ div {
     height: 70px;
     width: 70px;
 }
-
-/*#grid-view {
-    display: block;
-}
-
-#list-view {
-    display: block;
-}*/
 
 @media (max-width: 1024.98px) {
     #grid-view {

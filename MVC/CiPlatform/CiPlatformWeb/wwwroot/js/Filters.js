@@ -3,9 +3,12 @@ var selectedCountry = null;
 var selectedSortCase = null;
 var currentUrl = window.location.href;
 let allDropdowns = $('.dropdown ul');
+var pagesize = 3;
 
-spFilterSortSearchPagination();
-spFilterStory();
+spFilterSortSearchPagination(1);
+spFilterStory(1);
+
+
 
 $('#searchText').on('keyup', function () {
     if (currentUrl.includes("PlatformLanding")) {
@@ -25,23 +28,135 @@ allDropdowns.on('change', function () {
     }
 });
 
-function spFilterSortSearchPagination() {
+function spFilterSortSearchPagination(pageNo) {
     var CountryId = selectedCountry;
     var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var searchText = $("#searchText").val();
     var sortCase = selectedSortCase;
-    console.log(UserId);
+    console.log(pageNo);
     $.ajax({
         type: 'POST',
         url: '/Mission/PlatformLanding',
-        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, sortCase: sortCase, UserId: UserId },
+        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, sortCase: sortCase, UserId: UserId, pageNo: pageNo, pagesize: pagesize },
         success: function (data) {
-            console.log("Done");
             var view = $(".partialViews");
             view.empty();
-            view.append(data);
+            view.append(data);          
+            totalMission();
+
+            if (document.getElementById('missionCount') != null) {
+                var totalRecords = document.getElementById('missionCount').innerText;
+            }
+            let totalPages = Math.ceil(totalRecords / pagesize);
+
+            if (totalPages <= 1) {
+                $('#pagination-container').parent().parent().hide();
+            }
+            let paginationHTML = `
+            <li class="page-item">
+            <a class="pagination-link first-page" aria-label="Previous">
+            <span aria-hidden="true"><img src="/images/previous.png" /></span>
+            </a>
+            </li>
+            <li class="page-item">
+            <a class="pagination-link previous-page" aria-label="Previous">
+            <span aria-hidden="true"><img src="/images/left.png" /></span>
+            </a>
+            </li>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                let activeClass = '';
+                if (i === (pageNo === undefined ? 1 : pageNo)) {
+                    activeClass = ' active';
+                }
+                paginationHTML += `
+                <li class="page-item ${activeClass}">
+                <a class="pagination-link" data-page="${i}">${i}</a>
+                </li>`;
+            }
+
+            paginationHTML += `
+            <li class="page-item">
+            <a class="pagination-link next-page" aria-label="Next">
+            <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
+            </a>
+            </li>
+            <li class="page-item">
+            <a class="pagination-link last-page" aria-label="Next">
+            <span aria-hidden="true"><img src="/images/next.png" /></span>
+            </a>
+            </li>`;
+
+            $('#pagination-container').empty()
+            $('#pagination-container').append(paginationHTML)
+            $('#pagination-container').parent().parent().show();
+
+
+
+            // pagination
+            let currentPage;
+
+            $(document).on('click', '.pagination li', (function () {
+                $('.pagination li').each(function () {
+                    if ($(this).hasClass('active')) {
+
+                        currentPage = $(this).find('a').data('page');
+                        $(this).removeClass('active');
+                    }
+                })
+                pageNo = currentPage;
+                if ($(this).find('a').hasClass('first-page')) {
+                    pageNo = 1;
+                    currentPage = pageNo;
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == 1) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                }
+                else if ($(this).find('a').hasClass('last-page')) {
+                    pageNo = totalPages;
+                    currentPage = pageNo;
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == totalPages) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                }
+                else if ($(this).find('a').hasClass('previous-page')) {
+                    if (currentPage > totalPages) {
+                        pageNo = currentPage - 1;
+                    }
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == pageNo) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                    currentPage = pageNo;
+
+                } else if ($(this).find('a').hasClass('next-page')) {
+                    if (currentPage < totalPages) {
+                        pageNo = currentPage + 1;
+                    }
+
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == pageNo) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                    currentPage = pageNo;
+
+                } else {
+                    $(this).addClass('active')
+
+                    pageNo = $(this).find('a').data('page');
+                    currentPage = pageNo;
+
+                }
+                spFilterSortSearchPagination(pageNo);
+            }));
         },
         error: function (error) {
             console.log(error)
@@ -49,7 +164,7 @@ function spFilterSortSearchPagination() {
     });
 }
 
-function spFilterStory() {
+function spFilterStory(pageNo) {
     var CountryId = selectedCountry;
     var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
@@ -58,17 +173,141 @@ function spFilterStory() {
     $.ajax({
         type: 'POST',
         url: '/Story/StoryListing',
-        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText },
+        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, pageNo: pageNo, pagesize: pagesize },
         success: function (data) {
-            console.log("Done");
             var view = $(".storyPartial");
             view.empty();
             view.append(data);
+
+            if (document.getElementById('storyCount') != null) {
+                var totalRecords = document.getElementById('storyCount').innerText;
+            }
+            let totalPages = Math.ceil(totalRecords / pagesize);
+
+            if (totalPages <= 1) {
+                $('#pagination-container').parent().parent().hide();
+            }
+            let paginationHTML = `
+                    <li class="page-item">
+                    <a class="pagination-link first-page" aria-label="Previous">
+                    <span aria-hidden="true"><img src="/images/previous.png" /></span>
+                    </a>
+                    </li>
+                    <li class="page-item">
+                    <a class="pagination-link previous-page" aria-label="Previous">
+                    <span aria-hidden="true"><img src="/images/left.png" /></span>
+                    </a>
+                    </li>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                let activeClass = '';
+                if (i === (pageNo === undefined ? 1 : pageNo)) {
+                    activeClass = ' active';
+                }
+                paginationHTML += `
+                    <li class="page-item ${activeClass}">
+                    <a class="pagination-link" data-page="${i}">${i}</a>
+                    </li>`;
+            }
+
+            paginationHTML += `
+                <li class="page-item">
+                <a class="pagination-link next-page" aria-label="Next">
+                <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
+                </a>
+                </li>
+                <li class="page-item">
+                <a class="pagination-link last-page" aria-label="Next">
+                <span aria-hidden="true"><img src="/images/next.png" /></span>
+                </a>
+                </li>`;
+
+            $('#pagination-container').empty()
+            $('#pagination-container').append(paginationHTML)
+            $('#pagination-container').parent().parent().show();
+
+
+
+            // pagination
+            let currentPage;
+
+            $(document).on('click', '.pagination li', (function () {
+                $('.pagination li').each(function () {
+                    if ($(this).hasClass('active')) {
+
+                        currentPage = $(this).find('a').data('page');
+                        $(this).removeClass('active');
+                    }
+                })
+                pageNo = currentPage;
+                if ($(this).find('a').hasClass('first-page')) {
+                    pageNo = 1;
+                    currentPage = pageNo;
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == 1) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                }
+                else if ($(this).find('a').hasClass('last-page')) {
+                    pageNo = totalPages;
+                    currentPage = pageNo;
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == totalPages) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                }
+                else if ($(this).find('a').hasClass('previous-page')) {
+                    if (currentPage > totalPages) {
+                        pageNo = currentPage - 1;
+                    }
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == pageNo) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                    currentPage = pageNo;
+
+                } else if ($(this).find('a').hasClass('next-page')) {
+                    if (currentPage < totalPages) {
+                        pageNo = currentPage + 1;
+                    }
+
+                    $('.pagination li').find('a').each(function () {
+                        if ($(this).data('page') == pageNo) {
+                            $(this).parent().addClass('active')
+                        }
+                    })
+                    currentPage = pageNo;
+
+                } else {
+                    $(this).addClass('active')
+
+                    pageNo = $(this).find('a').data('page');
+                    currentPage = pageNo;
+
+                }
+                spFilterStory(pageNo);
+            }));
         },
         error: function (error) {
             console.log(error)
         }
     });
+}
+
+function totalMission() {
+    var count = document.getElementById('missionCount').innerText;
+    $('#exploreText').text("Explore " + count + " missions");
+    
+
+    if (count == 0) {
+        $('.NoMissionFound').show();
+    }
+    else {
+        $('.NoMissionFound').hide();
+    }
 }
 
 $("#sortList li").click(function () {
@@ -150,7 +389,12 @@ allDropdowns.each(function () {
                 // Uncheck the corresponding checkbox
                 const checkboxElement = dropdown.find(`input[type="checkbox"][value="${selectedOptionValue}"]`);
                 checkboxElement.prop('checked', false);
-                spFilterSortSearchPagination();
+                if (currentUrl.includes("PlatformLanding")) {
+                    spFilterSortSearchPagination();
+                }
+                else if (currentUrl.includes("StoryListing")) {
+                    spFilterStory();
+                }
                 if (filterPills.children('.pill').length === 1) {
                     filterPills.children('.closeAll').remove();
                 }
@@ -162,7 +406,12 @@ allDropdowns.each(function () {
                 filterPills.children('.closeAll').click(function () {
                     allDropdowns.find('input[type="checkbox"]').prop('checked', false);
                     filterPills.empty();
-                    spFilterSortSearchPagination();
+                    if (currentUrl.includes("PlatformLanding")) {
+                        spFilterSortSearchPagination();
+                    }
+                    else if (currentUrl.includes("StoryListing")) {
+                        spFilterStory();
+                    }
                 });
 
                 //add the pill before the close icon
@@ -189,7 +438,12 @@ allDropdowns.each(function () {
             }
         }
 
-        spFilterSortSearchPagination();
+        if (currentUrl.includes("PlatformLanding")) {
+            spFilterSortSearchPagination();
+        }
+        else if (currentUrl.includes("StoryListing")) {
+            spFilterStory();
+        }
     });
 });
 
@@ -199,15 +453,15 @@ function addToFavourites(missionId) {
         type: 'POST',
         data: { missionId: missionId },
         success: function (result) {
-            console.log(result)
+            console.log(missionId)
             var icon = $("#" + missionId);
             var text = $(".favText");
             if (icon.hasClass("bi-heart")) {
-                icon.removeClass("text-dark bi-heart").addClass("text-danger bi-heart-fill");
+                icon.removeClass("text-light bi-heart").addClass("text-danger bi-heart-fill");
                 text.empty();
                 text.append("Added to favourites");
             } else {
-                icon.removeClass("text-danger bi-heart-fill").addClass("text-dark bi-heart");
+                icon.removeClass("text-danger bi-heart-fill").addClass("text-light bi-heart");
                 text.empty();
                 text.append("Add to favourites");
             }
@@ -229,7 +483,6 @@ $('.rateMission i').click(function () {
         type: 'POST',
         data: { rating: rating, missionId: missionId },
         success: function () {
-            console.log("done");
             selectedIcon.removeClass('bi-star').addClass('bi-star-fill text-warning');
             unselectedIcon.removeClass('bi-star-fill text-warning').addClass('bi-star');
         },

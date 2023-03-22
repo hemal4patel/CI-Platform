@@ -2,9 +2,10 @@
 @{
     string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
-    string UserId = ViewBag.UserId;
-    long Id = long.Parse(UserId);
-    //int TotalRecords = ViewBag.totalRecords;
+    //string UserId = ViewBag.UserId;
+    //long Id = long.Parse(UserId);
+    var Id = Convert.ToInt64(ViewBag.UserId);
+    var TotalRecords = ViewBag.totalRecords;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.DisplayMissionCards
@@ -12,6 +13,20 @@
 @*<div class="partialViews">*@
 <!-- GRID OR LIST -->
 <!-- GRID PARTIAL -->
+
+<script>
+    if (localStorage.getItem('view') == 0) {
+        $('#grid-view').show();
+        $('#list-view').hide();
+    }
+    else {
+        $('#list-view').show();
+        $('#grid-view').hide();
+    }
+</script>
+
+<span class="d-none" id="missionCount">@TotalRecords</span>
+
 <div id="grid-view">
     <div class="container my-3 pb-5">
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 missions" id="missions">
@@ -38,30 +53,43 @@
                     @*<span>@hasApplied</span>*@
                     <div class="card h-100 shadow-sm border-light">
                         <div class="position-relative">
-                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                             class="card-img-top" alt="...">
+                            @if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
+                            {                                
+                                @foreach (var image in obj.MissionMedia)
+                                {                                    
+                                    @if (image.Default == 1)
+                                    {
+                                        <img src=@image.MediaPath class="card-img-top" alt="">
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                            }
 
-                            <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                                <a class="text-decoration-none text-white">
+                            <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                                <div class="text-decoration-none text-white">
                                     <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
                                     <span class="mission-city">@obj.City.Name</span>
-                                </a>
+                                </div>
 
-                            </button>
+                            </div>
 
                             <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill" onclick="addToFavourites(@obj.MissionId)">
-                                @if (obj.FavouriteMissions.Any(fm => fm.UserId == Id))
+                                @if (obj.FavouriteMissions.Any(fm => fm.UserId == Id && fm.MissionId == obj.MissionId))
                                 {
-                                    <i class="bi bi-heart-fill text-danger @obj.MissionId" data-mission-id="@obj.MissionId"></i>
+                                    <i class="bi bi-heart-fill text-danger" id="@obj.MissionId"></i>
                                 }
                                 else
                                 {
-                                    <i class="bi bi-heart text-light @obj.MissionId" data-mission-id="@obj.MissionId"></i>
+                                    <i class="bi bi-heart text-light" id="@obj.MissionId"></i>
                                 }
+
                             </button>
 
                             <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter-@MissionId">
-                                    <img src="~/images/user.png" alt="" class="img-fluid">
+                                <img src="~/images/user.png" alt="" class="img-fluid">
                             </button>
                             <div class="modal fade" id="exampleModalCenter-@MissionId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -260,9 +288,21 @@
                     <span class="mission-id">@MissionId</span>
                     <span class="d-none mission-country">@obj.CountryId</span>
                     <div class="col-md-4 position-relative">
-                        <img src="~/images/Plantation-and-Afforestation-programme.png"
+                        @*<img src="~/images/Plantation-and-Afforestation-programme.png"
                          class="img-fluid rounded-start" alt=""
-                         style="height:100%; width:100%; background-size: cover; background-position: center;">
+                         style="height:100%; width:100%; background-size: cover; background-position: center;">*@
+
+                        @if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
+                        {
+                            @foreach (var image in obj.MissionMedia)
+                            {
+                                <img src=@image.MediaPath class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;">
+                            }
+                        }
+                        else
+                        {
+                            <img src="~/images/no-image-found.png" class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;" />
+                        }
 
                         @if (hasApplied)
                         {
@@ -280,21 +320,22 @@
                             }
                         }
 
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                            <a href="" class="text-decoration-none text-white">
+                        <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                            <div class="text-decoration-none text-white">
                                 <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
                                 <span class="mission-city">@obj.City.Name</span>
-                            </a>
-                        </button>
+                            </div>
+                        </div>
+
 
                         <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill" onclick="addToFavourites(@obj.MissionId)">
-                            @if (obj.FavouriteMissions.Any(fm => fm.UserId == Id))
+                            @if (obj.FavouriteMissions.Any(fm => fm.UserId == Id && fm.MissionId == obj.MissionId))
                             {
-                                <i class="bi bi-heart-fill text-danger @obj.MissionId" data-mission-id="@obj.MissionId"></i>
+                                <i class="bi bi-heart-fill text-danger" id="@obj.MissionId"></i>
                             }
                             else
                             {
-                                <i class="bi bi-heart text-light @obj.MissionId" data-mission-id="@obj.MissionId"></i>
+                                <i class="bi bi-heart text-light" id="@obj.MissionId"></i>
                             }
                         </button>
 
@@ -460,3 +501,4 @@
     </div>
 </div>
 @*</div>*@
+

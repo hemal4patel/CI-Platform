@@ -56,22 +56,14 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        public async Task<IActionResult> PlatformLanding (string searchText, int? countryId, string? cityId, string? themeId, string? skillId, int? sortCase, string? userId)
+        public async Task<IActionResult> PlatformLanding (string searchText, int? countryId, string? cityId, string? themeId, string? skillId, int? sortCase, string? userId, int? pageNo, int? pagesize)
         {
-            //if (HttpContext.Session.GetString("Email") != null)
-            //{
-            //    ViewBag.Email = HttpContext.Session.GetString("Email");
-            //    ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            //    ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            //}
-
-            //var UserId = Convert.ToInt64(ViewBag.UserId);
-
-            //var response = _db.Missions.FromSql($"exec spFilterSortSearchPagination @searchText={searchText}, @countryId={countryId}, @cityId={cityId}, @themeId={themeId}, @skillId={skillId}, @sortCase = {sortCase}, @userId = {userId}");
-
-            //var items = await response.ToListAsync();
-
-            //var MissionIds = items.Select(m => m.MissionId).ToList();
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                ViewBag.Email = HttpContext.Session.GetString("Email");
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            }
 
             IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
 
@@ -80,8 +72,6 @@ namespace CiPlatformWeb.Controllers
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-
-                // Call the stored procedure
                 SqlCommand command = new SqlCommand("spFilterSortSearchPagination", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("@countryId", SqlDbType.VarChar).Value = countryId != null ? countryId : null;
@@ -91,8 +81,8 @@ namespace CiPlatformWeb.Controllers
                 command.Parameters.Add("@searchText", SqlDbType.VarChar).Value = searchText;
                 command.Parameters.Add("@sortCase", SqlDbType.VarChar).Value = sortCase;
                 command.Parameters.Add("@userId", SqlDbType.VarChar).Value = userId;
-                command.Parameters.Add("@pageSize", SqlDbType.Int).Value = 9;
-                command.Parameters.Add("@pageNo", SqlDbType.Int).Value = 1;
+                command.Parameters.Add("@pageSize", SqlDbType.Int).Value = pagesize;
+                command.Parameters.Add("@pageNo", SqlDbType.Int).Value = pageNo;
                 SqlDataReader reader = command.ExecuteReader();
 
                 List<long> MissionIds = new List<long>();
@@ -109,10 +99,10 @@ namespace CiPlatformWeb.Controllers
                     MissionIds.Add(missionId);
                 }
 
-                var UserId = Convert.ToInt64(ViewBag.UserId);
 
                 var vm = new DisplayMissionCards();
 
+                var UserId = Convert.ToInt64(ViewBag.UserId);
                 vm.MissionList = _missionlist.GetMissions(MissionIds);
                 vm.UserList = _missionlist.GetUserList(UserId);
 
@@ -133,7 +123,7 @@ namespace CiPlatformWeb.Controllers
                 var FavoriteMissionId = _db.FavouriteMissions.Where(fm => fm.MissionId == missionId && fm.UserId == userId).FirstOrDefault();
                 _db.FavouriteMissions.Remove(FavoriteMissionId);
                 _db.SaveChanges();
-                return RedirectToAction("PlatformLanding", "Mission");
+                return Ok();
             }
 
             // Add the mission to favorites for the user
@@ -141,7 +131,7 @@ namespace CiPlatformWeb.Controllers
             _db.FavouriteMissions.Add(favoriteMission);
             _db.SaveChanges();
 
-            return RedirectToAction("PlatformLanding", "Mission");
+            return Ok();
         }
 
 
@@ -179,6 +169,8 @@ namespace CiPlatformWeb.Controllers
             if (alredyRated != null)
             {
                 alredyRated.Rating = rating;
+                alredyRated.UpdatedAt= DateTime.Now;
+                _db.Update(alredyRated);
                 _db.SaveChanges();
             }
             else
@@ -211,16 +203,28 @@ namespace CiPlatformWeb.Controllers
 
         [HttpPost]
         public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
-        {
-            var missionInvite = new MissionInvite()
-            {
-                FromUserId = FromUserId,
-                ToUserId = ToUserId,
-                MissionId = MissionId,
-            };
+        {           
 
-            _db.MissionInvites.Add(missionInvite);
-            await _db.SaveChangesAsync();
+            if (_db.MissionInvites.Any(m => m.MissionId == MissionId && m.ToUserId == ToUserId && m.FromUserId == FromUserId))
+            {
+                var MissionInvite = _db.MissionInvites.Where(m => m.MissionId == MissionId && m.ToUserId == ToUserId && m.FromUserId == FromUserId).FirstOrDefault();
+                MissionInvite.UpdatedAt = DateTime.Now;
+                _db.Update(MissionInvite);
+                _db.SaveChanges();
+            }
+
+            else
+            {
+                var missionInvite = new MissionInvite()
+                {
+                    FromUserId = FromUserId,
+                    ToUserId = ToUserId,
+                    MissionId = MissionId,
+                };
+
+                _db.MissionInvites.Add(missionInvite);
+                await _db.SaveChangesAsync();
+            }            
 
             var MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
             string link = MissionLink;

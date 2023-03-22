@@ -8,10 +8,12 @@
     string UserName = ViewBag.UserName;
     string UserId = ViewBag.UserId;
     long Id = long.Parse(UserId);
-    //int TotalRecords = ViewBag.totalRecords;
+    var TotalRecords = ViewBag.totalRecords;
 }
 
 <partial name="FilterBarPartial" />
+
+<span class="d-none" id="total-records">@TotalRecords</span>
 
 <!-- PILLS -->
 <div class="container my-4 filter-pills" id="filter-pills">
@@ -21,7 +23,7 @@
 <div class="container my-4">
     <div class="row">
         <div class="col-9">
-            <h3>Explore  missions</h3>
+            <h3 id="exploreText"></h3>
         </div>
         <div class="col-2 sort">
             <div class="dropdown">
@@ -56,10 +58,14 @@
     <partial name="GridViewPartial" />
 </div>*@
 
-    @*<partial name="_MissionDisplayPartial" />*@
+@*<partial name="_MissionDisplayPartial" />*@
 
 
 <div class="partialViews"></div>
+
+<div class="container NoMissionFound text-center mt-5">
+    <h3>No Mission Found</h3>
+</div>
 
 
 <!-- LIST PARTIAL -->
@@ -67,19 +73,26 @@
     <partial name="ListViewPartial" />
 </div>*@
 
+<center>
+    <div class="container">
+        <nav aria-label="Page navigation example" class="pagination justify-content-center">
+            <ul class="pagination" id="pagination-container">
+            </ul>
+        </nav>
+    </div>
+</center>
+
 
 <script>
     function show_grid() {
         document.getElementById("grid-view").style.display = "block";
         document.getElementById("list-view").style.display = "none";
+        localStorage.setItem('view', 0);
     }
 
     function show_list() {
         document.getElementById("list-view").style.display = "block";
         document.getElementById("grid-view").style.display = "none";
+        localStorage.setItem('view', 1);
     }
-
-    //function removeFilters() {
-    //    document.getElementById("filter-pills").style.display = "none";
-    //}
 </script>

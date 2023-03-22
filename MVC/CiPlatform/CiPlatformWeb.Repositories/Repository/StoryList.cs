@@ -21,6 +21,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<Story> GetStories (List<long> StoryIds)
         {
             return _db.Stories.Where(s => StoryIds.Contains(s.StoryId))
+                .Include(s => s.StoryMedia)
                 .Include(s => s.Mission)
                 .ThenInclude(s => s.Theme)
                 .Include(s => s.User)

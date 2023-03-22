@@ -1,5 +1,11 @@
 ﻿@model CiPlatformWeb.Entities.ViewModels.StoryListingViewModel
 
+@{
+    var totalRecords = ViewBag.totalRecords;
+}
+
+<span class="d-none" id="storyCount">@totalRecords</span>
+
 <div class="container my-5 pb-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach (var obj in Model.StoryList)
@@ -7,8 +13,17 @@
             <div class="col">
                 <div class="card h-100">
                     <div class="card-img position-relative">
-                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                         class="card-img-top " alt="...">
+                        @if(obj.StoryMedia.Any(s => s.StoryId == obj.StoryId))
+                        {
+                            @foreach(var image in obj.StoryMedia)
+                            {
+                                <img src=@image.Path class="card-img-top" alt="">
+                            }
+                        }
+                        else
+                        {
+                            <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                        }
                         <button class="btn-share-story rounded-pill px-4 py-2 position-absolute top-50 start-50 translate-middle">
                             View Details &nbsp;
                             <i class="bi bi-arrow-right"></i>

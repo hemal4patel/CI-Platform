@@ -52,7 +52,8 @@ namespace CiPlatformWeb.Repositories.Repository
                     .Include(m => m.GoalMissions)
                     .Include(m => m.MissionApplications)
                     .Include(m => m.FavouriteMissions)
-                    .Include(m => m.MissionMedia).ToList().OrderBy(ml => MissionIds.IndexOf(ml.MissionId));
+                    .Include(m => m.MissionMedia)
+                    .ToList().OrderBy(ml => MissionIds.IndexOf(ml.MissionId));
 
             return MissionList;
         }
@@ -70,9 +71,9 @@ namespace CiPlatformWeb.Repositories.Repository
 
             var Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            var fromEmail = new MailAddress("hemal04121@gmail.com");
+            var fromEmail = new MailAddress("");
             var toEmail = new MailAddress(Email.Email);
-            var fromEmailPassword = "qmdbskpvcugmcztp";
+            var fromEmailPassword = "";
             string subject = "Mission Invitation";
             string body = "You Have Recieved Mission Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 

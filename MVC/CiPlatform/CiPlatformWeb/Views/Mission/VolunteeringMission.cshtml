@@ -46,43 +46,38 @@
         <div class="col-lg-6">
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/img1.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/img1.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/image1.png" />
-                    </div>
+                    @if (Model.MissionDetails.MissionMedia.Any(m => m.MissionId == MissionId))
+                    {
+                        @foreach (var image in Model.MissionDetails.MissionMedia)
+                        {
+                            <div class="swiper-slide">
+                                <img src=@image.MediaPath />
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                    }
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/img1.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/img11.png" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/image1.png" />
-                    </div>
-
+                    @if (Model.MissionDetails.MissionMedia.Any(m => m.MissionId == MissionId))
+                    {
+                        @foreach (var image in Model.MissionDetails.MissionMedia)
+                        {
+                            <div class="swiper-slide">
+                                <img src=@image.MediaPath />
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                    }
                 </div>
 
             </div>
@@ -169,12 +164,12 @@
                     <button class="btn-share rounded-pill p-2 w-100" onclick="addToFavourites(@Model.MissionDetails.MissionId)">
                         @if (Model.MissionDetails.FavouriteMissions.Any(fm => fm.UserId == Id))
                         {
-                            <i class="bi bi-heart-fill text-danger " id="@Model.MissionDetails.MissionId"></i>
+                            <i class="bi bi-heart-fill text-danger" id="@Model.MissionDetails.MissionId"></i>
                             <span class="favText">Added to Favourites</span>
                         }
                         else
                         {
-                            <i class="bi bi-heart text-light @Model.MissionDetails.MissionId"></i>
+                            <i class="bi bi-heart text-light" id="@Model.MissionDetails.MissionId"></i>
                             <span class="favText">Add to Favourites</span>
                         }
 
@@ -302,7 +297,7 @@
                 else if (Model.MissionDetails.MissionApplications.Any(m => m.UserId == Id && m.ApprovalStatus == "PENDING"))
                 {
                     <button class="rounded-pill px-4 py-2" style="background: #F88634; color: white; border: 2px solid #F88634;">
-                        Applied
+                        Status Pending
                     </button>
                 }
                 else
@@ -461,9 +456,21 @@
                     <div class="d-flex justify-content-start mt-4">
                         <p>Skills</p>
                         <p class="ms-5">
-                            @foreach (var skill in Model.MissionDetails.MissionSkills)
+                            @* @foreach (var skill in Model.MissionDetails.MissionSkills)
                             {
-                                @skill.Skill.SkillName <br />
+                            @skill.Skill.SkillName <br />
+                            }*@
+
+                            @if (Model.MissionDetails.MissionSkills.Any())
+                            {
+                                @foreach (var skill in Model.MissionDetails.MissionSkills)
+                                {
+                                    @skill.Skill.SkillName <br />
+                                }
+                            }
+                            else
+                            {
+                                <span>No Skills required</span>
                             }
                         </p>
                     </div>
@@ -476,14 +483,16 @@
                     <div class="d-flex justify-content-start mt-3 mb-3">
                         <p>Rating</p>
                         <div class="ms-5">
-                            @for (var i = 0; i < missionRating; i++)
+                            @for (var i = 0; i < 5; i++)
                             {
-                                <i class="bi bi-star-fill text-warning m-1"></i>
-
-                            }
-                            @for (var i = 5; i > missionRating; i--)
-                            {
-                                <i class="bi bi-star m-1"></i>
+                                if (i < missionRating)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-star"></i>
+                                }
                             }
                         </div>
                     </div>
@@ -522,23 +531,6 @@
                     </div>
 
                 </div>
-
-                @*<hr class="mb-0">
-                <div class="mt-0 row g-0">
-                <div class="col-1">
-                <button class="border-end border-secondary p-2" style="border: none;">
-                <img src="~/images/left.png" alt="">
-                </button>
-                </div>
-                <div class="col-10 mt-2 text-center">
-                1 - 9 of 25 Recent Volunteers
-                </div>
-                <div class="col-1 text-end">
-                <button class="border-start border-secondary p-2" style="border: none;">
-                <img src="~/images/right-arrow1.png" alt="">
-                </button>
-                </div>
-                </div>*@
             </div>
         </div>
     </div>
@@ -571,33 +563,68 @@
                 @*<span>@hasApplied</span>*@
                 <div class="card h-100 shadow-sm border-light">
                     <div class="position-relative">
-                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                         class="card-img-top" alt="...">
+                        @if (m.MissionMedia.Any(m => m.MissionId == mMissionId))
+                        {
+                            @foreach (var image in m.MissionMedia)
+                            {
+                                @if (image.Default == 1)
+                                {
+                                    <img src=@image.MediaPath class="card-img-top" alt="">
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                        }
 
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                            <a class="text-decoration-none text-white">
+                        <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                            <div class="text-decoration-none text-white">
                                 <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
                                 <span class="mission-city">@m.City.Name</span>
-                            </a>
+                            </div>
 
-                        </button>
+                        </div>
 
                         <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill" onclick="addToFavourites(@m.MissionId)">
-                            @if (m.FavouriteMissions.Any(fm => fm.UserId == Id))
+                            @if (m.FavouriteMissions.Any(fm => fm.UserId == Id && fm.MissionId == m.MissionId))
                             {
-                                <i class="bi bi-heart-fill text-danger @m.MissionId" data-mission-id="@m.MissionId"></i>
+                                <i class="bi bi-heart-fill text-danger" id="@m.MissionId"></i>
                             }
                             else
                             {
-                                <i class="bi bi-heart text-light @m.MissionId" data-mission-id="@m.MissionId"></i>
+                                <i class="bi bi-heart text-light" id="@m.MissionId"></i>
                             }
                         </button>
 
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="~/images/user.png" alt="" class="img-fluid">
-                            </a>
+                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter-@m.MissionId">
+                            <img src="~/images/user.png" alt="" class="img-fluid">
                         </button>
+                        <div class="modal fade" id="exampleModalCenter-@m.MissionId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Recommend to a Co-Worker</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @foreach (var u in Model.UserList)
+                                        {
+                                            <div class="mt-2" style="display : flex; justify-content : space-between;">
+
+                                                <span class="me-4 ">@u.FirstName @u.LastName</span>
+
+                                                <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@m.MissionId">
+                                                    <button onclick="recommendToCoWorker(@u.UserId, @m.MissionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@m.MissionId">Invite</button>
+                                                </span>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
                             <span class="mission-theme">@m.Theme.Title</span>
                         </div>
@@ -616,13 +643,16 @@
                                 </h6>
                             </div>
                             <div class="col text-end">
-                                @for (var i = 0; i < mmissionRating; i++)
+                                @for (var i = 0; i < 5; i++)
                                 {
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                }
-                                @for (var i = 5; i > mmissionRating; i--)
-                                {
-                                    <i class="bi bi-star"></i>
+                                    if (i < mmissionRating)
+                                    {
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-star"></i>
+                                    }
                                 }
                             </div>
                         </div>

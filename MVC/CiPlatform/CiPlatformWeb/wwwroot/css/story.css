@@ -34,6 +34,26 @@
     display: block;
 }
 
+.pagination li {
+    margin: 10px 5px;
+}
+
+    .pagination li a {
+        padding: 5px 11px;
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 4px;
+        color: #414141;
+        border: 1px solid #d0d0d0;
+        /*padding-bottom: 8px;*/
+    }
+
+.pagination .active a {
+    color: #fff;
+    background-color: #F88634 !important;
+    border-color: #F88634 !important;
+}
+
 @media (max-width: 767.98px) {
     .img-header .text {
         display: none;
