@@ -48,15 +48,6 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
             }
-
-            //var UserId = Convert.ToInt64(ViewBag.UserId);
-
-            //var response = _db.Stories.FromSql($"exec spFilterStory @searchText={searchText}, @countryId={countryId}, @cityId={cityId}, @themeId={themeId}, @skillId={skillId}");
-
-            //var items = await response.ToListAsync();
-
-            //var StoryIds = items.Select(m => m.StoryId).ToList();
-
             IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
 
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -94,6 +85,97 @@ namespace CiPlatformWeb.Controllers
 
                 return PartialView("_StoryListing", vm);
             }
+        }
+
+
+        public IActionResult ShareStory ()
+        {
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                ViewBag.Email = HttpContext.Session.GetString("Email");
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            }
+            var userId = Convert.ToInt64(ViewBag.UserId);
+
+            var vm = new ShareStoryViewModel();
+            vm.MissionTitles = _storyList.GetMissions();
+
+            return View(vm);
+        }
+
+
+        public IActionResult GetStory (long missionId)
+        {
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                ViewBag.Email = HttpContext.Session.GetString("Email");
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            }
+            var Id = Convert.ToInt64(ViewBag.UserId);
+            var userId = (long) Id;
+
+            var story = _storyList.GetDraftedStory(missionId, userId);
+
+            return Json(story);
+        }
+
+        [HttpPost]
+        public IActionResult SaveStory (ShareStoryViewModel viewmodel, long storyId)
+        {
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                ViewBag.Email = HttpContext.Session.GetString("Email");
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            }
+            var Id = Convert.ToInt64(ViewBag.UserId);
+            var userId = (long) Id;
+
+            if(storyId != 0)
+            {
+
+                var draftStory = _storyList.GetDraftedStory(storyId);
+
+                draftStory.Title = viewmodel.StoryTitle;
+                draftStory.Description = viewmodel.StoryDescription;
+                draftStory.Status = "DRAFT";
+                draftStory.UpdatedAt = DateTime.Now;
+
+                _db.Update(draftStory);
+                _db.SaveChanges();
+
+                return Ok(new { message = "Story saved as draft!!!"});
+            }
+            else
+            {
+                if (_storyList.CheckPublishedStory(viewmodel.MissionId, userId) == true)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    var newStory = new Story()
+                    {
+                        MissionId = viewmodel.MissionId,
+                        UserId = userId,
+                        Title = viewmodel.StoryTitle,
+                        Description = viewmodel.StoryDescription,
+                        Status = "DRAFT",
+                        CreatedAt = DateTime.Now,
+                    };
+
+                    _db.Stories.Add(newStory);
+                    _db.SaveChanges();
+
+                    return Ok();
+                }            
+               
+            }
+
+            return Ok();
+
         }
     }
 }

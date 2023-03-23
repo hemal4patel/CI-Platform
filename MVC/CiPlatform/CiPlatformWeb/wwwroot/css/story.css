@@ -22,6 +22,12 @@
     opacity: 1;
 }
 
+    .btn-share-story:hover {
+        color: black;
+        background-color: #fff;
+        border: 2px solid #fff;
+    }
+
 .card-img button {
     display: none;
 }
@@ -54,8 +60,96 @@
     border-color: #F88634 !important;
 }
 
+.btn-cancel {
+    border-color: #757575;
+    color: #757575;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #757575;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .btn-cancel:hover {
+        color: #fff;
+        border-color: #757575;
+        background-color: #757575;
+    }
+
+.btn-cancel-margin {
+    margin-right: auto;
+}
+
+.btn-save {
+    border-color: #F88634;
+    color: #F88634;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .btn-save:hover {
+        color: #fff;
+        border-color: #F88634;
+        background-color: #F88634;
+    }
+
+
+.drag-drop {
+    width: 100%;
+    margin: 10px auto;
+    text-align: center;
+    border: 1px dashed #757575;
+    padding: 30px 0;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+    .drag-drop img {
+    }
+
+#image-list {
+    flex-wrap: wrap;
+}
+
+    #image-list .image-item img {
+        width: 4em;
+        height: 4em;
+    }
+
+    #image-list .image-item {
+        position: relative;
+        margin: 2px 10px 15px 0;
+    }
+
+        #image-list .image-item .close-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 6px;
+            top: 0px;
+        }
+
 @media (max-width: 767.98px) {
     .img-header .text {
         display: none;
+    }
+}
+
+@media (max-width: 424.98px) {
+    .btns {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .btn-cancel-margin {
+        margin-right: 0px;
+        margin-top: 20px;
+    }
+
+    .btns1 {
+        flex-direction: column;
+        text-align: center;
     }
 }

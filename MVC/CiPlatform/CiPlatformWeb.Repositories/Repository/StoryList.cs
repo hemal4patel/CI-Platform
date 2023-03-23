@@ -28,5 +28,26 @@ namespace CiPlatformWeb.Repositories.Repository
                 .ToList();
         }
 
+        public List<Mission> GetMissions ()
+        {
+            return _db.Missions.ToList();
+        }
+
+        public Story GetDraftedStory (long missionId, long userId)
+        {
+            return _db.Stories.Where(s => s.MissionId == missionId && s.UserId == userId && s.Status == "DRAFT").FirstOrDefault();
+        }
+
+        public Story GetDraftedStory (long StoryId)
+        {
+            return _db.Stories.Where(s => s.StoryId == StoryId).FirstOrDefault();
+        }
+
+        public bool CheckPublishedStory (long MissionId, long userId)
+        {
+            return _db.Stories.Any(s => s.MissionId == MissionId && s.UserId == userId && s.Status == "PUBLISHED");
+        }
+
+
     }
 }
