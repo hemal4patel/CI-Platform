@@ -59,6 +59,9 @@
           }
         }
       },
+      "jQuery/1.6.3": {
+        "type": "package"
+      },
       "MessagePack/2.1.152": {
         "type": "package",
         "dependencies": {
@@ -2563,6 +2566,9 @@
           }
         }
       },
+      "SweetAlert/1.0.0": {
+        "type": "package"
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4138,6 +4144,12 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
+      "toastr/2.1.1": {
+        "type": "package",
+        "dependencies": {
+          "jQuery": "1.6.3"
+        }
+      },
       "CiPlatformWeb.Entities/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -4146,7 +4158,8 @@
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.12"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.12",
+          "toastr": "2.1.1"
         },
         "compile": {
           "bin/placeholder/CiPlatformWeb.Entities.dll": {}
@@ -4163,7 +4176,8 @@
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.EntityFrameworkCore": "7.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.12"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.12",
+          "toastr": "2.1.1"
         },
         "compile": {
           "bin/placeholder/CiPlatformWeb.Repositories.dll": {}
@@ -4229,6 +4243,24 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "jQuery/1.6.3": {
+      "sha512": "vb0p7+eRmc2evBCT9W7PCUupqWiDMi9/ofBHN99LraRzLY5jPKMeFzFYBoMgwA8TiwRoFDke5hiDDLsvae7qMg==",
+      "type": "package",
+      "path": "jquery/1.6.3",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Scripts/jquery-1.6.3-vsdoc.js",
+        "Content/Scripts/jquery-1.6.3.js",
+        "Content/Scripts/jquery-1.6.3.min.js",
+        "Tools/install.ps1",
+        "Tools/jquery-1.6.3-vsdoc-para.js",
+        "Tools/uninstall.ps1",
+        "jquery.1.6.3.nupkg.sha512",
+        "jquery.nuspec"
       ]
     },
     "MessagePack/2.1.152": {
@@ -7326,6 +7358,28 @@
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.nuspec",
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
+      ]
+    },
+    "SweetAlert/1.0.0": {
+      "sha512": "eaHJph59CQhNUf5h6k02LaWM31az2t8JBHcJuVXW2dZ+QU2TDkHCxOUSNdAVIgfj+ivQsBTp6laWt8H0nKAydQ==",
+      "type": "package",
+      "path": "sweetalert/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/Content/bootstrap/mixins.less",
+        "content/Content/bootstrap/variables.less",
+        "content/Content/sweetalert/bootstrap-sweetalert.png",
+        "content/Content/sweetalert/docs.css",
+        "content/Content/sweetalert/sweet-alert-animations.less",
+        "content/Content/sweetalert/sweet-alert-combine.less",
+        "content/Content/sweetalert/sweet-alert.css",
+        "content/Content/sweetalert/sweet-alert.less",
+        "content/Content/sweetalert/thumbs-up.jpg",
+        "content/Controllers/SweetController.cs",
+        "content/Views/Sweet/Alert.cshtml",
+        "sweetalert.1.0.0.nupkg.sha512",
+        "sweetalert.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -11242,6 +11296,23 @@
         "system.xml.xdocument.nuspec"
       ]
     },
+    "toastr/2.1.1": {
+      "sha512": "h/688XvzYk1xVYn213ryU+HCElE4n/drYzAHJkAi9LsSUPS3EbI6wGlvCglBUt7i4h5iESgAVarYaigjQmVpqg==",
+      "type": "package",
+      "path": "toastr/2.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/content/toastr.css",
+        "content/content/toastr.less",
+        "content/content/toastr.min.css",
+        "content/content/toastr.scss",
+        "content/scripts/toastr.js",
+        "content/scripts/toastr.min.js",
+        "toastr.2.1.1.nupkg.sha512",
+        "toastr.nuspec"
+      ]
+    },
     "CiPlatformWeb.Entities/1.0.0": {
       "type": "project",
       "path": "../CiPlatform.Entities/CiPlatformWeb.Entities.csproj",
@@ -11262,7 +11333,9 @@
       "Microsoft.EntityFrameworkCore.Design >= 7.0.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.3",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.3",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.12"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.12",
+      "SweetAlert >= 1.0.0",
+      "toastr >= 2.1.1"
     ]
   },
   "packageFolders": {
@@ -11345,6 +11418,14 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[6.0.12, )"
+          },
+          "SweetAlert": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          },
+          "toastr": {
+            "target": "Package",
+            "version": "[2.1.1, )"
           }
         },
         "imports": [

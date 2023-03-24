@@ -35,7 +35,6 @@ function spFilterSortSearchPagination(pageNo) {
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var searchText = $("#searchText").val();
     var sortCase = selectedSortCase;
-    console.log(pageNo);
     $.ajax({
         type: 'POST',
         url: '/Mission/PlatformLanding',

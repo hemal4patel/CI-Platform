@@ -13,6 +13,10 @@
 
 <link rel="stylesheet" href="~/css/story.css" asp-append-version="true" />
 
+@*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>*@
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
@@ -23,17 +27,17 @@
 
 
 <div class="container my-5">
-    <h1>Share your story</h1>
+    <h1>Share Your Story</h1>
     <div class="form" id="story">
 
         <div class="row mt-2 gy-4">
             <div class="col-md">
                 <label asp-for="MissionId" class="form-label">Select Mission</label>
                 <select asp-for="MissionId" class="form-select" aria-label="Default select example" id="missionId">
-                    <option selected disabled>Select your mission</option>
-                    @foreach(var m in Model.MissionTitles)
+                    <option selected disabled value="default">Select your mission</option>
+                    @foreach (var m in Model.MissionTitles)
                     {
-                        <option value="@m.MissionId">@m.Title</option>
+                        <option value="@m.Mission.MissionId">@m.Mission.Title</option>
                     }
                 </select>
                 <span asp-validation-for="MissionId" class="text-danger"></span>
@@ -52,14 +56,15 @@
 
 
         <div class="form-group mt-4">
-            <label for="exampleFormControlTextarea1" class="form-label my-0">My Story</label>
-            <textarea asp-for="StoryDescription" class="form-control" id="editor" rows="3"></textarea>
-            <span asp-validation-for="StoryDescription" class="text-danger"></span>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1" class="form-label my-0">My Story</label>
+                <textarea asp-for="StoryDescription" class="form-control summernote" id="editor" rows="3"></textarea>
+            </div>
         </div>
 
         <div class="mt-4">
             <label asp-for="VideoUrl" class="form-label">Enter Video URL</label>
-            <textarea asp-for="VideoUrl" class="form-control" id="videoUrls" placeholder="Enter your url(Youtube links only)" rows="3"></textarea>
+            <textarea asp-for="VideoUrl" class="form-control" id="videoUrls" placeholder="Enter your url(Youtube links only)" rows="5"></textarea>
         </div>
 
         <div class="mt-4">
@@ -78,18 +83,18 @@
         </div>
 
         <div class="d-flex mt-4 btns">
-            <div class="btn-cancel-margin p-2">
+            <div class="btn-cancel-margin mt-2 p-2">
                 <a href='javascript:history.go(-1)' class="btn-cancel rounded-pill px-4 py-2 text-decoration-none">Cancel</a>
             </div>
             <div class="btns1 d-flex">
                 <div class="p-2">
-                    <button class="btn-save rounded-pill px-4 py-2">Preview</button>
+                    <button class="btn-save rounded-pill px-4 py-2" disabled id="previewStory">Preview</button>
                 </div>
                 <div class="p-2">
                     <button class="btn-save rounded-pill px-4 py-2" id="saveStory">Save</button>
                 </div>
                 <div class="p-2">
-                    <button class="btn-save rounded-pill px-4 py-2">Submit</button>
+                    <button class="btn-save rounded-pill px-4 py-2" @*disabled*@ id="submitStory">Submit</button>
                 </div>
             </div>
         </div>

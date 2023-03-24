@@ -10,7 +10,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 {
     public class ShareStoryViewModel
     {
-        public List<Mission>? MissionTitles { get; set; }
+        public List<MissionApplication>? MissionTitles { get; set; }
 
         [Required]
         public long MissionId { get; set; }
@@ -24,8 +24,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required]
         public string StoryDescription { get; set;}
 
-        public string? VideoUrl { get; set; }
+        public string[]? VideoUrl { get; set; } 
 
-        public string? Images { get; set; }
+        public string[]? Images { get; set; }
     }
 }

@@ -7,7 +7,15 @@ $('#missionId').click(function () {
         data: { missionId: missionId },
         success: function (result) {
             if (result != null) {
-                console.log(result.storyId);
+
+                //swal.fire({
+                //    position: 'top-end',
+                //    icon: 'warning',
+                //    title: 'Draft story available!!!',
+                //    showConfirmButton: false,
+                //    timer: 3000
+                //})
+
                 $('#storyTitle').val(result.title);
 
                 const date = new Date(result.createdAt);
@@ -15,14 +23,27 @@ $('#missionId').click(function () {
                 const mm = String(date.getMonth() + 1).padStart(2, '0');
                 const dd = String(date.getDate()).padStart(2, '0');
                 const formattedDate = `${yyyy}-${mm}-${dd}`;
-
                 $('#date').val(formattedDate);
+
                 $('#editor').val(result.description);
-                $('#storyId').val(result.storyId);
+                //$('.summernote').summernote('code', result.description);
+                //$("#editor.note-codable").val(result.description);
+                //$("textarea.summernote").val(result.description);
+
+                var urls = "";
+                for (var i = 0; i < result.storyMedia.length; i++) {
+                    if (result.storyMedia[i].type === "video") {
+                        urls += result.storyMedia[i].path + "\n";
+                    }
+                }
+                $('#videoUrls').val(urls);
             }
             else {
-                $('#storyId').val('');
-                console.log($('#storyId').val());
+                $('#storyTitle').val('');
+                $('#date').val('');
+                $('#editor').val('');
+                $('#videoUrls').val('');
+                $('#image-list').val('');
             }
         },
         error: function (error) {
@@ -32,6 +53,23 @@ $('#missionId').click(function () {
 });
 
 $('#saveStory').click(function () {
+    var urls = null;
+    var u = $('#videoUrls').val();
+    if (u != null) {
+        urls = u.split('\n');
+    }
+
+    var input = $('#file-input');
+    var images = input[0].files; // Note: use [0] to access the actual input element
+
+    var imgUrl = [];
+
+    for (var i = 0; i < images.length; i++) {
+        var file = images[i];
+        var filename = file.name;
+        imgUrl.push(filename);
+    }
+
     $.ajax({
         type: 'POST',
         url: '/Story/SaveStory',
@@ -40,16 +78,88 @@ $('#saveStory').click(function () {
             StoryTitle: $('#storyTitle').val(),
             Date: $('#date').val(),
             StoryDescription: $('#editor').val(),
-            storyId: $('#storyId').val()
+            VideoUrl: urls,
+            Images: imgUrl
         },
         success: function (result) {
-            alert(result.message);
+            swal.fire({
+                position: 'top-end',
+                icon: result.icon,
+                title: result.message,
+                showConfirmButton: false,
+                timer: 3000
+            })
+            if (result.published == 0) {
+                $('#previewStory').removeAttr('disabled');
+                $('#submitStory').removeAttr('disabled');
+            }
+            if (result.published == 1) {
+                $('#missionId').val('default');
+                $('#storyTitle').val('');
+                $('#date').val('');
+                $('#editor').val('');
+                $('#videoUrls').val('');
+                $('#image-list').val('');
+            }
         },
         error: function (error) {
             console.log(error);
         }
     });
 });
+
+
+$('#submitStory').click(function () {
+
+    var urls = null;
+    var u = $('#videoUrls').val();
+    if (u != null) {
+        urls = u.split('\n');
+    }
+
+    var input = $('#file-input');
+    var images = input[0].files; // Note: use [0] to access the actual input element
+
+    var imgUrl = [];
+
+    for (var i = 0; i < images.length; i++) {
+        var file = images[i];
+        var filename = file.name;
+        imgUrl.push(filename);
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/Story/SubmitStory',
+        data: {
+            MissionId: $('#missionId').val(),
+            StoryTitle: $('#storyTitle').val(),
+            Date: $('#date').val(),
+            StoryDescription: $('#editor').val(),
+            VideoUrl: urls,
+            Images: imgUrl
+        },
+        success: function (result) {
+            swal.fire({
+                position: 'top-end',
+                icon: result.icon,
+                title: result.message,
+                showConfirmButton: false,
+                timer: 3000
+            })
+            $('#missionId').val('default');
+            $('#storyTitle').val('');
+            $('#date').val('');
+            $('#editor').val('');
+            $('#videoUrls').val('');
+            $('#image-list').empty();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+});
+
 
 //$('#editor').summernote({
 //    height: 200, // set the height of the editor

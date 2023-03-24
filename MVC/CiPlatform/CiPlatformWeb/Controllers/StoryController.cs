@@ -99,7 +99,7 @@ namespace CiPlatformWeb.Controllers
             var userId = Convert.ToInt64(ViewBag.UserId);
 
             var vm = new ShareStoryViewModel();
-            vm.MissionTitles = _storyList.GetMissions();
+            vm.MissionTitles = _storyList.GetMissions(userId);
 
             return View(vm);
         }
@@ -122,7 +122,7 @@ namespace CiPlatformWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveStory (ShareStoryViewModel viewmodel, long storyId)
+        public IActionResult SaveStory (ShareStoryViewModel viewmodel)
         {
             if (HttpContext.Session.GetString("Email") != null)
             {
@@ -133,48 +133,72 @@ namespace CiPlatformWeb.Controllers
             var Id = Convert.ToInt64(ViewBag.UserId);
             var userId = (long) Id;
 
-            if(storyId != 0)
+            var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
+            if (story != null)
             {
+                _storyList.UpdateDraftedStory(viewmodel, story);
 
-                var draftStory = _storyList.GetDraftedStory(storyId);
+                if (viewmodel.VideoUrl != null)
+                {
+                    _storyList.UpdateStoryUrls(story.StoryId, viewmodel.VideoUrl);
+                }
 
-                draftStory.Title = viewmodel.StoryTitle;
-                draftStory.Description = viewmodel.StoryDescription;
-                draftStory.Status = "DRAFT";
-                draftStory.UpdatedAt = DateTime.Now;
+                if (viewmodel.Images != null)
+                {
+                    _storyList.UpdateStoryImages(story.StoryId, viewmodel.Images);
+                }
 
-                _db.Update(draftStory);
-                _db.SaveChanges();
-
-                return Ok(new { message = "Story saved as draft!!!"});
+                return Ok(new { icon = "warning", message = "Story saved as draft!!!", published = 0 });
             }
             else
             {
                 if (_storyList.CheckPublishedStory(viewmodel.MissionId, userId) == true)
                 {
-                    return Ok();
+                    return Ok(new { icon = "error", message = "Only one story for a mission is allowed!!!", published = 1 });
                 }
                 else
                 {
-                    var newStory = new Story()
-                    {
-                        MissionId = viewmodel.MissionId,
-                        UserId = userId,
-                        Title = viewmodel.StoryTitle,
-                        Description = viewmodel.StoryDescription,
-                        Status = "DRAFT",
-                        CreatedAt = DateTime.Now,
-                    };
-
-                    _db.Stories.Add(newStory);
-                    _db.SaveChanges();
-
-                    return Ok();
-                }            
-               
+                    _storyList.AddNewStory(viewmodel, userId);
+                    return Ok(new { icon = "success", message = "New story saved as draft!!!", published = 0 });
+                }
             }
+        }
 
-            return Ok();
+
+        [HttpPost]
+        public IActionResult SubmitStory (ShareStoryViewModel viewmodel)
+        {
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                ViewBag.Email = HttpContext.Session.GetString("Email");
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            }
+            var Id = Convert.ToInt64(ViewBag.UserId);
+            var userId = (long) Id;
+
+
+            var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
+            if (story != null)
+            {
+                _storyList.SubmitStory(viewmodel, story);
+
+                if (viewmodel.VideoUrl != null)
+                {
+                    _storyList.UpdateStoryUrls(story.StoryId, viewmodel.VideoUrl);
+                }
+
+                if (viewmodel.Images != null)
+                {
+                    _storyList.UpdateStoryImages(story.StoryId, viewmodel.Images);
+                }
+
+                return Ok(new { icon = "success", message = "Story submitted!!! Approval is pending!!!" });
+            }
+            else
+            {
+                return Ok(new { icon = "error", message = "Only one story for a mission is allowed!!!" });
+            }
 
         }
     }
