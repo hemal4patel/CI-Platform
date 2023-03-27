@@ -8,14 +8,6 @@ $('#missionId').click(function () {
         success: function (result) {
             if (result != null) {
 
-                //swal.fire({
-                //    position: 'top-end',
-                //    icon: 'warning',
-                //    title: 'Draft story available!!!',
-                //    showConfirmButton: false,
-                //    timer: 3000
-                //})
-
                 $('#storyTitle').val(result.title);
 
                 const date = new Date(result.createdAt);
@@ -25,25 +17,32 @@ $('#missionId').click(function () {
                 const formattedDate = `${yyyy}-${mm}-${dd}`;
                 $('#date').val(formattedDate);
 
-                $('#editor').val(result.description);
-                //$('.summernote').summernote('code', result.description);
-                //$("#editor.note-codable").val(result.description);
-                //$("textarea.summernote").val(result.description);
+                $('.note-editable').html(result.description);
+                $('#image-list').empty();
 
                 var urls = "";
                 for (var i = 0; i < result.storyMedia.length; i++) {
                     if (result.storyMedia[i].type === "video") {
                         urls += result.storyMedia[i].path + "\n";
                     }
+                    else {
+                        var image = $('<img>').attr('src', '/Upload/' + result.storyMedia[i].path);
+                        var closeIcon = $('<button>').text('x').click(function () {
+                            $(this).parent().remove(); // remove the parent div containing both the image and the close button
+                        });
+                        var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
+                        $('#image-list').append(item);
+                    }
                 }
+
                 $('#videoUrls').val(urls);
             }
             else {
                 $('#storyTitle').val('');
                 $('#date').val('');
-                $('#editor').val('');
+                $('.note-editable').text('');
                 $('#videoUrls').val('');
-                $('#image-list').val('');
+                $('#image-list').empty();
             }
         },
         error: function (error) {
@@ -53,34 +52,39 @@ $('#missionId').click(function () {
 });
 
 $('#saveStory').click(function () {
+
+    var formData = new FormData();
+
     var urls = null;
     var u = $('#videoUrls').val();
     if (u != null) {
         urls = u.split('\n');
+
+        for (var i = 0; i < urls.length; i++) {
+            formData.append("VideoUrl", urls[i]);
+        }
+    }
+    else {
+        formData.append("VideoUrl", null);
     }
 
     var input = $('#file-input');
-    var images = input[0].files; // Note: use [0] to access the actual input element
-
-    var imgUrl = [];
-
-    for (var i = 0; i < images.length; i++) {
-        var file = images[i];
-        var filename = file.name;
-        imgUrl.push(filename);
+    var files = input[0].files;
+    for (var i = 0; i < files.length; i++) {
+        formData.append("Images", files[i]);
     }
+
+    formData.append("MissionId", $('#missionId').val());
+    formData.append("StoryTitle", $('#storyTitle').val());
+    formData.append("Date", $('#date').val());
+    formData.append("StoryDescription", $('.note-editable').html());
 
     $.ajax({
         type: 'POST',
         url: '/Story/SaveStory',
-        data: {
-            MissionId: $('#missionId').val(),
-            StoryTitle: $('#storyTitle').val(),
-            Date: $('#date').val(),
-            StoryDescription: $('#editor').val(),
-            VideoUrl: urls,
-            Images: imgUrl
-        },
+        data: formData,
+        processData: false,
+        contentType: false,
         success: function (result) {
             swal.fire({
                 position: 'top-end',
@@ -97,9 +101,9 @@ $('#saveStory').click(function () {
                 $('#missionId').val('default');
                 $('#storyTitle').val('');
                 $('#date').val('');
-                $('#editor').val('');
+                $('.note-editable').text('');
                 $('#videoUrls').val('');
-                $('#image-list').val('');
+                $('#image-list').empty();
             }
         },
         error: function (error) {
@@ -111,34 +115,38 @@ $('#saveStory').click(function () {
 
 $('#submitStory').click(function () {
 
+    var formData = new FormData();
+
     var urls = null;
     var u = $('#videoUrls').val();
     if (u != null) {
         urls = u.split('\n');
+
+        for (var i = 0; i < urls.length; i++) {
+            formData.append("VideoUrl", urls[i]);
+        }
+    }
+    else {
+        formData.append("VideoUrl", null);
     }
 
     var input = $('#file-input');
-    var images = input[0].files; // Note: use [0] to access the actual input element
-
-    var imgUrl = [];
-
-    for (var i = 0; i < images.length; i++) {
-        var file = images[i];
-        var filename = file.name;
-        imgUrl.push(filename);
+    var files = input[0].files;
+    for (var i = 0; i < files.length; i++) {
+        formData.append("Images", files[i]);
     }
+
+    formData.append("MissionId", $('#missionId').val());
+    formData.append("StoryTitle", $('#storyTitle').val());
+    formData.append("Date", $('#date').val());
+    formData.append("StoryDescription", $('.note-editable').html());
 
     $.ajax({
         type: 'POST',
         url: '/Story/SubmitStory',
-        data: {
-            MissionId: $('#missionId').val(),
-            StoryTitle: $('#storyTitle').val(),
-            Date: $('#date').val(),
-            StoryDescription: $('#editor').val(),
-            VideoUrl: urls,
-            Images: imgUrl
-        },
+        data: formData,
+        processData: false,
+        contentType: false,
         success: function (result) {
             swal.fire({
                 position: 'top-end',
@@ -150,7 +158,7 @@ $('#submitStory').click(function () {
             $('#missionId').val('default');
             $('#storyTitle').val('');
             $('#date').val('');
-            $('#editor').val('');
+            $('.note-editable').text('');
             $('#videoUrls').val('');
             $('#image-list').empty();
         },
@@ -161,13 +169,7 @@ $('#submitStory').click(function () {
 });
 
 
-//$('#editor').summernote({
-//    height: 200, // set the height of the editor
-//    toolbar: [
-//        // add formatting options to the toolbar
-//        ['style', ['bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'underline']]
-//    ]
-//});
+
 
 // drag and drop images in share your story page
 

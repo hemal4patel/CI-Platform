@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\CiPlatformWeb.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\achieved.png",
+      "PackagePath": "staticwebassets\\Upload\\achieved.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\css\\mission.css",
       "PackagePath": "staticwebassets\\css\\mission.css"
     },

@@ -1,5 +1,6 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,11 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void UpdateDraftedStory (ShareStoryViewModel viewmodel, Story draftedStory);
 
-        public void UpdateStoryImages (long storyId, string[] images);
+        public void UpdateStoryImages (long storyId, List<IFormFile> images);
 
         public void UpdateStoryUrls (long storyId, string[] url);
 
         public void AddNewStory (ShareStoryViewModel viewmodel, long userId);
-
 
         public void SubmitStory (ShareStoryViewModel viewmodel, Story draftedStory);
     }

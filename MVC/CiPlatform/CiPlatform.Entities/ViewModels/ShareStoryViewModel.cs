@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,8 +25,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required]
         public string StoryDescription { get; set;}
 
-        public string[]? VideoUrl { get; set; } 
+        public string[]? VideoUrl { get; set; }   
 
-        public string[]? Images { get; set; }
+        public List<IFormFile>? Images { get; set; }
     }
 }

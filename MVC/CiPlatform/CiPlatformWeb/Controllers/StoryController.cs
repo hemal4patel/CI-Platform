@@ -133,6 +133,10 @@ namespace CiPlatformWeb.Controllers
             var Id = Convert.ToInt64(ViewBag.UserId);
             var userId = (long) Id;
 
+            //string[] urlArray = viewmodel.VideoUrl;
+            //viewmodel.VideoUrl = urlArray;
+
+
             var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
             if (story != null)
             {

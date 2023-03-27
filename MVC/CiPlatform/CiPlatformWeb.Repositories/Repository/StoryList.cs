@@ -1,6 +1,7 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -86,13 +87,18 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-        public void UpdateStoryImages (long storyId, string[] images)
+        public void UpdateStoryImages (long storyId, List<IFormFile> images)
         {
             //delete records
             var media = _db.StoryMedia.Where(s => s.StoryId == storyId && s.Type == "img");
-            if (media.Any())
+            foreach(var m in media)
             {
-                _db.RemoveRange(media);
+                if (m != null)
+                {
+                    var fileName = m.Path;
+                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", fileName));
+                    _db.Remove(m);
+                }
             }
 
             //add records
@@ -100,13 +106,22 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 if (u != null)
                 {
+                    var fileName = u.FileName; 
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", fileName); 
+
                     var newMedia = new StoryMedium()
                     {
                         StoryId = storyId,
                         Type = "img",
-                        Path = u,
+                        Path = u.FileName,
                         CreatedAt = DateTime.Now,
                     };
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        u.CopyTo(stream);
+                    }
+
                     _db.StoryMedia.Add(newMedia);
                 }
             }

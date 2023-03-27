@@ -39,4 +39,12 @@
     <ProjectReference Include="..\CiPlatformWeb.Repositories\CiPlatformWeb.Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Upload\achieved.png" />
+  </ItemGroup>
+
 </Project>

@@ -42,7 +42,7 @@ function spFilterSortSearchPagination(pageNo) {
         success: function (data) {
             var view = $(".partialViews");
             view.empty();
-            view.append(data);          
+            view.append(data);
             totalMission();
 
             if (document.getElementById('missionCount') != null) {
@@ -297,16 +297,19 @@ function spFilterStory(pageNo) {
 }
 
 function totalMission() {
-    var count = document.getElementById('missionCount').innerText;
-    $('#exploreText').text("Explore " + count + " missions");
-    
+    if (document.getElementById('missionCount') != null) {
 
-    if (count == 0) {
-        $('.NoMissionFound').show();
+        var count = document.getElementById('missionCount').innerText;
+        $('#exploreText').text("Explore " + count + " missions");
+
+        if (count == 0) {
+            $('.NoMissionFound').show();
+        }
+        else {
+            $('.NoMissionFound').hide();
+        }
     }
-    else {
-        $('.NoMissionFound').hide();
-    }
+
 }
 
 $("#sortList li").click(function () {
