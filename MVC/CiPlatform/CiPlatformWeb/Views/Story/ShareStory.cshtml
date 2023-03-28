@@ -7,6 +7,7 @@
     string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
     var Id = Convert.ToInt64(ViewBag.UserId);
+    string UserAvatar = ViewBag.UserAvatar;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.ShareStoryViewModel
@@ -31,7 +32,7 @@
 <div class="container my-5">
     <h1>Share Your Story</h1>
     <div class="form" id="story">
-
+        @*<span class="" id="userId">@Id</span>*@
         <div class="row mt-2 gy-4">
             <div class="col-md">
                 <label asp-for="MissionId" class="form-label">Select Mission</label>
@@ -47,14 +48,13 @@
             <div class="col-md">
                 <label asp-for="StoryTitle" class="form-label">My Story Title</label>
                 <input asp-for="StoryTitle" type="text" id="storyTitle" class="form-control" placeholder="Enter story title">
-                <span asp-validation-for="StoryTitle" class="text-danger"></span>
+                <span asp-validation-for="StoryTitle" id="valStoryTitle" class="text-danger"></span>
             </div>
             <div class="col-md">
                 <label class="form-label">Date</label>
                 <input asp-for="Date" type="date" id="date" class="form-control" placeholder="Select date">
             </div>
         </div>
-        <span id="storyId"></span>
 
 
         <div class="form-group mt-4">
@@ -66,7 +66,7 @@
 
         <div class="mt-4">
             <label asp-for="VideoUrl" class="form-label">Enter Video URL</label>
-            <textarea asp-for="VideoUrl" class="form-control" id="videoUrls" placeholder="Enter your url(Youtube links only)" rows="5"></textarea>
+            <textarea asp-for="VideoUrl" class="form-control" id="videoUrls" placeholder="Enter your url (Youtube links only)" rows="5"></textarea>
         </div>
 
         <div class="mt-4">
@@ -89,6 +89,7 @@
                 <a href='javascript:history.go(-1)' class="btn-cancel rounded-pill px-4 py-2 text-decoration-none">Cancel</a>
             </div>
             <div class="btns1 d-flex">
+                <input type="hidden" id="UserId" value="@Id" />
                 <div class="p-2">
                     <button class="btn-save rounded-pill px-4 py-2" disabled id="previewStory">Preview</button>
                 </div>
@@ -96,7 +97,7 @@
                     <button class="btn-save rounded-pill px-4 py-2" id="saveStory">Save</button>
                 </div>
                 <div class="p-2">
-                    <button class="btn-save rounded-pill px-4 py-2" @*disabled*@ id="submitStory">Submit</button>
+                    <button class="btn-save rounded-pill px-4 py-2" disabled id="submitStory">Submit</button>
                 </div>
             </div>
         </div>

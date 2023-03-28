@@ -33,7 +33,7 @@
         border: 2px solid #fff;
     }
 
-.card-img button {
+.card-img a {
     display: none;
 }
 
@@ -41,7 +41,7 @@
     filter: brightness(50%);
 }
 
-.card-img:hover button {
+.card-img:hover a {
     display: block;
 }
 
@@ -134,26 +134,95 @@
             top: 0px;
         }
 
-@media (max-width: 767.98px) {
-    .img-header .text {
-        display: none;
+.recommend-btn {
+    border-color: #757575;
+    color: #757575;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #757575;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .recommend-btn:hover {
+        color: #fff;
+        border-color: #757575;
+        background-color: #757575;
+    }
+
+.mission-btn {
+    border-color: #F88634;
+    color: #F88634;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .mission-btn:hover {
+        color: #fff;
+        border-color: #F88634;
+        background-color: #F88634;
+    }
+
+.tabs .nav-tabs .nav-link.active {
+    color: #414141;
+    background-color: #fff;
+    border-color: #fff #fff #414141;
+    border-width: 3px;
+    font-weight: 600;
+}
+
+.tabs .nav-link {
+    color: #757575;
+}
+
+@media (max-width: 425.98px) {
+
+    .recommend-btn,
+    .mission-btn {
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
     }
 }
 
-@media (max-width: 424.98px) {
-    .btns {
-        flex-direction: column-reverse;
+@media (max-width: 374.98px) {
+    .user-img {
         text-align: center;
     }
 
-    .btn-cancel-margin {
-        margin-right: 0px;
-        margin-top: 20px;
-    }
-
-    .btns1 {
+    .user-data {
         flex-direction: column;
         text-align: center;
+        align-items: center;
     }
-}
 
+        .user-data .rounded-pill {
+            margin-top: 20px;
+        }
+
+    @media (max-width: 767.98px) {
+        .img-header .text {
+            display: none;
+        }
+    }
+
+    @media (max-width: 424.98px) {
+        .btns {
+            flex-direction: column-reverse;
+            text-align: center;
+        }
+
+        .btn-cancel-margin {
+            margin-right: 0px;
+            margin-top: 20px;
+        }
+
+        .btns1 {
+            flex-direction: column;
+            text-align: center;
+        }
+    }

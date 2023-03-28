@@ -6,6 +6,7 @@
     //long Id = long.Parse(UserId);
     var Id = Convert.ToInt64(ViewBag.UserId);
     var TotalRecords = ViewBag.totalRecords;
+    string UserAvatar = ViewBag.UserAvatar;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.DisplayMissionCards
@@ -15,7 +16,7 @@
 <!-- GRID PARTIAL -->
 
 <script>
-    if (localStorage.getItem('view') == 0) {
+    if (localStorage.getItem('view') == 1) {
         $('#grid-view').show();
         $('#list-view').hide();
     }

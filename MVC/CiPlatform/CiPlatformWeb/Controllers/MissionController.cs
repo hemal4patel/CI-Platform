@@ -33,6 +33,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
 
             var userId = Convert.ToInt64(ViewBag.UserId);
@@ -63,6 +64,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
 
             IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
@@ -143,6 +145,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
             var userId = Convert.ToInt64(ViewBag.UserId);
 

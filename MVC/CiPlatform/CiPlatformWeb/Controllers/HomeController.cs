@@ -89,6 +89,14 @@ namespace CiPlatformWeb.Controllers
                         HttpContext.Session.SetString("Email", user.Email);
                         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
                         HttpContext.Session.SetString("UserId", user.UserId.ToString());
+                        if(user.Avatar is not null)
+                        {
+                            HttpContext.Session.SetString("UserAvatar", user.Avatar);
+                        }
+                        else
+                        {
+                            HttpContext.Session.SetString("UserAvatar", "");
+                        }
                         return RedirectToAction("PlatformLanding", "Mission");
                     }
                     else
@@ -181,7 +189,8 @@ namespace CiPlatformWeb.Controllers
             HttpContext.Session.SetString("Email", "");
             HttpContext.Session.SetString("UserName", "");
             HttpContext.Session.SetString("UserId", "");
-            return View("Index");
+            HttpContext.Session.SetString("UserAvatar", "");
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

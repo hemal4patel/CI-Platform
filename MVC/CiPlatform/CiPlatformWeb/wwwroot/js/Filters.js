@@ -177,6 +177,7 @@ function spFilterStory(pageNo) {
             var view = $(".storyPartial");
             view.empty();
             view.append(data);
+            totalStory();
 
             if (document.getElementById('storyCount') != null) {
                 var totalRecords = document.getElementById('storyCount').innerText;
@@ -187,16 +188,16 @@ function spFilterStory(pageNo) {
                 $('#pagination-container').parent().parent().hide();
             }
             let paginationHTML = `
-                    <li class="page-item">
-                    <a class="pagination-link first-page" aria-label="Previous">
-                    <span aria-hidden="true"><img src="/images/previous.png" /></span>
-                    </a>
-                    </li>
-                    <li class="page-item">
-                    <a class="pagination-link previous-page" aria-label="Previous">
-                    <span aria-hidden="true"><img src="/images/left.png" /></span>
-                    </a>
-                    </li>`;
+            <li class="page-item">
+            <a class="pagination-link first-page" aria-label="Previous">
+            <span aria-hidden="true"><img src="/images/previous.png" /></span>
+            </a>
+            </li>
+            <li class="page-item">
+            <a class="pagination-link previous-page" aria-label="Previous">
+            <span aria-hidden="true"><img src="/images/left.png" /></span>
+            </a>
+            </li>`;
 
             for (let i = 1; i <= totalPages; i++) {
                 let activeClass = '';
@@ -204,22 +205,22 @@ function spFilterStory(pageNo) {
                     activeClass = ' active';
                 }
                 paginationHTML += `
-                    <li class="page-item ${activeClass}">
-                    <a class="pagination-link" data-page="${i}">${i}</a>
-                    </li>`;
+                <li class="page-item ${activeClass}">
+                <a class="pagination-link" data-page="${i}">${i}</a>
+                </li>`;
             }
 
             paginationHTML += `
-                <li class="page-item">
-                <a class="pagination-link next-page" aria-label="Next">
-                <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
-                </a>
-                </li>
-                <li class="page-item">
-                <a class="pagination-link last-page" aria-label="Next">
-                <span aria-hidden="true"><img src="/images/next.png" /></span>
-                </a>
-                </li>`;
+            <li class="page-item">
+            <a class="pagination-link next-page" aria-label="Next">
+            <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
+            </a>
+            </li>
+            <li class="page-item">
+            <a class="pagination-link last-page" aria-label="Next">
+            <span aria-hidden="true"><img src="/images/next.png" /></span>
+            </a>
+            </li>`;
 
             $('#pagination-container').empty()
             $('#pagination-container').append(paginationHTML)
@@ -310,6 +311,20 @@ function totalMission() {
         }
     }
 
+}
+
+function totalStory() {
+    if (document.getElementById('storyCount') != null) {
+
+        var count = document.getElementById('storyCount').innerText;
+
+        if (count == 0) {
+            $('.NoStoryFound').show();
+        }
+        else {
+            $('.NoStoryFound').hide();
+        }
+    }
 }
 
 $("#sortList li").click(function () {
@@ -497,7 +512,18 @@ $('.rateMission i').click(function () {
 $('.commentButton').click(function () {
     var comment = $('.newComment').val();
     var missionId = $(this).data('mission-id');
-    if (comment != null) {
+    console.log(comment.length);
+    if (comment.length == 0) {
+        $('.valComment').show();
+
+        $('.newComment').on('input', function () {
+            if ($('.newComment').val().length != 0) {
+                $('.valComment').hide();
+            }
+        })
+
+        return;
+    }
         console.log(comment);
         $.ajax({
             type: 'POST',
@@ -510,10 +536,8 @@ $('.commentButton').click(function () {
                 console.log("error");
             }
         });
-    }
-    else {
-        console.log("null");
-    }
+    
+   
 });
 
 function recommendToCoWorker(ToUserId, MissionId, FromUserId) {

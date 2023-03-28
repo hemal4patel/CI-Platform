@@ -9,6 +9,7 @@
     string UserId = ViewBag.UserId;
     long Id = long.Parse(UserId);
     var TotalRecords = ViewBag.totalRecords;
+    string UserAvatar = ViewBag.UserAvatar;
 }
 
 <partial name="FilterBarPartial" />
@@ -87,12 +88,12 @@
     function show_grid() {
         document.getElementById("grid-view").style.display = "block";
         document.getElementById("list-view").style.display = "none";
-        localStorage.setItem('view', 0);
+        localStorage.setItem('view', 1);
     }
 
     function show_list() {
         document.getElementById("list-view").style.display = "block";
         document.getElementById("grid-view").style.display = "none";
-        localStorage.setItem('view', 1);
+        localStorage.setItem('view', 0);
     }
 </script>

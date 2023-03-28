@@ -7,6 +7,7 @@
     string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
     var Id = Convert.ToInt64(ViewBag.UserId);
+    string UserAvatar = ViewBag.UserAvatar;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.VolunteeringMissionViewModel
@@ -402,6 +403,7 @@
                     <div class="mb-3">
                         <textarea class="form-control newComment" placeholder="Enter your comments..."
                                   rows="3"></textarea>
+                                  <span class="valComment text-danger" style="display: none;">Enter comment</span>
                     </div>
                     <button class="btn-apply rounded-pill px-4 py-2 commentButton" data-mission-Id="@Model.MissionDetails.MissionId">
                         Post Comment

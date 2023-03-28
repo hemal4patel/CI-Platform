@@ -4,7 +4,7 @@
     string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
     var Id = Convert.ToInt64(ViewBag.UserId);
-
+    string UserAvatar = ViewBag.UserAvatar;
 }
 
 <script>
@@ -35,7 +35,7 @@
                             aria-label="Toggle navigation" style="border:none">
                         <span><img src="~/images/list.png"></span>
                     </button>
-                    <a class="navbar-brand" asp-controller="Mission" asp-action="Index">
+                    <a class="navbar-brand" asp-controller="Mission" asp-action="PlatformLanding">
                         <img src="~/images/logo.png" alt="">
                     </a>
                 </div>
@@ -94,8 +94,17 @@
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <span>
-                                <img src="~/images/user-img.png" alt="" class="rounded-circle me-2"
+                                @*<img src="~/images/user-img.png" alt="" class="rounded-circle me-2"
+                                     width="40" height="40">*@
+                                @if(UserAvatar != ""){
+                                    <img src="~/Upload/@UserAvatar" alt="" class="rounded-circle me-2"
                                      width="40" height="40">
+                                }
+                                else
+                                {
+                                    <img src="~/Upload/no-avatar.jpg" alt="" class="rounded-circle me-2"
+                                     width="40" height="40">
+                                }
                             </span>
                             <p class="d-inline" id="profileText">
                                 @UserName 

@@ -2,9 +2,10 @@
 
 @{
     var totalRecords = ViewBag.totalRecords;
+    string UserAvatar = ViewBag.UserAvatar;
 }
 
-<span class="d-none" id="storyCount">@totalRecords</span>
+<span class="" id="storyCount">@totalRecords</span>
 
 <div class="container my-5 pb-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -13,21 +14,23 @@
             <div class="col">
                 <div class="card h-100">
                     <div class="card-img position-relative">
-                        @if(obj.StoryMedia.Any(s => s.StoryId == obj.StoryId))
+                        @if (obj.StoryMedia.Any(s => s.StoryId == obj.StoryId))
                         {
-                            @foreach(var image in obj.StoryMedia)
+                            @*@foreach (var image in obj.StoryMedia)
                             {
                                 <img src=@image.Path class="card-img-top" alt="">
-                            }
+                            }*@
+                            var path = obj.StoryMedia.Where(s => s.StoryId == obj.StoryId).FirstOrDefault();
+                            <img src="~/Upload/@path.Path" class="card-img-top" alt="">
                         }
                         else
                         {
                             <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
                         }
-                        <button class="btn-share-story rounded-pill px-4 py-2 position-absolute top-50 start-50 translate-middle">
+                        <a class="btn-share-story rounded-pill px-4 py-2 position-absolute top-50 start-50 translate-middle text-decoration-none" href="@Url.Action("StoryDetail", "Story" , new { MissionId = @obj.MissionId, UserId = @obj.UserId})">
                             View Details &nbsp;
                             <i class="bi bi-arrow-right"></i>
-                        </button>
+                        </a>
                         <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2 text-center"
                          style="color: #414141;">
                             <span>@obj.Mission.Theme.Title</span>
@@ -39,8 +42,17 @@
                             @obj.Description
                         </p>
                         <div class="d-flex align-items-center">
-                            <img src="~/images/volunteer1.png" alt="" class="rounded-circle"
+
+                            @if (obj.User.Avatar is not null)
+                            {
+                                <img src="~/Upload/@obj.User.Avatar" alt="" class="rounded-circle"
                              style="width: 50px; height: 50px;">
+                            }
+                            else
+                            {
+                                <img src="~/Upload/no-avatar.jpg" alt="" class="rounded-circle"
+                             style="width: 50px; height: 50px;">
+                            }
                             <span class="ms-3">
                                 @obj.User.FirstName @obj.User.LastName
                             </span>

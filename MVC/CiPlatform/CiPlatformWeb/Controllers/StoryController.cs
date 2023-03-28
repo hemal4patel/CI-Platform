@@ -27,6 +27,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
 
 
@@ -47,6 +48,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
             IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
 
@@ -95,6 +97,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
             var userId = Convert.ToInt64(ViewBag.UserId);
 
@@ -112,6 +115,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
             var Id = Convert.ToInt64(ViewBag.UserId);
             var userId = (long) Id;
@@ -129,12 +133,10 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
             var Id = Convert.ToInt64(ViewBag.UserId);
             var userId = (long) Id;
-
-            //string[] urlArray = viewmodel.VideoUrl;
-            //viewmodel.VideoUrl = urlArray;
 
 
             var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
@@ -177,6 +179,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
             var Id = Convert.ToInt64(ViewBag.UserId);
             var userId = (long) Id;
@@ -204,6 +207,27 @@ namespace CiPlatformWeb.Controllers
                 return Ok(new { icon = "error", message = "Only one story for a mission is allowed!!!" });
             }
 
+        }
+
+
+        public IActionResult StoryDetail (long MissionId, long UserId)
+        {
+            if (HttpContext.Session.GetString("Email") != null)
+            {
+                ViewBag.Email = HttpContext.Session.GetString("Email");
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
+            }
+            var Id = Convert.ToInt64(ViewBag.UserId);
+            var userId = (long) Id;
+
+            Story storyDetail = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
+                                .Include(s => s.StoryMedia)
+                                .Include(s => s.Mission)
+                                .Include(s => s.User).FirstOrDefault();
+
+            return View(storyDetail);
         }
     }
 }
