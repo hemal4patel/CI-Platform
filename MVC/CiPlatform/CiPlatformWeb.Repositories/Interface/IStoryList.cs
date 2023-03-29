@@ -32,5 +32,13 @@ namespace CiPlatformWeb.Repositories.Interface
         public void AddNewStory (ShareStoryViewModel viewmodel, long userId);
 
         public void SubmitStory (ShareStoryViewModel viewmodel, Story draftedStory);
+
+        public void IncreaseViewCount (long MissionId, long UserId);
+
+        public Story GetStoryDetails (long MissionId, long UserId);
+
+        public List<User> GetUserList (long userId);
+
+        public Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link);
     }
 }

@@ -190,6 +190,12 @@
 }
 
 @media (max-width: 374.98px) {
+
+    .btn-share-story {
+        display: flex;
+        align-items: center;
+    }
+
     .user-img {
         text-align: center;
     }
@@ -203,26 +209,27 @@
         .user-data .rounded-pill {
             margin-top: 20px;
         }
+}
 
-    @media (max-width: 767.98px) {
-        .img-header .text {
-            display: none;
-        }
+@media (max-width: 767.98px) {
+    .img-header .text {
+        display: none;
+    }
+}
+
+@media (max-width: 424.98px) {
+    .btns {
+        flex-direction: column-reverse;
+        text-align: center;
     }
 
-    @media (max-width: 424.98px) {
-        .btns {
-            flex-direction: column-reverse;
-            text-align: center;
-        }
-
-        .btn-cancel-margin {
-            margin-right: 0px;
-            margin-top: 20px;
-        }
-
-        .btns1 {
-            flex-direction: column;
-            text-align: center;
-        }
+    .btn-cancel-margin {
+        margin-right: 0px;
+        margin-top: 20px;
     }
+
+    .btns1 {
+        flex-direction: column;
+        text-align: center;
+    }
+}

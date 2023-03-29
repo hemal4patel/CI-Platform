@@ -15,7 +15,7 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public long PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
 
     public string? Avatar { get; set; }
 

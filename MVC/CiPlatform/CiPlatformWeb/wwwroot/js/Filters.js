@@ -232,6 +232,7 @@ function spFilterStory(pageNo) {
             let currentPage;
 
             $(document).on('click', '.pagination li', (function () {
+                console.log("hi");
                 $('.pagination li').each(function () {
                     if ($(this).hasClass('active')) {
 
@@ -333,7 +334,8 @@ $("#sortList li").click(function () {
 });
 
 $("#CountryList li").click(function () {
-
+    allDropdowns.find('input[type="checkbox"]').prop('checked', false);
+    $('.filter-pills').empty();
     var countryId = $(this).val();
     selectedCountry = countryId;
     console.log(selectedCountry);
@@ -552,3 +554,4 @@ function recommendToCoWorker(ToUserId, MissionId, FromUserId) {
         }
     });
 }
+

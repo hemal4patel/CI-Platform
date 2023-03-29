@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,7 +93,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             //delete records
             var media = _db.StoryMedia.Where(s => s.StoryId == storyId && s.Type == "img");
-            foreach(var m in media)
+            foreach (var m in media)
             {
                 if (m != null)
                 {
@@ -106,14 +108,14 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 if (u != null)
                 {
-                    var fileName = u.FileName; 
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", fileName); 
+                    var fileName = Guid.NewGuid().ToString("N") + "_" + u.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", fileName);
 
                     var newMedia = new StoryMedium()
                     {
                         StoryId = storyId,
                         Type = "img",
-                        Path = u.FileName,
+                        Path = fileName,
                         CreatedAt = DateTime.Now,
                     };
 
@@ -168,5 +170,65 @@ namespace CiPlatformWeb.Repositories.Repository
         }
 
 
+        public void IncreaseViewCount (long MissionId, long UserId)
+        {
+            Story story = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == "PUBLISHED").FirstOrDefault();
+
+            if (story != null)
+            {
+                story.StoryViews = story.StoryViews + 1;
+                story.UpdatedAt = DateTime.Now;
+                _db.Update(story);
+                _db.SaveChanges();
+            }
+        }
+
+
+        public Story GetStoryDetails (long MissionId, long UserId)
+        {
+            return _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
+                    .Include(s => s.StoryMedia)
+                    .Include(s => s.Mission)
+                    .Include(s => s.User).FirstOrDefault();
+        }
+
+
+        public List<User> GetUserList (long userId)
+        {
+            var list = _db.Users.Where(u => u.UserId != userId).ToList();
+            return list;
+        }
+
+
+        public async Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link)
+        {
+            var Email = await _db.Users.Where(u => u.UserId == ToUserId).FirstOrDefaultAsync();
+
+            var Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
+
+            var fromEmail = new MailAddress("akshayghadiya28@gmail.com");
+            var toEmail = new MailAddress(Email.Email);
+            var fromEmailPassword = "dmsmefwcumhbtthp";
+            string subject = "Mission Invitation";
+            string body = "You Have Recieved Story Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            var message = new MailMessage(fromEmail, toEmail);
+            message.Subject = subject;
+            message.Body = body;
+            message.IsBodyHtml = true;
+
+            await smtp.SendMailAsync(message);
+
+        }
     }
 }

@@ -20,9 +20,18 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
-        public void RegisterUser (User obj)
+        public void RegisterUser (RegistrationValidation obj)
         {
-            _db.Add(obj);
+            var newUser = new User()
+            {
+                FirstName = obj.FirstName,
+                LastName = obj.LastName,
+                Email = obj.Email,
+                Password = obj.Password,
+                PhoneNumber = obj.PhoneNumber,
+                CreatedAt = DateTime.Now,
+            };
+            _db.Users.Add(newUser);
             _db.SaveChanges();
         }
 

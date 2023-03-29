@@ -10,22 +10,27 @@
     string UserAvatar = ViewBag.UserAvatar;
 }
 
-@model CiPlatformWeb.Entities.DataModels.Story
+@model CiPlatformWeb.Entities.ViewModels.StoryDetailViewModel
 
 <link rel="stylesheet" href="~/css/story.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/slider.css" asp-append-version="true" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-@*<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>*@
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+
+<span class="d-none" id="storyMissionId">@Model.storyDetail.MissionId</span>
+<span class="d-none" id="storyUserId">@Model.storyDetail.UserId</span>
+<span class="d-none" id="storyId">@Model.storyDetail.StoryId</span>
+<span class="d-none" id="fromUserId">@Id</span>
 
 <div class="container my-4">
     <div class="row d-flex mt-5">
         <div class="col-lg-6">
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
                 <div class="swiper-wrapper">
-                    @if (Model.StoryMedia.Any(s => s.StoryId == Model.StoryId))
+                    @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
                     {
-                        @foreach (var image in Model.StoryMedia)
+                        @foreach (var image in Model.storyDetail.StoryMedia)
                         {
                             if (image.Type == "img")
                             {
@@ -45,9 +50,9 @@
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    @if (Model.StoryMedia.Any(s => s.StoryId == Model.StoryId))
+                    @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
                     {
-                        @foreach (var image in Model.StoryMedia)
+                        @foreach (var image in Model.storyDetail.StoryMedia)
                         {
                             if (image.Type == "img")
                             {
@@ -66,9 +71,9 @@
 
             <!-- USER IMAGE -->
             <div class="user-img mt-5">
-                @if (Model.User.Avatar is not null)
+                @if (Model.storyDetail.User.Avatar is not null)
                 {
-                    <img src="~/Upload/@Model.User.Avatar" alt="" class="rounded-circle"
+                    <img src="~/Upload/@Model.storyDetail.User.Avatar" alt="" class="rounded-circle"
                      style="width: 100px; height: 100px;">
                 }
                 else
@@ -80,26 +85,56 @@
 
             <!-- USER NAME AND VIEWS -->
             <div class="d-flex justify-content-between mt-2 user-data">
-                <div class="">@Model.User.FirstName @Model.User.LastName</div>
+                <div class="">@Model.storyDetail.User.FirstName @Model.storyDetail.User.LastName</div>
                 <div class="border border-secondary rounded-pill px-3 py-1">
-                    <i class="bi bi-eye"></i> &nbsp; 12,000 Views
+                    <i class="bi bi-eye"></i> &nbsp; @Model.storyDetail.StoryViews Views
                 </div>
             </div>
 
             <div class="user-intro mt-4">
                 <p style="font: 15px;">
-                    @Model.User.WhyIVolunteer
+                    @Model.storyDetail.User.WhyIVolunteer
                 </p>
             </div>
 
             <div class="row gy-4 buttons mt-4">
                 <div class="col-md-7">
-                    <button class="rounded-pill recommend-btn p-2 w-100">
+                    <button class="rounded-pill recommend-btn p-2 w-100 text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                         <i class="bi bi-person-plus"></i> &nbsp; Recommend to a Co-Worker
                     </button>
+
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Recommend to a Co-Worker</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    @foreach (var u in Model.userDetail)
+                                    {
+
+                                        <div class="mt-2" style="display : flex; justify-content : space-between;">
+
+                                            <span class="me-4 ">@u.FirstName @u.LastName</span>
+
+
+                                            <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@Model.storyDetail.StoryId">
+                                                <button onclick="storyInvite(@u.UserId)" class="btn btn-outline-primary model-button">
+                                                    Invite
+                                                </button>
+                                            </span>
+
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-5">
-                    <button class="rounded-pill mission-btn p-2 w-100">
+                    <button class="rounded-pill mission-btn p-2 w-100 text-decoration-none" onclick="openMission()" id="openMission">
                         Open Mission &nbsp; <i class="bi bi-arrow-right"></i>
                     </button>
                 </div>
@@ -115,14 +150,14 @@
             <ul class="nav nav-tabs mt-3">
                 <li class="nav-item">
                     <a class="nav-link active disabled" aria-current="page" href="#"
-                       style="font-size: 22px;"> @Model.Title </a>
+                       style="font-size: 22px;"> @Model.storyDetail.Title </a>
                 </li>
             </ul>
 
 
             <div class="row mt-4">
                 <p style="font: 15px;">
-                    @Html.Raw(@Model.Description)
+                    @Html.Raw(@Model.storyDetail.Description)
                 </p>
             </div>
 
@@ -130,6 +165,7 @@
     </div>
 </div>
 
+<script src="~/js/story.js" asp-append-version="true"></script>
 <script>
     //var swiper = new Swiper(".mySwiper", {
     //    loop: true,

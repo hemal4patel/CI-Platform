@@ -33,15 +33,14 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Registration (User obj, IFormCollection form)
+        public IActionResult Registration (RegistrationValidation obj)
         {
             if (ModelState.IsValid)
             {
                 var user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
-                    if (form["cnf-password"] == obj.Password)
+                    if (obj.ConfirmPassword == obj.Password)
                     {
                         _userRepository.RegisterUser(obj);
                         TempData["success"] = "Registered!!!";
@@ -70,8 +69,7 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index (User obj)
+        public IActionResult Index (LoginValidation obj)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +87,7 @@ namespace CiPlatformWeb.Controllers
                         HttpContext.Session.SetString("Email", user.Email);
                         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
                         HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                        if(user.Avatar is not null)
+                        if (user.Avatar is not null)
                         {
                             HttpContext.Session.SetString("UserAvatar", user.Avatar);
                         }
@@ -117,7 +115,6 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult ForgotPassword (ForgotPasswordValidation obj)
         {
             if (ModelState.IsValid)
@@ -152,7 +149,6 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult ResetPassword (ResetPasswordValidation obj, IFormCollection form)
         {
             if (ModelState.IsValid)

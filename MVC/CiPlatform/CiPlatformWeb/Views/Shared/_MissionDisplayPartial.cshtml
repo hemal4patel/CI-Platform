@@ -320,20 +320,20 @@
                                 <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
                             }
 
-                        @if (hasApplied)
-                        {
-                            <div class="ms-2 position-absolute top-0 start-0 text-white p-2 rounded-pill" style="background:green 0% 0% no-repeat;">
-                                <span>APPLIED</span>
-                            </div>
-                        }
                         @if (obj.MissionType.Equals("Time"))
                         {
                             if (hasDeadlinePassed || haEndDatePassed)
                             {
-                                <div class="ms-2 position-absolute top-0 start-0 text-white p-2 rounded-pill" style="background:red 0% 0% no-repeat;">
+                                <div class="position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
                                     <span>CLOSED</span>
                                 </div>
                             }
+                        }
+                        else 
+                        {                            
+                            <div class="position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                                <span>APPLIED</span>
+                            </div>
                         }
 
                         <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">

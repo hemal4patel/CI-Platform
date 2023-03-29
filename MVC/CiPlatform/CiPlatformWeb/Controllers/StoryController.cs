@@ -1,6 +1,7 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
+using CiPlatformWeb.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -222,12 +223,54 @@ namespace CiPlatformWeb.Controllers
             var Id = Convert.ToInt64(ViewBag.UserId);
             var userId = (long) Id;
 
-            Story storyDetail = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
-                                .Include(s => s.StoryMedia)
-                                .Include(s => s.Mission)
-                                .Include(s => s.User).FirstOrDefault();
+            _storyList.IncreaseViewCount(MissionId, UserId);
 
-            return View(storyDetail);
+            var vm = new StoryDetailViewModel();
+            vm.storyDetail = _storyList.GetStoryDetails(MissionId, UserId);
+            vm.userDetail = _storyList.GetUserList(userId);
+
+            return View(vm);
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> StoryInvite (long ToUserId, long StoryId, long FromUserId, long storyUserId, long storyMissionId)
+        {
+
+            if (_db.StoryInvites.Any(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId))
+            {
+                var StoryInvite = _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId).FirstOrDefault();
+                StoryInvite.UpdatedAt = DateTime.Now;
+                _db.Update(StoryInvite);
+                _db.SaveChanges();
+            }
+
+            else
+            {
+                var storyInvite = new StoryInvite()
+                {
+                    FromUserId = FromUserId,
+                    ToUserId = ToUserId,
+                    StoryId = StoryId,
+                    CreatedAt = DateTime.Now,
+                };
+
+                _db.StoryInvites.Add(storyInvite);
+                await _db.SaveChangesAsync();
+            }
+
+            var StoryLink = Url.Action("StoryDetail", "Story", new
+            {
+                MissionId = storyMissionId,
+                UserId = storyUserId
+            }, Request.Scheme);
+            string link = StoryLink;
+
+            await _storyList.SendInvitationToCoWorker(ToUserId, FromUserId, link);
+
+            return Json(new { success = true });
+        }
+
     }
 }

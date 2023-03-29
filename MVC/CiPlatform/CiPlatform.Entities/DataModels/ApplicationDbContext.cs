@@ -706,6 +706,7 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('DRAFT')")
                 .HasColumnName("status");
+            entity.Property(e => e.StoryViews).HasColumnName("story_views");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)

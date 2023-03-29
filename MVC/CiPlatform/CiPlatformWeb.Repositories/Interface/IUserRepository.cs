@@ -10,7 +10,7 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IUserRepository 
     {
-        void RegisterUser (User obj);
+        void RegisterUser (RegistrationValidation obj);
 
         User CheckUser (string email);
 
