@@ -29,7 +29,7 @@ $('#missionId').click(function () {
                     else {
                         var image = $('<img>').attr('src', '/Upload/' + result.storyMedia[i].path);
                         var closeIcon = $('<span>').text('x').click(function () {
-                            $(this).parent().remove(); // remove the parent div containing both the image and the close button
+                            $(this).parent().remove();
                         });
                         var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
                         $('#image-list').append(item);
@@ -37,6 +37,11 @@ $('#missionId').click(function () {
                 }
 
                 $('#videoUrls').val(urls);
+
+                $('.valMission').hide();
+                $('.valstoryTitle').hide();
+                $('.valDate').hide();
+                $('.valStory').hide();
             }
             else {
                 $('#storyTitle').val('');
@@ -52,66 +57,159 @@ $('#missionId').click(function () {
     });
 });
 
-$('#saveStory').click(function () {
+$('#videoUrls').on('input', function () {
+    $('.valUrlCount').hide();
+    $('.valUrl').hide();
+})
 
-    var formData = new FormData();
+function isYoutubeUrl(url) {
+    var pattern = /^.*(youtube.com\/|youtu.be\/|\/v\/|\/e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
+    return pattern.test(url);
+}
 
-    var urls = null;
-    var u = $('#videoUrls').val();
-    if (u != null) {
-        urls = u.split('\n');
+function validateUrls() {
+    var urls = $('#videoUrls').val().split('\n');
 
-        for (var i = 0; i < urls.length; i++) {
-            formData.append("VideoUrl", urls[i]);
-        }
+    if (urls.length > 20) {
+        $('.valUrlCount').show();
+        return false;
     }
     else {
-        formData.append("VideoUrl", null);
+        $('.valUrlCount').hide();
     }
 
-    var input = $('#file-input');
-    var files = input[0].files;
-    for (var i = 0; i < files.length; i++) {
-        formData.append("Images", files[i]);
-    }
-
-    formData.append("MissionId", $('#missionId').val());
-    formData.append("StoryTitle", $('#storyTitle').val());
-    formData.append("Date", $('#date').val());
-    formData.append("StoryDescription", $('.note-editable').html());
-
-    $.ajax({
-        type: 'POST',
-        url: '/Story/SaveStory',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-            swal.fire({
-                position: 'top-end',
-                icon: result.icon,
-                title: result.message,
-                showConfirmButton: false,
-                timer: 3000
-            })
-            if (result.published == 0) {
-                $('#previewStory').removeAttr('disabled');
-                $('#submitStory').removeAttr('disabled');
-            }
-            if (result.published == 1) {
-                $('#missionId').val('default');
-                $('#storyTitle').val('');
-                $('#date').val('');
-                $('.note-editable').text('');
-                $('#videoUrls').val('');
-                $('#image-list').empty();
-            }
-        },
-        error: function (error) {
-            console.log(error);
+    for (var i = 0; i < urls.length; i++) {
+        var url = urls[i].trim();
+        if (url.length > 0 && !isYoutubeUrl(url)) {
+            $('.valUrl').show();
+            return false;
         }
-    });
+    }
 
+    return true;
+}
+
+function formValidation() {
+    var flag = true;
+
+    var missionId = $('#missionId').val();
+    var storyTitle = $('#storyTitle').val();
+    var date = $('#date').val();
+    var story = $('.note-editable').text();
+
+    if (missionId == null) {
+        $('.valMission').show();
+        flag = false;
+
+        $('#missionId').on('input', function () {
+            if ($('#missionId').val().length != 0) {
+                $('.valMission').hide();
+                flag = true;
+            }
+        })
+    }
+    if (storyTitle.length == 0) {
+        $('.valstoryTitle').show();
+        flag = false;
+
+        $('#storyTitle').on('input', function () {
+            if ($('#storyTitle').val().length != 0) {
+                $('.valstoryTitle').hide();
+                flag = true;
+            }
+        })
+    }
+    if (date.length == 0) {
+        $('.valDate').show();
+        flag = false;
+
+        $('#date').on('input', function () {
+            if ($('#date').val().length != 0) {
+                $('.valDate').hide();
+                flag = true;
+            }
+        })
+    }
+    if (story.length == 0) {
+        $('.valStory').show();
+        flag = false;
+
+        $('.note-editable').on('input', function () {
+            if ($('.note-editable').text() != null) {
+                $('.valStory').hide();
+                flag = true;
+            }
+        })
+    }
+
+    var f = validateUrls();
+
+    console.log(flag && f)
+
+    return (flag && f);
+}
+
+$('#saveStory').click(function () {
+
+    if (formValidation()) {
+        var formData = new FormData();
+
+        var urls = null;
+        var u = $('#videoUrls').val();
+        if (u != null) {
+            urls = u.split('\n');
+
+            for (var i = 0; i < urls.length; i++) {
+                formData.append("VideoUrl", urls[i]);
+            }
+        }
+        else {
+            formData.append("VideoUrl", null);
+        }
+
+        var input = $('#file-input');
+        var files = input[0].files;
+        for (var i = 0; i < files.length; i++) {
+            formData.append("Images", files[i]);
+        }
+
+        formData.append("MissionId", $('#missionId').val());
+        formData.append("StoryTitle", $('#storyTitle').val());
+        formData.append("Date", $('#date').val());
+        formData.append("StoryDescription", $('.note-editable').html());
+
+        $.ajax({
+            type: 'POST',
+            url: '/Story/SaveStory',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                swal.fire({
+                    position: 'top-end',
+                    icon: result.icon,
+                    title: result.message,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                if (result.published == 0) {
+                    $('#previewStory').removeAttr('disabled');
+                    $('#submitStory').removeAttr('disabled');
+                }
+                if (result.published == 1) {
+                    $('#missionId').val('default');
+                    $('#storyTitle').val('');
+                    $('#date').val('');
+                    $('.note-editable').text('');
+                    $('#videoUrls').val('');
+                    $('#image-list').empty();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 });
 
 
@@ -222,16 +320,55 @@ function openMission() {
     });
 }
 
-//$('#openMission').click(function () {
-//    console.log("hello")
-//    var storyMissionId = $('#storyMissionId').text();
-//    console.log(storyMissionId)
-//})
-
-
 
 // drag and drop images in share your story page
+var allfiles = [];
+var fileInput = document.getElementById('file-input');
+var fileList;
+function handleFiles(e) {
 
+    // Add dropped images or selected images to the list
+    var files = e.target.files || e.originalEvent.dataTransfer.files;
+
+    // Add selected images to the list
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+        allfiles.push(files[i]);
+        //formData.append('file', file);
+
+        // Create image preview and close icon
+        // Create image preview and close icon
+        reader.onload = (function (file) {
+            return function (e) {
+                var image = $('<img>').attr('src', e.target.result);
+                var closeIcon = $('<span>').addClass('close-icon').text('x');
+
+                // Add image and close icon to the list
+                var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
+                imageList.append(item);
+
+                // Handle close icon click event
+                closeIcon.on('click', function () {
+                    item.remove();
+                    allfiles.splice(allfiles.indexOf(file), 1);
+
+
+                    console.log(allfiles);
+                });
+            };
+        })(file);
+
+        // Read image file as data URL
+        reader.readAsDataURL(file);
+    }
+    // Create a new DataTransfer object
+    var dataTransfer = new DataTransfer();
+    // Create a new FileList object from the DataTransfer object
+    fileList = dataTransfer.files;
+}
+
+//var allfiles = new DataTransfer().files;
 var dropzone = $('#dropzone');
 var imageList = $('#image-list');
 
@@ -242,31 +379,9 @@ dropzone.on('drop', function (e) {
 
     // Remove dropzone highlight
     dropzone.removeClass('dragover');
-
-    // Add dropped images to the list
-    var files = e.originalEvent.dataTransfer.files;
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        var reader = new FileReader();
-
-        // Create image preview and close icon
-        reader.onload = function (e) {
-            var image = $('<img>').attr('src', e.target.result);
-            var closeIcon = $('<span>').addClass('close-icon').text('x');
-
-            // Add image and close icon to the list
-            var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
-            imageList.append(item);
-
-            // Handle close icon click event
-            closeIcon.on('click', function () {
-                item.remove();
-            });
-        };
-
-        // Read image file as data URL
-        reader.readAsDataURL(file);
-    }
+    $('.note-dropzone').remove();
+    //$('.note-dropzone-message').remove();
+    handleFiles(e);
 });
 
 // Handle file dragover event
@@ -287,31 +402,8 @@ dropzone.on('dragleave', function (e) {
     dropzone.removeClass('dragover');
 });
 
+
 // Handle file input change event
 $('#file-input').on('change', function (e) {
-    var files = e.target.files;
-
-    // Add selected images to the list
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        var reader = new FileReader();
-
-        // Create image preview and close icon
-        reader.onload = function (e) {
-            var image = $('<img>').attr('src', e.target.result);
-            var closeIcon = $('<span>').addClass('close-icon').text('x');
-
-            // Add image and close icon to the list
-            var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
-            imageList.append(item);
-
-            // Handle close icon click event
-            closeIcon.on('click', function () {
-                item.remove();
-            });
-        };
-
-        // Read image file as data URL
-        reader.readAsDataURL(file);
-    }
+    handleFiles(e);
 });

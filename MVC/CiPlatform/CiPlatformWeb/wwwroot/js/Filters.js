@@ -3,10 +3,13 @@ var selectedCountry = null;
 var selectedSortCase = null;
 var currentUrl = window.location.href;
 let allDropdowns = $('.dropdown ul');
-var pagesize = 3;
 
-spFilterSortSearchPagination(1);
-spFilterStory(1);
+if (currentUrl.includes("PlatformLanding")) {
+    spFilterSortSearchPagination(1);
+}
+else if (currentUrl.includes("StoryListing")) {
+    spFilterStory(1);
+}
 
 
 
@@ -35,6 +38,9 @@ function spFilterSortSearchPagination(pageNo) {
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var searchText = $("#searchText").val();
     var sortCase = selectedSortCase;
+    var pagesize = 6;
+    var pageNo = pageNo;
+
     $.ajax({
         type: 'POST',
         url: '/Mission/PlatformLanding',
@@ -54,16 +60,16 @@ function spFilterSortSearchPagination(pageNo) {
                 $('#pagination-container').parent().parent().hide();
             }
             let paginationHTML = `
-            <li class="page-item">
-            <a class="pagination-link first-page" aria-label="Previous">
-            <span aria-hidden="true"><img src="/images/previous.png" /></span>
-            </a>
-            </li>
-            <li class="page-item">
-            <a class="pagination-link previous-page" aria-label="Previous">
-            <span aria-hidden="true"><img src="/images/left.png" /></span>
-            </a>
-            </li>`;
+              <li class="page-item">
+                <a class="pagination-link first-page" aria-label="Previous">
+                  <span aria-hidden="true"><img src="/images/previous.png" /></span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="pagination-link previous-page" aria-label="Previous">
+                  <span aria-hidden="true"><img src="/images/left.png" /></span>
+                </a>
+              </li>`;
 
             for (let i = 1; i <= totalPages; i++) {
                 let activeClass = '';
@@ -72,21 +78,21 @@ function spFilterSortSearchPagination(pageNo) {
                 }
                 paginationHTML += `
                 <li class="page-item ${activeClass}">
-                <a class="pagination-link" data-page="${i}">${i}</a>
+                    <a class="pagination-link" data-page="${i}">${i}</a>
                 </li>`;
             }
 
             paginationHTML += `
-            <li class="page-item">
-            <a class="pagination-link next-page" aria-label="Next">
-            <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
-            </a>
-            </li>
-            <li class="page-item">
-            <a class="pagination-link last-page" aria-label="Next">
-            <span aria-hidden="true"><img src="/images/next.png" /></span>
-            </a>
-            </li>`;
+              <li class="page-item">
+                <a class="pagination-link next-page" aria-label="Next">
+                  <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="pagination-link last-page" aria-label="Next">
+                  <span aria-hidden="true"><img src="/images/next.png" /></span>
+                </a>
+              </li>`;
 
             $('#pagination-container').empty()
             $('#pagination-container').append(paginationHTML)
@@ -156,6 +162,7 @@ function spFilterSortSearchPagination(pageNo) {
                 }
                 spFilterSortSearchPagination(pageNo);
             }));
+
         },
         error: function (error) {
             console.log(error)
@@ -164,11 +171,14 @@ function spFilterSortSearchPagination(pageNo) {
 }
 
 function spFilterStory(pageNo) {
+    console.log("hii");
     var CountryId = selectedCountry;
     var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
     var searchText = $("#searchText").val();
+    var pagesize = 3;
+    var pageNo = pageNo;
     $.ajax({
         type: 'POST',
         url: '/Story/StoryListing',
@@ -188,16 +198,16 @@ function spFilterStory(pageNo) {
                 $('#pagination-container').parent().parent().hide();
             }
             let paginationHTML = `
-            <li class="page-item">
-            <a class="pagination-link first-page" aria-label="Previous">
-            <span aria-hidden="true"><img src="/images/previous.png" /></span>
-            </a>
-            </li>
-            <li class="page-item">
-            <a class="pagination-link previous-page" aria-label="Previous">
-            <span aria-hidden="true"><img src="/images/left.png" /></span>
-            </a>
-            </li>`;
+              <li class="page-item">
+                <a class="pagination-link first-page" aria-label="Previous">
+                  <span aria-hidden="true"><img src="/images/previous.png" /></span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="pagination-link previous-page" aria-label="Previous">
+                  <span aria-hidden="true"><img src="/images/left.png" /></span>
+                </a>
+              </li>`;
 
             for (let i = 1; i <= totalPages; i++) {
                 let activeClass = '';
@@ -206,21 +216,21 @@ function spFilterStory(pageNo) {
                 }
                 paginationHTML += `
                 <li class="page-item ${activeClass}">
-                <a class="pagination-link" data-page="${i}">${i}</a>
+                    <a class="pagination-link" data-page="${i}">${i}</a>
                 </li>`;
             }
 
             paginationHTML += `
-            <li class="page-item">
-            <a class="pagination-link next-page" aria-label="Next">
-            <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
-            </a>
-            </li>
-            <li class="page-item">
-            <a class="pagination-link last-page" aria-label="Next">
-            <span aria-hidden="true"><img src="/images/next.png" /></span>
-            </a>
-            </li>`;
+              <li class="page-item">
+                <a class="pagination-link next-page" aria-label="Next">
+                  <span aria-hidden="true"><img src="/images/right-arrow1.png" /></span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="pagination-link last-page" aria-label="Next">
+                  <span aria-hidden="true"><img src="/images/next.png" /></span>
+                </a>
+              </li>`;
 
             $('#pagination-container').empty()
             $('#pagination-container').append(paginationHTML)
@@ -232,7 +242,6 @@ function spFilterStory(pageNo) {
             let currentPage;
 
             $(document).on('click', '.pagination li', (function () {
-                console.log("hi");
                 $('.pagination li').each(function () {
                     if ($(this).hasClass('active')) {
 
@@ -526,20 +535,20 @@ $('.commentButton').click(function () {
 
         return;
     }
-        console.log(comment);
-        $.ajax({
-            type: 'POST',
-            url: '/Mission/PostComment',
-            data: { comment: comment, missionId: missionId },
-            success: function () {
-                $('.newComment').val('');
-            },
-            error: function (error) {
-                console.log("error");
-            }
-        });
-    
-   
+    console.log(comment);
+    $.ajax({
+        type: 'POST',
+        url: '/Mission/PostComment',
+        data: { comment: comment, missionId: missionId },
+        success: function () {
+            $('.newComment').val('');
+        },
+        error: function (error) {
+            console.log("error");
+        }
+    });
+
+
 });
 
 function recommendToCoWorker(ToUserId, MissionId, FromUserId) {

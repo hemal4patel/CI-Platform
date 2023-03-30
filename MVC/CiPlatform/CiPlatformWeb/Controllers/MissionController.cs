@@ -36,7 +36,7 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
 
-            var userId = Convert.ToInt64(ViewBag.UserId);
+            long userId = Convert.ToInt64(ViewBag.UserId);
 
             var vm = new DisplayMissionCards();
 
@@ -44,6 +44,13 @@ namespace CiPlatformWeb.Controllers
             vm.ThemeList = _missionlist.GetThemeList();
             vm.SkillList = _missionlist.GetSkillList();
             vm.UserList = _missionlist.GetUserList(userId);
+
+            //vm.missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
+            //vm.storyInvites = _db.StoryInvites.Where(s => s.ToUserId == userId).Include(s => s.Story).ToList();
+
+            //vm.combinedList = new List<baseClass>();
+            //vm.combinedList.AddRange(vm.missionInvites);
+            //vm.combinedList.AddRange(vm.storyInvites);
 
             return View(vm);
         }

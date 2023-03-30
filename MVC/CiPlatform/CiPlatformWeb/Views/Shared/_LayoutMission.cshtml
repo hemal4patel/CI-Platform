@@ -1,4 +1,5 @@
-﻿@*@model CiPlatformWeb.Entities.DataModels.Mission*@
+﻿@*@model CiPlatformWeb.Entities.ViewModels.DisplayMissionCards*@
+@using CiPlatformWeb.Entities.DataModels
 
 @{
     string Email = ViewBag.Email;
@@ -83,20 +84,49 @@
                                 <img src="~/images/bell.png" alt="" class="m-2">
                             </span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="notificationDropdown">
+                        <ul class="dropdown-menu dropdown-menu-md-end dropdown-position" id="invites" aria-labelledby="notificationDropdown" style="width: 300px;">
                             <li><a class="dropdown-item" href="#">Dashboard</a></li>
                             <li><a class="dropdown-item" href="#">My Account</a></li>
                             <li><a class="dropdown-item" href="#">Help Center</a></li>
                             <li><a class="dropdown-item" href="#">Logout</a></li>
+
+                            @*@foreach (var i in Model.combinedList)
+                            {
+                            @if (i is MissionInvites)
+                            <li><a class="dropdown-item" href="#">  </a></li>
+                            }*@
+                            @*.OrderByDescending(c => c.UpdatedAt)*@
+
+                            @*@foreach (var i in Model.combinedList)
+                            {
+                                @if (i is MissionInvite missionInvites)
+                                {
+                                    <li>
+                                        <a class="dropdown-item text-wrap" href="#">
+                                            <i class="bi bi-person-circle"></i> &nbsp; @missionInvites.FromUser.FirstName @missionInvites.FromUser.LastName: Recommended this mission - <strong>@missionInvites.Mission.Title</strong>
+                                        </a>
+                                    </li>
+                                }
+                                else if (i is StoryInvite storyInvites)
+                                {
+                                    <li>
+                                        <a class="dropdown-item text-wrap" href="#">
+                                            <i class="bi bi-person-circle"></i> &nbsp; @storyInvites.FromUser.FirstName @storyInvites.FromUser.LastName: Recommended this story - <strong>@storyInvites.Story.Title</strong>
+                                        </a>
+                                    </li>
+                                }
+                            }*@
                         </ul>
                     </div>
+                    
                     <div class="dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <span>
                                 @*<img src="~/images/user-img.png" alt="" class="rounded-circle me-2"
-                                     width="40" height="40">*@
-                                @if(UserAvatar != ""){
+                                width="40" height="40">*@
+                                @if (UserAvatar != "")
+                                {
                                     <img src="~/Upload/@UserAvatar" alt="" class="rounded-circle me-2"
                                      width="40" height="40">
                                 }
@@ -107,7 +137,7 @@
                                 }
                             </span>
                             <p class="d-inline" id="profileText">
-                                @UserName 
+                                @UserName
                                 @*<span class="d-none">@Id</span>*@
                             </p>
                         </a>

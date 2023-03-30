@@ -28,7 +28,7 @@ div {
     flex-wrap: wrap;
 }
 
-.pill{
+.pill {
     border: 1px solid black;
     border-radius: 40%;
     padding: 2px 5px;
@@ -66,10 +66,10 @@ div {
     opacity: 1;
 }
 
-.btn-apply:hover {
-    background: #F88634;
-    color: white;
-}
+    .btn-apply:hover {
+        background: #F88634;
+        color: white;
+    }
 
 .btn-share {
     font-size: 17px;
@@ -167,6 +167,12 @@ div {
 
     .comment-box .card-body h5 {
         text-align: center;
+    }
+
+    .dropdown-position {
+        position: absolute;
+        left: -150px !important;
+        right: 0px !important;
     }
 }
 

@@ -29,5 +29,14 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         //to store data
         public IEnumerable<Mission> MissionList { get; set; }
+
+
+        // invites 
+
+        public List<MissionInvite>? missionInvites { get; set; }
+
+        public List<StoryInvite>? storyInvites { get; set; }
+
+        public List<baseClass>? combinedList { get; set; }
     }
 }

@@ -55,9 +55,9 @@
                     <div class="card h-100 shadow-sm border-light">
                         <div class="position-relative">
                             @if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
-                            {                                
+                            {
                                 @foreach (var image in obj.MissionMedia)
-                                {                                    
+                                {
                                     @if (image.Default == 1)
                                     {
                                         <img src=@image.MediaPath class="card-img-top" alt="">
@@ -128,7 +128,14 @@
                         <div class="card-body pt-4">
                             <h4 class="card-title" id="card-title">@obj.Title</h4>
                             <p class="card-text">
-                                @obj.ShortDescription
+                                @{
+                                    int maxLength = 100;
+                                    string description = obj.ShortDescription.Length > maxLength
+                                    ? @obj.ShortDescription.Substring(0, maxLength) + "..."
+                                    : @obj.ShortDescription;
+                                }
+                                @description
+
                             </p>
 
                             <div class="row d-flex seats-left">
@@ -290,35 +297,35 @@
                     <span class="d-none mission-country">@obj.CountryId</span>
                     <div class="col-md-4 position-relative">
                         @*<img src="~/images/Plantation-and-Afforestation-programme.png"
-                         class="img-fluid rounded-start" alt=""
-                         style="height:100%; width:100%; background-size: cover; background-position: center;">*@
+                    class="img-fluid rounded-start" alt=""
+                    style="height:100%; width:100%; background-size: cover; background-position: center;">*@
 
                         @*@if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
+                    {
+                    @foreach (var image in obj.MissionMedia)
+                    {
+                    <img src=@image.MediaPath class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;">
+                    }
+                    }
+                    else
+                    {
+                    <img src="~/images/no-image-found.png" class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;" />
+                    }*@
+
+                        @if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
                         {
                             @foreach (var image in obj.MissionMedia)
                             {
-                                <img src=@image.MediaPath class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;">
+                                @if (image.Default == 1)
+                                {
+                                    <img src=@image.MediaPath class="card-img-top" alt="">
+                                }
                             }
                         }
                         else
                         {
-                            <img src="~/images/no-image-found.png" class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;" />
-                        }*@
-
-                        @if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
-                            {                                
-                                @foreach (var image in obj.MissionMedia)
-                                {                                    
-                                    @if (image.Default == 1)
-                                    {
-                                        <img src=@image.MediaPath class="card-img-top" alt="">
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
-                            }
+                            <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                        }
 
                         @if (obj.MissionType.Equals("Time"))
                         {
@@ -329,8 +336,8 @@
                                 </div>
                             }
                         }
-                        else 
-                        {                            
+                        else
+                        {
                             <div class="position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
                                 <span>APPLIED</span>
                             </div>

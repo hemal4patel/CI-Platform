@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_LayoutMission.cshtml";
+    var totalRecords = ViewBag.totalRecords;
 }
 
 <link rel="stylesheet" href="~/css/story.css" asp-append-version="true" />
@@ -35,6 +36,8 @@
 <!-- PILLS -->
 <div class="container my-4 filter-pills" id="filter-pills">
 </div>
+
+@*<span class="" id="storyCount"> @totalRecords </span>*@
 
 <!-- STORIES -->
 

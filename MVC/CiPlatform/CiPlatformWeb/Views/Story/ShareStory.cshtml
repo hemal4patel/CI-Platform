@@ -43,16 +43,17 @@
                         <option value="@m.Mission.MissionId">@m.Mission.Title</option>
                     }
                 </select>
-                <span asp-validation-for="MissionId" class="text-danger"></span>
+                <span class="valMission text-danger" style="display: none;">Mission is required.</span>
             </div>
             <div class="col-md">
                 <label asp-for="StoryTitle" class="form-label">My Story Title</label>
                 <input asp-for="StoryTitle" type="text" id="storyTitle" class="form-control" placeholder="Enter story title">
-                <span asp-validation-for="StoryTitle" id="valStoryTitle" class="text-danger"></span>
+                <span class="valstoryTitle text-danger" style="display: none;">Story title is required.</span>
             </div>
             <div class="col-md">
                 <label class="form-label">Date</label>
-                <input asp-for="Date" type="date" id="date" class="form-control" placeholder="Select date">
+                <input type="date" class="form-control" id="date" name="date">
+                <span class="valDate text-danger" style="display: none;">Date is required.</span>
             </div>
         </div>
 
@@ -61,12 +62,15 @@
             <div class="form-group">
                 <label for="exampleFormControlTextarea1" class="form-label my-0">My Story</label>
                 <textarea asp-for="StoryDescription" class="form-control summernote" id="editor" rows="3"></textarea>
+                <span class="valStory text-danger" style="display: none;">Story is required.</span>
             </div>
         </div>
 
         <div class="mt-4">
             <label asp-for="VideoUrl" class="form-label">Enter Video URL</label>
             <textarea asp-for="VideoUrl" class="form-control" id="videoUrls" placeholder="Enter your url (Youtube links only)" rows="5"></textarea>
+            <span class="valUrlCount text-danger" style="display: none;">Enter only 20 URLs at maximum.</span>
+            <span class="valUrl text-danger" style="display: none;">Enter valid URLs only.</span>
         </div>
 
         <div class="mt-4">
