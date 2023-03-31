@@ -5,24 +5,32 @@
       "PackagePath": "staticwebassets\\CiPlatformWeb.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\018bc15c423a41b6b80391d002eb0e2f_achieved.png",
-      "PackagePath": "staticwebassets\\Upload\\018bc15c423a41b6b80391d002eb0e2f_achieved.png"
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\2186907eef2c4dccb1716c281be05008_9494f8374ba74a968b686376dae20d48_dee1cd64a64244dbbca2efe26a440ef7_404-Page-image.png",
+      "PackagePath": "staticwebassets\\Upload\\2186907eef2c4dccb1716c281be05008_9494f8374ba74a968b686376dae20d48_dee1cd64a64244dbbca2efe26a440ef7_404-Page-image.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\28d1a2475a7241ddb376782e8452b160_checked.png",
       "PackagePath": "staticwebassets\\Upload\\28d1a2475a7241ddb376782e8452b160_checked.png"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\3ececac985954cbda02593313cac83ce_add1.png",
-      "PackagePath": "staticwebassets\\Upload\\3ececac985954cbda02593313cac83ce_add1.png"
-    },
-    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\4f2a1c74807a44f5a4126d7f3c22377d_Already-volunteered.png",
       "PackagePath": "staticwebassets\\Upload\\4f2a1c74807a44f5a4126d7f3c22377d_Already-volunteered.png"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\61b51e0f2f96435389396fa72f223ce0_056377e753324e988a6a78e321dedad3_83478c7af24940f5ac56cd991270fe79_3ececac985954cbda02593313cac83ce_add1.png",
+      "PackagePath": "staticwebassets\\Upload\\61b51e0f2f96435389396fa72f223ce0_056377e753324e988a6a78e321dedad3_83478c7af24940f5ac56cd991270fe79_3ececac985954cbda02593313cac83ce_add1.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\661ef628a6894194832d30935e17ef0a_add1.png",
       "PackagePath": "staticwebassets\\Upload\\661ef628a6894194832d30935e17ef0a_add1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\6aa46845150848e3bd35982597120b32_6ee3b70fa8334f9a9c2238568ac0a5c5_93091b7acbd040e8901c8ed55c8f3493_018bc15c423a41b6b80391d002eb0e2f_achieved.png",
+      "PackagePath": "staticwebassets\\Upload\\6aa46845150848e3bd35982597120b32_6ee3b70fa8334f9a9c2238568ac0a5c5_93091b7acbd040e8901c8ed55c8f3493_018bc15c423a41b6b80391d002eb0e2f_achieved.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\75980d66f80a4769ab4bcbe035ac3e97_909f9696b9b9430da169232d225c9971_c32fafa3ea6a452e9bb4993b26453a13_bell-big.png",
+      "PackagePath": "staticwebassets\\Upload\\75980d66f80a4769ab4bcbe035ac3e97_909f9696b9b9430da169232d225c9971_c32fafa3ea6a452e9bb4993b26453a13_bell-big.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\7af0afac2cb24707bdceb1de8129d0a1_cancel1.png",
@@ -37,36 +45,332 @@
       "PackagePath": "staticwebassets\\Upload\\9299f5e254e3436fabfe634241a487b6_add.png"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\9969f98f1b4c41279cf3467b4156a602_7ad872ea65954e7c88a597c83fe4b049_5f6ca918a5584323a8dac991f73f9154_d5732f5d1bdb4f1290b986d03a3308d1_add.png",
+      "PackagePath": "staticwebassets\\Upload\\9969f98f1b4c41279cf3467b4156a602_7ad872ea65954e7c88a597c83fe4b049_5f6ca918a5584323a8dac991f73f9154_d5732f5d1bdb4f1290b986d03a3308d1_add.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document1.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document1.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document10.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document10.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document2.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document2.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document3.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document3.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document4.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document4.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document5.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document5.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document6.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document6.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document7.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document7.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document8.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document8.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document9.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document9.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalShelter1.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalShelter1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalShelter2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalShelter2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalShelter3.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalShelter3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalShelter4.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalShelter4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalWelfare1.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalWelfare1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalWelfare2.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalWelfare2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalWelfare3.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalWelfare3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalWelfare4.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalWelfare4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalWelfare5.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\animalWelfare5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\cleanCommunity1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\cleanCommunity1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\cleanCommunity2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\cleanCommunity2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\cleanCommunity3.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\cleanCommunity3.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\cleanCommunity4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\cleanCommunity4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\disaster1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\disaster1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\disaster2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\disaster2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\disaster3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\disaster3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\disaster4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\disaster4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\disaster5.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\disaster5.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\envClean1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\envClean1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\envClean2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\envClean2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\envClean3.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\envClean3.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\envClean4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\envClean4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\feedHomeless1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\feedHomeless1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\feedHomeless2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\feedHomeless2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\feedHomeless3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\feedHomeless3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\feedHomeless4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\feedHomeless4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\home1.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\home1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\home2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\home2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\home3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\home3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\home4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\home4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\no-image-found.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\no-image-found.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\plantTrees1.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\plantTrees1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\plantTrees2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\plantTrees3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\plantTrees3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\plantTrees4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\plantTrees4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\senior1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\senior1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\senior2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\senior2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\senior3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\senior3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\senior4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\senior4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\teachingRural1.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\teachingRural1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\teachingRural2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\teachingRural2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\teachingRural3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\teachingRural3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\teachingRural4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\teachingRural4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\cleanCommunity1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\cleanCommunity2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity3.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\cleanCommunity3.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\cleanCommunity4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\feedHomeless1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\feedHomeless1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\feedHomeless2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\feedHomeless2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\feedHomeless3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\feedHomeless3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\feedHomeless4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\feedHomeless4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\no-image-found.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\no-image-found.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\senior1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\senior1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\senior2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\senior2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\senior3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\senior3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\senior4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\senior4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\teachSenior1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\teachSenior1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\teachSenior2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\teachSenior2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\teachSenior3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\teachSenior3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\teachSenior4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\teachSenior4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar1.png",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar10.png",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar10.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar2.png",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar3.png",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar3.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar4.png",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar4.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar6.png",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar6.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar8.jpg",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar8.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar9.png",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\avatar9.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\no-avatar.jpg",
+      "PackagePath": "staticwebassets\\Upload\\UserProfile\\no-avatar.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\a2c43b3801024f868ba516858882f2fb_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png",
+      "PackagePath": "staticwebassets\\Upload\\a2c43b3801024f868ba516858882f2fb_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\a847a2cddaa6493f933654f97ef1ca89_avatar1.png",
       "PackagePath": "staticwebassets\\Upload\\a847a2cddaa6493f933654f97ef1ca89_avatar1.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\avatar10.png",
-      "PackagePath": "staticwebassets\\Upload\\avatar10.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\avatar2.png",
-      "PackagePath": "staticwebassets\\Upload\\avatar2.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\avatar3.png",
-      "PackagePath": "staticwebassets\\Upload\\avatar3.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\avatar4.png",
-      "PackagePath": "staticwebassets\\Upload\\avatar4.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\avatar6.png",
-      "PackagePath": "staticwebassets\\Upload\\avatar6.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\avatar8.jpg",
-      "PackagePath": "staticwebassets\\Upload\\avatar8.jpg"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\avatar9.png",
-      "PackagePath": "staticwebassets\\Upload\\avatar9.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\ced9348347124c86a67d639e0d2a65ca_achieved.png",
@@ -77,8 +381,8 @@
       "PackagePath": "staticwebassets\\Upload\\customer-engagement.jfif"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\d5732f5d1bdb4f1290b986d03a3308d1_add.png",
-      "PackagePath": "staticwebassets\\Upload\\d5732f5d1bdb4f1290b986d03a3308d1_add.png"
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\df89e461b70c44ca8bacd77fe7e295a4_bin.png",
+      "PackagePath": "staticwebassets\\Upload\\df89e461b70c44ca8bacd77fe7e295a4_bin.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\e4198b469e744f409e869116ae6bf915_Animal-welfare-&-save-birds-campaign.png",
@@ -87,10 +391,6 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\laptop-working.jpg",
       "PackagePath": "staticwebassets\\Upload\\laptop-working.jpg"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\no-avatar.jpg",
-      "PackagePath": "staticwebassets\\Upload\\no-avatar.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\reports-story.webp",

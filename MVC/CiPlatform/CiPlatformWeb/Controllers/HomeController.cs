@@ -64,6 +64,9 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult Index ()
         {
+            HttpContext.Session.SetString("Email", "");
+            HttpContext.Session.SetString("UserName", "");
+            HttpContext.Session.SetString("UserId", "");
             return View();
         }
 

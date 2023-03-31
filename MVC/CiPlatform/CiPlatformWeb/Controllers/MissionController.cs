@@ -28,31 +28,35 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult PlatformLanding ()
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
+
+                long userId = Convert.ToInt64(ViewBag.UserId);
+
+                var vm = new DisplayMissionCards();
+
+                vm.CountryList = _missionlist.GetCountryList();
+                vm.ThemeList = _missionlist.GetThemeList();
+                vm.SkillList = _missionlist.GetSkillList();
+                vm.UserList = _missionlist.GetUserList(userId);
+
+                //vm.missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
+                //vm.storyInvites = _db.StoryInvites.Where(s => s.ToUserId == userId).Include(s => s.Story).ToList();
+
+                //vm.combinedList = new List<baseClass>();
+                //vm.combinedList.AddRange(vm.missionInvites);
+                //vm.combinedList.AddRange(vm.storyInvites);
+
+                return View(vm);
             }
-
-            long userId = Convert.ToInt64(ViewBag.UserId);
-
-            var vm = new DisplayMissionCards();
-
-            vm.CountryList = _missionlist.GetCountryList();
-            vm.ThemeList = _missionlist.GetThemeList();
-            vm.SkillList = _missionlist.GetSkillList();
-            vm.UserList = _missionlist.GetUserList(userId);
-
-            //vm.missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
-            //vm.storyInvites = _db.StoryInvites.Where(s => s.ToUserId == userId).Include(s => s.Story).ToList();
-
-            //vm.combinedList = new List<baseClass>();
-            //vm.combinedList.AddRange(vm.missionInvites);
-            //vm.combinedList.AddRange(vm.storyInvites);
-
-            return View(vm);
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public IActionResult GetCitiesByCountry (int countryId)
@@ -163,6 +167,7 @@ namespace CiPlatformWeb.Controllers
             vm.RecentVolunteers = _missiondetail.GetRecentVolunteers(MissionId, userId);
             vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
             vm.UserList = _missionlist.GetUserList(userId);
+            vm.MissionDocuments = _missiondetail.GetMissionDocuments(MissionId);
 
             return View(vm);
         }
@@ -179,7 +184,7 @@ namespace CiPlatformWeb.Controllers
             if (alredyRated != null)
             {
                 alredyRated.Rating = rating;
-                alredyRated.UpdatedAt= DateTime.Now;
+                alredyRated.UpdatedAt = DateTime.Now;
                 _db.Update(alredyRated);
                 _db.SaveChanges();
             }
@@ -194,6 +199,17 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+        public IActionResult DisplayDocument (string fileName)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+            "wwwroot/Upload/MissionDocuments", fileName);
+
+            var fileStream = new FileStream(filePath, FileMode.Open);
+
+            return File(fileStream, "application/pdf");
+        }
+
+
         [HttpPost]
         public IActionResult PostComment (string comment, long missionId)
         {
@@ -202,18 +218,20 @@ namespace CiPlatformWeb.Controllers
 
             if (comment != null)
             {
-                var newComment = new Comment { UserId = userId, MissionId = missionId, CommentText = comment };
-                _db.Comments.Add(newComment);
-                _db.SaveChanges();
+                //var newComment = new Comment { UserId = userId, MissionId = missionId, CommentText = comment };
+                //_db.Comments.Add(newComment);
+                //_db.SaveChanges();
+                _missiondetail.AddComment(missionId, userId, comment);
+                return Ok(new { icon = "success", message = "Comment added!!" });
             }
 
-            return Ok();
+            return Ok(new { icon = "error", message = "Failed!!" });
         }
 
 
         [HttpPost]
         public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
-        {           
+        {
 
             if (_db.MissionInvites.Any(m => m.MissionId == MissionId && m.ToUserId == ToUserId && m.FromUserId == FromUserId))
             {
@@ -234,7 +252,7 @@ namespace CiPlatformWeb.Controllers
 
                 _db.MissionInvites.Add(missionInvite);
                 await _db.SaveChangesAsync();
-            }            
+            }
 
             var MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
             string link = MissionLink;

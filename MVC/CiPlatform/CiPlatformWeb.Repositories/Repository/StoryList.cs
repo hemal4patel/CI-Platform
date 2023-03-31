@@ -108,7 +108,7 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 if (u != null)
                 {
-                    var fileName = Guid.NewGuid().ToString("N") + "_" + u.FileName;
+                    var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", fileName);
 
                     var newMedia = new StoryMedium()

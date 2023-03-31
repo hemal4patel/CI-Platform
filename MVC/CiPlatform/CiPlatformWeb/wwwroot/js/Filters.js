@@ -484,15 +484,25 @@ function addToFavourites(missionId) {
             console.log(missionId)
             var icon = $("#" + missionId);
             var text = $(".favText");
-            if (icon.hasClass("bi-heart")) {
-                icon.removeClass("text-light bi-heart").addClass("text-danger bi-heart-fill");
-                text.empty();
-                text.append("Added to favourites");
-            } else {
-                icon.removeClass("text-danger bi-heart-fill").addClass("text-light bi-heart");
-                text.empty();
-                text.append("Add to favourites");
+            if (currentUrl.includes("PlatformLanding")) {
+                if (icon.hasClass("bi-heart")) {
+                    icon.removeClass("text-light bi-heart").addClass("text-danger bi-heart-fill");
+                } else {
+                    icon.removeClass("text-danger bi-heart-fill").addClass("text-light bi-heart");
+                }
             }
+            else if (currentUrl.includes("VolunteeringMission")) {
+                if (icon.hasClass("bi-heart")) {
+                    icon.removeClass("text-danger bi-heart").addClass("text-danger bi-heart-fill");
+                    text.empty();
+                    text.append("Added to favourites");
+                } else {
+                    icon.removeClass("text-danger bi-heart-fill").addClass("text-danger bi-heart");
+                    text.empty();
+                    text.append("Add to favourites");
+                }
+            }
+            
         },
         error: function (error) {
             console.log("error")
@@ -540,8 +550,15 @@ $('.commentButton').click(function () {
         type: 'POST',
         url: '/Mission/PostComment',
         data: { comment: comment, missionId: missionId },
-        success: function () {
+        success: function (result) {
             $('.newComment').val('');
+            swal.fire({
+                position: 'top-end',
+                icon: result.icon,
+                title: result.message,
+                showConfirmButton: false,
+                timer: 3000
+            })
         },
         error: function (error) {
             console.log("error");

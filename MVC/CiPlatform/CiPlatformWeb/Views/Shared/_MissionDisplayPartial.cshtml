@@ -60,13 +60,13 @@
                                 {
                                     @if (image.Default == 1)
                                     {
-                                        <img src=@image.MediaPath class="card-img-top" alt="">
+                                        <img src="~/Upload/MissionPhotos/@image.MediaPath" class="card-img-top" alt="">
                                     }
                                 }
                             }
                             else
                             {
-                                <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                                <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
                             }
 
                             <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
@@ -318,13 +318,13 @@
                             {
                                 @if (image.Default == 1)
                                 {
-                                    <img src=@image.MediaPath class="card-img-top" alt="">
+                                    <img src="~/Upload/MissionPhotos/@image.MediaPath" class="card-img-top" alt="">
                                 }
                             }
                         }
                         else
                         {
-                            <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                            <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
                         }
 
                         @if (obj.MissionType.Equals("Time"))

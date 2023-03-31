@@ -35,14 +35,14 @@
                             if (image.Type == "img")
                             {
                                 <div class="swiper-slide">
-                                    <img src="~/Upload/@image.Path" />
+                                    <img src="~/Upload/StoryPhotos/@image.Path" class="card-img-top" alt="">
                                 </div>
                             }
                         }
                     }
                     else
                     {
-                        <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                        <img src="~/Upload/StoryPhotos/no-image-found.png" class="card-img-top" alt="" />
                     }
                 </div>
                 <div class="swiper-button-next"></div>
@@ -57,7 +57,7 @@
                             if (image.Type == "img")
                             {
                                 <div class="swiper-slide">
-                                    <img src="~/Upload/@image.Path" />
+                                    <img src="~/Upload/StoryPhotos/@image.Path" class="card-img-top" alt="">
                                 </div>
                             }
                         }
@@ -73,12 +73,12 @@
             <div class="user-img mt-5">
                 @if (Model.storyDetail.User.Avatar is not null)
                 {
-                    <img src="~/Upload/@Model.storyDetail.User.Avatar" alt="" class="rounded-circle"
+                    <img src="~/Upload/UserProfile/@Model.storyDetail.User.Avatar" alt="" class="rounded-circle"
                      style="width: 100px; height: 100px;">
                 }
                 else
                 {
-                    <img src="~/Upload/no-avatar.jpg" alt="" class="rounded-circle"
+                    <img src="~/Upload/UserProfile/no-avatar.jpg" alt="" class="rounded-circle"
                      style="width: 100px; height: 100px;">
                 }
             </div>

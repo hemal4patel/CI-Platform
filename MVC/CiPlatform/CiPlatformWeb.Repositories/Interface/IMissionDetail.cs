@@ -16,5 +16,9 @@ namespace CiPlatformWeb.Repositories.Interface
         public List<Mission> GetRelatedMissions (long MissionId);
 
         public List<MissionApplication> GetRecentVolunteers (long MissionId, long userId);
+
+        public List<MissionDocument> GetMissionDocuments (long MissionId);
+
+        public void AddComment (long MissionId, long userId, string comment);
     }
 }

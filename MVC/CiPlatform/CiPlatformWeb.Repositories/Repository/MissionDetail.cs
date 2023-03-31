@@ -38,7 +38,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<Comment> GetApprovedComments (long MissionId)
         {
             var approvedComments = _db.Comments.Where(c => c.MissionId == MissionId && c.ApprovalStatus == "PUBLISHED")
-                .Include(c => c.User).ToList();
+                .Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
 
             return approvedComments;
         }
@@ -60,7 +60,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 .Include(m => m.FavouriteMissions)
                 .Include(m => m.MissionMedia).Take(3));
 
-            if(relatedMissions.Count < 3)
+            if (relatedMissions.Count < 3)
             {
                 relatedMissions.AddRange(_db.Missions.Where(m => m.MissionId != MissionId && m.CountryId == mission.CountryId)
                 .Include(m => m.Country)
@@ -91,11 +91,32 @@ namespace CiPlatformWeb.Repositories.Repository
             return relatedMissions;
         }
 
-        public List<MissionApplication> GetRecentVolunteers(long MissionId, long userId)
+        public List<MissionApplication> GetRecentVolunteers (long MissionId, long userId)
         {
             var recentVolunteers = _db.MissionApplications.Include(u => u.User).Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt).ToList();
 
-                return recentVolunteers;
+            return recentVolunteers;
+        }
+
+
+        public List<MissionDocument> GetMissionDocuments (long MissionId)
+        {
+            return _db.MissionDocuments.Where(m => m.MissionId == MissionId).ToList();
+        }
+
+
+
+        public void AddComment (long missionId, long userId, string comment)
+        {
+            var newComment = new Comment
+            {
+                MissionId = missionId,
+                UserId = userId,
+                CommentText = comment,
+                CreatedAt = DateTime.Now
+            };
+            _db.Comments.Add(newComment);
+            _db.SaveChanges();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+
 $('#missionId').click(function () {
     var missionId = $(this).val();
 
@@ -6,7 +7,7 @@ $('#missionId').click(function () {
         type: 'GET',
         url: '/Story/GetStory',
         data: { missionId: missionId },
-        success: function (result) {
+        success: async function (result) {
             if (result != null) {
 
                 $('#storyTitle').val(result.title);
@@ -27,12 +28,25 @@ $('#missionId').click(function () {
                         urls += result.storyMedia[i].path + "\n";
                     }
                     else {
+                        var file = result.storyMedia[i];
                         var image = $('<img>').attr('src', '/Upload/' + result.storyMedia[i].path);
-                        var closeIcon = $('<span>').text('x').click(function () {
-                            $(this).parent().remove();
-                        });
-                        var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
+                        var closebtn = $('<span>').text('x');
+                        var item = $('<div>').addClass('image-item').append(image).append(closebtn);
                         $('#image-list').append(item);
+
+                        const response = await fetch('/Upload/' + file.path);
+                        const blob = await response.blob();
+                        const files = new File([blob], file.path, { type: blob.type });
+
+                        allfiles.push(files);
+
+                        closebtn.on('click', function () {
+                            var index = $(this).parent().index();
+                            allfiles.splice(index, 1);
+                            $(this).parent().remove();
+                            console.log(allfiles);
+                        });
+
                     }
                 }
 
@@ -144,8 +158,6 @@ function formValidation() {
 
     var f = validateUrls();
 
-    console.log(flag && f)
-
     return (flag && f);
 }
 
@@ -166,11 +178,9 @@ $('#saveStory').click(function () {
         else {
             formData.append("VideoUrl", null);
         }
-
-        var input = $('#file-input');
-        var files = input[0].files;
-        for (var i = 0; i < files.length; i++) {
-            formData.append("Images", files[i]);
+        
+        for (var i = 0; i < allfiles.length; i++) {
+            formData.append("Images", allfiles[i]);
         }
 
         formData.append("MissionId", $('#missionId').val());
@@ -250,10 +260,8 @@ $('#submitStory').click(function () {
         formData.append("VideoUrl", null);
     }
 
-    var input = $('#file-input');
-    var files = input[0].files;
-    for (var i = 0; i < files.length; i++) {
-        formData.append("Images", files[i]);
+    for (var i = 0; i < allfiles.length; i++) {
+        formData.append("Images", allfiles[i]);
     }
 
     formData.append("MissionId", $('#missionId').val());
@@ -293,7 +301,7 @@ function storyInvite(ToUserId) {
     var storyUserId = $('#storyUserId').text();
     var storyMissionId = $('#storyMissionId').text();
     var FromUserId = $('#fromUserId').text();
-    //console.log(ToUserId, StoryId, FromUserId, storyUserId, storyMissionId);
+    
     $.ajax({
         type: "POST",
         url: "/Story/StoryInvite",

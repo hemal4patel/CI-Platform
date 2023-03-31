@@ -17,16 +17,12 @@
                     <div class="card-img position-relative">
                         @if (obj.StoryMedia.Any(s => s.StoryId == obj.StoryId))
                         {
-                            @*@foreach (var image in obj.StoryMedia)
-                    {
-                    <img src=@image.Path class="card-img-top" alt="">
-                    }*@
                             var path = obj.StoryMedia.Where(s => s.StoryId == obj.StoryId).FirstOrDefault();
-                            <img src="~/Upload/@path.Path" class="card-img-top" alt="">
+                            <img src="~/Upload/StoryPhotos/@path.Path" class="card-img-top" alt="">
                         }
                         else
                         {
-                            <img src="~/images/no-image-found.png" class="card-img-top" alt="" />
+                            <img src="~/Upload/StoryPhotos/no-image-found.png" class="card-img-top" alt="" />
                         }
                         <a class="btn-share-story rounded-pill px-4 py-2 position-absolute top-50 start-50 translate-middle text-decoration-none" href="@Url.Action("StoryDetail", "Story" , new { MissionId = @obj.MissionId, UserId = @obj.UserId})">
                             View Details &nbsp;

@@ -60,8 +60,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            var list = _db.Users.Where(u => u.UserId != userId).ToList();
-            return list;
+            var recentVolunteers = _db.Users.Where(u => u.UserId != userId).ToList();
+
+            //var recentVolunteers = _db.MissionApplications.Include(u => u.User).Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt).ToList();
+
+
+            return recentVolunteers;
         }
 
 
