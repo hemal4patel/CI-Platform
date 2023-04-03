@@ -26,7 +26,9 @@
 
     @*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>*@
     @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
+
 </head>
 
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
@@ -90,7 +92,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-md-end dropdown-position" id="invites" aria-labelledby="notificationDropdown" style="width: 300px;">
                             <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="#">My Account</a></li>
+                            <li> <a class="dropdown-item" asp-controller="User" asp-action="UserProfile"> My Account </a> </li>
                             <li><a class="dropdown-item" href="#">Help Center</a></li>
                             <li><a class="dropdown-item" href="#">Logout</a></li>
 
@@ -142,12 +144,11 @@
                             </span>
                             <p class="d-inline" id="profileText">
                                 @UserName
-                                @*<span class="d-none">@Id</span>*@
                             </p>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                             <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="#">My Account</a></li>
+                            <li><a class="dropdown-item" asp-controller="User" asp-action="UserProfile">My Account</a></li>
                             <li><a class="dropdown-item" href="#">Help Center</a></li>
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
                         </ul>
@@ -190,6 +191,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="~/js/Filters.js" asp-append-version="true"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 

@@ -98,7 +98,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 if (m != null)
                 {
                     var fileName = m.Path;
-                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", fileName));
+                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName));
                     _db.Remove(m);
                 }
             }
@@ -109,7 +109,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 if (u != null)
                 {
                     var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", fileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName);
 
                     var newMedia = new StoryMedium()
                     {
@@ -206,9 +206,9 @@ namespace CiPlatformWeb.Repositories.Repository
 
             var Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            var fromEmail = new MailAddress("akshayghadiya28@gmail.com");
+            var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
             var toEmail = new MailAddress(Email.Email);
-            var fromEmailPassword = "dmsmefwcumhbtthp";
+            var fromEmailPassword = "oretveqrckcgcoog";
             string subject = "Mission Invitation";
             string body = "You Have Recieved Story Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 

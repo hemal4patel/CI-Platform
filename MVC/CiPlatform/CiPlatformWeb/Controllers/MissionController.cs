@@ -123,6 +123,7 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+        
         [HttpPost]
         public IActionResult AddToFavorites (int missionId)
         {
@@ -136,13 +137,17 @@ namespace CiPlatformWeb.Controllers
                 var FavoriteMissionId = _db.FavouriteMissions.Where(fm => fm.MissionId == missionId && fm.UserId == userId).FirstOrDefault();
                 _db.FavouriteMissions.Remove(FavoriteMissionId);
                 _db.SaveChanges();
-                return Ok();
+                //return Ok();
+            }
+            else
+            {
+
+                // Add the mission to favorites for the user
+                var favoriteMission = new FavouriteMission { MissionId = missionId, UserId = userId };
+                _db.FavouriteMissions.Add(favoriteMission);
+                _db.SaveChanges();
             }
 
-            // Add the mission to favorites for the user
-            var favoriteMission = new FavouriteMission { MissionId = missionId, UserId = userId };
-            _db.FavouriteMissions.Add(favoriteMission);
-            _db.SaveChanges();
 
             return Ok();
         }
@@ -151,22 +156,23 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult VolunteeringMission (long MissionId)
         {
-            if (HttpContext.Session.GetString("Email") != null)
-            {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
-            }
-            var userId = Convert.ToInt64(ViewBag.UserId);
+            //if (HttpContext.Session.GetString("Email") != null)
+            //{
+            ViewBag.Email = HttpContext.Session.GetString("Email");
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
+            //}
+            //var userId = Convert.ToInt64(ViewBag.UserId);
+            string userId = ViewBag.UserId;
 
             var vm = new VolunteeringMissionViewModel();
 
             vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId);
             vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId);
-            vm.RecentVolunteers = _missiondetail.GetRecentVolunteers(MissionId, userId);
+            vm.RecentVolunteers = _missiondetail.GetRecentVolunteers(MissionId, Convert.ToInt64(userId));
             vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
-            vm.UserList = _missionlist.GetUserList(userId);
+            vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
             vm.MissionDocuments = _missiondetail.GetMissionDocuments(MissionId);
 
             return View(vm);
@@ -192,7 +198,7 @@ namespace CiPlatformWeb.Controllers
             {
                 var newRating = new MissionRating { UserId = userId, MissionId = missionId, Rating = rating };
                 _db.MissionRatings.Add(newRating);
-                _db.SaveChanges();
+                _db.SaveChangesAsync();
             }
 
             return Json(missionId);

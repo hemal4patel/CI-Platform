@@ -29,12 +29,12 @@ $('#missionId').click(function () {
                     }
                     else {
                         var file = result.storyMedia[i];
-                        var image = $('<img>').attr('src', '/Upload/' + result.storyMedia[i].path);
+                        var image = $('<img>').attr('src', '/Upload/StoryPhotos/' + result.storyMedia[i].path);
                         var closebtn = $('<span>').text('x');
                         var item = $('<div>').addClass('image-item').append(image).append(closebtn);
                         $('#image-list').append(item);
 
-                        const response = await fetch('/Upload/' + file.path);
+                        const response = await fetch('/Upload/StoryPhotos/' + file.path);
                         const blob = await response.blob();
                         const files = new File([blob], file.path, { type: blob.type });
 
@@ -415,3 +415,4 @@ dropzone.on('dragleave', function (e) {
 $('#file-input').on('change', function (e) {
     handleFiles(e);
 });
+

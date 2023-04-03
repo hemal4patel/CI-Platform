@@ -506,6 +506,10 @@ function addToFavourites(missionId) {
         },
         error: function (error) {
             console.log("error")
+            alert("Please login!!");
+            //var url = '/Home/Login';
+            //window.location.href = url;
+            window.location.href = "/Home/Index";
         }
     });
 }
@@ -570,7 +574,6 @@ $('.commentButton').click(function () {
 
 function recommendToCoWorker(ToUserId, MissionId, FromUserId) {
     console.log(MissionId);
-    debugger
     $.ajax({
         type: "POST",
         url: "/Mission/MissionInvite",

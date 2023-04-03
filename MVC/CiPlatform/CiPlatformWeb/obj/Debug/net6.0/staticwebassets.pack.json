@@ -5,50 +5,6 @@
       "PackagePath": "staticwebassets\\CiPlatformWeb.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\2186907eef2c4dccb1716c281be05008_9494f8374ba74a968b686376dae20d48_dee1cd64a64244dbbca2efe26a440ef7_404-Page-image.png",
-      "PackagePath": "staticwebassets\\Upload\\2186907eef2c4dccb1716c281be05008_9494f8374ba74a968b686376dae20d48_dee1cd64a64244dbbca2efe26a440ef7_404-Page-image.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\28d1a2475a7241ddb376782e8452b160_checked.png",
-      "PackagePath": "staticwebassets\\Upload\\28d1a2475a7241ddb376782e8452b160_checked.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\4f2a1c74807a44f5a4126d7f3c22377d_Already-volunteered.png",
-      "PackagePath": "staticwebassets\\Upload\\4f2a1c74807a44f5a4126d7f3c22377d_Already-volunteered.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\61b51e0f2f96435389396fa72f223ce0_056377e753324e988a6a78e321dedad3_83478c7af24940f5ac56cd991270fe79_3ececac985954cbda02593313cac83ce_add1.png",
-      "PackagePath": "staticwebassets\\Upload\\61b51e0f2f96435389396fa72f223ce0_056377e753324e988a6a78e321dedad3_83478c7af24940f5ac56cd991270fe79_3ececac985954cbda02593313cac83ce_add1.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\661ef628a6894194832d30935e17ef0a_add1.png",
-      "PackagePath": "staticwebassets\\Upload\\661ef628a6894194832d30935e17ef0a_add1.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\6aa46845150848e3bd35982597120b32_6ee3b70fa8334f9a9c2238568ac0a5c5_93091b7acbd040e8901c8ed55c8f3493_018bc15c423a41b6b80391d002eb0e2f_achieved.png",
-      "PackagePath": "staticwebassets\\Upload\\6aa46845150848e3bd35982597120b32_6ee3b70fa8334f9a9c2238568ac0a5c5_93091b7acbd040e8901c8ed55c8f3493_018bc15c423a41b6b80391d002eb0e2f_achieved.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\75980d66f80a4769ab4bcbe035ac3e97_909f9696b9b9430da169232d225c9971_c32fafa3ea6a452e9bb4993b26453a13_bell-big.png",
-      "PackagePath": "staticwebassets\\Upload\\75980d66f80a4769ab4bcbe035ac3e97_909f9696b9b9430da169232d225c9971_c32fafa3ea6a452e9bb4993b26453a13_bell-big.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\7af0afac2cb24707bdceb1de8129d0a1_cancel1.png",
-      "PackagePath": "staticwebassets\\Upload\\7af0afac2cb24707bdceb1de8129d0a1_cancel1.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\89d84aceb0ca48a6b722e4c86a1bcd94_cross.png",
-      "PackagePath": "staticwebassets\\Upload\\89d84aceb0ca48a6b722e4c86a1bcd94_cross.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\9299f5e254e3436fabfe634241a487b6_add.png",
-      "PackagePath": "staticwebassets\\Upload\\9299f5e254e3436fabfe634241a487b6_add.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\9969f98f1b4c41279cf3467b4156a602_7ad872ea65954e7c88a597c83fe4b049_5f6ca918a5584323a8dac991f73f9154_d5732f5d1bdb4f1290b986d03a3308d1_add.png",
-      "PackagePath": "staticwebassets\\Upload\\9969f98f1b4c41279cf3467b4156a602_7ad872ea65954e7c88a597c83fe4b049_5f6ca918a5584323a8dac991f73f9154_d5732f5d1bdb4f1290b986d03a3308d1_add.png"
-    },
-    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document1.pdf",
       "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document1.pdf"
     },
@@ -261,6 +217,42 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\teachingRural4.jfif"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\3b979_42a91_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\3b979_42a91_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\4a84f_9cf30_19157_Animal-welfare-&-save-birds-campaign.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\4a84f_9cf30_19157_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\60f90_6ba1b_08802_50c45_animal-welfare-2.jpg",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\60f90_6ba1b_08802_50c45_animal-welfare-2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\710c4_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\710c4_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\8a8d2_08802_50c45_animal-welfare-2.jpg",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\8a8d2_08802_50c45_animal-welfare-2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\8dc55_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\8dc55_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\94572_9cf30_19157_Animal-welfare-&-save-birds-campaign.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\94572_9cf30_19157_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\b8f93_7377c_9cf30_19157_Animal-welfare-&-save-birds-campaign.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\b8f93_7377c_9cf30_19157_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\ce7a1_08802_50c45_animal-welfare-2.jpg",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\ce7a1_08802_50c45_animal-welfare-2.jpg"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity1.jfif",
       "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\cleanCommunity1.jfif"
     },
@@ -275,6 +267,18 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity4.jfif",
       "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\cleanCommunity4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\df67a_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\df67a_45a31_275d1_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\f5254_9cf30_19157_Animal-welfare-&-save-birds-campaign.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\f5254_9cf30_19157_Animal-welfare-&-save-birds-campaign.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\f5fb2_08802_50c45_animal-welfare-2.jpg",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\f5fb2_08802_50c45_animal-welfare-2.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\feedHomeless1.jfif",
@@ -365,38 +369,6 @@
       "PackagePath": "staticwebassets\\Upload\\UserProfile\\no-avatar.jpg"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\a2c43b3801024f868ba516858882f2fb_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png",
-      "PackagePath": "staticwebassets\\Upload\\a2c43b3801024f868ba516858882f2fb_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\a847a2cddaa6493f933654f97ef1ca89_avatar1.png",
-      "PackagePath": "staticwebassets\\Upload\\a847a2cddaa6493f933654f97ef1ca89_avatar1.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\ced9348347124c86a67d639e0d2a65ca_achieved.png",
-      "PackagePath": "staticwebassets\\Upload\\ced9348347124c86a67d639e0d2a65ca_achieved.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\customer-engagement.jfif",
-      "PackagePath": "staticwebassets\\Upload\\customer-engagement.jfif"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\df89e461b70c44ca8bacd77fe7e295a4_bin.png",
-      "PackagePath": "staticwebassets\\Upload\\df89e461b70c44ca8bacd77fe7e295a4_bin.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\e4198b469e744f409e869116ae6bf915_Animal-welfare-&-save-birds-campaign.png",
-      "PackagePath": "staticwebassets\\Upload\\e4198b469e744f409e869116ae6bf915_Animal-welfare-&-save-birds-campaign.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\laptop-working.jpg",
-      "PackagePath": "staticwebassets\\Upload\\laptop-working.jpg"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\reports-story.webp",
-      "PackagePath": "staticwebassets\\Upload\\reports-story.webp"
-    },
-    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\css\\mission.css",
       "PackagePath": "staticwebassets\\css\\mission.css"
     },
@@ -411,6 +383,10 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\css\\story.css",
       "PackagePath": "staticwebassets\\css\\story.css"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\css\\user.css",
+      "PackagePath": "staticwebassets\\css\\user.css"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\favicon.ico",

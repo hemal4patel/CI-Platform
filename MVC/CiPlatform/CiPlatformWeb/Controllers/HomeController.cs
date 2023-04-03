@@ -90,14 +90,15 @@ namespace CiPlatformWeb.Controllers
                         HttpContext.Session.SetString("Email", user.Email);
                         HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
                         HttpContext.Session.SetString("UserId", user.UserId.ToString());
+                        HttpContext.Session.SetString("UserAvatar", "");
                         if (user.Avatar is not null)
                         {
                             HttpContext.Session.SetString("UserAvatar", user.Avatar);
                         }
-                        else
-                        {
-                            HttpContext.Session.SetString("UserAvatar", "");
-                        }
+                        //else
+                        //{
+                        //    HttpContext.Session.SetString("UserAvatar", "");
+                        //}
                         return RedirectToAction("PlatformLanding", "Mission");
                     }
                     else
@@ -134,6 +135,7 @@ namespace CiPlatformWeb.Controllers
                     string PasswordResetLink = Url.Action("ResetPassword", "Home", new { Email = obj.Email, Token = token }, Request.Scheme);
                     _emailGeneration.GenerateEmail(token, PasswordResetLink, obj);
                     TempData["success"] = "Link sent to the registered email!!!";
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(obj);

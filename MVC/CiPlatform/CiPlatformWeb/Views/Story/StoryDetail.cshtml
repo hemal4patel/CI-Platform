@@ -35,7 +35,13 @@
                             if (image.Type == "img")
                             {
                                 <div class="swiper-slide">
-                                    <img src="~/Upload/StoryPhotos/@image.Path" class="card-img-top" alt="">
+                                    <img src="~/Upload/StoryPhotos/@image.Path" class="card-img-top" alt="" style="height: 100%; width: 100%;">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="swiper-slide">
+                                    <iframe src="//www.youtube.com/embed/@image.Path.Split("v=").ElementAt(1)" style="height: 100%; width: 100%;" allowfullscreen></iframe>
                                 </div>
                             }
                         }
@@ -58,6 +64,12 @@
                             {
                                 <div class="swiper-slide">
                                     <img src="~/Upload/StoryPhotos/@image.Path" class="card-img-top" alt="">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="swiper-slide">
+                                    <img src="https://img.youtube.com/vi/@image.Path.Split("v=").ElementAt(1)/0.jpg" />
                                 </div>
                             }
                         }

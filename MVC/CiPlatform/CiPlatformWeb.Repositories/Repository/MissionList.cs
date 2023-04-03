@@ -75,9 +75,9 @@ namespace CiPlatformWeb.Repositories.Repository
 
             var Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            var fromEmail = new MailAddress("");
+            var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
             var toEmail = new MailAddress(Email.Email);
-            var fromEmailPassword = "";
+            var fromEmailPassword = "oretveqrckcgcoog";
             string subject = "Mission Invitation";
             string body = "You Have Recieved Mission Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 
