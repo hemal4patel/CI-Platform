@@ -31,6 +31,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.12" />
     <PackageReference Include="SweetAlert" Version="1.0.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 

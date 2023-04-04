@@ -346,7 +346,6 @@ function handleFiles(e) {
         //formData.append('file', file);
 
         // Create image preview and close icon
-        // Create image preview and close icon
         reader.onload = (function (file) {
             return function (e) {
                 var image = $('<img>').attr('src', e.target.result);
@@ -361,7 +360,6 @@ function handleFiles(e) {
                     item.remove();
                     allfiles.splice(allfiles.indexOf(file), 1);
 
-
                     console.log(allfiles);
                 });
             };
@@ -372,46 +370,35 @@ function handleFiles(e) {
     }
     // Create a new DataTransfer object
     var dataTransfer = new DataTransfer();
-    // Create a new FileList object from the DataTransfer object
     fileList = dataTransfer.files;
 }
 
-//var allfiles = new DataTransfer().files;
 var dropzone = $('#dropzone');
 var imageList = $('#image-list');
 
-// Handle file drop event
 dropzone.on('drop', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    // Remove dropzone highlight
     dropzone.removeClass('dragover');
     $('.note-dropzone').remove();
-    //$('.note-dropzone-message').remove();
     handleFiles(e);
 });
 
-// Handle file dragover event
 dropzone.on('dragover', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    // Highlight dropzone
     dropzone.addClass('dragover');
 });
 
-// Handle file dragleave event
 dropzone.on('dragleave', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    // Remove dropzone highlight
     dropzone.removeClass('dragover');
 });
 
-
-// Handle file input change event
 $('#file-input').on('change', function (e) {
     handleFiles(e);
 });

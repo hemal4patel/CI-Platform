@@ -25,7 +25,7 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("Email") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
@@ -42,7 +42,7 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        public async Task<IActionResult> StoryListing (string searchText, int? countryId, string? cityId, string? themeId, string? skillId, int? pageNo, int? pagesize)
+        public IActionResult StoryListing (StoryListingViewModel viewmodel)
         {
             if (HttpContext.Session.GetString("Email") != null)
             {
@@ -51,43 +51,50 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
-            IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
 
-            string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("spFilterStory", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add("@countryId", SqlDbType.VarChar).Value = countryId != null ? countryId : null;
-                command.Parameters.Add("@cityId", SqlDbType.VarChar).Value = cityId != null ? cityId : null;
-                command.Parameters.Add("@themeId", SqlDbType.VarChar).Value = themeId != null ? themeId : null;
-                command.Parameters.Add("@skillId", SqlDbType.VarChar).Value = skillId != null ? skillId : null;
-                command.Parameters.Add("@searchText", SqlDbType.VarChar).Value = searchText;
-                command.Parameters.Add("@pageSize", SqlDbType.Int).Value = pagesize;
-                command.Parameters.Add("@pageNo", SqlDbType.Int).Value = pageNo;
-                SqlDataReader reader = command.ExecuteReader();
+            //using (SqlConnection connection = new SqlConnection(connectionString))
+            //{
+            //    connection.Open();
+            //    SqlCommand command = new SqlCommand("spFilterStory", connection);
+            //    command.CommandType = CommandType.StoredProcedure;
+            //    command.Parameters.Add("@countryId", SqlDbType.VarChar).Value = countryId != null ? countryId : null;
+            //    command.Parameters.Add("@cityId", SqlDbType.VarChar).Value = cityId != null ? cityId : null;
+            //    command.Parameters.Add("@themeId", SqlDbType.VarChar).Value = themeId != null ? themeId : null;
+            //    command.Parameters.Add("@skillId", SqlDbType.VarChar).Value = skillId != null ? skillId : null;
+            //    command.Parameters.Add("@searchText", SqlDbType.VarChar).Value = searchText;
+            //    command.Parameters.Add("@pageSize", SqlDbType.Int).Value = pagesize;
+            //    command.Parameters.Add("@pageNo", SqlDbType.Int).Value = pageNo;
+            //    SqlDataReader reader = command.ExecuteReader();
 
-                List<long> StoryIds = new List<long>();
-                while (reader.Read())
-                {
-                    long totalRecords = reader.GetInt32("TotalCards");
-                    ViewBag.totalRecords = totalRecords;
-                }
-                reader.NextResult();
+            //    List<long> StoryIds = new List<long>();
+            //    while (reader.Read())
+            //    {
+            //        long totalRecords = reader.GetInt32("TotalCards");
+            //        ViewBag.totalRecords = totalRecords;
+            //    }
+            //    reader.NextResult();
 
-                while (reader.Read())
-                {
-                    long storyId = reader.GetInt64("story_id");
-                    StoryIds.Add(storyId);
-                }
+            //    while (reader.Read())
+            //    {
+            //        long storyId = reader.GetInt64("story_id");
+            //        StoryIds.Add(storyId);
+            //    }
 
-                var vm = new StoryListingViewModel();
-                vm.StoryList = _storyList.GetStories(StoryIds);
+            //    var vm = new StoryListingViewModel();
+            //    vm.StoryList = _storyList.GetStories(StoryIds);
 
-                return PartialView("_StoryListing", vm);
-            }
+            //}
+
+            var vm = new StoryListingViewModel();
+
+            var UserId = Convert.ToInt64(ViewBag.UserId);
+
+            var data = _storyList.GetStories(viewmodel);
+            vm.StoryList = data.Item1;
+            ViewBag.totalRecords = data.Item2;
+
+            return PartialView("_StoryListing", vm);
         }
 
 

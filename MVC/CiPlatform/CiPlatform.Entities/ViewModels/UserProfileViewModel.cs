@@ -25,7 +25,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public long? CityId { get; set; }
 
-        public long CountryId { get; set; }
+        public long? CountryId { get; set; }
 
         public string ProfileText { get; set; }
 

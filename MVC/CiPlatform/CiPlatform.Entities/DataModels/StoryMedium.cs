@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -20,6 +21,6 @@ public partial class StoryMedium
 
     public DateTime? DeletedAt { get; set; }
 
-    [JsonIgnore]
+    [System.Text.Json.Serialization.JsonIgnore]
     public virtual Story Story { get; set; } = null!;
 }

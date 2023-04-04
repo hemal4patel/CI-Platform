@@ -33,9 +33,9 @@ allDropdowns.on('change', function () {
 
 function spFilterSortSearchPagination(pageNo) {
     var CountryId = selectedCountry;
-    var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
-    var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
-    var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
+    var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
+    var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var searchText = $("#searchText").val();
     var sortCase = selectedSortCase;
     var pagesize = 6;
@@ -171,18 +171,19 @@ function spFilterSortSearchPagination(pageNo) {
 }
 
 function spFilterStory(pageNo) {
-    console.log("hii");
     var CountryId = selectedCountry;
-    var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
-    var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
-    var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get().join();
+    var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
+    var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
+    var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var searchText = $("#searchText").val();
     var pagesize = 3;
     var pageNo = pageNo;
+
     $.ajax({
         type: 'POST',
         url: '/Story/StoryListing',
         data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, pageNo: pageNo, pagesize: pagesize },
+
         success: function (data) {
             var view = $(".storyPartial");
             view.empty();
@@ -584,3 +585,30 @@ function recommendToCoWorker(ToUserId, MissionId, FromUserId) {
     });
 }
 
+$('#applyToMission').click(function () {
+    var missionId = $('.missionId').text();
+    console.log(missionId);
+    $.ajax({
+        type: "POST",
+        url: "/Mission/ApplyToMission",
+        data: { missionId: missionId },
+        success: function (result) {
+            swal.fire({
+                position: 'top-end',
+                icon: result.icon,
+                title: result.message,
+                showConfirmButton: false,
+                timer: 3000
+            });
+            if (result.status == 1) {
+                $("#applyToMission").css({
+                    "background": "#F88634",
+                    "color": "white",
+                    "border": "2px solid #F88634"
+                });
+                $("#applyToMission").removeClass('btn-apply');
+                $("#applyToMission").text("Status Pending");
+            }
+        }
+    });
+});

@@ -343,7 +343,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Description)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("description");
             entity.Property(e => e.EndDate)
                 .HasColumnType("datetime")
@@ -360,7 +360,7 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("organization_name");
             entity.Property(e => e.ShortDescription)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("short_description");
             entity.Property(e => e.StartDate)
                 .HasColumnType("datetime")
@@ -695,7 +695,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Description)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("description");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.PublishedAt)
@@ -888,7 +888,9 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(225)
                 .IsUnicode(false)
                 .HasColumnName("password");
-            entity.Property(e => e.PhoneNumber).HasColumnName("phone_number");
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(20)
+                .HasColumnName("phone_number");
             entity.Property(e => e.ProfileText)
                 .HasColumnType("text")
                 .HasColumnName("profile_text");

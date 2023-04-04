@@ -77,6 +77,10 @@
               "target": "Package",
               "version": "[6.0.12, )"
             },
+            "System.ValueTuple": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
             "toastr": {
               "target": "Package",
               "version": "[2.1.1, )"
@@ -174,6 +178,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[6.0.12, )"
+            },
+            "System.ValueTuple": {
+              "target": "Package",
+              "version": "[4.5.0, )"
             },
             "toastr": {
               "target": "Package",
@@ -279,6 +287,10 @@
             "SweetAlert": {
               "target": "Package",
               "version": "[1.0.0, )"
+            },
+            "System.ValueTuple": {
+              "target": "Package",
+              "version": "[4.5.0, )"
             },
             "toastr": {
               "target": "Package",

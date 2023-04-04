@@ -11,6 +11,7 @@ using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -23,14 +24,46 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
-        public List<Story> GetStories (List<long> StoryIds)
+        public (List<Story> stories, int count) GetStories (StoryListingViewModel viewmodel)
         {
-            return _db.Stories.Where(s => StoryIds.Contains(s.StoryId))
+            var stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsNoTracking();
+
+            if (viewmodel.CountryId != null)
+            {
+                stories = stories.Where(s => s.Mission.CountryId == viewmodel.CountryId);
+            }
+
+            if (viewmodel.CityId != null)
+            {
+                stories = stories.Where(s => viewmodel.CityId.Contains(s.Mission.CityId));
+            }
+
+            if (viewmodel.ThemeId != null)
+            {
+                stories = stories.Where(s => viewmodel.ThemeId.Contains(s.Mission.ThemeId));
+            }
+
+            if (viewmodel.SkillId != null)
+            {
+                stories = stories.Where(s => s.Mission.MissionSkills.Any(skill => viewmodel.SkillId.Contains(skill.SkillId)));
+            }
+
+            if (viewmodel.searchText != null)
+            {
+                stories = stories.Where(s => s.Title.ToLower().Contains(viewmodel.searchText) || s.Description.ToLower().Contains(viewmodel.searchText));
+            }
+
+            int count = stories.Count();
+
+            stories = stories
                 .Include(s => s.StoryMedia)
                 .Include(s => s.Mission)
                 .ThenInclude(s => s.Theme)
                 .Include(s => s.User)
-                .ToList();
+                .Skip(Math.Max((viewmodel.pageNo - 1) * 3, 0))
+                .Take(3);
+
+            return (stories.ToList(), count);
         }
 
         public List<MissionApplication> GetMissions (long userId)

@@ -50,7 +50,7 @@
 
                 <div class="col card-div mb-5">
                     <span class="d-none mission-country">@obj.CountryId</span>
-                    <span class="mission-id">@MissionId</span>
+                    <span class="mission-id d-none">@MissionId</span>
                     @*<span>@hasApplied</span>*@
                     <div class="card h-100 shadow-sm border-light">
                         <div class="position-relative">
@@ -293,24 +293,9 @@
 
             <div class="card mb-5 border-light shadow-sm card-div">
                 <div class="row g-0">
-                    <span class="mission-id">@MissionId</span>
+                    <span class="mission-id d-none">@MissionId</span>
                     <span class="d-none mission-country">@obj.CountryId</span>
                     <div class="col-md-4 position-relative">
-                        @*<img src="~/images/Plantation-and-Afforestation-programme.png"
-                    class="img-fluid rounded-start" alt=""
-                    style="height:100%; width:100%; background-size: cover; background-position: center;">*@
-
-                        @*@if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
-                    {
-                    @foreach (var image in obj.MissionMedia)
-                    {
-                    <img src=@image.MediaPath class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;">
-                    }
-                    }
-                    else
-                    {
-                    <img src="~/images/no-image-found.png" class="card-img-top" alt="" style="height:100%; width:100%; background-size: cover; background-position: center;" />
-                    }*@
 
                         @if (obj.MissionMedia.Any(m => m.MissionId == MissionId))
                         {
@@ -432,7 +417,13 @@
 
                             <h4 class="card-title pt-3">@obj.Title</h4>
                             <p class="card-text">
-                                @obj.ShortDescription
+                                @{
+                                    int maxLength = 200;
+                                    string description = obj.ShortDescription.Length > maxLength
+                                    ? @obj.ShortDescription.Substring(0, maxLength) + "..."
+                                    : @obj.ShortDescription;
+                                }
+                                @description
                             </p>
 
 

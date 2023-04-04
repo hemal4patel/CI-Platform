@@ -17,18 +17,26 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public List<Skill> SkillList { get; set; }
 
-        public List<MissionApplication> Application { get; set; } = null;
-
-        public List<MissionRating> MissionRatings { get; set; } = null;
-
-        public List<GoalMission> GoalMissions { get; set; } = null;
-
         public List<User> UserList { get; set; } = null;
 
-        public string? link { get; set; }
-
         //to store data
-        public IEnumerable<Mission> MissionList { get; set; }
+        public List<Mission> MissionList { get; set; }
+
+
+        //linq filter params
+        public string? searchText { get; set; }
+
+        public long? CountryId { get; set; }
+
+        public long[]? CityId { get; set; }
+
+        public long[]? ThemeId { get; set; }
+
+        public long[]? SkillId { get; set; }
+
+        public int? sortCase { get; set; }
+
+        public int pageNo { get; set; }
 
 
         // invites 

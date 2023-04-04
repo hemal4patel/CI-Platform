@@ -47,6 +47,7 @@
             bool hasApplied = Model.MissionDetails.MissionApplications.Any(m => m.UserId == Id);
         }
 
+        <span class="missionId d-none"> @MissionId </span>
         <!-- SLIDER -->
         <div class="col-lg-6">
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
@@ -303,7 +304,7 @@
                 }
                 else
                 {
-                    <button class="btn-apply rounded-pill px-4 py-2">
+                    <button id="applyToMission" class="btn-apply rounded-pill px-4 py-2">
                         Apply Now
                         <i class="bi bi-arrow-right ms-3"></i>
                     </button>
@@ -505,7 +506,16 @@
                             {
                                 <div class="col-4">
                                     <div class="text-center">
-                                        <img src="~/images/volunteer1.png" alt="" class="rounded-circle vol-img">
+                                        @*<img src="~/images/volunteer1.png" alt="" class="rounded-circle vol-img">*@
+                                        @*<img src="~/Upload/UserProfile/@v.User.Avatar" alt="" class="rounded-circle vol-img">*@
+                                        @if (v.User.Avatar is not null)
+                                        {
+                                            <img src="~/Upload/UserProfile/@v.User.Avatar" alt="" class="rounded-circle vol-img">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Upload/UserProfile/no-avatar.jpg" alt="" class="rounded-circle vol-img">
+                                        }
                                         <p>@v.User.FirstName @v.User.LastName</p>
                                     </div>
                                 </div>
@@ -546,7 +556,7 @@
 
             <div class="col card-div mb-5">
                 <span class="d-none mission-country">@m.Country.Name</span>
-                <span class="mission-id">@m.MissionId</span>
+                <span class="mission-id d-none">@m.MissionId</span>
                 @*<span>@hasApplied</span>*@
                 <div class="card h-100 shadow-sm border-light">
                     <div class="position-relative">

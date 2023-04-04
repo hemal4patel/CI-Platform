@@ -32,7 +32,7 @@ namespace CiPlatformWeb.Controllers
                 long userId = Convert.ToInt64(ViewBag.UserId);
 
                 var vm = new UserProfileViewModel();
-                vm.UserDetails = _userProfile.GetUserDetails(userId);
+                vm = _userProfile.GetUserDetails(userId);
                 vm.CountryList = _userProfile.GetCountryList();
                 vm.SkillList = _userProfile.GetSkillList();
 
@@ -44,12 +44,41 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult UserProfile (UserProfileViewModel viewmodel)
+        {
+            return Ok();
+        }
+
 
         public IActionResult GetCitiesByCountry (int countryId)
         {
             var vm = new UserProfileViewModel();
             vm.CityList = _userProfile.GetCityList(countryId);
             return Json(vm.CityList);
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword (string oldPassoword, string newPassword, string confirmPassword)
+        {
+            ViewBag.Email = HttpContext.Session.GetString("Email");
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
+
+            long userId = Convert.ToInt64(ViewBag.UserId);
+
+            var user = _userProfile.CheckPassword(userId, oldPassoword);
+
+            if (user != null)
+            {
+                _userProfile.UpdatePassword(user, newPassword);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

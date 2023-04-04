@@ -1,4 +1,106 @@
 ﻿
+function validateChangePassword() {
+    var flag = true;
+
+    var oldPassoword = $('#oldPassword').val();
+    var newPassword = $('#newPassword').val();
+    var confirmPassword = $('#confirmPassword').val();
+
+    console.log(oldPassoword);
+
+    if (oldPassoword == "") {
+        $('.valOldPassword').show();
+        flag = false;
+
+        $('#oldPassword').on('input', function () {
+            if ($('#oldPassword').val().length != 0) {
+                $('.valOldPassword').hide();
+                flag = true;
+            }
+        })
+    }
+    if (newPassword == "") {
+        $('.valnewPassword').show();
+        $(".valMatchingPassword").hide();
+        flag = false;
+
+        $('#newPassword').on('input', function () {
+            if ($('#newPassword').val().length != 0) {
+                $('.valnewPassword').hide();
+                $(".valMatchingPassword").hide();
+                flag = true;
+            }
+        })
+    }
+    if (confirmPassword == "") {
+        $('.valConfirmPassword').show();
+        flag = false;
+
+        $('#confirmPassword').on('input', function () {
+            if ($('#confirmPassword').val().length != 0) {
+                $('.valConfirmPassword').hide();
+                $(".valMatchingPassword").hide();
+                flag = true;
+            }
+        })
+    }
+    else {
+        if (newPassword !== confirmPassword) {
+            $('.valMatchingPassword').show();
+            flag = false;
+
+            $("#ConfirmPassword").on('input', function () {
+                if ($("#ConfirmPassword").val().lenght != 0) {
+                    $(".valMatchingPassword").hide();
+                    flag = true;
+                }
+            });
+        }
+        else {
+            $(".valMatchingPassword").hide();
+            flag = true;
+        }
+    }
+
+    return flag;
+}
+
+
+
+$('#changePassowrd').click(function () {
+
+    if (validateChangePassword()) {
+        var oldPassoword = $('#oldPassword').val();
+        var newPassword = $('#newPassword').val();
+        var confirmPassword = $('#confirmPassword').val();
+        console.log(oldPassoword + newPassword + confirmPassword);
+
+        $.ajax({
+            type: "POST",
+            url: "/User/ChangePassword",
+            data: { oldPassoword: oldPassoword, newPassword: newPassword, confirmPassword: confirmPassword },
+            success: function (data) {
+                $('#changePassword').modal('hide');
+                swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: "Password updated successfully!!!",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            },
+            error: function () {
+                $('.valInvalidPassword').show();
+                $('#oldPassword').on('input', function () {
+                    if ($('#oldPassword').val().length != 0) {
+                        $('.valInvalidPassword').hide();
+                    }
+                })
+            }
+        });
+    }
+
+})
 
 $("#countryDropdown").click(function () {
     var countryId = $(this).val();
@@ -25,7 +127,7 @@ $('.selectSkills').click(function () {
     var newOption;
     var displaySkillsDiv = $('.upSkillsSelected select');
     var selectedSkills = $('.skillOptions select option:selected');
-    //displaySkillsDiv.empty();
+    displaySkillsDiv.empty();
     selectedSkills.each(function () {
         newOption = $('<option>', {
             value: $(this).val(),
@@ -46,22 +148,30 @@ $('.deselectSkills').click(function () {
 })
 
 
+var selectedUserSkills = [];
 function saveSkills() {
     console.log("called");
 
     var container = $('.skillsContainer');
     container.empty();
-
+    selectedUserSkills.splice(0, selectedUserSkills.length);
     skills = "";
 
     $('.upSkillsSelected select option').each(function () {
         var value = $(this).val();
         var text = $(this).html();
-        skills += ` <div data-value=${value}>${text}</div>`
+        skills += ` <div class="userSkill" data-value=${value}>${text}</div>`
+        selectedUserSkills.push($(this).val());
 
     })
     container.append(skills);
+    var s = selectedUserSkills.join(',');
+    console.log(s);
+    $('#selectedSkills').val(s);
+
+    console.log($('#selectedSkills').val());
 }
+
 
 // Add change event listener to profile image file input
 $('#profile-image-input').change(function () {
@@ -76,4 +186,24 @@ $('#profile-image-input').change(function () {
 $('.edit-icon').click(function () {
     // Open file input dialog
     $('#profile-image-input').click();
+});
+
+$('#saveProfile').click(function () {
+    var firstName = $('#firstName').val();
+    var lastName = $('#lastName').val();
+    var empId = $('#empId').val();
+    var manager = $('#manager').val();
+    var title = $('#title').val();
+    var dept = $('#dept').val();
+    var profileText = $('#ProfileText').val();
+    var whyIVolunteer = $('#whyIVolunteer').val();
+    var city = $('#CityDropdown').val();
+    var country = $('#countryDropdown').val();
+    var availability = $('#availability').val();
+    var linkedInUrl = $('#linkedInUrl').val();
+
+    $('.userSkill').each(function () {
+        console.log($(this).data('value'));
+    })
+
 });

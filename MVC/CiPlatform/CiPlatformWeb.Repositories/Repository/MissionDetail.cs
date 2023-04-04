@@ -35,6 +35,26 @@ namespace CiPlatformWeb.Repositories.Repository
             return mission;
         }
 
+        public bool HasAlreadyApplied (long missionId, long userId)
+        {
+            return _db.MissionApplications.Any(ma => ma.MissionId == missionId && ma.UserId == userId);
+        }
+
+        public void ApplyToMission (long missionId, long userId)
+        {
+            var missionApplication = new MissionApplication()
+            {
+                MissionId = missionId,
+                UserId = userId,
+                ApprovalStatus = "PENDING",
+                CreatedAt = DateTime.Now,
+                AppliedAt = DateTime.Now
+            };
+            _db.MissionApplications.Add(missionApplication);
+            _db.SaveChanges();
+        }
+
+
         public List<Comment> GetApprovedComments (long MissionId)
         {
             var approvedComments = _db.Comments.Where(c => c.MissionId == MissionId && c.ApprovalStatus == "PUBLISHED")

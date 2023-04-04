@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,9 +19,24 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
-        public User GetUserDetails (long userId)
+        public UserProfileViewModel GetUserDetails (long userId)
         {
-            return _db.Users.Where(u => u.UserId == userId).Include(u => u.UserSkills).FirstOrDefault();
+            User user = _db.Users.Where(u => u.UserId == userId).Include(u => u.UserSkills).FirstOrDefault();
+            var vm = new UserProfileViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Avatar = user.Avatar,
+                WhyIVolunteer = user.WhyIVolunteer,
+                EmployeeId = user.EmployeeId,
+                Department = user.Department,
+                CityId = user.CityId,
+                CountryId = user.CountryId,
+                ProfileText = user.ProfileText,
+                LinkedInUrl = user.LinkedInUrl,
+                Title = user.Title
+            };
+            return vm;
         }
 
         public List<Country> GetCountryList ()
@@ -37,6 +53,18 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<Skill> GetSkillList ()
         {
             return _db.Skills.ToList();
+        }
+
+        public User CheckPassword (long userId, string oldPassoword)
+        {
+            return _db.Users.Where(u => u.UserId == userId && u.Password == oldPassoword).FirstOrDefault();
+        }
+
+        public void UpdatePassword (User user, string newPassoword)
+        {
+            user.Password = newPassoword;
+            user.UpdatedAt = DateTime.Now;
+            _db.SaveChanges();
         }
 
     }

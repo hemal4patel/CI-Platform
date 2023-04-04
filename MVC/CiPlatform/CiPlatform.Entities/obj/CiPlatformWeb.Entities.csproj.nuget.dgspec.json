@@ -77,6 +77,10 @@
               "target": "Package",
               "version": "[6.0.12, )"
             },
+            "System.ValueTuple": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
             "toastr": {
               "target": "Package",
               "version": "[2.1.1, )"

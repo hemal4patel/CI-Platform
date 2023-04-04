@@ -68,7 +68,7 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        public async Task<IActionResult> PlatformLanding (string searchText, int? countryId, string? cityId, string? themeId, string? skillId, int? sortCase, string? userId, int? pageNo, int? pagesize)
+        public IActionResult PlatformLanding (DisplayMissionCards viewmodel)
         {
             if (HttpContext.Session.GetString("Email") != null)
             {
@@ -78,52 +78,19 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
             }
 
-            IConfigurationRoot _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+            var vm = new DisplayMissionCards();
 
-            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+            var UserId = Convert.ToInt64(ViewBag.UserId);
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("spFilterSortSearchPagination", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add("@countryId", SqlDbType.VarChar).Value = countryId != null ? countryId : null;
-                command.Parameters.Add("@cityId", SqlDbType.VarChar).Value = cityId != null ? cityId : null;
-                command.Parameters.Add("@themeId", SqlDbType.VarChar).Value = themeId != null ? themeId : null;
-                command.Parameters.Add("@skillId", SqlDbType.VarChar).Value = skillId != null ? skillId : null;
-                command.Parameters.Add("@searchText", SqlDbType.VarChar).Value = searchText;
-                command.Parameters.Add("@sortCase", SqlDbType.VarChar).Value = sortCase;
-                command.Parameters.Add("@userId", SqlDbType.VarChar).Value = userId;
-                command.Parameters.Add("@pageSize", SqlDbType.Int).Value = pagesize;
-                command.Parameters.Add("@pageNo", SqlDbType.Int).Value = pageNo;
-                SqlDataReader reader = command.ExecuteReader();
+            var data = _missionlist.GetMissions(viewmodel, UserId);
+            vm.MissionList = data.Item1;
+            ViewBag.totalRecords = data.Item2;
+            vm.UserList = _missionlist.GetUserList(UserId);
 
-                List<long> MissionIds = new List<long>();
-                while (reader.Read())
-                {
-                    long totalRecords = reader.GetInt32("TotalRecords");
-                    ViewBag.totalRecords = totalRecords;
-                }
-                reader.NextResult();
-
-                while (reader.Read())
-                {
-                    long missionId = reader.GetInt64("mission_id");
-                    MissionIds.Add(missionId);
-                }
-
-
-                var vm = new DisplayMissionCards();
-
-                var UserId = Convert.ToInt64(ViewBag.UserId);
-                vm.MissionList = _missionlist.GetMissions(MissionIds);
-                vm.UserList = _missionlist.GetUserList(UserId);
-
-                return PartialView("_MissionDisplayPartial", vm);
-            }
+            return PartialView("_MissionDisplayPartial", vm);
         }
 
-        
+
         [HttpPost]
         public IActionResult AddToFavorites (int missionId)
         {
@@ -204,6 +171,43 @@ namespace CiPlatformWeb.Controllers
             return Json(missionId);
         }
 
+        [HttpPost]
+        public IActionResult ApplyToMission (long missionId)
+        {
+            string Id = HttpContext.Session.GetString("UserId");
+            var userId = Convert.ToInt64(Id);
+
+            var mission = _missiondetail.GetMissionDetails(missionId);
+
+            if (mission.StartDate < DateTime.Now)
+            {
+                if (mission.EndDate > DateTime.Now)
+                {
+                    return Ok(new
+                    {
+                        icon = "error",
+                        message = "Mission has already started!!!"
+                    });
+                }
+                else
+                {
+                    return Ok(new { icon = "error", message = "Mission is closed!!!" });
+                }
+            }
+            else
+            {
+                if (_missiondetail.HasAlreadyApplied(missionId, userId))
+                {
+                    return Ok(new { icon = "warning", message = "You have already applied to the mission!!!" });
+                }
+                else
+                {
+                    _missiondetail.ApplyToMission(missionId, userId);
+                    return Ok(new { icon = "success", message = "Successfully applied to the mission!!!", status = 1 });
+                }
+            }
+        }
+
 
         public IActionResult DisplayDocument (string fileName)
         {
@@ -224,9 +228,6 @@ namespace CiPlatformWeb.Controllers
 
             if (comment != null)
             {
-                //var newComment = new Comment { UserId = userId, MissionId = missionId, CommentText = comment };
-                //_db.Comments.Add(newComment);
-                //_db.SaveChanges();
                 _missiondetail.AddComment(missionId, userId, comment);
                 return Ok(new { icon = "success", message = "Comment added!!" });
             }
@@ -238,10 +239,10 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
         {
+            var MissionInvite = _missionlist.HasAlreadyInvited(ToUserId, MissionId, FromUserId);
 
-            if (_db.MissionInvites.Any(m => m.MissionId == MissionId && m.ToUserId == ToUserId && m.FromUserId == FromUserId))
+            if (MissionInvite != null)
             {
-                var MissionInvite = _db.MissionInvites.Where(m => m.MissionId == MissionId && m.ToUserId == ToUserId && m.FromUserId == FromUserId).FirstOrDefault();
                 MissionInvite.UpdatedAt = DateTime.Now;
                 _db.Update(MissionInvite);
                 _db.SaveChanges();

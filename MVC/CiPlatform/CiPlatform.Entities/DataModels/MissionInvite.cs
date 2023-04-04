@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CiPlatformWeb.Entities.DataModels;
 
-public partial class MissionInvite : baseClass
+public partial class MissionInvite
 {
     public long MissionInviteId { get; set; }
 

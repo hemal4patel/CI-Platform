@@ -11,6 +11,10 @@ namespace CiPlatformWeb.Repositories.Interface
     {
         public Mission GetMissionDetails (long MissionId);
 
+        public bool HasAlreadyApplied (long missionId, long userId);
+
+        public void ApplyToMission (long missionId, long userId);
+        
         public List<Comment> GetApprovedComments (long MissionId);
 
         public List<Mission> GetRelatedMissions (long MissionId);
@@ -20,5 +24,6 @@ namespace CiPlatformWeb.Repositories.Interface
         public List<MissionDocument> GetMissionDocuments (long MissionId);
 
         public void AddComment (long MissionId, long userId, string comment);
+
     }
 }

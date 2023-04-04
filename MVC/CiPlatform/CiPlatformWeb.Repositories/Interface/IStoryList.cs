@@ -11,7 +11,7 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IStoryList
     {
-        public List<Story> GetStories (List<long> StoryIds);
+        public (List<Story> stories, int count) GetStories (StoryListingViewModel viewmodel);
 
         public List<MissionApplication> GetMissions(long userId);
 

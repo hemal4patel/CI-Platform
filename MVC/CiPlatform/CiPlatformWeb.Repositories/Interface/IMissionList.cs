@@ -18,9 +18,11 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public List<Skill> GetSkillList ();
 
-        public IEnumerable<Mission> GetMissions (List<long> MissionIds);
+        public (List<Mission> missions, int count) GetMissions (DisplayMissionCards viewmodel, long userId);
 
         public List<User> GetUserList (long userId);
+
+        public MissionInvite HasAlreadyInvited (long ToUserId, long MissionId, long FromUserId);
 
         public Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link);
     }

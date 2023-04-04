@@ -15,10 +15,6 @@ public partial class Mission
 
     public string Title { get; set; } = null!;
 
-    public string? ShortDescription { get; set; }
-
-    public string? Description { get; set; }
-
     public DateTime? StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }
@@ -40,6 +36,10 @@ public partial class Mission
     public DateTime? DeletedAt { get; set; }
 
     public int? TotalSeats { get; set; }
+
+    public string? ShortDescription { get; set; }
+
+    public string? Description { get; set; }
 
     public virtual City City { get; set; } = null!;
 

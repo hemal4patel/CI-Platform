@@ -23,51 +23,111 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Country> GetCountryList ()
         {
-            return _db.Countries.ToList ();
+            return _db.Countries.ToList();
         }
 
         public List<City> GetCityList (long countryId)
         {
-            return _db.Cities.Where(c => c.CountryId== countryId).ToList ();
+            return _db.Cities.Where(c => c.CountryId == countryId).ToList();
         }
 
         public List<MissionTheme> GetThemeList ()
         {
-            return _db.MissionThemes.ToList ();
+            return _db.MissionThemes.ToList();
         }
 
         public List<Skill> GetSkillList ()
         {
-            return _db.Skills.ToList ();
+            return _db.Skills.ToList();
         }
 
-        public IEnumerable<Mission> GetMissions (List<long> MissionIds)
+        public (List<Mission> missions, int count) GetMissions (DisplayMissionCards viewmodel, long userId)
         {
-            var MissionList = _db.Missions.Where(m => MissionIds.Contains(m.MissionId))
-                    .Include(m => m.City)
-                    .Include(m => m.Country)
-                    .Include(m => m.MissionSkills).ThenInclude(ms => ms.Skill)
-                    .Include(m => m.Theme)
-                    .Include(m => m.MissionRatings)
-                    .Include(m => m.GoalMissions)
-                    .Include(m => m.MissionApplications)
-                    .Include(m => m.FavouriteMissions)
-                    .Include(m => m.MissionMedia)
-                    .ToList().OrderBy(ml => MissionIds.IndexOf(ml.MissionId));
+            var missions = _db.Missions.AsNoTracking();
 
-            return MissionList;
+            if (viewmodel.CountryId != null)
+            {
+                missions = missions.Where(m => m.CountryId == viewmodel.CountryId);
+            }
+
+            if (viewmodel.CityId != null)
+            {
+                missions = missions.Where(m => viewmodel.CityId.Contains(m.CityId));
+            }
+
+            if (viewmodel.ThemeId != null)
+            {
+                missions = missions.Where(m => viewmodel.ThemeId.Contains(m.ThemeId));
+            }
+
+            if (viewmodel.SkillId != null)
+            {
+                missions = missions.Where(m => m.MissionSkills.Any(s => viewmodel.SkillId.Contains(s.SkillId)));
+            }
+
+            if (viewmodel.searchText != null)
+            {
+                missions = missions.Where(m => m.Title.ToLower().Contains(viewmodel.searchText) || m.ShortDescription.ToLower().Contains(viewmodel.searchText) || m.Description.ToLower().Contains(viewmodel.searchText));
+            }
+
+
+            switch (viewmodel.sortCase)
+            {
+                case 1:
+                    missions = missions.OrderByDescending(m => m.CreatedAt);
+                    break;
+
+                case 2:
+                    missions = missions.OrderBy(m => m.CreatedAt);
+                    break;
+
+                case 3:
+                    missions = missions.OrderByDescending(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    break;
+
+                case 4:
+                    missions = missions.OrderBy(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    break;
+
+                case 5:
+                    missions = missions.OrderByDescending(m => m.EndDate);
+                    break;
+
+                case 6:
+                    missions = missions.Where(m => m.FavouriteMissions.Any(f => f.UserId == userId));
+                    break;
+            }
+
+            int count = missions.Count();
+
+            missions = missions
+                .Include(m => m.Country)
+                .Include(m => m.City)
+                .Include(m => m.MissionRatings)
+                .Include(m => m.Theme)
+                .Include(m => m.MissionSkills).ThenInclude(m => m.Skill)
+                .Include(m => m.MissionApplications)
+                .Include(m => m.GoalMissions)
+                .Include(m => m.FavouriteMissions)
+                .Include(m => m.MissionMedia)
+                .Skip(Math.Max((viewmodel.pageNo - 1) * 6, 0))
+                .Take(6);
+
+
+            return (missions.ToList(), count);
         }
 
         public List<User> GetUserList (long userId)
         {
             var recentVolunteers = _db.Users.Where(u => u.UserId != userId).ToList();
 
-            //var recentVolunteers = _db.MissionApplications.Include(u => u.User).Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt).ToList();
-
-
             return recentVolunteers;
         }
 
+        public MissionInvite HasAlreadyInvited (long ToUserId, long MissionId, long FromUserId)
+        {
+            return _db.MissionInvites.Where(m => m.MissionId == MissionId && m.ToUserId == ToUserId && m.FromUserId == FromUserId).FirstOrDefault();
+        }
 
         public async Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link)
         {
