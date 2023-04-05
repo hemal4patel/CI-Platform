@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,9 +25,10 @@ namespace CiPlatformWeb.Repositories.Repository
             User user = _db.Users.Where(u => u.UserId == userId).Include(u => u.UserSkills).FirstOrDefault();
             var vm = new UserProfileViewModel()
             {
+                UserId = user.UserId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Avatar = user.Avatar,
+                AvatarName = user.Avatar,
                 WhyIVolunteer = user.WhyIVolunteer,
                 EmployeeId = user.EmployeeId,
                 Department = user.Department,
@@ -55,6 +57,12 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Skills.ToList();
         }
 
+        public List<UserSkill> GetUserSkills (long userId)
+        {
+            return _db.UserSkills.Where(u => u.UserId == userId).Include(u => u.Skill).ToList();
+        }
+
+
         public User CheckPassword (long userId, string oldPassoword)
         {
             return _db.Users.Where(u => u.UserId == userId && u.Password == oldPassoword).FirstOrDefault();
@@ -65,6 +73,84 @@ namespace CiPlatformWeb.Repositories.Repository
             user.Password = newPassoword;
             user.UpdatedAt = DateTime.Now;
             _db.SaveChanges();
+        }
+
+        public UserProfileViewModel UpdateUserProfile (UserProfileViewModel viewmodel)
+        {
+            User user = _db.Users.Where(u => u.UserId == viewmodel.UserId).FirstOrDefault();
+
+            if (user != null)
+            {
+                user.FirstName = viewmodel.FirstName;
+                user.LastName = viewmodel.LastName;
+                user.EmployeeId = viewmodel.EmployeeId;
+                user.Title = viewmodel.Title;
+                user.Department = viewmodel.Department;
+                user.ProfileText = viewmodel.ProfileText;
+                user.WhyIVolunteer = viewmodel.WhyIVolunteer;
+                user.CountryId = viewmodel.CountryId;
+                user.LinkedInUrl = viewmodel.LinkedInUrl;
+                user.UpdatedAt = DateTime.Now;
+
+                if (viewmodel.CityId != 0)
+                {
+                    user.CityId = viewmodel.CityId;
+                }
+
+                if (viewmodel.AvatarImage != null)
+                {
+                    if (user.Avatar is not null)
+                    {
+                        File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "UserProfile", user.Avatar));
+                    }
+
+                    var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + viewmodel.AvatarImage.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "UserProfile", fileName);
+
+                    user.Avatar = fileName;
+                    viewmodel.AvatarName = fileName;
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        viewmodel.AvatarImage.CopyTo(stream);
+                    }
+                }
+                else
+                {
+                    viewmodel.AvatarName = user.Avatar;
+                }
+
+                //remove skills
+                var skills = _db.UserSkills.Where(s => s.UserId == viewmodel.UserId);
+                if (skills.Any())
+                {
+                    _db.RemoveRange(skills);
+                }
+                if (viewmodel.UserSelectedSkills != null)
+                {
+                    //long[] userSkills = viewmodel.UserSelectedSkills.Split(',');
+
+                    string[] selectedSkillsStr = viewmodel.UserSelectedSkills.Split(',');
+
+                    long[] selectedSkills = new long[selectedSkillsStr.Length];
+
+                    for (int i = 0; i < selectedSkillsStr.Length; i++)
+                    {
+                        selectedSkills[i] = long.Parse(selectedSkillsStr[i]);
+                        var newSkill = new UserSkill()
+                        {
+                            UserId = viewmodel.UserId,
+                            SkillId = selectedSkills[i],
+                            CreatedAt = DateTime.Now,
+                        };
+                        _db.UserSkills.Add(newSkill);
+                    }
+                }
+
+                _db.SaveChanges();
+            }
+
+            return viewmodel;
         }
 
     }

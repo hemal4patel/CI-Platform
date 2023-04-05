@@ -6,6 +6,7 @@
     string UserName = ViewBag.UserName;
     var Id = Convert.ToInt64(ViewBag.UserId);
     string UserAvatar = ViewBag.UserAvatar;
+    List <MissionInvite> inviteList = ViewBag.InviteList;
 }
 
 <script>
@@ -131,7 +132,7 @@
                             <span>
                                 @*<img src="~/images/user-img.png" alt="" class="rounded-circle me-2"
                                 width="40" height="40">*@
-                                @if (UserAvatar != "")
+                                @if (UserAvatar != null)
                                 {
                                     <img src="~/Upload/UserProfile/@UserAvatar" alt="" class="rounded-circle me-2"
                                      width="40" height="40">

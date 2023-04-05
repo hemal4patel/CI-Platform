@@ -18,8 +18,12 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public List<Skill> GetSkillList ();
 
+        public List<UserSkill> GetUserSkills (long userId); 
+
         public User CheckPassword (long userId, string oldPassoword);
 
         public void UpdatePassword (User user, string newPassoword);
+
+        public UserProfileViewModel UpdateUserProfile (UserProfileViewModel user); 
     }
 }

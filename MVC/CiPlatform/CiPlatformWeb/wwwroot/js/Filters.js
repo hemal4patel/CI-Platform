@@ -503,7 +503,7 @@ function addToFavourites(missionId) {
                     text.append("Add to favourites");
                 }
             }
-            
+
         },
         error: function (error) {
             console.log("error")
@@ -612,3 +612,29 @@ $('#applyToMission').click(function () {
         }
     });
 });
+
+
+$('#notificationDropdown').click(function () {
+    console.log("called");
+    $.ajax({
+        type: "GET",
+        url: "/Mission/GetInvitations",
+        success: function (result) {
+            console.log(result);
+            $('#invites').empty();
+            var items = "";
+            $(result).each(function (item) {
+                //items += '<li><a class="dropdown-item text-wrap"> <i class="bi bi-person-circle"></i> &nbsp; ' + item.fromUser.firstName + ' </a></li>'
+
+                    //<li>
+                    //    <a class="dropdown-item text-wrap">
+                    //        <i class="bi bi-person-circle"></i> &nbsp; @missionInvites.FromUser.FirstName @missionInvites.FromUser.LastName: Recommended this mission - <strong>@missionInvites.Mission.Title</strong>
+                    //    </a>
+                    //</li>
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+})

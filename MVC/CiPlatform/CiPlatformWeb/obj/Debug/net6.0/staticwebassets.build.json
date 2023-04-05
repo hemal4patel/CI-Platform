@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hXat3gC5Rves97CdC/ew4kNFjSMgGMn7lWV8aDVF4dU=",
+  "Hash": "t9TBrEVQBGzZrh8BHE9Sg++oFpw+2viGxtHEk87jFV8=",
   "Source": "CiPlatformWeb",
   "BasePath": "_content/CiPlatformWeb",
   "Mode": "Default",
@@ -4707,6 +4707,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\teachSenior4.jfif"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\24a02_volunteer7.png",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/UserProfile/24a02_volunteer7.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\24a02_volunteer7.png"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\69e68_a1.png",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/UserProfile/69e68_a1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\69e68_a1.png"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar1.png",

@@ -1,6 +1,8 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +11,17 @@ namespace CiPlatformWeb.Entities.ViewModels
 {
     public class UserProfileViewModel
     {
+        public long UserId { get; set; }
+
+        [Required(ErrorMessage = "First name is required.")]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = "Surname is required.")]
         public string LastName { get; set; }
 
-        public string? Avatar { get; set; }
+        public string? AvatarName { get; set; }
+
+        public IFormFile? AvatarImage { get; set; }
 
         public string? WhyIVolunteer { get; set; }
 
@@ -25,9 +33,11 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public long? CityId { get; set; }
 
+        [Required(ErrorMessage = "Country is required.")]
         public long? CountryId { get; set; }
 
-        public string ProfileText { get; set; }
+        [Required(ErrorMessage = "Profile is required.")]
+        public string? ProfileText { get; set; }
 
         public string? LinkedInUrl { get; set; }
 
@@ -35,16 +45,14 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public int? Availability { get; set; }
 
-        public DateTime? Created { get; set; }
+        public string? UserSelectedSkills { get; set; }
 
-        public User UserDetails { get; set; }
-
-        public List<Country> CountryList { get; set; }
+        public List<Country>? CountryList { get; set; }
 
         public List<City>? CityList { get; set; }
 
-        public List<Skill> SkillList {  get; set; }
+        public List<Skill>? SkillList {  get; set; }
 
-        public List<Skill> UserSkills { get; set; }
+        public List<UserSkill>? UserSkills { get; set; }
     }
 }

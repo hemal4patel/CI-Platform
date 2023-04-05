@@ -148,13 +148,10 @@ $('.deselectSkills').click(function () {
 })
 
 
-var selectedUserSkills = [];
 function saveSkills() {
-    console.log("called");
-
     var container = $('.skillsContainer');
     container.empty();
-    selectedUserSkills.splice(0, selectedUserSkills.length);
+    var selectedUserSkills = [];
     skills = "";
 
     $('.upSkillsSelected select option').each(function () {
@@ -165,16 +162,14 @@ function saveSkills() {
 
     })
     container.append(skills);
-    var s = selectedUserSkills.join(',');
-    console.log(s);
-    $('#selectedSkills').val(s);
-
+    console.log(selectedUserSkills);
+    $('#selectedSkills').val(selectedUserSkills.join());
     console.log($('#selectedSkills').val());
 }
 
 
 // Add change event listener to profile image file input
-$('#profile-image-input').change(function () {
+$('#avatarFile').change(function () {
     // Read image file and display preview
     var reader = new FileReader();
     reader.onload = function (e) {
@@ -185,7 +180,7 @@ $('#profile-image-input').change(function () {
 
 $('.edit-icon').click(function () {
     // Open file input dialog
-    $('#profile-image-input').click();
+    $('#avatarFile').click();
 });
 
 $('#saveProfile').click(function () {
@@ -207,3 +202,10 @@ $('#saveProfile').click(function () {
     })
 
 });
+
+
+//$('#avatarFile').on('input', function () {
+//    var avatar = $('#avatarFile')[0].files[0];
+//    $('#AvatarImage').val(avatar);
+//    console.log($('#AvatarImage').val());
+//})

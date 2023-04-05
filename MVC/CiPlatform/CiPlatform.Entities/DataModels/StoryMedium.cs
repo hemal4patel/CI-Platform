@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CiPlatformWeb.Entities.DataModels;
 
@@ -21,6 +19,5 @@ public partial class StoryMedium
 
     public DateTime? DeletedAt { get; set; }
 
-    [System.Text.Json.Serialization.JsonIgnore]
     public virtual Story Story { get; set; } = null!;
 }

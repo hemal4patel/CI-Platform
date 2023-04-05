@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing.Printing;
+using System.Text.Json;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -33,9 +34,8 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
-
                 long userId = Convert.ToInt64(ViewBag.UserId);
+                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
 
                 var vm = new DisplayMissionCards();
 
@@ -44,8 +44,8 @@ namespace CiPlatformWeb.Controllers
                 vm.SkillList = _missionlist.GetSkillList();
                 vm.UserList = _missionlist.GetUserList(userId);
 
-                //vm.missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
-                //vm.storyInvites = _db.StoryInvites.Where(s => s.ToUserId == userId).Include(s => s.Story).ToList();
+                vm.missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
+                vm.storyInvites = _db.StoryInvites.Where(s => s.ToUserId == userId).Include(s => s.Story).ToList();
 
                 //vm.combinedList = new List<baseClass>();
                 //vm.combinedList.AddRange(vm.missionInvites);
@@ -76,18 +76,19 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
+                long UserId = Convert.ToInt64(ViewBag.UserId);
+                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == UserId).Select(u => u.Avatar).FirstOrDefault();
+
+                var vm = new DisplayMissionCards();
+
+                var data = _missionlist.GetMissions(viewmodel, UserId);
+                vm.MissionList = data.Item1;
+                ViewBag.totalRecords = data.Item2;
+                vm.UserList = _missionlist.GetUserList(UserId);
+
+                return PartialView("_MissionDisplayPartial", vm);
             }
-
-            var vm = new DisplayMissionCards();
-
-            var UserId = Convert.ToInt64(ViewBag.UserId);
-
-            var data = _missionlist.GetMissions(viewmodel, UserId);
-            vm.MissionList = data.Item1;
-            ViewBag.totalRecords = data.Item2;
-            vm.UserList = _missionlist.GetUserList(UserId);
-
-            return PartialView("_MissionDisplayPartial", vm);
+            return View();
         }
 
 
@@ -128,10 +129,8 @@ namespace CiPlatformWeb.Controllers
             ViewBag.Email = HttpContext.Session.GetString("Email");
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
             ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            ViewBag.UserAvatar = HttpContext.Session.GetString("UserAvatar");
-            //}
-            //var userId = Convert.ToInt64(ViewBag.UserId);
             string userId = ViewBag.UserId;
+            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == Convert.ToInt64(userId)).Select(u => u.Avatar).FirstOrDefault();
 
             var vm = new VolunteeringMissionViewModel();
 
@@ -270,7 +269,16 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+        //[HttpPost]
+        public IActionResult GetInvitations ()
+        {
+            ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(ViewBag.UserId);
 
+            List<MissionInvite> missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
+
+            return Json(missionInvites);
+        }
 
     }
 }
