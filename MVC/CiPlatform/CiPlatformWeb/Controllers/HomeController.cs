@@ -99,6 +99,7 @@ namespace CiPlatformWeb.Controllers
                         //{
                         //    HttpContext.Session.SetString("UserAvatar", "");
                         //}
+
                         return RedirectToAction("PlatformLanding", "Mission");
                     }
                     else
