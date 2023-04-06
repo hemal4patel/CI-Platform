@@ -38,13 +38,5 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public int pageNo { get; set; }
 
-
-        // invites 
-
-        public List<MissionInvite>? missionInvites { get; set; }
-
-        public List<StoryInvite>? storyInvites { get; set; }
-
-        public List<baseClass>? combinedList { get; set; }
     }
 }

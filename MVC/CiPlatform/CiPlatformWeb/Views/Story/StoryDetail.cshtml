@@ -124,12 +124,19 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                            <span class="input-group-text bg-white border-none" id="searchIcon">
+                                                <img src="~/images/search.png" />
+                                            </span>
+                                            <input type="text" class="form-control border-none searchUserName" placeholder="Search" onkeyup="searchUser()" id="" aria-label="Search" />
+                                        </div>
+
                                     @foreach (var u in Model.userDetail)
                                     {
 
                                         <div class="mt-2" style="display : flex; justify-content : space-between;">
 
-                                            <span class="me-4 ">@u.FirstName @u.LastName</span>
+                                            <span class="me-4 userName">@u.FirstName @u.LastName</span>
 
 
                                             <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@Model.storyDetail.StoryId">

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing.Printing;
@@ -44,13 +45,6 @@ namespace CiPlatformWeb.Controllers
                 vm.SkillList = _missionlist.GetSkillList();
                 vm.UserList = _missionlist.GetUserList(userId);
 
-                vm.missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
-                vm.storyInvites = _db.StoryInvites.Where(s => s.ToUserId == userId).Include(s => s.Story).ToList();
-
-                //vm.combinedList = new List<baseClass>();
-                //vm.combinedList.AddRange(vm.missionInvites);
-                //vm.combinedList.AddRange(vm.storyInvites);
-
                 return View(vm);
             }
             else
@@ -70,7 +64,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult PlatformLanding (DisplayMissionCards viewmodel)
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -88,7 +82,7 @@ namespace CiPlatformWeb.Controllers
 
                 return PartialView("_MissionDisplayPartial", vm);
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -124,24 +118,29 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult VolunteeringMission (long MissionId)
         {
-            //if (HttpContext.Session.GetString("Email") != null)
-            //{
-            ViewBag.Email = HttpContext.Session.GetString("Email");
-            ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            string userId = ViewBag.UserId;
-            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == Convert.ToInt64(userId)).Select(u => u.Avatar).FirstOrDefault();
+            if (HttpContext.Session.GetString("Email") != "")
+            {
+                ViewBag.Email = HttpContext.Session.GetString("Email");
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                string userId = ViewBag.UserId;
+                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == Convert.ToInt64(userId)).Select(u => u.Avatar).FirstOrDefault();
 
-            var vm = new VolunteeringMissionViewModel();
+                var vm = new VolunteeringMissionViewModel();
 
-            vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId);
-            vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId);
-            vm.RecentVolunteers = _missiondetail.GetRecentVolunteers(MissionId, Convert.ToInt64(userId));
-            vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
-            vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
-            vm.MissionDocuments = _missiondetail.GetMissionDocuments(MissionId);
+                vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId);
+                vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId);
+                vm.RecentVolunteers = _missiondetail.GetRecentVolunteers(MissionId, Convert.ToInt64(userId));
+                vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
+                vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
+                vm.MissionDocuments = _missiondetail.GetMissionDocuments(MissionId);
 
-            return View(vm);
+                return View(vm);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
@@ -178,34 +177,11 @@ namespace CiPlatformWeb.Controllers
 
             var mission = _missiondetail.GetMissionDetails(missionId);
 
-            if (mission.StartDate < DateTime.Now)
-            {
-                if (mission.EndDate > DateTime.Now)
-                {
-                    return Ok(new
-                    {
-                        icon = "error",
-                        message = "Mission has already started!!!"
-                    });
-                }
-                else
-                {
-                    return Ok(new { icon = "error", message = "Mission is closed!!!" });
-                }
-            }
-            else
-            {
-                if (_missiondetail.HasAlreadyApplied(missionId, userId))
-                {
-                    return Ok(new { icon = "warning", message = "You have already applied to the mission!!!" });
-                }
-                else
-                {
-                    _missiondetail.ApplyToMission(missionId, userId);
-                    return Ok(new { icon = "success", message = "Successfully applied to the mission!!!", status = 1 });
-                }
-            }
+
+            _missiondetail.ApplyToMission(missionId, userId);
+            return Ok(new { icon = "success", message = "Successfully applied to the mission!!!" });
         }
+
 
 
         public IActionResult DisplayDocument (string fileName)
@@ -275,9 +251,13 @@ namespace CiPlatformWeb.Controllers
             ViewBag.UserId = HttpContext.Session.GetString("UserId");
             long userId = Convert.ToInt64(ViewBag.UserId);
 
-            List<MissionInvite> missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.Mission).ToList();
+            List<MissionInvite> missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Mission).ToList();
 
-            return Json(missionInvites);
+            List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Story).ToList();
+
+            var result = new { missionInvites = missionInvites, storyInvites = storyInvites };
+
+            return Json(result);
         }
 
     }

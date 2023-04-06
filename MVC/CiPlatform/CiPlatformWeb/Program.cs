@@ -11,13 +11,18 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddControllersWithViews()
+.AddNewtonsoftJson(options =>
+options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IEmailGeneration, EmailGeneration>(); 
-builder.Services.AddScoped<IMissionList, MissionList> ();
-builder.Services.AddScoped<IMissionDetail, MissionDetail> ();
-builder.Services.AddScoped<IStoryList, StoryList> ();
-builder.Services.AddScoped<IUserProfile, UserProfile> ();
+builder.Services.AddScoped<IEmailGeneration, EmailGeneration>();
+builder.Services.AddScoped<IMissionList, MissionList>();
+builder.Services.AddScoped<IMissionDetail, MissionDetail>();
+builder.Services.AddScoped<IStoryList, StoryList>();
+builder.Services.AddScoped<IUserProfile, UserProfile>();
 
 builder.Services.AddSession();
 builder.Services.AddMemoryCache();

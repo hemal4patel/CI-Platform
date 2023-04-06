@@ -50,7 +50,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             if (viewmodel.searchText != null)
             {
-                stories = stories.Where(s => s.Title.ToLower().Contains(viewmodel.searchText) || s.Description.ToLower().Contains(viewmodel.searchText));
+                stories = stories.Where(s => s.Title.ToLower().Replace(" ", "").Contains(viewmodel.searchText) || s.Description.ToLower().Contains(viewmodel.searchText));
             }
 
             int count = stories.Count();
@@ -219,10 +219,11 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public Story GetStoryDetails (long MissionId, long UserId)
         {
-            return _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
+            Story storyDetails =  _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
                     .Include(s => s.StoryMedia)
                     .Include(s => s.Mission)
                     .Include(s => s.User).FirstOrDefault();
+                return storyDetails;
         }
 
 

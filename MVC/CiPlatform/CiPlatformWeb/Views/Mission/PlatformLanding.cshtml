@@ -45,18 +45,18 @@
         </div>
         <div class="col-1 d-flex">
             @*<button class="btn border-none view-btn" type="submit" id="grid-btn" onclick="show_grid()">
-                <img src="~/images/grid.png" alt="">
+            <img src="~/images/grid.png" alt="">
             </button>
             <button class="btn border-none ms-2 view-btn" type="submit" id="list-btn" onclick="show_list()">
-                <img src="~/images/list.png" alt="">
+            <img src="~/images/list.png" alt="">
             </button>*@
 
-            <button class="btn border-none view-btn grid" type="submit" id="grid-btn" onclick="show_grid()">
-            <i class="bi bi-grid" style='font-size:30px;'></i>
-        </button>
-        <button class="btn border-none ms-2 view-btn" type="submit" class="list" id="list-btn" onclick="show_list()">
-            <i class="bi bi-list" style='font-size:33px;'></i>
-        </button>
+            <button class="btn border-none rounded-circle view-btn grid" type="submit" id="grid-btn" onclick="show_grid()" style="outline:none;">
+                <i class="bi bi-grid" style='font-size:30px;'></i>
+            </button>
+            <button class="btn border-none rounded-circle ms-2 view-btn list" type="submit" id="list-btn" onclick="show_list()">
+                <i class="bi bi-list" style='font-size:33px;'></i>
+            </button>
 
         </div>
     </div>
@@ -99,8 +99,8 @@
         document.getElementById("list-view").style.display = "none";
         localStorage.setItem('view', 1);
 
-        document.getElementById('grid-btn').style.borderRadius = '50%';
         document.getElementById('grid-btn').style.backgroundColor = 'gainsboro';
+        document.getElementById('grid-btn').style.borderRadius = '50% !important';
         document.getElementById('list-btn').style.backgroundColor = 'transparent';
 
     }

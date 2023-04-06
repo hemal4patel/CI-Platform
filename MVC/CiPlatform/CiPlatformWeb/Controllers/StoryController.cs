@@ -23,7 +23,7 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult StoryListing ()
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 //ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -39,14 +39,17 @@ namespace CiPlatformWeb.Controllers
 
                 return View(vm);
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //POST
         [HttpPost]
         public IActionResult StoryListing (StoryListingViewModel viewmodel)
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -62,13 +65,16 @@ namespace CiPlatformWeb.Controllers
 
                 return PartialView("_StoryListing", vm);
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
         public IActionResult ShareStory ()
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -81,13 +87,16 @@ namespace CiPlatformWeb.Controllers
 
                 return View(vm);
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
         public IActionResult GetStory (long missionId)
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -99,13 +108,16 @@ namespace CiPlatformWeb.Controllers
 
                 return Json(story);
             }
-            return BadRequest();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
         public IActionResult SaveStory (ShareStoryViewModel viewmodel)
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -144,14 +156,17 @@ namespace CiPlatformWeb.Controllers
                     }
                 }
             }
-            return BadRequest();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
         [HttpPost]
         public IActionResult SubmitStory (ShareStoryViewModel viewmodel)
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -182,13 +197,16 @@ namespace CiPlatformWeb.Controllers
                     return Ok(new { icon = "error", message = "Only one story for a mission is allowed!!!" });
                 }
             }
-            return BadRequest();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
         public IActionResult StoryDetail (long MissionId, long UserId)
         {
-            if (HttpContext.Session.GetString("Email") != null)
+            if (HttpContext.Session.GetString("Email") != "")
             {
                 ViewBag.Email = HttpContext.Session.GetString("Email");
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
@@ -204,7 +222,10 @@ namespace CiPlatformWeb.Controllers
 
                 return View(vm);
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
@@ -220,7 +241,6 @@ namespace CiPlatformWeb.Controllers
                 _db.Update(StoryInvite);
                 _db.SaveChanges();
             }
-
             else
             {
                 var storyInvite = new StoryInvite()

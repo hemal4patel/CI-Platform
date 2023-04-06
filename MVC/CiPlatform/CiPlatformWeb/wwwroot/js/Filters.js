@@ -5,38 +5,38 @@ var currentUrl = window.location.href;
 let allDropdowns = $('.dropdown ul');
 
 if (currentUrl.includes("PlatformLanding")) {
-    spFilterSortSearchPagination(1);
+    showMissions(1);
 }
 else if (currentUrl.includes("StoryListing")) {
-    spFilterStory(1);
+    showStories(1);
 }
 
 
 
 $('#searchText').on('keyup', function () {
     if (currentUrl.includes("PlatformLanding")) {
-        spFilterSortSearchPagination();
+        showMissions();
     }
     else if (currentUrl.includes("StoryListing")) {
-        spFilterStory();
+        showStories();
     }
 });
 
 allDropdowns.on('change', function () {
     if (currentUrl.includes("PlatformLanding")) {
-        spFilterSortSearchPagination();
+        showMissions();
     }
     else if (currentUrl.includes("StoryListing")) {
-        spFilterStory();
+        showStories();
     }
 });
 
-function spFilterSortSearchPagination(pageNo) {
+function showMissions(pageNo) {
     var CountryId = selectedCountry;
     var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
-    var searchText = $("#searchText").val();
+    var searchText = $("#searchText").val().toLowerCase().replace(" ", "");;
     var sortCase = selectedSortCase;
     var pagesize = 6;
     var pageNo = pageNo;
@@ -49,6 +49,7 @@ function spFilterSortSearchPagination(pageNo) {
             var view = $(".partialViews");
             view.empty();
             view.append(data);
+            search();
             totalMission();
 
             if (document.getElementById('missionCount') != null) {
@@ -160,7 +161,7 @@ function spFilterSortSearchPagination(pageNo) {
                     currentPage = pageNo;
 
                 }
-                spFilterSortSearchPagination(pageNo);
+                showMissions(pageNo);
             }));
 
         },
@@ -170,12 +171,12 @@ function spFilterSortSearchPagination(pageNo) {
     });
 }
 
-function spFilterStory(pageNo) {
+function showStories(pageNo) {
     var CountryId = selectedCountry;
     var CityId = $('#CityList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
-    var searchText = $("#searchText").val();
+    var searchText = $("#searchText").val().toLowerCase().replace(" ", "");;
     var pagesize = 3;
     var pageNo = pageNo;
 
@@ -299,7 +300,7 @@ function spFilterStory(pageNo) {
                     currentPage = pageNo;
 
                 }
-                spFilterStory(pageNo);
+                showStories(pageNo);
             }));
         },
         error: function (error) {
@@ -340,7 +341,7 @@ function totalStory() {
 
 $("#sortList li").click(function () {
     selectedSortCase = $(this).val();
-    spFilterSortSearchPagination();
+    showMissions();
 });
 
 $("#CountryList li").click(function () {
@@ -353,10 +354,10 @@ $("#CountryList li").click(function () {
     GetCitiesByCountry(countryId);
 
     if (currentUrl.includes("PlatformLanding")) {
-        spFilterSortSearchPagination();
+        showMissions();
     }
     else if (currentUrl.includes("StoryListing")) {
-        spFilterStory();
+        showStories();
     }
 });
 
@@ -419,10 +420,10 @@ allDropdowns.each(function () {
                 const checkboxElement = dropdown.find(`input[type="checkbox"][value="${selectedOptionValue}"]`);
                 checkboxElement.prop('checked', false);
                 if (currentUrl.includes("PlatformLanding")) {
-                    spFilterSortSearchPagination();
+                    showMissions();
                 }
                 else if (currentUrl.includes("StoryListing")) {
-                    spFilterStory();
+                    showStories();
                 }
                 if (filterPills.children('.pill').length === 1) {
                     filterPills.children('.closeAll').remove();
@@ -436,10 +437,10 @@ allDropdowns.each(function () {
                     allDropdowns.find('input[type="checkbox"]').prop('checked', false);
                     filterPills.empty();
                     if (currentUrl.includes("PlatformLanding")) {
-                        spFilterSortSearchPagination();
+                        showMissions();
                     }
                     else if (currentUrl.includes("StoryListing")) {
-                        spFilterStory();
+                        showStories();
                     }
                 });
 
@@ -468,10 +469,10 @@ allDropdowns.each(function () {
         }
 
         if (currentUrl.includes("PlatformLanding")) {
-            spFilterSortSearchPagination();
+            showMissions();
         }
         else if (currentUrl.includes("StoryListing")) {
-            spFilterStory();
+            showStories();
         }
     });
 });
@@ -486,6 +487,13 @@ function addToFavourites(missionId) {
             var icon = $("#" + missionId);
             var text = $(".favText");
             if (currentUrl.includes("PlatformLanding")) {
+                if (icon.hasClass("bi-heart")) {
+                    icon.removeClass("text-light bi-heart").addClass("text-danger bi-heart-fill");
+                } else {
+                    icon.removeClass("text-danger bi-heart-fill").addClass("text-light bi-heart");
+                }
+
+                var icon = $("#list-" + missionId);
                 if (icon.hasClass("bi-heart")) {
                     icon.removeClass("text-light bi-heart").addClass("text-danger bi-heart-fill");
                 } else {
@@ -600,38 +608,111 @@ $('#applyToMission').click(function () {
                 showConfirmButton: false,
                 timer: 3000
             });
-            if (result.status == 1) {
-                $("#applyToMission").css({
-                    "background": "#F88634",
-                    "color": "white",
-                    "border": "2px solid #F88634"
-                });
-                $("#applyToMission").removeClass('btn-apply');
-                $("#applyToMission").text("Status Pending");
-            }
+            $("#applyToMission").css({
+                "background": "#F88634",
+                "color": "white",
+                "border": "2px solid #F88634"
+            });
+            $("#applyToMission").removeClass('btn-apply');
+            $("#applyToMission").html('Status Pending <i class="bi bi-exclamation-circle ms-2"></i>');
+            $("#applyToMission").attr('disabled', true);
+            $("#applyToMission").removeAttr('id');
+
         }
     });
 });
 
+function searchUser() {
+    console.log("called");
+    var text = $(".searchUserName").val().toLowerCase();
+    var userNames = $('.userName');
+    var parentElements = userNames.parent();
+    for (var i = 0; i < userNames.length; i++) {
+        var name = userNames.eq(i).text().toLowerCase().trim().replace(" ", "");
+        if (name.indexOf(text) == -1) {
+            parentElements.eq(i).hide();
+        } else {
+            parentElements.eq(i).show();
+        }
+    }
+}
+
+function search() {
+    $('.searchUserByName').each(function () {
+        $(this).keyup(function () {
+            var missionId = $(this).data('value');
+            console.log(missionId);
+
+            if (localStorage.getItem('view') == 1) {
+                var text = $("#searchUserByNameGrid-" + missionId).val().toLowerCase();
+                console.log(text);
+                var userNames = $('.userName-' + missionId);
+                var parentElements = userNames.parent();
+                for (var i = 0; i < userNames.length; i++) {
+                    var name = userNames.eq(i).text().trim().toLowerCase().replace(" ", "");
+                    if (name.indexOf(text) == -1) {
+                        parentElements.eq(i).hide();
+                    } else {
+                        parentElements.eq(i).show();
+                    }
+                }
+            }
+            else {
+                var text = $("#searchUserByNameList-" + missionId).val().toLowerCase();
+                console.log(text);
+                var userNames = $('.userName-' + missionId);
+                var parentElements = userNames.parent();
+                for (var i = 0; i < userNames.length; i++) {
+                    var name = userNames.eq(i).text().trim().toLowerCase().replace(" ", "");
+                    if (name.indexOf(text) == -1) {
+                        parentElements.eq(i).hide();
+                    } else {
+                        parentElements.eq(i).show();
+                    }
+                }
+            }
+        })
+    })
+}
+
+//$(".volMissionModal").on('click', function () {
+//    console.log("called");
+//    $(".searchUserName").val('');
+//});
+
 
 $('#notificationDropdown').click(function () {
-    console.log("called");
     $.ajax({
         type: "GET",
         url: "/Mission/GetInvitations",
         success: function (result) {
-            console.log(result);
-            $('#invites').empty();
+            $('#invitesDropdown').empty();
             var items = "";
-            $(result).each(function (item) {
-                //items += '<li><a class="dropdown-item text-wrap"> <i class="bi bi-person-circle"></i> &nbsp; ' + item.fromUser.firstName + ' </a></li>'
+            var combinedList = $.merge(result.missionInvites, result.storyInvites);
+            combinedList.sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1);
+            console.log(combinedList.length)
 
-                    //<li>
-                    //    <a class="dropdown-item text-wrap">
-                    //        <i class="bi bi-person-circle"></i> &nbsp; @missionInvites.FromUser.FirstName @missionInvites.FromUser.LastName: Recommended this mission - <strong>@missionInvites.Mission.Title</strong>
-                    //    </a>
-                    //</li>
-            });
+            if (combinedList.length != 0) {
+
+                $(combinedList).each(function (i, item) {
+                    var url = "";
+                    if (item.missionId) {
+                        console.log("m");
+                        url = '/Mission/VolunteeringMission?MissionId=' + item.missionId
+                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this mission - <strong>' + item.mission.title + '</strong></a></li>'
+                    }
+                    else {
+                        console.log("s");
+                        url = '/Story/StoryDetail?MissionId=' + item.story.missionId + '&UserId=' + item.story.userId
+                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this story - <strong>' + item.story.title + '</strong></a></li>'
+                    }
+
+                })
+            }
+            else {
+                items = '<li class="text-center" style="font-size: 21px;">No invites</li>'
+            }
+            $('#invitesDropdown').html(items);
         },
         error: function (error) {
             console.log(error);

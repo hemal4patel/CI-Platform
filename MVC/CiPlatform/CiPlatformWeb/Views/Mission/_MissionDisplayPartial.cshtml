@@ -101,12 +101,19 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-white border-none" id="searchIcon">
+                                                    <img src="~/images/search.png" />
+                                                </span>
+                                                <input type="text" class="form-control border-none searchUserByName" placeholder="Search" id="searchUserByNameGrid-@MissionId" data-value="@MissionId" aria-label="Search" />
+                                            </div>
+
                                             @foreach (var u in Model.UserList)
                                             {
                                                 <div class="mt-2" style="display : flex; justify-content : space-between;">
 
-                                                    <span class="me-4 ">@u.FirstName @u.LastName</span>
-
+                                                    <span class="me-4 userName-@MissionId">@u.FirstName @u.LastName</span>
 
                                                     <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@MissionId">
                                                         <button onclick="recommendToCoWorker(@u.UserId, @MissionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@obj.MissionId">Invite</button>
@@ -159,17 +166,7 @@
                                 </div>
                             </div>
 
-                            @if (haEndDatePassed || hasApplied)
-                            {
-                                <hr>
-                                <div class="text-center pt-3">
-                                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
-                                        View Details
-                                        <i class="bi bi-arrow-right ms-3"></i>
-                                    </a>
-                                </div>
-                            }
-                            else if (isOngoing)
+                            @if (isOngoing)
                             {
                                 <div class="row d-flex py-3 g-0 items-align-center">
                                     <div class="col-2">
@@ -181,14 +178,6 @@
                                     <div class="col-2">
                                         <hr>
                                     </div>
-                                </div>
-
-                                @*<hr>*@
-                                <div class="text-center pt-3">
-                                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
-                                        View Details
-                                        <i class="bi bi-arrow-right ms-3"></i>
-                                    </a>
                                 </div>
                             }
                             else
@@ -215,51 +204,64 @@
                                         <hr>
                                     </div>
                                 </div>
+                            }
 
-                                <div class="d-flex justify-content-around mt-1 seats-left">
-                                    <div class="d-flex align-items-center">
-                                        <img src="~/images/Seats-left.png" alt=""
+                            <div class="d-flex justify-content-around mt-1 seats-left">
+                                <div class="d-flex align-items-center">
+                                    <img src="~/images/Seats-left.png" alt=""
                                      style="margin-right: 10px; width: 30px; height: 30px" />
-                                        <div class="d-flex flex-column">
-                                            <span>@SeatsLeft</span>
-                                            <span>Seats Left</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        @if (obj.MissionType.Equals("Time"))
-                                        {
-                                            <img src="~/images/calender.png" alt=""
-                                     style="margin-right: 10px; width: 30px; height: 30px" />
-                                            <div class="d-flex flex-column">
-                                                <span>@obj.StartDate.Value.AddDays(-1).ToShortDateString() </span>
-                                                <span>Deadline</span>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            @foreach (var goal in obj.GoalMissions)
-                                            {
-                                                <img src="~/images/achieved.png" alt="deadline"
-                                     style="margin-right: 10px; width: 30px; height: 30px;">
-                                                <div class="card-detail-text">
-                                                    <div class="progress" style="width: 150px">
-                                                        <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <span> @goal.GoalValue achieved </span>
-                                                </div>
-                                            }
-                                        }
+                                    <div class="d-flex flex-column">
+                                        <span>@SeatsLeft</span>
+                                        <span>Seats Left</span>
                                     </div>
                                 </div>
+                                <div class="d-flex align-items-center">
+                                    @if (obj.MissionType.Equals("Time"))
+                                    {
+                                        <img src="~/images/calender.png" alt=""
+                                     style="margin-right: 10px; width: 30px; height: 30px" />
+                                        <div class="d-flex flex-column">
+                                            <span>@obj.StartDate.Value.AddDays(-1).ToShortDateString() </span>
+                                            <span>Deadline</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var goal in obj.GoalMissions)
+                                        {
+                                            <img src="~/images/achieved.png" alt="deadline"
+                                     style="margin-right: 10px; width: 30px; height: 30px;">
+                                            <div class="card-detail-text">
+                                                <div class="progress" style="width: 150px">
+                                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <span> @goal.GoalValue achieved </span>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
 
-                                <hr>
-                                <div class="text-center pt-3">
+                            <hr>
+                            @if ((obj.MissionType.Equals("Time") && (hasDeadlinePassed || haEndDatePassed)) || hasApplied)
+                            {
+                                <div class="text-center pt-3 mb-3">
                                     <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
-                                        Apply
-                                        <i class="bi bi-arrow-right ms-3"></i>
+                                        View Details
+                                        <i class="bi bi-arrow-right ms-2"></i>
                                     </a>
                                 </div>
                             }
+                            else
+                            {
+                                <div class="text-center pt-3 mb-3">
+                                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
+                                        Apply
+                                        <i class="bi bi-arrow-right ms-2"></i>
+                                    </a>
+                                </div>
+                            }
+                           
                         </div>
                     </div>
                 </div>
@@ -312,21 +314,19 @@
                             <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
                         }
 
-                        @if (obj.MissionType.Equals("Time"))
-                        {
-                            if (hasDeadlinePassed || haEndDatePassed)
-                            {
-                                <div class="position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
-                                    <span>CLOSED</span>
-                                </div>
-                            }
-                        }
-                        else
+                        @if (hasApplied)
                         {
                             <div class="position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
                                 <span>APPLIED</span>
                             </div>
                         }
+                        else if (obj.MissionType.Equals("Time") && (hasDeadlinePassed || haEndDatePassed))
+                        {
+                            <div class="position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                                <span>CLOSED</span>
+                            </div>
+                        }
+
 
                         <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
                             <div class="text-decoration-none text-white">
@@ -339,20 +339,18 @@
                         <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill" onclick="addToFavourites(@obj.MissionId)">
                             @if (obj.FavouriteMissions.Any(fm => fm.UserId == Id && fm.MissionId == obj.MissionId))
                             {
-                                <i class="bi bi-heart-fill text-danger" id="@obj.MissionId"></i>
+                                <i class="bi bi-heart-fill text-danger" id="list-@obj.MissionId"></i>
                             }
                             else
                             {
-                                <i class="bi bi-heart text-light" id="@obj.MissionId"></i>
+                                <i class="bi bi-heart text-light" id="list-@obj.MissionId"></i>
                             }
                         </button>
 
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                            <a href="" class="text-decoration-none text-white">
-                                <img src="~/images/user.png" alt="" class="img-fluid">
-                            </a>
+                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenterList-@MissionId">
+                            <img src="~/images/user.png" alt="" class="img-fluid">
                         </button>
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal fade" id="exampleModalCenterList-@MissionId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -361,17 +359,25 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
+                                       
+                                        <div class="input-group mb-3">
+                                                <span class="input-group-text bg-white border-none" id="searchIcon">
+                                                    <img src="~/images/search.png" />
+                                                </span>
+                                            <input type="text" class="form-control border-none searchUserByName" placeholder="Search" id="searchUserByNameList-@MissionId" data-value="@MissionId" aria-label="Search" />
+                                            </div>
+
                                         @foreach (var u in Model.UserList)
                                         {
-
                                             <div class="mt-2" style="display : flex; justify-content : space-between;">
 
-                                                <span class="me-4 ">@u.FirstName @u.LastName</span>
+                                                <span class="me-4 userName-@MissionId">@u.FirstName @u.LastName</span>
 
 
-                                                <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@MissionId">
-                                                    <button onclick="recommendToCoWorker(@u.UserId, @MissionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@MissionId">Invite</button>
+                                                <span style="margin-left : 6%;" class="invited-@u.UserId Invited-@MissionId">
+                                                    <button onclick="recommendToCoWorker(@u.UserId, @MissionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@obj.MissionId">Invite</button>
                                                 </span>
+
                                             </div>
                                         }
                                     </div>
@@ -415,7 +421,7 @@
                                 </div>
                             </div>
 
-                            <h4 class="card-title pt-3">@obj.Title</h4>
+                            <h4 class="card-title pt-3 mt-3">@obj.Title</h4>
                             <p class="card-text">
                                 @{
                                     int maxLength = 200;
@@ -499,10 +505,20 @@
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <div class="text-center pt-3">
-                                        <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
-                                            View Details
-                                            <i class="bi bi-arrow-right ms-3"></i>
-                                        </a>
+                                        @if ((obj.MissionType.Equals("Time") && (hasDeadlinePassed || haEndDatePassed)) || hasApplied)
+                                        {
+                                            <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
+                                                View Details
+                                                <i class="bi bi-arrow-right ms-2"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.MissionId})">
+                                                Apply
+                                                <i class="bi bi-arrow-right ms-2"></i>
+                                            </a>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -515,4 +531,3 @@
     </div>
 </div>
 @*</div>*@
-
