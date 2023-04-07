@@ -69,7 +69,7 @@
                                 <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
                             }
 
-                            <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                            <div class="mt-1 me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
                                 <div class="text-decoration-none text-white">
                                     <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
                                     <span class="mission-city">@obj.City.Name</span>
@@ -89,7 +89,7 @@
 
                             </button>
 
-                            <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter-@MissionId">
+                            <button class="mb-1 me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter-@MissionId">
                                 <img src="~/images/user.png" alt="" class="img-fluid">
                             </button>
                             <div class="modal fade" id="exampleModalCenter-@MissionId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -293,7 +293,7 @@
             bool isOngoing = CurrentDate > obj.StartDate;
             bool hasApplied = obj.MissionApplications.Any(m => m.UserId == Id);
 
-            <div class="card mb-5 border-light shadow-sm card-div">
+            <div class="card mb-5 border-light shadow-sm card-div" style="width: 100% !important">
                 <div class="row g-0">
                     <span class="mission-id d-none">@MissionId</span>
                     <span class="d-none mission-country">@obj.CountryId</span>
@@ -316,19 +316,19 @@
 
                         @if (hasApplied)
                         {
-                            <div class="position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                            <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
                                 <span>APPLIED</span>
                             </div>
                         }
                         else if (obj.MissionType.Equals("Time") && (hasDeadlinePassed || haEndDatePassed))
                         {
-                            <div class="position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                            <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
                                 <span>CLOSED</span>
                             </div>
                         }
 
 
-                        <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                        <div class="mt-1 me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
                             <div class="text-decoration-none text-white">
                                 <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
                                 <span class="mission-city">@obj.City.Name</span>
@@ -347,7 +347,7 @@
                             }
                         </button>
 
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenterList-@MissionId">
+                        <button class="mb-1 me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenterList-@MissionId">
                             <img src="~/images/user.png" alt="" class="img-fluid">
                         </button>
                         <div class="modal fade" id="exampleModalCenterList-@MissionId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

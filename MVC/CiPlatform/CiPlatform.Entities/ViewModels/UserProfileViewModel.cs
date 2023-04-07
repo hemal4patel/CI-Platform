@@ -31,12 +31,12 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public string? Department { get; set; }
 
+        [Required(ErrorMessage = "City is required.")]
         public long? CityId { get; set; }
 
         [Required(ErrorMessage = "Country is required.")]
         public long? CountryId { get; set; }
 
-        [Required(ErrorMessage = "Profile is required.")]
         public string? ProfileText { get; set; }
 
         public string? LinkedInUrl { get; set; }

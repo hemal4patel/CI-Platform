@@ -22,13 +22,16 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult UserProfile ()
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+                User sessionUser = _userProfile.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
 
                 var vm = new UserProfileViewModel();
@@ -54,28 +57,41 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult UserProfile (UserProfileViewModel viewmodel)
         {
-            ViewBag.Email = HttpContext.Session.GetString("Email");
-            ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
-            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
-
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                viewmodel = _userProfile.UpdateUserProfile(viewmodel);
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(ViewBag.UserId);
+                User sessionUser = _userProfile.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
-                viewmodel.CountryList = _userProfile.GetCountryList();
-                viewmodel.SkillList = _userProfile.GetSkillList();
-                viewmodel.UserSkills = _userProfile.GetUserSkills(userId); 
-                if (viewmodel.CountryId != null)
+                if (ModelState.IsValid)
                 {
-                    long countryId = Convert.ToInt64(viewmodel.CountryId);
-                    viewmodel.CityList = _userProfile.GetCityList(countryId);
-                }
+                    viewmodel = _userProfile.UpdateUserProfile(viewmodel);
 
-                return RedirectToAction("UserProfile");
+                    viewmodel.CountryList = _userProfile.GetCountryList();
+                    viewmodel.SkillList = _userProfile.GetSkillList();
+                    viewmodel.UserSkills = _userProfile.GetUserSkills(userId);
+                    if (viewmodel.CountryId != null)
+                    {
+                        long countryId = Convert.ToInt64(viewmodel.CountryId);
+                        viewmodel.CityList = _userProfile.GetCityList(countryId);
+                    }
+
+                    
+                    TempData["message"] = "Profile updated successfully!!!";
+
+                    return RedirectToAction("UserProfile");
+                }
+                return View(viewmodel);
             }
-            return View(viewmodel);
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 
@@ -105,6 +121,49 @@ namespace CiPlatformWeb.Controllers
             else
             {
                 return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ContactUs (string subject, string message)
+        {
+            ViewBag.Email = HttpContext.Session.GetString("Email");
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(ViewBag.UserId);
+            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+
+            if (userId != null)
+            {
+                _userProfile.ContactUs(userId, subject, message);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        //GET
+        public IActionResult VolunteeringTimesheet ()
+        {
+            if (HttpContext.Session.GetString("UserId") != null)
+            {
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.UserId = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(ViewBag.UserId);
+                User sessionUser = _userProfile.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
         }
     }

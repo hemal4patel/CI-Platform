@@ -24,6 +24,12 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
+        public User sessionUser (long userId)
+        {
+            var sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            return sessionUser;
+        }
+
         public (List<Story> stories, int count) GetStories (StoryListingViewModel viewmodel)
         {
             var stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsNoTracking();
@@ -137,27 +143,30 @@ namespace CiPlatformWeb.Repositories.Repository
             }
 
             //add records
-            foreach (var u in images)
+            if(images != null)
             {
-                if (u != null)
+                foreach (var u in images)
                 {
-                    var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName);
-
-                    var newMedia = new StoryMedium()
+                    if (u != null)
                     {
-                        StoryId = storyId,
-                        Type = "img",
-                        Path = fileName,
-                        CreatedAt = DateTime.Now,
-                    };
+                        var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName);
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        u.CopyTo(stream);
+                        var newMedia = new StoryMedium()
+                        {
+                            StoryId = storyId,
+                            Type = "img",
+                            Path = fileName,
+                            CreatedAt = DateTime.Now,
+                        };
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            u.CopyTo(stream);
+                        }
+
+                        _db.StoryMedia.Add(newMedia);
                     }
-
-                    _db.StoryMedia.Add(newMedia);
                 }
             }
 

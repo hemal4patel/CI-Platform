@@ -8,6 +8,7 @@
     string UserName = ViewBag.UserName;
     var Id = Convert.ToInt64(ViewBag.UserId);
     string UserAvatar = ViewBag.UserAvatar;
+    var volCount = ViewBag.volCount;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.VolunteeringMissionViewModel
@@ -501,8 +502,8 @@
                                 {
                                     <i class="bi bi-star"></i>
                                 }
-                            } 
-                            <span>(Rated by @ratedByVols Volunteers</span>
+                            }
+                            <span>(Rated by @ratedByVols Volunteers)</span>
                         </div>
                     </div>
                     <!-- <hr> -->
@@ -510,46 +511,9 @@
             </div>
 
             <!-- VOLUNTEER BOX -->
-            <div class="row border border-secondary mt-5">
-                <div class="tabs d-flex flex-column" style="font-size: 15px;">
-                    <ul class="nav nav-tabs mt-3">
-                        <li class="nav-item">
-                            <a class="nav-link active disabled" aria-current="page" href="#"
-                               style="font-size: 22px;">Recent Volunteers</a>
-                        </li>
-                    </ul>
+            @*<partial name="_RecentVolunteers" />*@
+            <div class="recentVolunteersDiv"></div>
 
-
-                    <div class="row mt-3">
-                        @if (Model.RecentVolunteers.Any())
-                        {
-                            @foreach (var v in Model.RecentVolunteers)
-                            {
-                                <div class="col-4">
-                                    <div class="text-center">
-                                        @*<img src="~/images/volunteer1.png" alt="" class="rounded-circle vol-img">*@
-                                        @*<img src="~/Upload/UserProfile/@v.User.Avatar" alt="" class="rounded-circle vol-img">*@
-                                        @if (v.User.Avatar is not null)
-                                        {
-                                            <img src="~/Upload/UserProfile/@v.User.Avatar" alt="" class="rounded-circle vol-img">
-                                        }
-                                        else
-                                        {
-                                            <img src="~/Upload/UserProfile/no-avatar.jpg" alt="" class="rounded-circle vol-img">
-                                        }
-                                        <p>@v.User.FirstName @v.User.LastName</p>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <span class="mb-3 text-center" style="font-size: 25px;"> No recent volunteers </span>
-                        }
-                    </div>
-
-                </div>
-            </div>
         </div>
     </div>
 
@@ -786,92 +750,92 @@
                         }
 
                         @*@if (mhaEndDatePassed || mhasApplied)
-                        {
-                            <hr>
-                            <div class="text-center pt-3">
-                                <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
-                                    View Details
-                                    <i class="bi bi-arrow-right ms-3"></i>
-                                </a>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="row d-flex py-3 g-0 items-align-center">
-                                <div class="col-2">
-                                    <hr>
-                                </div>
-                                <div class="col-8 text-center border border-secondary rounded-pill">
+                    {
+                    <hr>
+                    <div class="text-center pt-3">
+                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
+                    View Details
+                    <i class="bi bi-arrow-right ms-3"></i>
+                    </a>
+                    </div>
+                    }
+                    else
+                    {
+                    <div class="row d-flex py-3 g-0 items-align-center">
+                    <div class="col-2">
+                    <hr>
+                    </div>
+                    <div class="col-8 text-center border border-secondary rounded-pill">
 
-                                    @if (m.MissionType.Equals("Time"))
-                                    {
+                    @if (m.MissionType.Equals("Time"))
+                    {
 
-                                        if (misOngoing)
-                                        {
-                                            <span style="font-size: 15px;">Ongoing opportunity</span>
-                                        }
-                                        else
-                                        {
-                                            <span style="font-size: 15px;">From @m.StartDate.Value.ToShortDateString() until @m.EndDate.Value.ToShortDateString()</span>
-                                        }
-                                    }
-                                    @if (m.MissionType.Equals("Goal"))
-                                    {
-                                        @foreach (var goal in m.GoalMissions)
-                                        {
-                                            <span style="font-size: 15px;"> @goal.GoalObjectiveText </span>
-                                        }
-                                    }
-                                </div>
-                                <div class="col-2">
-                                    <hr>
-                                </div>
-                            </div>
+                    if (misOngoing)
+                    {
+                    <span style="font-size: 15px;">Ongoing opportunity</span>
+                    }
+                    else
+                    {
+                    <span style="font-size: 15px;">From @m.StartDate.Value.ToShortDateString() until @m.EndDate.Value.ToShortDateString()</span>
+                    }
+                    }
+                    @if (m.MissionType.Equals("Goal"))
+                    {
+                    @foreach (var goal in m.GoalMissions)
+                    {
+                    <span style="font-size: 15px;"> @goal.GoalObjectiveText </span>
+                    }
+                    }
+                    </div>
+                    <div class="col-2">
+                    <hr>
+                    </div>
+                    </div>
 
-                            <div class="d-flex justify-content-around mt-1 seats-left">
-                                <div class="d-flex align-items-center">
-                                    <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                                    <div class="d-flex flex-column">
-                                        <span>@mSeatsLeft</span>
-                                        <span>Seats Left</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    @if (m.MissionType.Equals("Time"))
-                                    {
-                                        <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                                        <div class="d-flex flex-column">
-                                            <span>@m.StartDate.Value.AddDays(-1).ToShortDateString() </span>
-                                            <span>Deadline</span>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        @foreach (var goal in m.GoalMissions)
-                                        {
-                                            <img src="~/images/achieved.png" alt="deadline"
-                                 style="margin-right: 10px; width: 30px; height: 30px;">
-                                            <div class="card-detail-text">
-                                                <div class="progress" style="width: 150px">
-                                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span> @goal.GoalValue achieved </span>
-                                            </div>
-                                        }
-                                    }
-                                </div>
-                            </div>
+                    <div class="d-flex justify-content-around mt-1 seats-left">
+                    <div class="d-flex align-items-center">
+                    <img src="~/images/Seats-left.png" alt=""
+                    style="margin-right: 10px; width: 30px; height: 30px" />
+                    <div class="d-flex flex-column">
+                    <span>@mSeatsLeft</span>
+                    <span>Seats Left</span>
+                    </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                    @if (m.MissionType.Equals("Time"))
+                    {
+                    <img src="~/images/Seats-left.png" alt=""
+                    style="margin-right: 10px; width: 30px; height: 30px" />
+                    <div class="d-flex flex-column">
+                    <span>@m.StartDate.Value.AddDays(-1).ToShortDateString() </span>
+                    <span>Deadline</span>
+                    </div>
+                    }
+                    else
+                    {
+                    @foreach (var goal in m.GoalMissions)
+                    {
+                    <img src="~/images/achieved.png" alt="deadline"
+                    style="margin-right: 10px; width: 30px; height: 30px;">
+                    <div class="card-detail-text">
+                    <div class="progress" style="width: 150px">
+                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span> @goal.GoalValue achieved </span>
+                    </div>
+                    }
+                    }
+                    </div>
+                    </div>
 
-                            <hr>
-                            <div class="text-center pt-3">
-                                <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
-                                    Apply
-                                    <i class="bi bi-arrow-right ms-3"></i>
-                                </a>
-                            </div>
-                        }*@
+                    <hr>
+                    <div class="text-center pt-3">
+                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
+                    Apply
+                    <i class="bi bi-arrow-right ms-3"></i>
+                    </a>
+                    </div>
+                    }*@
                     </div>
                 </div>
             </div>

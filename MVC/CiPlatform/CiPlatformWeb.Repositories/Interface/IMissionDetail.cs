@@ -19,7 +19,7 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public List<Mission> GetRelatedMissions (long MissionId);
 
-        public List<MissionApplication> GetRecentVolunteers (long MissionId, long userId);
+        public (List<MissionApplication> recentVolunteers, int count) GetRecentVolunteers (long MissionId, long userId, int pageno);
 
         public List<MissionDocument> GetMissionDocuments (long MissionId);
 

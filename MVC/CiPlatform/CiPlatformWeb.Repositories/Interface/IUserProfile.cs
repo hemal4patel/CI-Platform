@@ -10,6 +10,8 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IUserProfile
     {
+        public User sessionUser (long userId);
+
         public UserProfileViewModel GetUserDetails (long userId);
 
         public List<Country> GetCountryList ();
@@ -24,6 +26,8 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void UpdatePassword (User user, string newPassoword);
 
-        public UserProfileViewModel UpdateUserProfile (UserProfileViewModel user); 
+        public UserProfileViewModel UpdateUserProfile (UserProfileViewModel user);
+
+        public void ContactUs (long userId, string subject, string message);
     }
 }

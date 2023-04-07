@@ -23,13 +23,16 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult StoryListing ()
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
                 //ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+                User sessionUser = _storyList.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
 
                 var vm = new StoryListingViewModel();
@@ -49,13 +52,16 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult StoryListing (StoryListingViewModel viewmodel)
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long UserId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == UserId).Select(u => u.Avatar).FirstOrDefault();
+                long userId = Convert.ToInt64(ViewBag.UserId);
+                User sessionUser = _storyList.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
                 var vm = new StoryListingViewModel();
 
@@ -74,13 +80,16 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult ShareStory ()
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+                User sessionUser = _storyList.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
                 var vm = new ShareStoryViewModel();
                 vm.MissionTitles = _storyList.GetMissions(userId);
@@ -96,13 +105,16 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult GetStory (long missionId)
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+                User sessionUser = _storyList.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
                 var story = _storyList.GetDraftedStory(missionId, userId);
 
@@ -117,13 +129,16 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult SaveStory (ShareStoryViewModel viewmodel)
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+                User sessionUser = _storyList.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
 
                 var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
@@ -131,15 +146,15 @@ namespace CiPlatformWeb.Controllers
                 {
                     _storyList.UpdateDraftedStory(viewmodel, story);
 
-                    if (viewmodel.VideoUrl != null)
-                    {
+                    //if (viewmodel.VideoUrl != null)
+                    //{
                         _storyList.UpdateStoryUrls(story.StoryId, viewmodel.VideoUrl);
-                    }
+                    //}
 
-                    if (viewmodel.Images != null)
-                    {
+                    //if (viewmodel.Images != null)
+                    //{
                         _storyList.UpdateStoryImages(story.StoryId, viewmodel.Images);
-                    }
+                    //}
 
                     return Ok(new { icon = "warning", message = "Story saved as draft!!!", published = 0 });
                 }
@@ -166,13 +181,16 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult SubmitStory (ShareStoryViewModel viewmodel)
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+                User sessionUser = _storyList.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
 
                 var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
@@ -206,13 +224,16 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult StoryDetail (long MissionId, long UserId)
         {
-            if (HttpContext.Session.GetString("Email") != "")
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                ViewBag.Email = HttpContext.Session.GetString("Email");
-                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //ViewBag.Email = HttpContext.Session.GetString("Email");
+                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
-                ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+                User sessionUser = _storyList.sessionUser(userId);
+                ViewBag.Email = sessionUser.Email;
+                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+                ViewBag.UserAvatar = sessionUser.Avatar;
 
                 _storyList.IncreaseViewCount(MissionId, UserId);
 
@@ -224,6 +245,9 @@ namespace CiPlatformWeb.Controllers
             }
             else
             {
+                HttpContext.Session.SetString("StoryMissionId", MissionId.ToString());
+                HttpContext.Session.SetString("StoryUserId", UserId.ToString());
+
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -249,6 +273,7 @@ namespace CiPlatformWeb.Controllers
                     ToUserId = ToUserId,
                     StoryId = StoryId,
                     CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
                 };
 
                 _db.StoryInvites.Add(storyInvite);

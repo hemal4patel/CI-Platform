@@ -1,6 +1,7 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace CiPlatformWeb.Repositories.Repository
         public UserProfile (ApplicationDbContext db)
         {
             _db = db;
+        }
+
+        public User sessionUser (long userId)
+        {
+            var sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            return sessionUser;
         }
 
         public UserProfileViewModel GetUserDetails (long userId)
@@ -120,14 +127,14 @@ namespace CiPlatformWeb.Repositories.Repository
                     viewmodel.AvatarName = user.Avatar;
                 }
 
-                //remove skills
-                var skills = _db.UserSkills.Where(s => s.UserId == viewmodel.UserId);
-                if (skills.Any())
-                {
-                    _db.RemoveRange(skills);
-                }
                 if (viewmodel.UserSelectedSkills != null)
                 {
+                    //remove skills
+                    var skills = _db.UserSkills.Where(s => s.UserId == viewmodel.UserId);
+                    if (skills.Any())
+                    {
+                        _db.RemoveRange(skills);
+                    }
                     //long[] userSkills = viewmodel.UserSelectedSkills.Split(',');
 
                     string[] selectedSkillsStr = viewmodel.UserSelectedSkills.Split(',');
@@ -152,6 +159,20 @@ namespace CiPlatformWeb.Repositories.Repository
 
             return viewmodel;
         }
+
+        public void ContactUs (long userId, string subject, string message)
+        {
+            var data = new ContactU()
+            {
+                UserId = userId,
+                Subject = subject,
+                Message = message,
+                CreatedAt = DateTime.Now,
+            };
+            _db.ContactUs.Add(data);
+            _db.SaveChanges();
+        }
+
 
     }
 }

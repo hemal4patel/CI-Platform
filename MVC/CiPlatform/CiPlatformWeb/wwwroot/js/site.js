@@ -113,7 +113,7 @@ $("#countryDropdown").click(function () {
             var dropdown = $("#CityDropdown");
             dropdown.empty();
             var items = "";
-            items += '<option selected value="0">Select your city</option>'
+            items += '<option selected value="">Select your city</option>'
             $(data).each(function (i, item) {
                 items += '<option value=' + item.cityId + '> ' + item.name + ' </option>'
             });
@@ -204,8 +204,67 @@ $('#saveProfile').click(function () {
 });
 
 
-//$('#avatarFile').on('input', function () {
-//    var avatar = $('#avatarFile')[0].files[0];
-//    $('#AvatarImage').val(avatar);
-//    console.log($('#AvatarImage').val());
-//})
+function validateContactUsForm() {
+    var flag = true;
+
+    var subject = $('#contactSubject').val();
+    var message = $('#contactMessage').val();
+
+    if (subject == "") {
+        $('.valContactSubject').show();
+        flag = false;
+
+        $('#contactSubject').on('input', function () {
+            if ($('#contactSubject').val().length != 0) {
+                $('.valContactSubject').hide();
+                flag = true;
+            }
+        })
+    }
+
+    if (message == "") {
+        $('.valContactMessage').show();
+        flag = false;
+
+        $('#contactMessage').on('input', function () {
+            if ($('#contactMessage').val().length != 0) {
+                $('.valContactMessage').hide();
+                flag = true;
+            }
+        })
+    }
+    console.log(flag)
+
+
+    return flag;
+}
+
+$('#submitContactForm').click(function () {
+    console.log("called");
+
+    var subject = $('#contactSubject').val();
+    var message = $('#contactMessage').val();
+
+
+    if (validateContactUsForm()) {
+        console.log('true');
+        $.ajax({
+            type: "POST",
+            url: "/User/ContactUs",
+            data: { subject: subject, message: message },
+            success: function (data) {
+                $('#contactUs').modal('hide');
+                swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: "Thank you for contacting us!!!",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            },
+            error: function (error) {
+                console.lof(error)
+            }
+        });
+    }
+})

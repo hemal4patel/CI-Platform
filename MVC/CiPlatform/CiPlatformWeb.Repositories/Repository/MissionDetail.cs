@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -111,11 +112,21 @@ namespace CiPlatformWeb.Repositories.Repository
             return relatedMissions;
         }
 
-        public List<MissionApplication> GetRecentVolunteers (long MissionId, long userId)
+        public (List<MissionApplication> recentVolunteers, int count) GetRecentVolunteers (long MissionId, long userId, int pageno)
         {
-            var recentVolunteers = _db.MissionApplications.Include(u => u.User).Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt).ToList();
+            var recentVolunteers = _db.MissionApplications
+                .Include(u => u.User)
+                .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE");
 
-            return recentVolunteers;
+            int count = recentVolunteers.Count();
+
+            recentVolunteers = _db.MissionApplications
+                .Include(u => u.User)
+                .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt)
+                .Skip(Math.Max((pageno - 1) * 2, 0))
+                .Take(2);
+
+            return (recentVolunteers.ToList(), count);
         }
 
 

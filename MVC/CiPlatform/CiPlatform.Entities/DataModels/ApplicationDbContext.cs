@@ -25,6 +25,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Comment> Comments { get; set; }
 
+    public virtual DbSet<ContactU> ContactUs { get; set; }
+
     public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<FavouriteMission> FavouriteMissions { get; set; }
@@ -232,6 +234,30 @@ public partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__comment__user_id__634EBE90");
+        });
+
+        modelBuilder.Entity<ContactU>(entity =>
+        {
+            entity.HasKey(e => e.ContactUsId);
+
+            entity.ToTable("contact_us");
+
+            entity.Property(e => e.ContactUsId).HasColumnName("contact_us_id");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Message)
+                .IsUnicode(false)
+                .HasColumnName("message");
+            entity.Property(e => e.Subject)
+                .IsUnicode(false)
+                .HasColumnName("subject");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ContactUs)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_contact_us_user_id");
         });
 
         modelBuilder.Entity<Country>(entity =>

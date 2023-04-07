@@ -44,6 +44,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxfTWlzc2lvbkRpc3BsYXlQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Mission/_RecentVolunteers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWlzc2lvblxfUmVjZW50Vm9sdW50ZWVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -82,6 +86,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/User/UserProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/User/VolunteeringTimesheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxWb2x1bnRlZXJpbmdUaW1lc2hlZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pci94/Desktop/Project/CI Platform/MVC/CiPlatform/CiPlatformWeb/Views/_ViewImports.cshtml]

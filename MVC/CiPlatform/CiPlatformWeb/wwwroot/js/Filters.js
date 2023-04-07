@@ -11,6 +11,55 @@ else if (currentUrl.includes("StoryListing")) {
     showStories(1);
 }
 
+var currVolPage = 1;
+showRecentVounteers(1);
+
+function showRecentVounteers(currVolPage) {
+    var missionId = $('.missionId').text();
+    $.ajax({
+        type: 'GET',
+        url: '/Mission/showRecentVounteers',
+        data: { currVolPage: currVolPage, missionId: missionId },
+        success: function (data) {
+
+            var recentVols = $('.recentVolunteersDiv');
+            recentVols.empty();
+            $('.volText').text('');
+
+            recentVols.append(data);
+
+            var start = ((currVolPage - 1) * 2) + 1;
+            var total = $('#volCount').val();
+            var end = Math.min(currVolPage * 2, total);
+
+            var text = start + ' - ' + end + ' of ' + total + ' Recent Volunteers';
+            $('.volText').text(text);
+
+            $('.volPagination button').click(function () {
+
+                var totalVolPages = Math.ceil($('#volCount').val() / 2);
+
+                if (totalVolPages != 1) {
+                    if ($(this).hasClass('next')) {
+                        currVolPage = currVolPage + 1;
+                        if (currVolPage <= totalVolPages) {
+                            showRecentVounteers(currVolPage);
+                        }
+                    }
+                    if ($(this).hasClass('prev')) {
+                        currVolPage = currVolPage - 1;
+                        if (currVolPage > 0) {
+                            showRecentVounteers(currVolPage);
+                        }
+                    }
+                }
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
 
 $('#searchText').on('keyup', function () {
@@ -57,9 +106,7 @@ function showMissions(pageNo) {
             }
             let totalPages = Math.ceil(totalRecords / pagesize);
 
-            if (totalPages <= 1) {
-                $('#pagination-container').parent().parent().hide();
-            }
+
             let paginationHTML = `
               <li class="page-item">
                 <a class="pagination-link first-page" aria-label="Previous">
@@ -99,7 +146,9 @@ function showMissions(pageNo) {
             $('#pagination-container').append(paginationHTML)
             $('#pagination-container').parent().parent().show();
 
-
+            if (totalPages <= 1) {
+                $('#pagination-container').parent().parent().hide();
+            }
 
             // pagination
             let currentPage;
@@ -196,9 +245,7 @@ function showStories(pageNo) {
             }
             let totalPages = Math.ceil(totalRecords / pagesize);
 
-            if (totalPages <= 1) {
-                $('#pagination-container').parent().parent().hide();
-            }
+
             let paginationHTML = `
               <li class="page-item">
                 <a class="pagination-link first-page" aria-label="Previous">
@@ -238,7 +285,9 @@ function showStories(pageNo) {
             $('#pagination-container').append(paginationHTML)
             $('#pagination-container').parent().parent().show();
 
-
+            if (totalPages <= 1) {
+                $('#pagination-container').parent().parent().hide();
+            }
 
             // pagination
             let currentPage;

@@ -56,7 +56,7 @@ div {
     content: ' *';
 }
 
-.add-btn {
+.add-skills-btn {
     border-color: #757575;
     color: #757575;
     font-weight: 500;
@@ -66,7 +66,7 @@ div {
     opacity: 1;
 }
 
-    .add-btn:hover {
+    .add-skills-btn:hover {
         color: #fff;
         border-color: #757575;
         background-color: #757575;
@@ -149,3 +149,57 @@ div {
     border: none;
 }
 */
+
+
+/*TIMESHEET*/
+
+.add-btn {
+    border-color: #F88634;
+    color: #F88634;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .add-btn:hover {
+        color: #fff;
+        border-color: #F88634;
+        background-color: #F88634;
+    }
+
+th,
+td {
+    white-space: nowrap;
+}
+
+.volCard {
+    min-height: 300px;
+    max-width: 750px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
+
+
+.submit-btn {
+    border-color: #F88634;
+    color: #F88634;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .submit-btn:hover {
+        color: #fff;
+        border-color: #F88634;
+        background-color: #F88634;
+    }

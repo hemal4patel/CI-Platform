@@ -47,6 +47,8 @@ public partial class User
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
 
+    public virtual ICollection<ContactU> ContactUs { get; } = new List<ContactU>();
+
     public virtual Country? Country { get; set; }
 
     public virtual ICollection<FavouriteMission> FavouriteMissions { get; } = new List<FavouriteMission>();

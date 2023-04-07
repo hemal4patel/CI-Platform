@@ -21,6 +21,13 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
+        public User sessionUser (long userId)
+        {
+            var sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            return sessionUser;
+        }
+
+
         public List<Country> GetCountryList ()
         {
             return _db.Countries.ToList();

@@ -64,9 +64,7 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult Index ()
         {
-            HttpContext.Session.SetString("Email", "");
-            HttpContext.Session.SetString("UserName", "");
-            HttpContext.Session.SetString("UserId", "");
+            HttpContext.Session.Remove("UserId");
             return View();
         }
 
@@ -86,21 +84,38 @@ namespace CiPlatformWeb.Controllers
                 {
                     if (user.Password == obj.Password)
                     {
-                        TempData["success"] = "Logged In!!!";
-                        HttpContext.Session.SetString("Email", user.Email);
-                        HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
+                        //TempData["success"] = "Logged In!!!";
+                        //HttpContext.Session.SetString("Email", user.Email);
+                        //HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
                         HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                        HttpContext.Session.SetString("UserAvatar", "");
-                        if (user.Avatar is not null)
-                        {
-                            HttpContext.Session.SetString("UserAvatar", user.Avatar);
-                        }
+                        //HttpContext.Session.SetString("UserAvatar", "");
+                        //if (user.Avatar is not null)
+                        //{
+                        //    HttpContext.Session.SetString("UserAvatar", user.Avatar);
+                        //}
                         //else
                         //{
                         //    HttpContext.Session.SetString("UserAvatar", "");
                         //}
+                        var missionId = HttpContext.Session.GetString("MissionId");
+                        var storyMissionId = HttpContext.Session.GetString("StoryMissionId");
+                        var storyUserId = HttpContext.Session.GetString("StoryUserId");
+                        if (!string.IsNullOrEmpty(missionId))
+                        {
+                            HttpContext.Session.Remove("MissionId");
+                            return RedirectToAction("VolunteeringMission", "Mission", new { missionId = Convert.ToInt64(missionId) });
 
-                        return RedirectToAction("PlatformLanding", "Mission");
+                        }
+                        else if (!string.IsNullOrEmpty(storyMissionId) && !string.IsNullOrEmpty(storyUserId))
+                        {
+                            HttpContext.Session.Remove("StoryMissionId");
+                            HttpContext.Session.Remove("StoryUserId");
+                            return RedirectToAction("StoryDetail", "Story", new { missionId = Convert.ToInt64(storyMissionId), userId = Convert.ToInt64(storyUserId) });
+                        }
+                        else
+                        {
+                            return RedirectToAction("PlatformLanding", "Mission");
+                        }
                     }
                     else
                     {
@@ -188,10 +203,10 @@ namespace CiPlatformWeb.Controllers
         //Logout
         public IActionResult Logout ()
         {
-            HttpContext.Session.SetString("Email", "");
-            HttpContext.Session.SetString("UserName", "");
-            HttpContext.Session.SetString("UserId", "");
-            HttpContext.Session.SetString("UserAvatar", "");
+            //HttpContext.Session.SetString("Email", "");
+            //HttpContext.Session.SetString("UserName", "");
+            HttpContext.Session.Remove("UserId");
+            //HttpContext.Session.SetString("UserAvatar", "");
             return RedirectToAction("Index", "Home");
         }
 

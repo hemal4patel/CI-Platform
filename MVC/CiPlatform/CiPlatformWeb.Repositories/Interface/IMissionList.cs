@@ -10,6 +10,9 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IMissionList
     {
+
+        public User sessionUser (long userId);
+
         public List<Country> GetCountryList ();
 
         public List<City> GetCityList (long countryId);

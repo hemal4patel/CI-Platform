@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CiPlatformWeb.Entities.DataModels;
 
@@ -20,12 +19,9 @@ public partial class MissionInvite
 
     public DateTime? DeletedAt { get; set; }
 
-    [JsonIgnore]
     public virtual User FromUser { get; set; } = null!;
 
-    [JsonIgnore]
     public virtual Mission Mission { get; set; } = null!;
 
-    [JsonIgnore]
     public virtual User ToUser { get; set; } = null!;
 }
