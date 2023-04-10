@@ -105,25 +105,12 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult GetStory (long missionId)
         {
-            if (HttpContext.Session.GetString("UserId") != null)
-            {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _storyList.sessionUser(userId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
+            ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(ViewBag.UserId);
 
-                var story = _storyList.GetDraftedStory(missionId, userId);
+            var story = _storyList.GetDraftedStory(missionId, userId);
 
-                return Json(story);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return Json(story);
         }
 
         [HttpPost]
@@ -148,12 +135,12 @@ namespace CiPlatformWeb.Controllers
 
                     //if (viewmodel.VideoUrl != null)
                     //{
-                        _storyList.UpdateStoryUrls(story.StoryId, viewmodel.VideoUrl);
+                    _storyList.UpdateStoryUrls(story.StoryId, viewmodel.VideoUrl);
                     //}
 
                     //if (viewmodel.Images != null)
                     //{
-                        _storyList.UpdateStoryImages(story.StoryId, viewmodel.Images);
+                    _storyList.UpdateStoryImages(story.StoryId, viewmodel.Images);
                     //}
 
                     return Ok(new { icon = "warning", message = "Story saved as draft!!!", published = 0 });

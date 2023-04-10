@@ -175,7 +175,7 @@ td {
 }
 
 .volCard {
-    min-height: 300px;
+    max-height: 300px;
     max-width: 750px;
 }
 
@@ -203,3 +203,19 @@ td {
         border-color: #F88634;
         background-color: #F88634;
     }
+
+
+/*SCROLLBAR OF TABLES*/
+/* Style the scrollbar for the table-responsive element in X-direction */
+.table-responsive::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+}

@@ -3,21 +3,31 @@
     Layout = "~/Views/Shared/_LayoutMission.cshtml";
 }
 
+@model CiPlatformWeb.Entities.ViewModels.VolunteeringTimesheetViewModel
 
 @{
     string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
     var Id = Convert.ToInt64(ViewBag.UserId);
     string UserAvatar = ViewBag.UserAvatar;
+
+    var todaysDate = DateTime.Now.ToShortDateString();
 }
 
 <link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+
 
 
 <div class="container mt-5 mb-5">
     <h1>Volunteering Timesheet</h1>
 
     <div class="row mt-3">
+
+        @*TIME BASED MODAL*@
         <div class="col-md-6 mt-4 mb-md-0">
             <div class="card volCard border border-light-subtle border-3 shadow-sm">
                 <div class="card-body">
@@ -26,12 +36,13 @@
                             <p style="font-size: 16px;" class="">Volunteering Hours</p>
                         </div>
                         <div class="div">
+                            @*ADD BUTTON*@
                             <button class="add-btn rounded-pill py-1 px-2 w-100" data-bs-toggle="modal"
                                     data-bs-target="#addVolHours">
                                 <i class="bi bi-plus-lg"></i> &nbsp; Add
                             </button>
 
-                            <!-- Modal -->
+                            <!-- TIME Modal -->
                             <div class="modal fade" id="addVolHours" tabindex="-1"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -44,51 +55,67 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
-                                        <form>
+
+                                        @*TIME BASED FORM*@
+                                        <form method="post">
+
+                                            <input type="hidden" id="timesheetId" asp-for="@Model.timeBasedSheet.timeSheetId" />
+
                                             <div class="modal-body py-1">
                                                 <div class="form-group">
-                                                    <label class="form-label">Mission</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected disabled value="default">
+                                                    <label asp-for="@Model.timeBasedSheet.timeMissions" class="form-label">Mission</label>
+                                                    <select asp-for="@Model.timeBasedSheet.timeMissions" id="mission" class="form-select" aria-label="Default select example">
+                                                        <option selected disabled value="">
                                                             Select your mission
                                                         </option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        @if (Model.timeMissions is not null)
+                                                        {
+                                                            foreach (var m in Model.timeMissions)
+                                                            {
+                                                                <option value="@m.MissionId" data-value="@m.Mission.StartDate">@m.Mission.Title</option>
+                                                            }
+                                                        }
                                                     </select>
+                                                    <span asp-validation-for="@Model.timeBasedSheet.timeMissions" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="form-group mt-3">
-                                                    <label class="form-label">Date Volnteered</label>
-                                                    <input type="date" id="date" class="form-control"
-                                                           placeholder="Select date">
+                                                    <label asp-for="@Model.timeBasedSheet.dateVolunteered" class="form-label">Date Volnteered</label>
+                                                    <input asp-for="@Model.timeBasedSheet.dateVolunteered" type="text" id="date" class="form-control">
+                                                    <span asp-validation-for="@Model.timeBasedSheet.dateVolunteered" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="form-group mt-1 row gy-4">
                                                     <div class="col-md-6">
-                                                        <label class="form-label">Hours</label>
-                                                        <input type="text" class="form-control"
+                                                        <label asp-for="@Model.timeBasedSheet.hours" class="form-label">Hours</label>
+                                                        <input asp-for="@Model.timeBasedSheet.hours" type="text" id="hours" class="form-control"
                                                                placeholder="Enter Spent Hours">
+                                                        <span asp-validation-for="@Model.timeBasedSheet.hours" class="text-danger"></span>
                                                     </div>
+
                                                     <div class="col-md-6">
-                                                        <label class="form-label">Minutes</label>
-                                                        <input type="text" class="form-control"
+                                                        <label asp-for="@Model.timeBasedSheet.minutes" class="form-label">Minutes</label>
+                                                        <input asp-for="@Model.timeBasedSheet.minutes" type="text" id="minutes" class="form-control"
                                                                placeholder="Enter Spent Minutes">
+                                                        <span asp-validation-for="@Model.timeBasedSheet.minutes" class="text-danger"></span>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mt-3">
-                                                    <label class="form-label">Message</label>
-                                                    <textarea class="form-control" placeholder="Enter your message"
-                                                              rows="4"></textarea>
+                                                    <label asp-for="@Model.timeBasedSheet.message" class="form-label">Message</label>
+<textarea asp-for="@Model.timeBasedSheet.message" id="message" class="form-control" placeholder="Enter your message"
+          rows="4"></textarea>
+                                                    <span asp-validation-for="@Model.timeBasedSheet.message" class="text-danger"></span>
                                                 </div>
                                             </div>
+
+                                            @*BUTTONS*@
                                             <div class="modal-footer mt-2">
-                                                <button type="button" class="canctnel-b rounded-pill py-1 px-3"
+                                                <button type="button" class="cancel-btn rounded-pill py-1 px-3"
                                                         data-bs-dismiss="modal">
                                                     Cancel
                                                 </button>
-                                                <button type="button"
+                                                <button type="submit"
                                                         class="submit-btn rounded-pill py-1 px-3">
                                                     Submit
                                                 </button>
@@ -99,9 +126,11 @@
                             </div>
                         </div>
                     </div>
+
+                    @*TIME BASED ENTRIES TABLE*@
                     <div class="mt-3">
-                        <div class="table-responsive">
-                            <table class="table table-borderless">
+                        <div class="table-responsive" style="height: 220px; overflow-x: auto; overflow-y: auto;">
+                            <table class="table table-borderless" id="timeTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">Mission</th>
@@ -112,36 +141,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Mission Mission Mission</td>
-                                        <td>Date</td>
-                                        <td>Hours</td>
-                                        <td>Minutes</td>
-                                        <td>
-                                            <i class="bi bi-pencil-square text-danger"></i> &nbsp; &nbsp;
-                                            <i class="bi bi-trash3"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mission Mission Mission</td>
-                                        <td>Date</td>
-                                        <td>Hours</td>
-                                        <td>Minutes</td>
-                                        <td>
-                                            <i class="bi bi-pencil-square text-danger"></i> &nbsp; &nbsp;
-                                            <i class="bi bi-trash3"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mission Mission Mission</td>
-                                        <td>Date</td>
-                                        <td>Hours</td>
-                                        <td>Minutes</td>
-                                        <td>
-                                            <i class="bi bi-pencil-square text-danger"></i> &nbsp; &nbsp;
-                                            <i class="bi bi-trash3"></i>
-                                        </td>
-                                    </tr>
+                                    @if (Model.timeBasedEntries is not null)
+                                    {
+                                        foreach (var t in Model.timeBasedEntries)
+                                        {
+                                            <tr id="@t.TimesheetId">
+                                                <td>@t.Mission.Title</td>
+                                                <td> @t.DateVolunteered.Date.ToShortDateString() </td>
+                                                <td> @(t.Time.Value.Hours)h</td>
+                                                <td>@(t.Time.Value.Minutes)min</td>
+                                                <td>
+                                                    <i class="bi bi-pencil-square text-danger editTimeTimesheet"></i>
+                                                    <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -149,6 +164,8 @@
                 </div>
             </div>
         </div>
+
+        @*GOAL BASED MODAL*@
         <div class="col-md-6 mt-4">
             <div class="card volCard border border-light-subtle border-3 shadow-sm">
                 <div class="card-body">
@@ -156,13 +173,15 @@
                         <div class="div">
                             <p style="font-size: 16px;" class="">Volunteering Goals</p>
                         </div>
+
+                        @*ADD GOAL ENTRY BUTTON*@
                         <div class="div">
                             <button class="add-btn rounded-pill py-1 px-2 w-100" data-bs-toggle="modal"
                                     data-bs-target="#addVolGoal">
                                 <i class="bi bi-plus-lg"></i> &nbsp; Add
                             </button>
 
-                            <!-- Modal -->
+                            <!-- GOAL Modal -->
                             <div class="modal fade" id="addVolGoal" tabindex="-1"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -175,43 +194,57 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
-                                        <form>
+
+                                        @*GOAL FORM*@
+                                        <form method="post">
+
+                                            <input type="hidden" id="GtimesheetId" asp-for="@Model.goalBasedSheet.timeSheetId" />
+
                                             <div class="modal-body py-1">
                                                 <div class="form-group">
-                                                    <label class="form-label">Mission</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected disabled value="default">
+                                                    <label asp-for="@Model.goalBasedSheet.goalMissions" class="form-label">Mission</label>
+                                                    <select asp-for="@Model.goalBasedSheet.goalMissions" id="Gmission" class="form-select" aria-label="Default select example">
+                                                        <option selected disabled value="">
                                                             Select your mission
                                                         </option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        @if (Model.goalMissions is not null)
+                                                        {
+                                                            foreach (var m in Model.goalMissions)
+                                                            {
+                                                                <option value="@m.MissionId">@m.Mission.Title</option>
+                                                            }
+                                                        }
                                                     </select>
+                                                    <span asp-validation-for="@Model.goalBasedSheet.goalMissions" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="form-group mt-3">
-                                                    <label class="form-label">Actions</label>
-                                                    <input type="text" class="form-control" placeholder="Enter Actions">
+                                                    <label asp-for="@Model.goalBasedSheet.actions" class="form-label">Actions</label>
+                                                    <input asp-for="@Model.goalBasedSheet.actions" type="text" id="Gaction" class="form-control" placeholder="Enter Actions">
+                                                    <span asp-validation-for="@Model.goalBasedSheet.actions" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="form-group mt-3">
-                                                    <label class="form-label">Date Volnteered</label>
-                                                    <input type="date" id="date" class="form-control"
-                                                           placeholder="Select date">
+                                                    <label asp-for="@Model.goalBasedSheet.dateVolunteered" class="form-label">Date Volnteered</label>
+                                                    <input asp-for="@Model.goalBasedSheet.dateVolunteered" type="date" id="Gdate" class="form-control">
+                                                    <span asp-validation-for="@Model.goalBasedSheet.dateVolunteered" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="form-group mt-3">
-                                                    <label class="form-label">Message</label>
-                                                    <textarea class="form-control" placeholder="Enter your message"
-                                                              rows="4"></textarea>
+                                                    <label asp-for="@Model.goalBasedSheet.message" class="form-label">Message</label>
+<textarea asp-for="@Model.goalBasedSheet.message" id="Gmessage" class="form-control" placeholder="Enter your message"
+          rows="4"></textarea>
+                                                    <span asp-validation-for="@Model.goalBasedSheet.message" class="text-danger"></span>
                                                 </div>
                                             </div>
+
+                                            @*GOAL BUTTONS*@
                                             <div class="modal-footer mt-2">
                                                 <button type="button" class="cancel-btn rounded-pill py-1 px-3"
                                                         data-bs-dismiss="modal">
                                                     Cancel
                                                 </button>
-                                                <button type="button"
+                                                <button type="submit"
                                                         class="submit-btn rounded-pill py-1 px-3">
                                                     Submit
                                                 </button>
@@ -222,8 +255,10 @@
                             </div>
                         </div>
                     </div>
+
+                    @*GOAL BASED ENTRIES TABLE*@
                     <div class="mt-3">
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="height: 220px; overflow-x: auto; overflow-y: auto;">
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
@@ -234,33 +269,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Mission Mission Mission</td>
-                                        <td>Date</td>
-                                        <td>Action</td>
-                                        <td>
-                                            <i class="bi bi-pencil-square text-danger"></i> &nbsp; &nbsp;
-                                            <i class="bi bi-trash3"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mission Mission Mission</td>
-                                        <td>Date</td>
-                                        <td>Action</td>
-                                        <td>
-                                            <i class="bi bi-pencil-square text-danger"></i> &nbsp; &nbsp;
-                                            <i class="bi bi-trash3"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mission Mission Mission</td>
-                                        <td>Date</td>
-                                        <td>Action</td>
-                                        <td>
-                                            <i class="bi bi-pencil-square text-danger"></i> &nbsp; &nbsp;
-                                            <i class="bi bi-trash3"></i>
-                                        </td>
-                                    </tr>
+
+                                    @if (Model.goalBasedEnteries is not null)
+                                    {
+                                        foreach (var t in Model.goalBasedEnteries)
+                                        {
+                                            <tr id="@t.TimesheetId">
+                                                <td>@t.Mission.Title</td>
+                                                <td> @t.DateVolunteered.Date.ToShortDateString() </td>
+                                                <td> @t.Action</td>
+                                                <td>
+                                                    <i class="bi bi-pencil-square text-danger editGoalTimesheet"></i>
+                                                    <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -270,3 +294,33 @@
         </div>
     </div>
 </div>
+
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>*@
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
+<script>
+    $('#timeTable').DataTable({
+        lengthChange: false,
+        paging: false,
+        searching: false,
+        columns: [
+            { "orderable": false }, // column 1
+            { "orderData": [1, 2] }, // column 2 (date)
+            { "orderData": [3] }, // column 3 (hours)
+            { "orderable": false }, // column 4
+            { "orderable": false }
+        ],
+        //initComplete: function () {
+        //    $('#volunteer-time-table').css('margin-bottom', '20px');
+        //}
+    });
+</script>

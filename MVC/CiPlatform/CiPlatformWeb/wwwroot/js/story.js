@@ -1,6 +1,6 @@
 ﻿
 
-$('#missionId').click(function () {
+$('#missionId').on('change', function () {
     var missionId = $(this).val();
 
     $.ajax({
@@ -8,6 +8,8 @@ $('#missionId').click(function () {
         url: '/Story/GetStory',
         data: { missionId: missionId },
         success: async function (result) {
+            console.log('called')
+            console.log(result);
             if (result != null) {
 
                 $('#storyTitle').val(result.title);
@@ -18,7 +20,6 @@ $('#missionId').click(function () {
                 const dd = String(date.getDate()).padStart(2, '0');
                 const formattedDate = `${yyyy}-${mm}-${dd}`;
                 $('#date').val(formattedDate);
-
                 $('.note-editable').html(result.description);
                 $('#image-list').empty();
 
@@ -178,7 +179,7 @@ $('#saveStory').click(function () {
         else {
             formData.append("VideoUrl", null);
         }
-        
+
         for (var i = 0; i < allfiles.length; i++) {
             formData.append("Images", allfiles[i]);
         }
@@ -301,7 +302,7 @@ function storyInvite(ToUserId) {
     var storyUserId = $('#storyUserId').text();
     var storyMissionId = $('#storyMissionId').text();
     var FromUserId = $('#fromUserId').text();
-    
+
     $.ajax({
         type: "POST",
         url: "/Story/StoryInvite",

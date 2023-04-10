@@ -117,8 +117,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 .Include(m => m.GoalMissions)
                 .Include(m => m.FavouriteMissions)
                 .Include(m => m.MissionMedia)
-                .Skip(Math.Max((viewmodel.pageNo - 1) * 6, 0))
-                .Take(6);
+                .Skip(Math.Max((viewmodel.pageNo - 1) * 1, 0))
+                .Take(1);
 
 
             return (missions.ToList(), count);

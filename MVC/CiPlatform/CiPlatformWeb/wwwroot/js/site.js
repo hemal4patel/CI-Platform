@@ -268,3 +268,103 @@ $('#submitContactForm').click(function () {
         });
     }
 })
+
+
+$('.deleteTimesheet').click(function () {
+    var id = $(this).closest('tr').attr('id');
+    var row = $(this).closest('tr');
+    console.log(id);
+    $.ajax({
+        type: "POST",
+        url: "/User/DeleteTimesheetData",
+        data: { id: id },
+        success: function () {
+            row.remove();
+        },
+        error: function (error) {
+            console.lof(error)
+        }
+    });
+
+})
+
+$('.editTimeTimesheet').click(function () {
+    var id = $(this).closest('tr').attr('id');
+    console.log(id);
+    $.ajax({
+        type: "POST",
+        url: "/User/GetTimesheetData",
+        data: { id: id },
+        success: function (data) {
+            console.log(data);
+            $("#addVolHours").modal("show");
+
+            $('#timesheetId').val(data.timesheetId)
+            $('#mission').val(data.missionId)
+            $('#mission option:not(:selected)').prop("disabled", true);
+
+            const date = new Date(data.dateVolunteered);
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
+            $('#date').val(formattedDate);
+            $('#hours').val(data.time.split(":")[0])
+            $('#minutes').val(data.time.split(":")[1])
+            $('#message').val(data.notes)
+        },
+        error: function (error) {
+            console.lof(error)
+        }
+    });
+})
+
+
+$('.editGoalTimesheet').click(function () {
+    var id = $(this).closest('tr').attr('id');
+    console.log(id);
+    $.ajax({
+        type: "GET",
+        url: "/User/GetTimesheetData",
+        data: { id: id },
+        success: function (data) {
+            console.log(data);
+            $("#addVolGoal").modal("show");
+
+            $('#GtimesheetId').val(data.timesheetId)
+            $('#Gmission').val(data.missionId)
+            $('#Gmission option:not(:selected)').prop("disabled", true);
+
+            $('#Gaction').val(data.action)
+
+            const date = new Date(data.dateVolunteered);
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
+            $('#Gdate').val(formattedDate);
+            $('#Gmessage').val(data.notes)
+        },
+        error: function (error) {
+            console.lof(error)
+        }
+    });
+})
+
+
+$('#mission').on('change', function () {
+    var startDate = $(this).find('option:selected').data('value')    
+    startDate = startDate.split(' ')[0]
+    var dateParts = startDate.split("-");
+    var year = dateParts[2];
+    var month = dateParts[1];
+    var day = dateParts[0];
+    var minDateVal = `${year}-${month}-${day}`
+
+    $('#date').datepicker('destroy')
+    $('#date').datepicker({
+        dateFormat: "dd-mm-yy",
+        maxDate: new Date(),
+        minDate: new Date(minDateVal)
+    });
+})

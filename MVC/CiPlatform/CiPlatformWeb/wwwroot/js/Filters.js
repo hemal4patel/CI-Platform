@@ -87,7 +87,7 @@ function showMissions(pageNo) {
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var searchText = $("#searchText").val().toLowerCase().replace(" ", "");;
     var sortCase = selectedSortCase;
-    var pagesize = 6;
+    var pagesize = 1;
     var pageNo = pageNo;
 
     $.ajax({
