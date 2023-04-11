@@ -15,19 +15,21 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Last Name is required.")]
         public string LastName { get; set; } = null!;
 
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Required(ErrorMessage = "Email is required")]
+        [RegularExpression(@"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$",
+        ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Phone Number is required.")]
-        [MaxLength(10, ErrorMessage = "Phone number must be of 10 digits only.")]
-        [MinLength(10, ErrorMessage = "Phone number must be of 10 digits only.")]
+        [MaxLength(10, ErrorMessage = "Phone number must be of 10 digits only")]
+        [MinLength(10, ErrorMessage = "Phone number must be of 10 digits only")]
         public string PhoneNumber { get; set; } 
 
-        [Required(ErrorMessage = "Password is required.")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; } = null!;
 
-        [Required(ErrorMessage = "Password is required.")]
+        [Required(ErrorMessage = "Password is required")]
+        [Compare("Password", ErrorMessage = "Password doesn't match")]
         public string ConfirmPassword { get; set; } = null!;
     }
 }

@@ -21,7 +21,5 @@ namespace CiPlatformWeb.Entities.ViewModels
         public List<User> UserList { get; set; } = null;
 
         public List<MissionDocument> MissionDocuments { get; set; } = null;
-
-        public string? link { get; set; }
     }
 }

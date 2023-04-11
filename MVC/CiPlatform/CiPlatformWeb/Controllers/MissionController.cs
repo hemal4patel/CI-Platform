@@ -98,25 +98,7 @@ namespace CiPlatformWeb.Controllers
             string Id = HttpContext.Session.GetString("UserId");
             var userId = Convert.ToInt64(Id);
 
-            // Check if the mission is already in favorites for the user
-            if (_db.FavouriteMissions.Any(fm => fm.MissionId == missionId && fm.UserId == userId))
-            {
-                // Mission is already in favorites, return an error message or redirect back to the mission page
-                var FavoriteMissionId = _db.FavouriteMissions.Where(fm => fm.MissionId == missionId && fm.UserId == userId).FirstOrDefault();
-                _db.FavouriteMissions.Remove(FavoriteMissionId);
-                _db.SaveChanges();
-                //return Ok();
-            }
-            else
-            {
-
-                // Add the mission to favorites for the user
-                var favoriteMission = new FavouriteMission { MissionId = missionId, UserId = userId };
-                _db.FavouriteMissions.Add(favoriteMission);
-                _db.SaveChanges();
-            }
-
-
+            _missionlist.AddToFavorites(missionId, userId);
             return Ok();
         }
 
@@ -161,11 +143,12 @@ namespace CiPlatformWeb.Controllers
             ViewBag.UserId = HttpContext.Session.GetString("UserId");
             long userId = Convert.ToInt64(ViewBag.UserId);
 
+            var vm = new VolunteeringMissionViewModel();
+
             var data = _missiondetail.GetRecentVolunteers(missionId, userId, currVolPage);
+            vm.RecentVolunteers = data.recentVolunteers;
             ViewBag.volCount = data.count;
 
-            var vm = new VolunteeringMissionViewModel();
-            vm.RecentVolunteers = data.recentVolunteers;
             return PartialView("_RecentVolunteers", vm);
         }
 
@@ -175,21 +158,7 @@ namespace CiPlatformWeb.Controllers
             ViewBag.UserId = HttpContext.Session.GetString("UserId");
             long userId = Convert.ToInt64(ViewBag.UserId);
 
-            var alredyRated = _db.MissionRatings.SingleOrDefault(mr => mr.MissionId == missionId && mr.UserId == userId);
-
-            if (alredyRated != null)
-            {
-                alredyRated.Rating = rating;
-                alredyRated.UpdatedAt = DateTime.Now;
-                _db.Update(alredyRated);
-                _db.SaveChanges();
-            }
-            else
-            {
-                var newRating = new MissionRating { UserId = userId, MissionId = missionId, Rating = rating };
-                _db.MissionRatings.Add(newRating);
-                _db.SaveChangesAsync();
-            }
+            _missionlist.RateMission(missionId, userId, rating);
 
             return Json(missionId);
         }
@@ -199,9 +168,6 @@ namespace CiPlatformWeb.Controllers
         {
             ViewBag.UserId = HttpContext.Session.GetString("UserId");
             long userId = Convert.ToInt64(ViewBag.UserId);
-
-            //var mission = _missiondetail.GetMissionDetails(missionId);
-
             _missiondetail.ApplyToMission(missionId, userId);
             return Ok(new { icon = "success", message = "Successfully applied to the mission!!!" });
         }
@@ -212,7 +178,6 @@ namespace CiPlatformWeb.Controllers
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
             "wwwroot/Upload/MissionDocuments", fileName);
-
             var fileStream = new FileStream(filePath, FileMode.Open);
 
             return File(fileStream, "application/pdf");
@@ -242,29 +207,15 @@ namespace CiPlatformWeb.Controllers
 
             if (MissionInvite != null)
             {
-                MissionInvite.UpdatedAt = DateTime.Now;
-                _db.Update(MissionInvite);
-                _db.SaveChanges();
+                _missiondetail.ReInviteToMission(MissionInvite);
             }
-
             else
             {
-                var missionInvite = new MissionInvite()
-                {
-                    FromUserId = FromUserId,
-                    ToUserId = ToUserId,
-                    MissionId = MissionId,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                };
-
-                _db.MissionInvites.Add(missionInvite);
-                await _db.SaveChangesAsync();
+                _missiondetail.InviteToMission(FromUserId, ToUserId, MissionId);
             }
 
             var MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
             string link = MissionLink;
-
             await _missionlist.SendInvitationToCoWorker(ToUserId, FromUserId, link);
 
             return Json(new { success = true });
@@ -277,10 +228,8 @@ namespace CiPlatformWeb.Controllers
             ViewBag.UserId = HttpContext.Session.GetString("UserId");
             long userId = Convert.ToInt64(ViewBag.UserId);
 
-            List<MissionInvite> missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Mission).ToList();
-
-            List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Story).ToList();
-
+            List<MissionInvite> missionInvites = _missionlist.GetMissionInvites(userId);
+            List<StoryInvite> storyInvites = _missionlist.GetStoryInvites(userId);
             var result = new { missionInvites = missionInvites, storyInvites = storyInvites };
 
             return Json(result);

@@ -16,6 +16,7 @@ showRecentVounteers(1);
 
 function showRecentVounteers(currVolPage) {
     var missionId = $('.missionId').text();
+    var pagesize = 2;
     $.ajax({
         type: 'GET',
         url: '/Mission/showRecentVounteers',
@@ -28,16 +29,16 @@ function showRecentVounteers(currVolPage) {
 
             recentVols.append(data);
 
-            var start = ((currVolPage - 1) * 2) + 1;
+            var start = ((currVolPage - 1) * pagesize) + 1;
             var total = $('#volCount').val();
-            var end = Math.min(currVolPage * 2, total);
+            var end = Math.min(currVolPage * pagesize, total);
 
             var text = start + ' - ' + end + ' of ' + total + ' Recent Volunteers';
             $('.volText').text(text);
 
             $('.volPagination button').click(function () {
 
-                var totalVolPages = Math.ceil($('#volCount').val() / 2);
+                var totalVolPages = Math.ceil($('#volCount').val() / pagesize);
 
                 if (totalVolPages != 1) {
                     if ($(this).hasClass('next')) {
@@ -87,13 +88,12 @@ function showMissions(pageNo) {
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var searchText = $("#searchText").val().toLowerCase().replace(" ", "");;
     var sortCase = selectedSortCase;
-    var pagesize = 1;
     var pageNo = pageNo;
-
+    var pagesize = 6;
     $.ajax({
         type: 'POST',
         url: '/Mission/PlatformLanding',
-        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, sortCase: sortCase, UserId: UserId, pageNo: pageNo, pagesize: pagesize },
+        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, sortCase: sortCase, UserId: UserId, pageNo: pageNo },
         success: function (data) {
             var view = $(".partialViews");
             view.empty();
@@ -398,7 +398,6 @@ $("#CountryList li").click(function () {
     $('.filter-pills').empty();
     var countryId = $(this).val();
     selectedCountry = countryId;
-    console.log(selectedCountry);
 
     GetCitiesByCountry(countryId);
 
@@ -427,9 +426,7 @@ function GetCitiesByCountry(countryId) {
             var dropdown = $("#CityListAccordian");
             dropdown.empty();
             var items = "";
-            //console.log(data);
             $(data).each(function (i, item) {
-                //console.log(item);
                 items += `<li> <div class="dropdown-item mb-1 form-check"> <input type="checkbox"  class="form-check-input" id="exampleCheck1" value =` + item.cityId + `><label class="form-check-label" for="exampleCheck1" value=` + item.cityId + `>` + item.name + `</label></div></li>`
 
             })
@@ -532,7 +529,6 @@ function addToFavourites(missionId) {
         type: 'POST',
         data: { missionId: missionId },
         success: function (result) {
-            console.log(missionId)
             var icon = $("#" + missionId);
             var text = $(".favText");
             if (currentUrl.includes("PlatformLanding")) {
@@ -595,7 +591,6 @@ $('.rateMission i').click(function () {
 $('.commentButton').click(function () {
     var comment = $('.newComment').val();
     var missionId = $(this).data('mission-id');
-    console.log(comment.length);
     if (comment.length == 0) {
         $('.valComment').show();
 
@@ -607,7 +602,6 @@ $('.commentButton').click(function () {
 
         return;
     }
-    console.log(comment);
     $.ajax({
         type: 'POST',
         url: '/Mission/PostComment',
@@ -615,7 +609,7 @@ $('.commentButton').click(function () {
         success: function (result) {
             $('.newComment').val('');
             swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: result.icon,
                 title: result.message,
                 showConfirmButton: false,
@@ -631,7 +625,6 @@ $('.commentButton').click(function () {
 });
 
 function recommendToCoWorker(ToUserId, MissionId, FromUserId) {
-    console.log(MissionId);
     $.ajax({
         type: "POST",
         url: "/Mission/MissionInvite",
@@ -644,14 +637,13 @@ function recommendToCoWorker(ToUserId, MissionId, FromUserId) {
 
 $('#applyToMission').click(function () {
     var missionId = $('.missionId').text();
-    console.log(missionId);
     $.ajax({
         type: "POST",
         url: "/Mission/ApplyToMission",
         data: { missionId: missionId },
         success: function (result) {
             swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: result.icon,
                 title: result.message,
                 showConfirmButton: false,
@@ -672,7 +664,6 @@ $('#applyToMission').click(function () {
 });
 
 function searchUser() {
-    console.log("called");
     var text = $(".searchUserName").val().toLowerCase();
     var userNames = $('.userName');
     var parentElements = userNames.parent();
@@ -690,11 +681,9 @@ function search() {
     $('.searchUserByName').each(function () {
         $(this).keyup(function () {
             var missionId = $(this).data('value');
-            console.log(missionId);
 
             if (localStorage.getItem('view') == 1) {
                 var text = $("#searchUserByNameGrid-" + missionId).val().toLowerCase();
-                console.log(text);
                 var userNames = $('.userName-' + missionId);
                 var parentElements = userNames.parent();
                 for (var i = 0; i < userNames.length; i++) {
@@ -708,7 +697,6 @@ function search() {
             }
             else {
                 var text = $("#searchUserByNameList-" + missionId).val().toLowerCase();
-                console.log(text);
                 var userNames = $('.userName-' + missionId);
                 var parentElements = userNames.parent();
                 for (var i = 0; i < userNames.length; i++) {
@@ -724,12 +712,6 @@ function search() {
     })
 }
 
-//$(".volMissionModal").on('click', function () {
-//    console.log("called");
-//    $(".searchUserName").val('');
-//});
-
-
 $('#notificationDropdown').click(function () {
     $.ajax({
         type: "GET",
@@ -739,19 +721,16 @@ $('#notificationDropdown').click(function () {
             var items = "";
             var combinedList = $.merge(result.missionInvites, result.storyInvites);
             combinedList.sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1);
-            console.log(combinedList.length)
 
             if (combinedList.length != 0) {
 
                 $(combinedList).each(function (i, item) {
                     var url = "";
                     if (item.missionId) {
-                        console.log("m");
                         url = '/Mission/VolunteeringMission?MissionId=' + item.missionId
                         items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this mission - <strong>' + item.mission.title + '</strong></a></li>'
                     }
                     else {
-                        console.log("s");
                         url = '/Story/StoryDetail?MissionId=' + item.story.missionId + '&UserId=' + item.story.userId
                         items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this story - <strong>' + item.story.title + '</strong></a></li>'
                     }

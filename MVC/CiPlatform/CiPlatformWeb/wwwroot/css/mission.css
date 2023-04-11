@@ -18,6 +18,11 @@ div {
     color: #212529 !important;
 }
 
+.required-field::before {
+    content: "*";
+    color: rgb(221 51 51);
+}
+
 .capsule-details {
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 2px solid #757575;
@@ -174,6 +179,11 @@ div {
 @media (max-width: 425.98px) {
     .comment-box .vol-img {
         margin-top: 15px;
+    }
+
+    .skills-box {
+        margin-left: 5px !important;
+        margin-right: 5px !important;
     }
 
     .comment-box .card-body h5 {

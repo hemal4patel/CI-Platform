@@ -35,7 +35,7 @@
         @*<span class="" id="userId">@Id</span>*@
         <div class="row mt-2 gy-4">
             <div class="col-md">
-                <label asp-for="MissionId" class="form-label">Select Mission</label>
+                <label asp-for="MissionId" class="form-label">Select Mission</label><span class="required-field"></span>
                 <select asp-for="MissionId" class="form-select" aria-label="Default select example" id="missionId">
                     <option selected disabled value="default">Select your mission</option>
                     @foreach (var m in Model.MissionTitles)
@@ -46,12 +46,12 @@
                 <span class="valMission text-danger" style="display: none;">Mission is required.</span>
             </div>
             <div class="col-md">
-                <label asp-for="StoryTitle" class="form-label">My Story Title</label>
+                <label asp-for="StoryTitle" class="form-label">My Story Title</label><span class="required-field"></span>
                 <input asp-for="StoryTitle" type="text" id="storyTitle" class="form-control" placeholder="Enter story title">
                 <span class="valstoryTitle text-danger" style="display: none;">Story title is required.</span>
             </div>
             <div class="col-md">
-                <label class="form-label">Date</label>
+                <label class="form-label">Date</label><span class="required-field"></span>
                 <input type="date" class="form-control" id="date" name="date">
                 <span class="valDate text-danger" style="display: none;">Date is required.</span>
             </div>
@@ -60,7 +60,7 @@
 
         <div class="form-group mt-4">
             <div class="form-group">
-                <label for="exampleFormControlTextarea1" class="form-label my-0">My Story</label>
+                <label for="exampleFormControlTextarea1" class="form-label my-0">My Story</label><span class="required-field"></span>
                 <textarea asp-for="StoryDescription" class="form-control summernote" id="editor" rows="3"></textarea>
                 <span class="valStory text-danger" style="display: none;">Story is required.</span>
             </div>

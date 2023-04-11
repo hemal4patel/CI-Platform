@@ -56,5 +56,11 @@
 </div>
 
 <div class="policy mt-xl-0.5">
-    <a href="">Privacy Policy</a>
+    <a asp-controller="User" asp-action="PrivacyPolicy">Privacy Policy</a>
 </div>
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

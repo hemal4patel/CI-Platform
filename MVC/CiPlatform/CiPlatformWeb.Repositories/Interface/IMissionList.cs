@@ -28,5 +28,13 @@ namespace CiPlatformWeb.Repositories.Interface
         public MissionInvite HasAlreadyInvited (long ToUserId, long MissionId, long FromUserId);
 
         public Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link);
+
+        public void AddToFavorites (long missionId, long userId);
+
+        public void RateMission (long missionId, long userId, int rating);
+
+        public List<MissionInvite> GetMissionInvites (long userId);
+
+        public List<StoryInvite> GetStoryInvites (long userId);
     }
 }

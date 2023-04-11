@@ -25,5 +25,8 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void AddComment (long MissionId, long userId, string comment);
 
+        public void InviteToMission (long FromUserId, long ToUserId, long MissionId);
+
+        public void ReInviteToMission (MissionInvite MissionInvite);
     }
 }

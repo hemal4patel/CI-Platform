@@ -9,11 +9,12 @@ namespace CiPlatformWeb.Entities.ViewModels
 {
     public class LoginValidation
     {
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Required(ErrorMessage = "Email is required")]
+        [RegularExpression(@"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$",
+        ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = null!;
 
-        [Required(ErrorMessage = "Password is required.")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; } = null!;
     }
 }

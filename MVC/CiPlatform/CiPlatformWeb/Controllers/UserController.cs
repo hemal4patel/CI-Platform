@@ -12,12 +12,15 @@ namespace CiPlatformWeb.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly IUserProfile _userProfile;
+        private readonly IVolunteeringTimesheet _timesheet;
 
-        public UserController (ILogger<UserController> logger, ApplicationDbContext db, IUserProfile userProfile)
+
+        public UserController (ILogger<UserController> logger, ApplicationDbContext db, IUserProfile userProfile, IVolunteeringTimesheet timesheet)
         {
             _logger = logger;
             _db = db;
             _userProfile = userProfile;
+            _timesheet = timesheet;
         }
 
         //GET
@@ -162,14 +165,10 @@ namespace CiPlatformWeb.Controllers
 
                 var vm = new VolunteeringTimesheetViewModel();
 
-                vm.timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Time" && m.ApprovalStatus == "APPROVE").Include(m => m.Mission).ToList();
-
-                vm.goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Goal" && m.ApprovalStatus == "APPROVE").Include(m => m.Mission).ToList();
-
-                vm.timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time").Include(t => t.Mission).ToList();
-
-                vm.goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal").Include(t => t.Mission).ToList();
-
+                vm.timeMissions = _timesheet.GetTimeBasedMission(userId);
+                vm.goalMissions = _timesheet.GetGoalBasedMission(userId);
+                vm.timeBasedEntries = _timesheet.GetTimeBasedEntries(userId);
+                vm.goalBasedEnteries = _timesheet.GetGoalBasedEntries(userId);
 
                 return View(vm);
             }
@@ -200,38 +199,18 @@ namespace CiPlatformWeb.Controllers
                     //EXISTING TIME ENTRY UPDATE
                     if (viewmodel.timeBasedSheet.timeSheetId is not null)
                     {
-                        var timeBasedEntry = _db.Timesheets.Where(t => t.TimesheetId == viewmodel.timeBasedSheet.timeSheetId).FirstOrDefault();
-
+                        var timeBasedEntry = _timesheet.GetEntry(viewmodel.timeBasedSheet.timeSheetId);
                         if (timeBasedEntry is not null)
                         {
-                            TimeSpan timeSpan = new TimeSpan(viewmodel.timeBasedSheet.hours, viewmodel.timeBasedSheet.minutes, 0);
-                            timeBasedEntry.MissionId = viewmodel.timeBasedSheet.timeMissions;
-                            timeBasedEntry.Time = timeSpan;
-                            timeBasedEntry.Action = null;
-                            timeBasedEntry.DateVolunteered = viewmodel.timeBasedSheet.dateVolunteered;
-                            timeBasedEntry.Notes = viewmodel.timeBasedSheet.message;
-                            timeBasedEntry.UpdatedAt = DateTime.Now;
-
-                            _db.Update(timeBasedEntry);
-                            _db.SaveChanges();
+                            _timesheet.UpdateTimeBasedEntry(timeBasedEntry, viewmodel.timeBasedSheet);
                         }
+                        TempData["message"] = "Entry updated successfully!!!";
                     }
                     //NEW TIME ENTRY ADD
                     else
                     {
-                        TimeSpan timeSpan = new TimeSpan(viewmodel.timeBasedSheet.hours, viewmodel.timeBasedSheet.minutes, 0);
-                        var timeBasedEntry = new Timesheet
-                        {
-                            UserId = userId,
-                            MissionId = viewmodel.timeBasedSheet.timeMissions,
-                            Time = timeSpan,
-                            Action = null,
-                            DateVolunteered = viewmodel.timeBasedSheet.dateVolunteered,
-                            Notes = viewmodel.timeBasedSheet.message,
-                            CreatedAt = DateTime.Now
-                        };
-                        _db.Timesheets.Add(timeBasedEntry);
-                        _db.SaveChanges();
+                        _timesheet.AddTimeBasedEntry(viewmodel.timeBasedSheet, userId);
+                        TempData["message"] = "Entry added successfully!!!";
                     }
                 }
 
@@ -241,48 +220,22 @@ namespace CiPlatformWeb.Controllers
                     //EXISTING GOAL ENTRY UPDATE
                     if (viewmodel.goalBasedSheet.timeSheetId is not null)
                     {
-                        var goalBasedEntry = _db.Timesheets.Where(t => t.TimesheetId == viewmodel.goalBasedSheet.timeSheetId).FirstOrDefault();
-
+                        var goalBasedEntry = _timesheet.GetEntry(viewmodel.goalBasedSheet.timeSheetId);
                         if (goalBasedEntry is not null)
                         {
-                            goalBasedEntry.MissionId = viewmodel.goalBasedSheet.goalMissions;
-                            goalBasedEntry.Time = null;
-                            goalBasedEntry.Action = viewmodel.goalBasedSheet.actions;
-                            goalBasedEntry.DateVolunteered = viewmodel.goalBasedSheet.dateVolunteered;
-                            goalBasedEntry.Notes = viewmodel.goalBasedSheet.message;
-                            goalBasedEntry.UpdatedAt = DateTime.Now;
-
-                            _db.Update(goalBasedEntry);
-                            _db.SaveChanges();
+                            _timesheet.UpdateGoalBasedEntry(goalBasedEntry, viewmodel.goalBasedSheet);
                         }
+                        TempData["message"] = "Entry updated successfully!!!";
                     }
                     //NEW GOAL ENTRY ADD
                     else
                     {
-                        var goalBasedEntry = new Timesheet
-                        {
-                            UserId = userId,
-                            MissionId = viewmodel.goalBasedSheet.goalMissions,
-                            Time = null,
-                            Action = viewmodel.goalBasedSheet.actions,
-                            DateVolunteered = viewmodel.goalBasedSheet.dateVolunteered,
-                            Notes = viewmodel.goalBasedSheet.message,
-                            CreatedAt = DateTime.Now
-                        };
-                        _db.Timesheets.Add(goalBasedEntry);
-                        _db.SaveChanges();
+                        _timesheet.AddGoalBasedEntry(viewmodel.goalBasedSheet, userId);
+                        TempData["message"] = "Entry added successfully!!!";
                     }
                 }
 
-                var vm = new VolunteeringTimesheetViewModel();
-                vm.timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Time" && m.ApprovalStatus == "APPROVE").Include(m => m.Mission).ToList();
-                vm.goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Goal" && m.ApprovalStatus == "APPROVE").Include(m => m.Mission).ToList();
-
-                vm.timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time").Include(t => t.Mission).ToList();
-
-                vm.goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal").Include(t => t.Mission).ToList();
-
-                return View(vm);
+                return RedirectToAction("VolunteeringTimesheet");
             }
             else
             {
@@ -300,7 +253,7 @@ namespace CiPlatformWeb.Controllers
 
             if (userId != null)
             {
-                var timesheet = _db.Timesheets.Where(t => t.TimesheetId == id).FirstOrDefault();
+                var timesheet = _timesheet.GetEntry(id);
                 return Json(timesheet);
             }
             else
@@ -321,15 +274,36 @@ namespace CiPlatformWeb.Controllers
 
             if (userId != null)
             {
-                var timesheet = _db.Timesheets.Where(t => t.TimesheetId == id).FirstOrDefault();
-                _db.Timesheets.Remove(timesheet);
-                _db.SaveChanges();
+                _timesheet.DeleteTimesheetEntry(id);
                 return Ok();
             }
             else
             {
                 return BadRequest();
             }
+        }
+
+        public IActionResult PrivacyPolicy ()
+        {
+            //if (HttpContext.Session.GetString("UserId") != null)
+            //{
+            //    //ViewBag.Email = HttpContext.Session.GetString("Email");
+            //    //ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            //    ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            //    long userId = Convert.ToInt64(ViewBag.UserId);
+            //    User sessionUser = _userProfile.sessionUser(userId);
+            //    ViewBag.Email = sessionUser.Email;
+            //    ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
+            //    ViewBag.UserAvatar = sessionUser.Avatar;
+
+            //    return View();
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+            return View();
         }
     }
 }

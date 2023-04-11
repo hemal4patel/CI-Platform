@@ -31,6 +31,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 .Include(m => m.GoalMissions)
                 .Include(m => m.FavouriteMissions)
                 .Include(m => m.MissionMedia)
+                .Include(m => m.Timesheets)
                 .FirstOrDefault(m => m.MissionId == MissionId);
 
             return mission;
@@ -114,6 +115,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public (List<MissionApplication> recentVolunteers, int count) GetRecentVolunteers (long MissionId, long userId, int pageno)
         {
+            var pagesize = 2;
             var recentVolunteers = _db.MissionApplications
                 .Include(u => u.User)
                 .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE");
@@ -123,8 +125,8 @@ namespace CiPlatformWeb.Repositories.Repository
             recentVolunteers = _db.MissionApplications
                 .Include(u => u.User)
                 .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt)
-                .Skip(Math.Max((pageno - 1) * 2, 0))
-                .Take(2);
+                .Skip(Math.Max((pageno - 1) * pagesize, 0))
+                .Take(pagesize);
 
             return (recentVolunteers.ToList(), count);
         }
@@ -134,8 +136,6 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             return _db.MissionDocuments.Where(m => m.MissionId == MissionId).ToList();
         }
-
-
 
         public void AddComment (long missionId, long userId, string comment)
         {
@@ -147,6 +147,28 @@ namespace CiPlatformWeb.Repositories.Repository
                 CreatedAt = DateTime.Now
             };
             _db.Comments.Add(newComment);
+            _db.SaveChanges();
+        }
+
+        public void InviteToMission (long FromUserId, long ToUserId, long MissionId)
+        {
+            var missionInvite = new MissionInvite()
+            {
+                FromUserId = FromUserId,
+                ToUserId = ToUserId,
+                MissionId = MissionId,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+
+            _db.MissionInvites.Add(missionInvite);
+            _db.SaveChanges();
+        }
+
+        public void ReInviteToMission (MissionInvite MissionInvite)
+        {
+            MissionInvite.UpdatedAt = DateTime.Now;
+            _db.Update(MissionInvite);
             _db.SaveChanges();
         }
     }

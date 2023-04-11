@@ -102,13 +102,13 @@
                         <div class="row row-cols-1 row-cols-md-2 g-4 g-md-4">
 
                             <div class="form-group">
-                                <label asp-for="FirstName" class="form-label required-field">Name*</label>
+                                <label asp-for="FirstName" class="form-label">Name<span class="required-field"></span></label>
                                 <input asp-for="FirstName" id="firstName" type="text" class="form-control" placeholder="Enter your name">
                                 <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="LastName" class="form-label required-field">Surname*</label>
+                                <label asp-for="LastName" class="form-label">Surname<span class="required-field"></span></label>
                                 <input asp-for="LastName" id="lastName" type="text" class="form-control" placeholder="Enter your surname">
                                 <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
@@ -137,7 +137,7 @@
 
                         <div class="row mt-4">
                             <div class="form-group">
-                                <label asp-for="ProfileText" class="form-label required-field">My Profile*</label>
+                                <label asp-for="ProfileText" class="form-label">My Profile</label>
                                 <textarea asp-for="ProfileText" class="form-control" id="ProfileText" rows="4" placeholder="Enter your comments..."></textarea>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                         <div class="row row-cols-1 row-cols-md-2 g-4 g-md-4">
 
                             <div class="form-group">
-                                <label class="form-label">City</label>
+                                <label class="form-label">City<span class="required-field"></span></label>
                                 <select asp-for="CityId" class="form-select" id="CityDropdown" aria-label="Default select example">
                                     <option value="">
                                         Select your city
@@ -182,7 +182,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="CountryId" class="form-label required-field">Country*</label>
+                                <label asp-for="CountryId" class="form-label">Country<span class="required-field"></span></label>
                                 <select asp-for="CountryId" class="form-select" id="countryDropdown" aria-label="Default select example">
                                     <option value="">
                                         Select your country
@@ -335,7 +335,7 @@
     <script>
         window.onload = function () {
             swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'success',
                 title: '@Html.Raw(TempData["message"])',
                 showConfirmButton: false,

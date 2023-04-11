@@ -148,13 +148,20 @@
                     {
                         @foreach (var goal in Model.MissionDetails.GoalMissions)
                         {
+                            int total = @goal.GoalValue;
+                            int? achieved = 0;
+                            if(goal.Mission.Timesheets.Any(m => m.MissionId == goal.Mission.MissionId))
+                            {
+                                achieved = goal.Mission.Timesheets.Where(m => m.MissionId == goal.Mission.MissionId).Sum(m => m.Action);
+                            }
+                            int? percent = achieved*(100/total);
                             <img src="~/images/achieved.png" alt="deadline"
                          style="margin-right: 10px; width: 30px; height: 30px;">
                             <div class="card-detail-text">
                                 <div class="progress" style="width: 150px">
-                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <span> @goal.GoalValue achieved </span>
+                                <span> @achieved achieved </span>
                             </div>
                         }
                     }
@@ -448,7 +455,7 @@
         <!-- SIDE 2 BOX -->
         <div class="col-lg-4 mb-5">
             <!-- INFO BOX -->
-            <div class="row border border-secondary">
+            <div class="row skills-box border border-secondary">
                 <div class="tabs d-flex flex-column" style="font-size: 15px;">
                     <ul class="nav nav-tabs mt-3">
                         <li class="nav-item">

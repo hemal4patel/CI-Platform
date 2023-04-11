@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using CiPlatformWeb.Entities.ViewModels;
+using System.Drawing.Printing;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -50,6 +51,8 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public (List<Mission> missions, int count) GetMissions (DisplayMissionCards viewmodel, long userId)
         {
+            var pagesize = 6;
+
             var missions = _db.Missions.AsNoTracking();
 
             if (viewmodel.CountryId != null)
@@ -116,9 +119,9 @@ namespace CiPlatformWeb.Repositories.Repository
                 .Include(m => m.MissionApplications)
                 .Include(m => m.GoalMissions)
                 .Include(m => m.FavouriteMissions)
-                .Include(m => m.MissionMedia)
-                .Skip(Math.Max((viewmodel.pageNo - 1) * 1, 0))
-                .Take(1);
+            .Include(m => m.MissionMedia)
+                .Skip(Math.Max((viewmodel.pageNo - 1) * pagesize, 0))
+                .Take(pagesize);
 
 
             return (missions.ToList(), count);
@@ -164,8 +167,53 @@ namespace CiPlatformWeb.Repositories.Repository
             message.IsBodyHtml = true;
 
             await smtp.SendMailAsync(message);
+        }
 
+        public void AddToFavorites (long missionId, long userId)
+        {
+            if (_db.FavouriteMissions.Any(fm => fm.MissionId == missionId && fm.UserId == userId))
+            {
+                var FavoriteMissionId = _db.FavouriteMissions.Where(fm => fm.MissionId == missionId && fm.UserId == userId).FirstOrDefault();
+                _db.FavouriteMissions.Remove(FavoriteMissionId);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var favoriteMission = new FavouriteMission { MissionId = missionId, UserId = userId };
+                _db.FavouriteMissions.Add(favoriteMission);
+                _db.SaveChanges();
+            }
+        }
 
+        public void RateMission (long missionId, long userId, int rating)
+        {
+            var alredyRated = _db.MissionRatings.SingleOrDefault(mr => mr.MissionId == missionId && mr.UserId == userId);
+
+            if (alredyRated != null)
+            {
+                alredyRated.Rating = rating;
+                alredyRated.UpdatedAt = DateTime.Now;
+                _db.Update(alredyRated);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var newRating = new MissionRating { UserId = userId, MissionId = missionId, Rating = rating };
+                _db.MissionRatings.Add(newRating);
+                _db.SaveChangesAsync();
+            }
+        }
+
+        public List<MissionInvite> GetMissionInvites (long userId)
+        {
+            var missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Mission).ToList();
+            return missionInvites;
+        }
+
+        public List<StoryInvite> GetStoryInvites (long userId)
+        {
+            var storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Story).ToList();
+            return storyInvites;
         }
     }
 }

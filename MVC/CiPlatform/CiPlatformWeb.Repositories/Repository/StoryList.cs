@@ -143,7 +143,7 @@ namespace CiPlatformWeb.Repositories.Repository
             }
 
             //add records
-            if(images != null)
+            if (images != null)
             {
                 foreach (var u in images)
                 {
@@ -228,11 +228,11 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public Story GetStoryDetails (long MissionId, long UserId)
         {
-            Story storyDetails =  _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
+            Story storyDetails = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
                     .Include(s => s.StoryMedia)
                     .Include(s => s.Mission)
                     .Include(s => s.User).FirstOrDefault();
-                return storyDetails;
+            return storyDetails;
         }
 
 
@@ -242,6 +242,32 @@ namespace CiPlatformWeb.Repositories.Repository
             return list;
         }
 
+        public StoryInvite HasAlreadyInvited (long ToUserId, long StoryId, long FromUserId)
+        {
+            return _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId).FirstOrDefault();
+        }
+
+        public void InviteToStory (long FromUserId, long ToUserId, long StoryId)
+        {
+            var storyInvite = new StoryInvite()
+            {
+                FromUserId = FromUserId,
+                ToUserId = ToUserId,
+                StoryId = StoryId,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            };
+
+            _db.StoryInvites.Add(storyInvite);
+            _db.SaveChanges();
+        }
+
+        public void ReInviteToStory (StoryInvite storyInvite)
+        {
+            storyInvite.UpdatedAt = DateTime.Now;
+            _db.Update(storyInvite);
+            _db.SaveChanges();
+        }
 
         public async Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link)
         {

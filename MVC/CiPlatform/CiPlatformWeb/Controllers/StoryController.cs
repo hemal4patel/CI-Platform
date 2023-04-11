@@ -244,36 +244,19 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> StoryInvite (long ToUserId, long StoryId, long FromUserId, long storyUserId, long storyMissionId)
         {
+            var storyInvite = _storyList.HasAlreadyInvited(ToUserId, StoryId, FromUserId);
 
-            if (_db.StoryInvites.Any(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId))
+            if (storyInvite != null)
             {
-                var StoryInvite = _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId).FirstOrDefault();
-                StoryInvite.UpdatedAt = DateTime.Now;
-                _db.Update(StoryInvite);
-                _db.SaveChanges();
+                _storyList.ReInviteToStory(storyInvite);
             }
             else
             {
-                var storyInvite = new StoryInvite()
-                {
-                    FromUserId = FromUserId,
-                    ToUserId = ToUserId,
-                    StoryId = StoryId,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                };
-
-                _db.StoryInvites.Add(storyInvite);
-                await _db.SaveChangesAsync();
+                _storyList.InviteToStory(FromUserId, ToUserId, StoryId);
             }
 
-            var StoryLink = Url.Action("StoryDetail", "Story", new
-            {
-                MissionId = storyMissionId,
-                UserId = storyUserId
-            }, Request.Scheme);
+            var StoryLink = Url.Action("StoryDetail", "Story", new { MissionId = storyMissionId, UserId = storyUserId }, Request.Scheme);
             string link = StoryLink;
-
             await _storyList.SendInvitationToCoWorker(ToUserId, FromUserId, link);
 
             return Json(new { success = true });

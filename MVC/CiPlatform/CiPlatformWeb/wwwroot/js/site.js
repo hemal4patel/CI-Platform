@@ -6,8 +6,6 @@ function validateChangePassword() {
     var newPassword = $('#newPassword').val();
     var confirmPassword = $('#confirmPassword').val();
 
-    console.log(oldPassoword);
-
     if (oldPassoword == "") {
         $('.valOldPassword').show();
         flag = false;
@@ -73,7 +71,6 @@ $('#changePassowrd').click(function () {
         var oldPassoword = $('#oldPassword').val();
         var newPassword = $('#newPassword').val();
         var confirmPassword = $('#confirmPassword').val();
-        console.log(oldPassoword + newPassword + confirmPassword);
 
         $.ajax({
             type: "POST",
@@ -82,7 +79,7 @@ $('#changePassowrd').click(function () {
             success: function (data) {
                 $('#changePassword').modal('hide');
                 swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
                     title: "Password updated successfully!!!",
                     showConfirmButton: false,
@@ -162,9 +159,7 @@ function saveSkills() {
 
     })
     container.append(skills);
-    console.log(selectedUserSkills);
     $('#selectedSkills').val(selectedUserSkills.join());
-    console.log($('#selectedSkills').val());
 }
 
 
@@ -183,25 +178,6 @@ $('.edit-icon').click(function () {
     $('#avatarFile').click();
 });
 
-$('#saveProfile').click(function () {
-    var firstName = $('#firstName').val();
-    var lastName = $('#lastName').val();
-    var empId = $('#empId').val();
-    var manager = $('#manager').val();
-    var title = $('#title').val();
-    var dept = $('#dept').val();
-    var profileText = $('#ProfileText').val();
-    var whyIVolunteer = $('#whyIVolunteer').val();
-    var city = $('#CityDropdown').val();
-    var country = $('#countryDropdown').val();
-    var availability = $('#availability').val();
-    var linkedInUrl = $('#linkedInUrl').val();
-
-    $('.userSkill').each(function () {
-        console.log($(this).data('value'));
-    })
-
-});
 
 
 function validateContactUsForm() {
@@ -233,21 +209,18 @@ function validateContactUsForm() {
             }
         })
     }
-    console.log(flag)
 
 
     return flag;
 }
 
 $('#submitContactForm').click(function () {
-    console.log("called");
 
     var subject = $('#contactSubject').val();
     var message = $('#contactMessage').val();
 
 
     if (validateContactUsForm()) {
-        console.log('true');
         $.ajax({
             type: "POST",
             url: "/User/ContactUs",
@@ -255,7 +228,7 @@ $('#submitContactForm').click(function () {
             success: function (data) {
                 $('#contactUs').modal('hide');
                 swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
                     title: "Thank you for contacting us!!!",
                     showConfirmButton: false,
@@ -263,7 +236,7 @@ $('#submitContactForm').click(function () {
                 });
             },
             error: function (error) {
-                console.lof(error)
+                console.log(error)
             }
         });
     }
@@ -273,30 +246,45 @@ $('#submitContactForm').click(function () {
 $('.deleteTimesheet').click(function () {
     var id = $(this).closest('tr').attr('id');
     var row = $(this).closest('tr');
-    console.log(id);
-    $.ajax({
-        type: "POST",
-        url: "/User/DeleteTimesheetData",
-        data: { id: id },
-        success: function () {
-            row.remove();
-        },
-        error: function (error) {
-            console.lof(error)
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/User/DeleteTimesheetData",
+                data: { id: id },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Entry deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
         }
-    });
-
+    })
 })
 
 $('.editTimeTimesheet').click(function () {
     var id = $(this).closest('tr').attr('id');
-    console.log(id);
     $.ajax({
         type: "POST",
         url: "/User/GetTimesheetData",
         data: { id: id },
         success: function (data) {
-            console.log(data);
             $("#addVolHours").modal("show");
 
             $('#timesheetId').val(data.timesheetId)
@@ -314,7 +302,7 @@ $('.editTimeTimesheet').click(function () {
             $('#message').val(data.notes)
         },
         error: function (error) {
-            console.lof(error)
+            console.log(error)
         }
     });
 })
@@ -322,13 +310,11 @@ $('.editTimeTimesheet').click(function () {
 
 $('.editGoalTimesheet').click(function () {
     var id = $(this).closest('tr').attr('id');
-    console.log(id);
     $.ajax({
         type: "GET",
         url: "/User/GetTimesheetData",
         data: { id: id },
         success: function (data) {
-            console.log(data);
             $("#addVolGoal").modal("show");
 
             $('#GtimesheetId').val(data.timesheetId)
@@ -346,14 +332,14 @@ $('.editGoalTimesheet').click(function () {
             $('#Gmessage').val(data.notes)
         },
         error: function (error) {
-            console.lof(error)
+            console.log(error)
         }
     });
 })
 
 
 $('#mission').on('change', function () {
-    var startDate = $(this).find('option:selected').data('value')    
+    var startDate = $(this).find('option:selected').data('value')
     startDate = startDate.split(' ')[0]
     var dateParts = startDate.split("-");
     var year = dateParts[2];
@@ -363,6 +349,24 @@ $('#mission').on('change', function () {
 
     $('#date').datepicker('destroy')
     $('#date').datepicker({
+        dateFormat: "dd-mm-yy",
+        maxDate: new Date(),
+        minDate: new Date(minDateVal)
+    });
+})
+
+
+$('#Gmission').on('change', function () {
+    var startDate = $(this).find('option:selected').data('value')
+    startDate = startDate.split(' ')[0]
+    var dateParts = startDate.split("-");
+    var year = dateParts[2];
+    var month = dateParts[1];
+    var day = dateParts[0];
+    var minDateVal = `${year}-${month}-${day}`
+
+    $('#Gdate').datepicker('destroy')
+    $('#Gdate').datepicker({
         dateFormat: "dd-mm-yy",
         maxDate: new Date(),
         minDate: new Date(minDateVal)

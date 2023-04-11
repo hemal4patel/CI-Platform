@@ -1,62 +1,76 @@
 ﻿
 
-$('#missionId').on('change', function () {
+async function blobData(file) {
+    const response = await fetch('/Upload/StoryPhotos/' + file.path);
+    const blob = await response.blob();
+    const files = new File([blob], file.path, { type: blob.type });
+    allfiles.push(files);
+}
+
+$('#missionId').click(function () {
+
     var missionId = $(this).val();
+    allfiles.splice(0, allfiles.length);
+    $('#image-list').empty();
+
 
     $.ajax({
-        type: 'GET',
-        url: '/Story/GetStory',
+        type: "GET",
+        url: "/Story/GetStory",
         data: { missionId: missionId },
-        success: async function (result) {
-            console.log('called')
-            console.log(result);
-            if (result != null) {
+        success: function (story) {
+            if (story != null) {
 
-                $('#storyTitle').val(result.title);
-
-                const date = new Date(result.createdAt);
+                const date = new Date(story.createdAt);
                 const yyyy = date.getFullYear();
                 const mm = String(date.getMonth() + 1).padStart(2, '0');
                 const dd = String(date.getDate()).padStart(2, '0');
                 const formattedDate = `${yyyy}-${mm}-${dd}`;
-                $('#date').val(formattedDate);
-                $('.note-editable').html(result.description);
-                $('#image-list').empty();
 
                 var urls = "";
-                for (var i = 0; i < result.storyMedia.length; i++) {
-                    if (result.storyMedia[i].type === "video") {
-                        urls += result.storyMedia[i].path + "\n";
+                for (var i = 0; i < story.storyMedia.length; i++) {
+                    if (story.storyMedia[i].type === "video") {
+                        urls += story.storyMedia[i].path + '\n';
                     }
                     else {
-                        var file = result.storyMedia[i];
-                        var image = $('<img>').attr('src', '/Upload/StoryPhotos/' + result.storyMedia[i].path);
+                        var file = story.storyMedia[i];
+                        var image = $('<img>').attr('src', '/Upload/StoryPhotos/' + story.storyMedia[i].path);
                         var closebtn = $('<span>').text('x');
                         var item = $('<div>').addClass('image-item').append(image).append(closebtn);
                         $('#image-list').append(item);
 
-                        const response = await fetch('/Upload/StoryPhotos/' + file.path);
-                        const blob = await response.blob();
-                        const files = new File([blob], file.path, { type: blob.type });
 
-                        allfiles.push(files);
+                        blobData(file)
+
+                       
 
                         closebtn.on('click', function () {
                             var index = $(this).parent().index();
                             allfiles.splice(index, 1);
                             $(this).parent().remove();
-                            console.log(allfiles);
                         });
 
                     }
                 }
 
+
+
+                $('#storyTitle').val(story.title);
+                $('#date').val(formattedDate);
+                $('.note-editable').html(story.description);
                 $('#videoUrls').val(urls);
 
                 $('.valMission').hide();
                 $('.valstoryTitle').hide();
                 $('.valDate').hide();
                 $('.valStory').hide();
+
+
+
+                //$('.submit-button').prop('disabled', false);
+                //$('.save-button').prop('disabled', false);
+                //$('.preview-button').prop('disabled', false)
+
             }
             else {
                 $('#storyTitle').val('');
@@ -64,13 +78,19 @@ $('#missionId').on('change', function () {
                 $('.note-editable').text('');
                 $('#videoUrls').val('');
                 $('#image-list').empty();
+                //$('.submit-button').prop('disabled', true);
+                //$('.preview-button').prop('disabled', true);
             }
         },
-        error: function (error) {
-            console.log(error);
+        error: function () {
+            alert("Error getting story data.");
         }
     });
-});
+
+
+
+
+})
 
 $('#videoUrls').on('input', function () {
     $('.valUrlCount').hide();
@@ -197,7 +217,7 @@ $('#saveStory').click(function () {
             contentType: false,
             success: function (result) {
                 swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: result.icon,
                     title: result.message,
                     showConfirmButton: false,
@@ -233,7 +253,6 @@ $('#previewStory').click(function () {
         url: '/Story/StoryDetail',
         data: { MissionId: missionId, UserId: userId },
         success: function (result) {
-            console.log(result);
             var url = '/Story/StoryDetail?MissionId=' + missionId + '&UserId=' + userId;
             window.location.href = url;
         },
@@ -278,7 +297,7 @@ $('#submitStory').click(function () {
         contentType: false,
         success: function (result) {
             swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: result.icon,
                 title: result.message,
                 showConfirmButton: false,
@@ -308,16 +327,13 @@ function storyInvite(ToUserId) {
         url: "/Story/StoryInvite",
         data: { ToUserId: ToUserId, StoryId: StoryId, FromUserId: FromUserId, storyUserId: storyUserId, storyMissionId: storyMissionId },
         success: function () {
-            console.log("sent");
             $('.Invited-' + ToUserId + '.Invited-' + StoryId).html(' <button class="btn btn-outline-success">Invited</button>');
         }
     });
 }
 
 function openMission() {
-    console.log("hello")
     var MissionId = $('#storyMissionId').text();
-    console.log(storyMissionId)
     $.ajax({
         type: "GET",
         url: "/Mission/VolunteeringMission",
@@ -360,8 +376,6 @@ function handleFiles(e) {
                 closeIcon.on('click', function () {
                     item.remove();
                     allfiles.splice(allfiles.indexOf(file), 1);
-
-                    console.log(allfiles);
                 });
             };
         })(file);

@@ -40,17 +40,9 @@ namespace CiPlatformWeb.Controllers
                 var user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
-                    if (obj.ConfirmPassword == obj.Password)
-                    {
-                        _userRepository.RegisterUser(obj);
-                        TempData["success"] = "Registered!!!";
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        TempData["error"] = "Password doesn't match!!!";
-                        return View(obj);
-                    }
+                    _userRepository.RegisterUser(obj);
+                    TempData["success"] = "Registered!!!";
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -84,19 +76,8 @@ namespace CiPlatformWeb.Controllers
                 {
                     if (user.Password == obj.Password)
                     {
-                        //TempData["success"] = "Logged In!!!";
-                        //HttpContext.Session.SetString("Email", user.Email);
-                        //HttpContext.Session.SetString("UserName", user.FirstName + " " + user.LastName);
                         HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                        //HttpContext.Session.SetString("UserAvatar", "");
-                        //if (user.Avatar is not null)
-                        //{
-                        //    HttpContext.Session.SetString("UserAvatar", user.Avatar);
-                        //}
-                        //else
-                        //{
-                        //    HttpContext.Session.SetString("UserAvatar", "");
-                        //}
+
                         var missionId = HttpContext.Session.GetString("MissionId");
                         var storyMissionId = HttpContext.Session.GetString("StoryMissionId");
                         var storyUserId = HttpContext.Session.GetString("StoryUserId");
@@ -178,17 +159,9 @@ namespace CiPlatformWeb.Controllers
 
                 if (ResetPasswordData)
                 {
-                    if (form["ConfirmPassword"] != obj.Password)
-                    {
-                        TempData["error"] = "Password doesn't match!!!";
-                        return View(obj);
-                    }
-                    else
-                    {
                         _userRepository.UpdatePassword(obj);
                         TempData["success"] = "Password updated!!!";
-                        return RedirectToAction("Index", "Home");
-                    }
+                        return RedirectToAction("Index", "Home");                  
                 }
                 else
                 {

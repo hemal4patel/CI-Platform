@@ -22,10 +22,6 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public bool CheckPublishedStory (long MissionId, long userId);
 
-        //public void DeleteVideoUrls (long storyId);
-
-        //public void AddVideoUrls(long storyId, string[] url);
-
         public void UpdateDraftedStory (ShareStoryViewModel viewmodel, Story draftedStory);
 
         public void UpdateStoryImages (long storyId, List<IFormFile> images);
@@ -41,6 +37,12 @@ namespace CiPlatformWeb.Repositories.Interface
         public Story GetStoryDetails (long MissionId, long UserId);
 
         public List<User> GetUserList (long userId);
+
+        public StoryInvite HasAlreadyInvited (long ToUserId, long StoryId, long FromUserId);
+
+        public void InviteToStory (long FromUserId, long ToUserId, long StoryId);
+
+        public void ReInviteToStory (StoryInvite storyInvite);
 
         public Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link);
     }

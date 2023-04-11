@@ -219,3 +219,38 @@ td {
 .table-responsive::-webkit-scrollbar-track {
     background-color: #f5f5f5;
 }
+
+#timeTable_info, #goalTable_info {
+    display: none;
+}
+
+
+/*PRIVACY POLICY */
+.policyNavigation div button {
+    border: none;
+    background: none;
+}
+
+.policyNavigation div {
+    border-bottom: solid 0.8px #D9D9D9;
+}
+
+    .policyNavigation div span {
+        font-weight: 300;
+    }
+
+.policyNavigation .Pactive {
+    font-weight: 500 !important;
+}
+
+.Ppreferences {
+    border: none !important;
+}
+
+#Pintro, #PUseCookies {
+    border-bottom: solid 0.8px #D9D9D9;
+}
+
+.Pcontainer li {
+    list-style: disc;
+}
