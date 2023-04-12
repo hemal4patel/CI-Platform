@@ -30,7 +30,7 @@ namespace CiPlatformWeb.Repositories.Repository
             return sessionUser;
         }
 
-        public (List<Story> stories, int count) GetStories (StoryListingViewModel viewmodel)
+        public (List<Story> stories, int count) GetStories (StoryQueryParams viewmodel)
         {
             var stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsNoTracking();
 
@@ -66,8 +66,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 .Include(s => s.Mission)
                 .ThenInclude(s => s.Theme)
                 .Include(s => s.User)
-                .Skip(Math.Max((viewmodel.pageNo - 1) * 3, 0))
-                .Take(3);
+                .Skip(Math.Max((viewmodel.pageNo - 1) * viewmodel.pagesize, 0))
+                .Take(viewmodel.pagesize);
 
             return (stories.ToList(), count);
         }

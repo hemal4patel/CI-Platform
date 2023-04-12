@@ -66,7 +66,7 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        public IActionResult PlatformLanding (DisplayMissionCards viewmodel)
+        public IActionResult PlatformLanding (MissionQueryParams viewmodel)
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
@@ -125,10 +125,6 @@ namespace CiPlatformWeb.Controllers
                 vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
                 vm.MissionDocuments = _missiondetail.GetMissionDocuments(MissionId);
 
-                //var volunteers = _missiondetail.GetRecentVolunteers(MissionId, Convert.ToInt64(userId), 1);
-                //vm.RecentVolunteers = volunteers.Item1;
-                //ViewBag.volCount = volunteers.Item2;
-
                 return View(vm);
             }
             else
@@ -168,8 +164,10 @@ namespace CiPlatformWeb.Controllers
         {
             ViewBag.UserId = HttpContext.Session.GetString("UserId");
             long userId = Convert.ToInt64(ViewBag.UserId);
+            
             _missiondetail.ApplyToMission(missionId, userId);
             return Ok(new { icon = "success", message = "Successfully applied to the mission!!!" });
+
         }
 
 

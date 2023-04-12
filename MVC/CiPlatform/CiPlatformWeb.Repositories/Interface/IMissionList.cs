@@ -21,7 +21,7 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public List<Skill> GetSkillList ();
 
-        public (List<Mission> missions, int count) GetMissions (DisplayMissionCards viewmodel, long userId);
+        public (List<Mission> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId);
 
         public List<User> GetUserList (long userId);
 

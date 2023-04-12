@@ -4,7 +4,7 @@
 }
 
 @{
-    string Email = ViewBag.Email;
+    //string Email = ViewBag.Email;
     string UserName = ViewBag.UserName;
     var Id = Convert.ToInt64(ViewBag.UserId);
     string UserAvatar = ViewBag.UserAvatar;
@@ -152,7 +152,7 @@
                             int? achieved = 0;
                             if(goal.Mission.Timesheets.Any(m => m.MissionId == goal.Mission.MissionId))
                             {
-                                achieved = goal.Mission.Timesheets.Where(m => m.MissionId == goal.Mission.MissionId).Sum(m => m.Action);
+                                achieved = goal.Mission.Timesheets.Sum(m => m.Action);
                             }
                             int? percent = achieved*(100/total);
                             <img src="~/images/achieved.png" alt="deadline"
@@ -175,21 +175,20 @@
                     <button class="btn-share rounded-pill p-2 w-100" onclick="addToFavourites(@Model.MissionDetails.MissionId)">
                         @if (Model.MissionDetails.FavouriteMissions.Any(fm => fm.UserId == Id))
                         {
-                            <i class="bi bi-heart-fill text-danger" id="@Model.MissionDetails.MissionId"></i>
-                            <span class="favText">Added to Favourites</span>
+                            <i class="bi bi-heart-fill text-danger" id="@Model.MissionDetails.MissionId"></i>                           
+                            <span class="favText">&nbsp; Added to Favourites</span>
                         }
                         else
                         {
-                            <i class="bi bi-heart text-danger" id="@Model.MissionDetails.MissionId"></i>
-                            <span class="favText">Add to Favourites</span>
+                            <i class="bi bi-heart text-danger" id="@Model.MissionDetails.MissionId"></i> 
+                            <span class="favText">&nbsp; Add to Favourites</span>
                         }
 
                     </button>
                 </div>
                 <div class="col-md-6">
                     <button class="btn-share rounded-pill p-2 w-100 volMissionModal" data-bs-toggle="modal" data-bs-target="#exampleModalCenterVolMission">
-                        <img src="~/images/add1.png" alt="">
-                        Recommend to a Co-Worker
+                        <i class="bi bi-person-plus"></i> &nbsp; Recommend to a Co-Worker
                     </button>
 
                     <div class="modal fade" id="exampleModalCenterVolMission" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -329,6 +328,12 @@
                 {
                     <button class="rounded-pill px-4 py-2" disabled style="background: red; color: white; border: 2px solid red;">
                         Declined <i class="bi bi-x-circle ms-2"></i>
+                    </button>
+                }
+                else if (SeatsLeft == 0)
+                {
+                    <button class="rounded-pill px-4 py-2" disabled style="background: #F88634; color: white; border: 2px solid #F88634;">
+                        No Seats Left <i class="bi bi-exclamation-circle ms-2"></i>
                     </button>
                 }
                 else
@@ -755,94 +760,6 @@
                                 </a>
                             </div>
                         }
-
-                        @*@if (mhaEndDatePassed || mhasApplied)
-                    {
-                    <hr>
-                    <div class="text-center pt-3">
-                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
-                    View Details
-                    <i class="bi bi-arrow-right ms-3"></i>
-                    </a>
-                    </div>
-                    }
-                    else
-                    {
-                    <div class="row d-flex py-3 g-0 items-align-center">
-                    <div class="col-2">
-                    <hr>
-                    </div>
-                    <div class="col-8 text-center border border-secondary rounded-pill">
-
-                    @if (m.MissionType.Equals("Time"))
-                    {
-
-                    if (misOngoing)
-                    {
-                    <span style="font-size: 15px;">Ongoing opportunity</span>
-                    }
-                    else
-                    {
-                    <span style="font-size: 15px;">From @m.StartDate.Value.ToShortDateString() until @m.EndDate.Value.ToShortDateString()</span>
-                    }
-                    }
-                    @if (m.MissionType.Equals("Goal"))
-                    {
-                    @foreach (var goal in m.GoalMissions)
-                    {
-                    <span style="font-size: 15px;"> @goal.GoalObjectiveText </span>
-                    }
-                    }
-                    </div>
-                    <div class="col-2">
-                    <hr>
-                    </div>
-                    </div>
-
-                    <div class="d-flex justify-content-around mt-1 seats-left">
-                    <div class="d-flex align-items-center">
-                    <img src="~/images/Seats-left.png" alt=""
-                    style="margin-right: 10px; width: 30px; height: 30px" />
-                    <div class="d-flex flex-column">
-                    <span>@mSeatsLeft</span>
-                    <span>Seats Left</span>
-                    </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                    @if (m.MissionType.Equals("Time"))
-                    {
-                    <img src="~/images/Seats-left.png" alt=""
-                    style="margin-right: 10px; width: 30px; height: 30px" />
-                    <div class="d-flex flex-column">
-                    <span>@m.StartDate.Value.AddDays(-1).ToShortDateString() </span>
-                    <span>Deadline</span>
-                    </div>
-                    }
-                    else
-                    {
-                    @foreach (var goal in m.GoalMissions)
-                    {
-                    <img src="~/images/achieved.png" alt="deadline"
-                    style="margin-right: 10px; width: 30px; height: 30px;">
-                    <div class="card-detail-text">
-                    <div class="progress" style="width: 150px">
-                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <span> @goal.GoalValue achieved </span>
-                    </div>
-                    }
-                    }
-                    </div>
-                    </div>
-
-                    <hr>
-                    <div class="text-center pt-3">
-                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
-                    Apply
-                    <i class="bi bi-arrow-right ms-3"></i>
-                    </a>
-                    </div>
-                    }*@
                     </div>
                 </div>
             </div>

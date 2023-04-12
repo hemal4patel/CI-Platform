@@ -14,7 +14,7 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public User sessionUser (long userId);
 
-        public (List<Story> stories, int count) GetStories (StoryListingViewModel viewmodel);
+        public (List<Story> stories, int count) GetStories (StoryQueryParams viewmodel);
 
         public List<MissionApplication> GetMissions(long userId);
 

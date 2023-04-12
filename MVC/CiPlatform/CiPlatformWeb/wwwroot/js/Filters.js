@@ -93,7 +93,17 @@ function showMissions(pageNo) {
     $.ajax({
         type: 'POST',
         url: '/Mission/PlatformLanding',
-        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, sortCase: sortCase, UserId: UserId, pageNo: pageNo },
+        data: {
+            CountryId: CountryId,
+            CityId: CityId,
+            ThemeId: ThemeId,
+            SkillId: SkillId,
+            searchText: searchText,
+            sortCase: sortCase,
+            UserId: UserId,
+            pageNo: pageNo,
+            pagesize: pagesize
+        },
         success: function (data) {
             var view = $(".partialViews");
             view.empty();
@@ -232,7 +242,15 @@ function showStories(pageNo) {
     $.ajax({
         type: 'POST',
         url: '/Story/StoryListing',
-        data: { CountryId: CountryId, CityId: CityId, ThemeId: ThemeId, SkillId: SkillId, searchText: searchText, pageNo: pageNo, pagesize: pagesize },
+        data: {
+            CountryId: CountryId,
+            CityId: CityId,
+            ThemeId: ThemeId,
+            SkillId: SkillId,
+            searchText: searchText,
+            pageNo: pageNo,
+            pagesize: pagesize
+        },
 
         success: function (data) {
             var view = $(".storyPartial");
@@ -747,3 +765,21 @@ $('#notificationDropdown').click(function () {
         }
     });
 })
+
+
+//var modals = document.getElementsByClassName("modal");
+//for (var i = 0; i < modals.length; i++) {
+//    modals[i].addEventListener("show.bs.modal", function () {
+//        var inputs = this.querySelectorAll("input:not([readonly]), select");
+//        for (var j = 0; j < inputs.length; j++) {
+//            inputs[j].value = "";
+//        }
+//        var dateInputs = document.querySelectorAll('input[type="date"]');
+//        for (var i = 0; i < dateInputs.length; i++) {
+//            dateInputs[i].removeAttribute("min");
+//            dateInputs[i].removeAttribute("max");
+//        }
+//    });
+
+
+//}

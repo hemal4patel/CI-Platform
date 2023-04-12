@@ -50,7 +50,7 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        public IActionResult StoryListing (StoryListingViewModel viewmodel)
+        public IActionResult StoryListing (StoryQueryParams viewmodel)
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {

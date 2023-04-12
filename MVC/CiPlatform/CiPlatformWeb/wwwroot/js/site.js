@@ -183,8 +183,8 @@ $('.edit-icon').click(function () {
 function validateContactUsForm() {
     var flag = true;
 
-    var subject = $('#contactSubject').val();
-    var message = $('#contactMessage').val();
+    var subject = $('#contactSubject').val().trim();
+    var message = $('#contactMessage').val().trim();
 
     if (subject == "") {
         $('.valContactSubject').show();
@@ -216,8 +216,8 @@ function validateContactUsForm() {
 
 $('#submitContactForm').click(function () {
 
-    var subject = $('#contactSubject').val();
-    var message = $('#contactMessage').val();
+    var subject = $('#contactSubject').val().trim();
+    var message = $('#contactMessage').val().trim();
 
 
     if (validateContactUsForm()) {
@@ -287,6 +287,8 @@ $('.editTimeTimesheet').click(function () {
         success: function (data) {
             $("#addVolHours").modal("show");
 
+            //DisableDates(data.startDate)
+
             $('#timesheetId').val(data.timesheetId)
             $('#mission').val(data.missionId)
             $('#mission option:not(:selected)').prop("disabled", true);
@@ -317,6 +319,8 @@ $('.editGoalTimesheet').click(function () {
         success: function (data) {
             $("#addVolGoal").modal("show");
 
+            //DisableDates(data.startDate)
+
             $('#GtimesheetId').val(data.timesheetId)
             $('#Gmission').val(data.missionId)
             $('#Gmission option:not(:selected)').prop("disabled", true);
@@ -340,35 +344,36 @@ $('.editGoalTimesheet').click(function () {
 
 $('#mission').on('change', function () {
     var startDate = $(this).find('option:selected').data('value')
-    startDate = startDate.split(' ')[0]
-    var dateParts = startDate.split("-");
-    var year = dateParts[2];
-    var month = dateParts[1];
-    var day = dateParts[0];
-    var minDateVal = `${year}-${month}-${day}`
 
-    $('#date').datepicker('destroy')
-    $('#date').datepicker({
-        dateFormat: "dd-mm-yy",
-        maxDate: new Date(),
-        minDate: new Date(minDateVal)
-    });
+    DisableDates(startDate)
 })
 
 
 $('#Gmission').on('change', function () {
     var startDate = $(this).find('option:selected').data('value')
+
+    DisableDates(startDate)
+})
+
+function DisableDates(startDate) {
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var dd = String(today.getDate()).padStart(2, '0');
+    var maxDate = yyyy + '-' + mm + '-' + dd;
+
     startDate = startDate.split(' ')[0]
     var dateParts = startDate.split("-");
     var year = dateParts[2];
     var month = dateParts[1];
     var day = dateParts[0];
-    var minDateVal = `${year}-${month}-${day}`
+    var minDate = `${year}-${month}-${day}`
 
-    $('#Gdate').datepicker('destroy')
-    $('#Gdate').datepicker({
-        dateFormat: "dd-mm-yy",
-        maxDate: new Date(),
-        minDate: new Date(minDateVal)
-    });
-})
+    var dateTime = document.getElementById("date");
+    dateTime.max = maxDate;
+    dateTime.min = minDate;
+
+    var dateGoal = document.getElementById("Gdate");
+    dateGoal.max = maxDate;
+    dateGoal.min = minDate;
+}

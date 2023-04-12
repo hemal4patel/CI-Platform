@@ -254,7 +254,7 @@ $('#previewStory').click(function () {
         data: { MissionId: missionId, UserId: userId },
         success: function (result) {
             var url = '/Story/StoryDetail?MissionId=' + missionId + '&UserId=' + userId;
-            window.location.href = url;
+            window.open(url, '_blank');
         },
         error: function (error) {
             console.log(error);

@@ -45,8 +45,15 @@
                 var deadline = @obj.StartDate.Value.AddDays(-1);
                 bool hasDeadlinePassed = CurrentDate > deadline;
                 bool haEndDatePassed = CurrentDate > obj.EndDate;
-                bool isOngoing = CurrentDate > obj.StartDate;
+                bool isOngoing = CurrentDate > obj.StartDate; 
                 bool hasApplied = obj.MissionApplications.Any(m => m.UserId == Id);
+
+                int? achieved = 0;
+                if (obj.Timesheets.Any())
+                {
+                    achieved = obj.Timesheets.Sum(m => m.Action);
+                }
+
 
                 <div class="col card-div mb-5">
                     <span class="d-none mission-country">@obj.CountryId</span>
@@ -229,13 +236,16 @@
                                     {
                                         @foreach (var goal in obj.GoalMissions)
                                         {
+                                            int total = @goal.GoalValue;
+                                            int? percent = achieved * (100 / total);
+
                                             <img src="~/images/achieved.png" alt="deadline"
                                      style="margin-right: 10px; width: 30px; height: 30px;">
                                             <div class="card-detail-text">
                                                 <div class="progress" style="width: 150px">
-                                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria-valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <span> @goal.GoalValue achieved </span>
+                                                <span> @achieved achieved </span>
                                             </div>
                                         }
                                     }
@@ -261,7 +271,7 @@
                                     </a>
                                 </div>
                             }
-                           
+
                         </div>
                     </div>
                 </div>
@@ -292,6 +302,12 @@
             bool haEndDatePassed = CurrentDate > obj.EndDate;
             bool isOngoing = CurrentDate > obj.StartDate;
             bool hasApplied = obj.MissionApplications.Any(m => m.UserId == Id);
+
+            int? achieved = 0;
+            if (obj.Timesheets.Any())
+            {
+                achieved = obj.Timesheets.Sum(m => m.Action);
+            }
 
             <div class="card mb-5 border-light shadow-sm card-div" style="width: 100% !important">
                 <div class="row g-0">
@@ -359,13 +375,13 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                       
+
                                         <div class="input-group mb-3">
-                                                <span class="input-group-text bg-white border-none" id="searchIcon">
-                                                    <img src="~/images/search.png" />
-                                                </span>
+                                            <span class="input-group-text bg-white border-none" id="searchIcon">
+                                                <img src="~/images/search.png" />
+                                            </span>
                                             <input type="text" class="form-control border-none searchUserByName" placeholder="Search" id="searchUserByNameList-@MissionId" data-value="@MissionId" aria-label="Search" />
-                                            </div>
+                                        </div>
 
                                         @foreach (var u in Model.UserList)
                                         {
@@ -463,15 +479,16 @@
                                     {
                                         @foreach (var goal in obj.GoalMissions)
                                         {
-                                            <img src="~/images/mission.png" alt=""
-                                     style="margin-right: 10px; width: 30px; height: 30px" />
-                                            <div class="ms-1">
-                                                <div class="card-detail-text">
-                                                    <div class="progress" style="width: 150px">
-                                                        <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <span> @goal.GoalValue achieved </span>
+                                            int total = @goal.GoalValue;
+                                            int? percent = achieved * (100 / total);
+
+                                            <img src="~/images/achieved.png" alt="deadline"
+                                     style="margin-right: 10px; width: 30px; height: 30px;">
+                                            <div class="card-detail-text">
+                                                <div class="progress" style="width: 150px">
+                                                    <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
+                                                <span> @achieved achieved </span>
                                             </div>
                                         }
                                     }

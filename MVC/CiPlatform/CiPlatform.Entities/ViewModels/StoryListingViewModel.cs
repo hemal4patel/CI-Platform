@@ -19,19 +19,5 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public List<Story> StoryList { get; set; }
 
-        //linq filter params
-        public string? searchText { get; set; }
-
-        public long? CountryId { get; set; }
-
-        public long[]? CityId { get; set; }
-
-        public long[]? ThemeId { get; set; }
-
-        public long[]? SkillId { get; set; }
-
-        public int? sortCase { get; set; }
-
-        public int pageNo { get; set; }
     }
 }

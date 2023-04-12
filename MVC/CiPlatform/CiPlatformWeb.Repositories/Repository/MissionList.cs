@@ -49,9 +49,8 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Skills.ToList();
         }
 
-        public (List<Mission> missions, int count) GetMissions (DisplayMissionCards viewmodel, long userId)
+        public (List<Mission> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
         {
-            var pagesize = 6;
 
             var missions = _db.Missions.AsNoTracking();
 
@@ -119,9 +118,10 @@ namespace CiPlatformWeb.Repositories.Repository
                 .Include(m => m.MissionApplications)
                 .Include(m => m.GoalMissions)
                 .Include(m => m.FavouriteMissions)
-            .Include(m => m.MissionMedia)
-                .Skip(Math.Max((viewmodel.pageNo - 1) * pagesize, 0))
-                .Take(pagesize);
+                .Include(m => m.Timesheets)
+                .Include(m => m.MissionMedia)
+                .Skip(Math.Max((viewmodel.pageNo - 1) * viewmodel.pagesize, 0))
+                .Take(viewmodel.pagesize);
 
 
             return (missions.ToList(), count);
