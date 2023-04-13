@@ -120,7 +120,7 @@ namespace CiPlatformWeb.Controllers
                 var vm = new VolunteeringMissionViewModel();
 
                 vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
-                vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId);
+                vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId, userId);
                 vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
 
                 return View(vm);

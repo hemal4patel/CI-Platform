@@ -10,7 +10,7 @@ namespace CiPlatformWeb.Entities.ViewModels
     public class VolunteeringMissionViewModel
     {
 
-        public List<Mission> RelatedMissions { get; set; }
+        public List<MissionListModel> RelatedMissions { get; set; }
 
         public List<User> UserList { get; set; } = null;
 

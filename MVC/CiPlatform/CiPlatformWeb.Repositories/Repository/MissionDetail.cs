@@ -73,60 +73,57 @@ namespace CiPlatformWeb.Repositories.Repository
         }
 
 
-        public List<Comment> GetApprovedComments (long MissionId)
-        {
-            var approvedComments = _db.Comments.Where(c => c.MissionId == MissionId && c.ApprovalStatus == "PUBLISHED")
-                .Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
+        //public List<Comment> GetApprovedComments (long MissionId)
+        //{
+        //    var approvedComments = _db.Comments.Where(c => c.MissionId == MissionId && c.ApprovalStatus == "PUBLISHED")
+        //        .Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
 
-            return approvedComments;
-        }
+        //    return approvedComments;
+        //}
 
-        public List<Mission> GetRelatedMissions (long MissionId)
+        public List<MissionListModel> GetRelatedMissions (long MissionId, long userId)
         {
             var mission = _db.Missions.Where(m => m.MissionId == MissionId).FirstOrDefault();
 
-            var relatedMissions = new List<Mission>();
+            var relatedMissions = _db.Missions
+                .Where(m => m.MissionId != MissionId && m.CityId == mission.CityId)
+                    .Take(3);
 
-            relatedMissions.AddRange(_db.Missions.Where(m => m.MissionId != MissionId && m.CityId == mission.CityId)
-                .Include(m => m.Country)
-                .Include(m => m.City)
-                .Include(m => m.MissionRatings)
-                .Include(m => m.Theme)
-                .Include(m => m.MissionSkills).ThenInclude(m => m.Skill)
-                .Include(m => m.MissionApplications)
-                .Include(m => m.GoalMissions)
-                .Include(m => m.FavouriteMissions)
-                .Include(m => m.MissionMedia).Take(3));
-
-            if (relatedMissions.Count < 3)
+            if (relatedMissions.Count() < 3)
             {
-                relatedMissions.AddRange(_db.Missions.Where(m => m.MissionId != MissionId && m.CountryId == mission.CountryId)
-                .Include(m => m.Country)
-                .Include(m => m.City)
-                .Include(m => m.MissionRatings)
-                .Include(m => m.Theme)
-                .Include(m => m.MissionSkills).ThenInclude(m => m.Skill)
-                .Include(m => m.MissionApplications)
-                .Include(m => m.GoalMissions)
-                .Include(m => m.FavouriteMissions)
-                .Include(m => m.MissionMedia).Take(3 - relatedMissions.Count));
+                relatedMissions = relatedMissions.Union(
+                    _db.Missions.Where(m => m.MissionId != MissionId && m.CountryId == mission.CountryId)
+                        .Take(3 - relatedMissions.Count()));
             }
 
-            if (relatedMissions.Count < 3)
+            if (relatedMissions.Count() < 3)
             {
-                relatedMissions.AddRange(_db.Missions.Where(m => m.MissionId != MissionId && m.ThemeId == mission.ThemeId)
-                .Include(m => m.Country)
-                .Include(m => m.City)
-                .Include(m => m.MissionRatings)
-                .Include(m => m.Theme)
-                .Include(m => m.MissionSkills).ThenInclude(m => m.Skill)
-                .Include(m => m.MissionApplications)
-                .Include(m => m.GoalMissions)
-                .Include(m => m.FavouriteMissions)
-                .Include(m => m.MissionMedia).Take(3 - relatedMissions.Count));
+                relatedMissions = relatedMissions.Union(
+                    _db.Missions.Where(m => m.MissionId != MissionId && m.ThemeId == mission.ThemeId)
+                        .Take(3 - relatedMissions.Count()));
             }
 
-            return relatedMissions;
+            var list = relatedMissions.Select(m => new MissionListModel()
+            {
+                mission = m,
+                missionId = m.MissionId,
+                cityName = m.City.Name,
+                themeName = m.Theme.Title,
+                isFavorite = m.FavouriteMissions.Any(m => m.UserId == userId),
+                rating = m.MissionRatings.Select(m => m.Rating).FirstOrDefault(),
+                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count(),
+                hasDeadlinePassed = m.StartDate.Value.AddDays(-1) < DateTime.Now,
+                haEndDatePassed = m.EndDate < DateTime.Now,
+                isOngoing = (m.StartDate < DateTime.Now) && (m.EndDate > DateTime.Now),
+                hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
+                goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
+                totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
+                achievedGoal = m.Timesheets.Sum(m => m.Action),
+                mediaPath = m.MissionMedia.Where(m => m.Default == 1).Select(m => m.MediaPath).FirstOrDefault(),
+                skill = m.MissionSkills.Select(m => m.Skill.SkillName).FirstOrDefault()
+            });
+
+            return list.ToList();
         }
 
         public (List<MissionApplication> recentVolunteers, int count) GetRecentVolunteers (long MissionId, long userId, int pageno)
@@ -148,10 +145,10 @@ namespace CiPlatformWeb.Repositories.Repository
         }
 
 
-        public List<MissionDocument> GetMissionDocuments (long MissionId)
-        {
-            return _db.MissionDocuments.Where(m => m.MissionId == MissionId).ToList();
-        }
+        //public List<MissionDocument> GetMissionDocuments (long MissionId)
+        //{
+        //    return _db.MissionDocuments.Where(m => m.MissionId == MissionId).ToList();
+        //}
 
         public void AddComment (long missionId, long userId, string comment)
         {

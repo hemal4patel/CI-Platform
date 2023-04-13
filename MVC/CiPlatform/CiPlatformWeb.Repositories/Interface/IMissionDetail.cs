@@ -16,13 +16,13 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void ApplyToMission (long missionId, long userId);
         
-        public List<Comment> GetApprovedComments (long MissionId);
+        //public List<Comment> GetApprovedComments (long MissionId);
 
-        public List<Mission> GetRelatedMissions (long MissionId);
+        public List<MissionListModel> GetRelatedMissions (long MissionId, long userId);
 
         public (List<MissionApplication> recentVolunteers, int count) GetRecentVolunteers (long MissionId, long userId, int pageno);
 
-        public List<MissionDocument> GetMissionDocuments (long MissionId);
+        //public List<MissionDocument> GetMissionDocuments (long MissionId);
 
         public void AddComment (long MissionId, long userId, string comment);
 

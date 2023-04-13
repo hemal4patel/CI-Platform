@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <script src="https://kit.fontawesome.com/0ae5aef6fc.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+    <div class="d-flex">
+        <div class="vertical-nav-admin">
+            <ul class="d-none d-md-block">
+                <p class="navigation text-light mb-3 d-lg-block d-none">NAVIGATION</p>
+                <li class="pb-3">
+                    <a class="admin-nav-active d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0" asp-controller="Admin" asp-action="AdminUser">
+                        <i class="fa-solid fa-user px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">User</span>
+                    </a>
+                </li>
+                <li class="pb-3">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0" asp-controller="Admin" asp-action="AdminUser">
+                        <i class="fa-solid fa-file-lines px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">CMS Page</span>
+                    </a>
+                </li>
+                <li class="pb-3">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
+                        <i class="fa-solid fa-regular fa-bullseye px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Mission</span>
+                    </a>
+                </li>
+                <li class="pb-3">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
+                        <i class="fa-sharp fa-solid fa-square px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Mission Theme</span>
+                    </a>
+                </li>
+                <li class="pb-3">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
+                        <i class="fa-solid fa-screwdriver-wrench px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Mission Skill</span>
+                    </a>
+                </li>
+                <li class="pb-3">
+                    <a class="d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
+                        <i class="fa-solid fa-folder px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Mission Application</span>
+                    </a>
+                </li>
+                <li class="pb-3">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
+                        <i class="fa-solid fa-book px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Story</span>
+                    </a>
+                </li>
+                <li class="pb-3">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
+                        <i class="fa-solid fa-ribbon px-lg-3 py-lg-0 p-2"></i>
+                        <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Banner Management</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content container-fluid">
+            <div class="admin-header d-flex justify-content-between">
+
+                <span class="today-date align-self-center">@DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt")</span>
+                @*@await Component.InvokeAsync("UserHeader", "Default")*@
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/js/admin.js"></script>
+
+    <!-- for validations -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

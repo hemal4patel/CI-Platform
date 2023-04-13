@@ -509,240 +509,213 @@
     <hr>
     <!-- RALATED MISSION CARDS -->
     <h2 class="text-center mt-5 mb-5">Related Missions</h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-
-        @foreach (var m in Model.RelatedMissions)
-        {
-            var mRegisteredUsers = m.MissionApplications.Count(m => m.ApprovalStatus.Contains("APPROVE"));
-            var mSeatsLeft = m.TotalSeats - mRegisteredUsers;
-            var mMissionId = m.MissionId;
-            double mmissionRating = 0;
-            @if (m.MissionRatings.Any())
+    @if(Model.RelatedMissions.Count == 0)
+    {
+        <h3 class="mb-3 text-center"> No related missions found </h3>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 missions" id="missions">
+            @foreach (var obj in Model.RelatedMissions)
             {
-                mmissionRating = Math.Round(m.MissionRatings.Average(r => r.Rating));
-            }
-            DateTime? mCurrentDate = @DateTime.Now;
-            var mdeadline = m.StartDate.Value.AddDays(-1);
-            bool mhasDeadlinePassed = mCurrentDate > mdeadline;
-            bool mhaEndDatePassed = mCurrentDate > m.EndDate;
-            bool misOngoing = mCurrentDate > m.StartDate;
-            bool mhasApplied = m.MissionApplications.Any(m => m.UserId == Id);
-
-            <div class="col card-div mb-5">
-                <span class="d-none mission-country">@m.Country.Name</span>
-                <span class="mission-id d-none">@m.MissionId</span>
-                @*<span>@hasApplied</span>*@
-                <div class="card h-100 shadow-sm border-light">
-                    <div class="position-relative">
-                        @if (m.MissionMedia.Any(m => m.MissionId == mMissionId))
-                        {
-                            @foreach (var image in m.MissionMedia)
+                <div class="col card-div mb-5">
+                    <span class="d-none mission-country">@obj.mission.CountryId</span>
+                    <span class="mission-id d-none">@obj.missionId</span>
+                    <div class="card h-100 shadow-sm border-light">
+                        <div class="position-relative">
+                            @if (obj.mediaPath is not null)
                             {
-                                @if (image.Default == 1)
-                                {
-                                    <img src="~/Upload/MissionPhotos/@image.MediaPath" class="card-img-top" alt="">
-                                }
-                            }
-                        }
-                        else
-                        {
-                            <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
-                        }
-
-                        <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
-                            <div class="text-decoration-none text-white">
-                                <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
-                                <span class="mission-city">@m.City.Name</span>
-                            </div>
-
-                        </div>
-
-                        <div class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill">
-                            @if (m.FavouriteMissions.Any(fm => fm.UserId == Id && fm.MissionId == m.MissionId))
-                            {
-                                <i class="bi bi-heart-fill text-danger" id="@m.MissionId"></i>
+                                <img src="~/Upload/MissionPhotos/@obj.mediaPath" class="card-img-top" alt="">
                             }
                             else
                             {
-                                <i class="bi bi-heart text-light" id="@m.MissionId"></i>
+                                <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
                             }
-                        </div>
 
-                        <button class="me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter-@m.MissionId">
-                            <img src="~/images/user.png" alt="" class="img-fluid">
-                        </button>
-                        <div class="modal fade" id="exampleModalCenter-@m.MissionId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Recommend to a Co-Worker</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @foreach (var u in Model.UserList)
-                                        {
-                                            <div class="mt-2" style="display : flex; justify-content : space-between;">
-
-                                                <span class="me-4 ">@u.FirstName @u.LastName</span>
-
-                                                <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@m.MissionId">
-                                                    <button onclick="recommendToCoWorker(@u.UserId, @m.MissionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@m.MissionId">Invite</button>
-                                                </span>
-                                            </div>
-                                        }
-                                    </div>
+                            <div class="mt-1 me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                                <div class="text-decoration-none text-white">
+                                    <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
+                                    <span class="mission-city">@obj.cityName</span>
                                 </div>
+
                             </div>
-                        </div>
 
-                        <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
-                            <span class="mission-theme">@m.Theme.Title</span>
-                        </div>
-                    </div>
-
-                    <div class="card-body pt-4">
-                        <h4 class="card-title" id="card-title">@m.Title</h4>
-                        <p class="card-text">
-                            @{
-                                int maxLength = 100;
-                                string description = m.ShortDescription.Length > maxLength
-                                ? @m.ShortDescription.Substring(0, maxLength) + "..."
-                                : @m.ShortDescription;
-                            }
-                            @description
-                        </p>
-
-                        <div class="row d-flex seats-left">
-                            <div class="col">
-                                <h6>
-                                    @m.OrganizationName
-                                </h6>
-                            </div>
-                            <div class="col text-end">
-                                @for (var i = 0; i < 5; i++)
+                            <button class="me-2 btn bg-black bg-opacity-50 position-absolute top-50 end-0 p-2 rounded-pill" onclick="addToFavourites(@obj.missionId)">
+                                @if (obj.isFavorite)
                                 {
-                                    if (i < mmissionRating)
-                                    {
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="bi bi-star"></i>
-                                    }
-                                }
-                            </div>
-                        </div>
-
-                        @if (misOngoing)
-                        {
-                            <div class="row d-flex py-3 g-0 items-align-center">
-                                <div class="col-2">
-                                    <hr>
-                                </div>
-                                <div class="col-8 text-center border border-secondary rounded-pill">
-                                    <span style="font-size: 15px;">Ongoing opportunity</span>
-                                </div>
-                                <div class="col-2">
-                                    <hr>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="row d-flex py-3 g-0 items-align-center">
-                                <div class="col-2">
-                                    <hr>
-                                </div>
-                                <div class="col-8 text-center border border-secondary rounded-pill">
-
-                                    @if (m.MissionType.Equals("Time"))
-                                    {
-
-                                        if (misOngoing)
-                                        {
-                                            <span style="font-size: 15px;">Ongoing opportunity</span>
-                                        }
-                                        else
-                                        {
-                                            <span style="font-size: 15px;">From @m.StartDate.Value.ToShortDateString() until @m.EndDate.Value.ToShortDateString()</span>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @foreach (var goal in m.GoalMissions)
-                                        {
-                                            <span style="font-size: 15px;"> @goal.GoalObjectiveText </span>
-                                        }
-                                    }
-                                </div>
-                                <div class="col-2">
-                                    <hr>
-                                </div>
-                            </div>
-                        }
-
-                        <div class="d-flex justify-content-around mt-1 seats-left">
-                            <div class="d-flex align-items-center">
-                                <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                                <div class="d-flex flex-column">
-                                    <span>@mSeatsLeft</span>
-                                    <span>Seats Left</span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                @if (m.MissionType.Equals("Time"))
-                                {
-                                    <img src="~/images/Seats-left.png" alt=""
-                                 style="margin-right: 10px; width: 30px; height: 30px" />
-                                    <div class="d-flex flex-column">
-                                        <span>@m.StartDate.Value.AddDays(-1).ToShortDateString() </span>
-                                        <span>Deadline</span>
-                                    </div>
+                                    <i class="bi bi-heart-fill text-danger" id="@obj.missionId"></i>
                                 }
                                 else
                                 {
-                                    @foreach (var goal in m.GoalMissions)
+                                    <i class="bi bi-heart text-light" id="@obj.missionId"></i>
+                                }
+
+                            </button>
+
+                            <button class="mb-1 me-2 btn bg-black bg-opacity-50 position-absolute bottom-0 end-0 p-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModalCenter-@obj.missionId">
+                                <img src="~/images/user.png" alt="" class="img-fluid">
+                            </button>
+                            <div class="modal fade" id="exampleModalCenter-@obj.missionId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Recommend to a Co-Worker</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-white border-none" id="searchIcon">
+                                                    <img src="~/images/search.png" />
+                                                </span>
+                                                <input type="text" class="form-control border-none searchUserByName" placeholder="Search" id="searchUserByNameGrid-@obj.missionId" data-value="@obj.missionId" aria-label="Search" />
+                                            </div>
+
+                                            @foreach (var u in Model.UserList)
+                                            {
+                                                <div class="mt-2" style="display : flex; justify-content : space-between;">
+
+                                                    <span class="me-4 userName-@obj.missionId">@u.FirstName @u.LastName</span>
+
+                                                    <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@obj.missionId">
+                                                        <button onclick="recommendToCoWorker(@u.UserId, @obj.missionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@obj.missionId">Invite</button>
+                                                    </span>
+
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2">
+                                <span class="mission-theme">@obj.themeName</span>
+                            </div>
+                        </div>
+
+                        <div class="card-body pt-4">
+                            <h4 class="card-title" id="card-title">@obj.mission.Title</h4>
+                            <p class="card-text">
+                                @{
+                                    int maxLength = 100;
+                                    string description = obj.mission.ShortDescription.Length > maxLength
+                                    ? @obj.mission.ShortDescription.Substring(0, maxLength) + "..."
+                                    : @obj.mission.ShortDescription;
+                                }
+                                @description
+
+                            </p>
+
+                            <div class="row d-flex seats-left">
+                                <div class="col">
+                                    <h6>
+                                        @obj.mission.OrganizationName
+                                    </h6>
+                                </div>
+                                <div class="col text-end">
+                                    @for (var i = 0; i < 5; i++)
                                     {
+                                        if (i < obj.rating)
+                                        {
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-star"></i>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row d-flex py-3 g-0 items-align-center">
+                                <div class="col-2">
+                                    <hr>
+                                </div>
+                                <div class="col-8 text-center border border-secondary rounded-pill">
+                                    @if (obj.isOngoing)
+                                    {
+                                        <span style="font-size: 15px;">Ongoing opportunity</span>
+
+                                    }
+                                    else
+                                    {
+                                        @if (obj.mission.MissionType.Equals("Time"))
+                                        {
+                                            <span style="font-size: 15px;">From @obj.mission.StartDate.Value.ToShortDateString() until @obj.mission.EndDate.Value.ToShortDateString()</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="font-size: 15px;"> @obj.goalObjectiveText </span>
+                                        }
+                                    }
+                                </div>
+                                <div class="col-2">
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-around mt-1 seats-left">
+                                <div class="d-flex align-items-center">
+                                    <img src="~/images/Seats-left.png" alt=""
+                                 style="margin-right: 10px; width: 30px; height: 30px" />
+                                    <div class="d-flex flex-column">
+                                        <span>@obj.seatsLeft</span>
+                                        <span>Seats Left</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    @if (obj.mission.MissionType.Equals("Time"))
+                                    {
+                                        <img src="~/images/calender.png" alt=""
+                                 style="margin-right: 10px; width: 30px; height: 30px" />
+                                        <div class="d-flex flex-column">
+                                            <span>@obj.mission.StartDate.Value.AddDays(-1).ToShortDateString() </span>
+                                            <span>Deadline</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        int? percent = obj.achievedGoal * (100 / obj.totalGoal);
+
                                         <img src="~/images/achieved.png" alt="deadline"
                                  style="margin-right: 10px; width: 30px; height: 30px;">
                                         <div class="card-detail-text">
                                             <div class="progress" style="width: 150px">
-                                                <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@goal.GoalValue%" aria - valuenow="@goal.GoalValue" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                            <span> @goal.GoalValue achieved </span>
+                                            <span> @obj.achievedGoal achieved </span>
                                         </div>
                                     }
-                                }
+                                </div>
                             </div>
-                        </div>
 
-                        <hr>
-                        @if ((m.MissionType.Equals("Time") && (mhasDeadlinePassed || mhaEndDatePassed)) || mhasApplied)
-                        {
-                            <div class="text-center pt-3 mb-3">
-                                <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
-                                    View Details
-                                    <i class="bi bi-arrow-right ms-2"></i>
-                                </a>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="text-center pt-3 mb-3">
-                                <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @m.MissionId})">
-                                    Apply
-                                    <i class="bi bi-arrow-right ms-2"></i>
-                                </a>
-                            </div>
-                        }
+                            <hr>
+                            @if ((obj.mission.MissionType.Equals("Time") && (obj.hasDeadlinePassed || obj.haEndDatePassed)) || obj.hasApplied)
+                            {
+                                <div class="text-center pt-3 mb-3">
+                                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.missionId})">
+                                        View Details
+                                        <i class="bi bi-arrow-right ms-2"></i>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center pt-3 mb-3">
+                                    <a class="btn-apply rounded-pill px-4 py-2 text-decoration-none" href="@Url.Action("VolunteeringMission", "Mission" , new { MissionId = @obj.missionId})">
+                                        Apply
+                                        <i class="bi bi-arrow-right ms-2"></i>
+                                    </a>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-
+            }
+        </div>
+    }
 </div>
 
 <!-- SLIDER SCRIPT -->

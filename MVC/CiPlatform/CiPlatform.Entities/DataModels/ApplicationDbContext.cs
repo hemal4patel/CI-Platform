@@ -127,7 +127,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("sort_order");
             entity.Property(e => e.Text)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("text");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
@@ -178,7 +178,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Description)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("description");
             entity.Property(e => e.Slug)
                 .HasMaxLength(255)
@@ -379,7 +379,7 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("mission_type");
             entity.Property(e => e.OrganizationDetail)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("organization_detail");
             entity.Property(e => e.OrganizationName)
                 .HasMaxLength(255)
@@ -805,7 +805,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Path)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("path");
             entity.Property(e => e.StoryId).HasColumnName("story_id");
             entity.Property(e => e.Type)
@@ -842,7 +842,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.Notes)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("notes");
             entity.Property(e => e.Status)
                 .HasMaxLength(25)
@@ -918,7 +918,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("phone_number");
             entity.Property(e => e.ProfileText)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("profile_text");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("((1))")
@@ -931,7 +931,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.WhyIVolunteer)
-                .HasColumnType("text")
+                .IsUnicode(false)
                 .HasColumnName("why_i_volunteer");
 
             entity.HasOne(d => d.City).WithMany(p => p.Users)
