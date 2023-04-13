@@ -1,4 +1,5 @@
 ﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
 @{
     ViewData["Title"] = "User";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -50,16 +51,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (User user in Model.users)
+                    @foreach (AdminUserModel user in Model.users)
                     {
                         <tr>
-                            <td scope="row">@user.FirstName</td>
-                            <td>@user.LastName</td>
-                            <td>@user.Email</td>
-                            <td>@user.EmployeeId</td>
-                            <td>@user.Department</td>
-                            <td>@user.Status</td>
-                            <td></td>
+                            <td scope="row">@user.firstName</td>
+                            <td>@user.lastName</td>
+                            <td>@user.email</td>
+                            <td>@user.employeeId</td>
+                            <td>@user.department</td>
+                            <td>
+                                @if(user.status == 1)
+                                {
+                                    <span style="color: #14C506;">Active</span>
+                                }
+                                else
+                                {
+                                    <span style="color: #f20707;">In-Active</span>
+                                }
+                            </td>
+                            <td>
+                                <i class="bi bi-pencil-square text-danger"></i>
+                                <i class="bi bi-trash3 ms-2"></i>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -75,41 +88,6 @@
     }
 }
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-@*<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>*@
-<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
-
-<script>
-    var dataTable = $('#userTable').DataTable({
-        lengthChange: false,
-        ordering: false,
-        paging: true,
-        searching: true,
-        pageLength: 7,
-        pagingType: "full_numbers",
-        language: {
-            paginate: {
-                first: '<span class="image-class-first"><i class="bi bi-chevron-double-left"></i></span>',
-                previous: '<span class="image-class-previous"><i class="bi bi-chevron-left"></i></span>',
-                next: '<span class="image-class-next"><i class="bi bi-chevron-right"></i></span>',
-                last: '<span class="image-class-last"><i class="bi bi-chevron-double-right"></i></span>'
-            }
-        },
-        drawCallback: function (settings) {
-            var api = this.api();
-            var numRows = api.rows({ search: "applied" }).count();
-            if (numRows === 0) {
-                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
-            } else {
-                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
-            }
-        }
-    });
-
-    $('#searchUser').on('keyup', function () {
-        dataTable.search($(this).val()).draw();
-    })
-</script>
+@*<script>
+    
+</script>*@

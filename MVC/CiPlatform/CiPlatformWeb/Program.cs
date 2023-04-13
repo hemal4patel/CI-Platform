@@ -25,6 +25,7 @@ builder.Services.AddScoped<IStoryList, StoryList>();
 builder.Services.AddScoped<IUserProfile, UserProfile>();
 builder.Services.AddScoped<IVolunteeringTimesheet, VolunteeringTimesheet>();
 builder.Services.AddScoped<IAdminUser, AdminUser>();
+builder.Services.AddScoped<IAdminMission, AdminMission>();
 
 builder.Services.AddSession();
 builder.Services.AddMemoryCache();
@@ -50,6 +51,6 @@ app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Admin}/{action=AdminUser}/{id?}");
 
 app.Run();

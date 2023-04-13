@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,21 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
-        public List<User> GetUsers ()
+        public List<AdminUserModel> GetUsers ()
         {
-            List<User> users = _db.Users.ToList();
-            return users;
+            IQueryable<User> users = _db.Users.AsQueryable();
+
+            IQueryable<AdminUserModel> list = users.Select(u => new AdminUserModel()
+            {
+                firstName = u.FirstName,
+                lastName = u.LastName,
+                email = u.Email,
+                employeeId = u.EmployeeId,   
+                department = u.Department,
+                status = u.Status
+            });
+
+            return list.ToList();
         }
     }
 }

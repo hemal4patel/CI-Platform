@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IAdminUser
     {
-        public List<User> GetUsers();
+        public List<AdminUserModel> GetUsers();
     }
 }

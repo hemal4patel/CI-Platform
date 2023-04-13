@@ -28,13 +28,13 @@
                     </a>
                 </li>
                 <li class="pb-3">
-                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0" asp-controller="Admin" asp-action="AdminUser">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
                         <i class="fa-solid fa-file-lines px-lg-3 py-lg-0 p-2"></i>
                         <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">CMS Page</span>
                     </a>
                 </li>
                 <li class="pb-3">
-                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0">
+                    <a class=" d-flex align-items-center py-lg-2 ps-lg-1 pe-lg-5 p-0" asp-controller="Admin" asp-action="AdminMission">
                         <i class="fa-solid fa-regular fa-bullseye px-lg-3 py-lg-0 p-2"></i>
                         <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Mission</span>
                     </a>
@@ -75,8 +75,29 @@
         <div class="main-content container-fluid">
             <div class="admin-header d-flex justify-content-between">
 
-                <span class="today-date align-self-center">@DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt")</span>
-                @*@await Component.InvokeAsync("UserHeader", "Default")*@
+                <div>
+                    <span class="today-date align-self-center">@DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt")</span>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/Upload/UserProfile/no-avatar.jpg" style="height: 40px !important; width: 40px !important" class="rounded-circle me-2" />
+                        <p class="d-inline" id="profileText">
+                            Evan Donohue
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-controller="User" asp-action="UserProfile">My Profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="User" asp-action="VolunteeringTimesheet">Volunteering Timesheet</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             @RenderBody()
         </div>
@@ -87,9 +108,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>*@
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="~/js/admin.js"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
 
     <!-- for validations -->
     @await RenderSectionAsync("Scripts", required: false)
