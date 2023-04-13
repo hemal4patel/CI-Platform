@@ -1,12 +1,11 @@
 ﻿@model CiPlatformWeb.Entities.ViewModels.StoryListingViewModel
 
 @{
-    var TotalRecords = ViewBag.totalRecords;
     string UserAvatar = ViewBag.UserAvatar;
 }
 
 
-<span class="d-none" id="storyCount">@TotalRecords</span>
+<span class="d-none" id="storyCount">@Model.StoryCount</span>
 
 <div class="container my-5 pb-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -15,41 +14,40 @@
             <div class="col">
                 <div class="card h-100">
                     <div class="card-img position-relative">
-                        @if (obj.StoryMedia.Any(s => s.StoryId == obj.StoryId))
+                        @if (obj.mediaPath is not null)
                         {
-                            var path = obj.StoryMedia.Where(s => s.StoryId == obj.StoryId).FirstOrDefault();
-                            <img src="~/Upload/StoryPhotos/@path.Path" class="card-img-top" alt="">
+                            <img src="~/Upload/StoryPhotos/@obj.mediaPath" class="card-img-top" alt="">
                         }
                         else
                         {
                             <img src="~/Upload/StoryPhotos/no-image-found.png" class="card-img-top" alt="" />
                         }
-                        <a class="btn-share-story rounded-pill px-4 py-2 position-absolute top-50 start-50 translate-middle text-decoration-none" href="@Url.Action("StoryDetail", "Story" , new { MissionId = @obj.MissionId, UserId = @obj.UserId})">
+                        <a class="btn-share-story rounded-pill px-4 py-2 position-absolute top-50 start-50 translate-middle text-decoration-none" href="@Url.Action("StoryDetail", "Story" , new { MissionId = @obj.story.MissionId, UserId = @obj.story.UserId})">
                             View Details &nbsp;
                             <i class="bi bi-arrow-right"></i>
                         </a>
                         <div class="position-absolute top-100 start-50 translate-middle bg-white rounded-pill px-3 py-2 text-center"
                          style="color: #414141;">
-                            <span>@obj.Mission.Theme.Title</span>
+                            <span>@obj.themeName</span>
                         </div>
                     </div>
                     <div class="card-body" style="color: #414141;">
-                        <h4 class="card-title mt-3">@obj.Title</h4>
+                        <h4 class="card-title mt-3">@obj.story.Title</h4>
                         <p class="card-text">
                             @{
                                 int maxLength = 100;
-                                string description = obj.Description.Length > maxLength
-                                ? @obj.Description.Substring(0, maxLength) + "..."
-                                : @obj.Description;
+                                string description = obj.story.Description.Length > maxLength
+                                ? @obj.story.Description.Substring(0, maxLength) + "..."
+                                : @obj.story.Description;
                             }
                             @description
 
                         </p>
                         <div class="d-flex align-items-center">
 
-                            @if (obj.User.Avatar is not null)
+                            @if (obj.storyUserAvatar is not null)
                             {
-                                <img src="~/Upload/UserProfile/@obj.User.Avatar" alt="" class="rounded-circle"
+                                <img src="~/Upload/UserProfile/@obj.storyUserAvatar" alt="" class="rounded-circle"
                              style="width: 50px; height: 50px;">
                             }
                             else
@@ -58,7 +56,7 @@
                              style="width: 50px; height: 50px;">
                             }
                             <span class="ms-3">
-                                @obj.User.FirstName @obj.User.LastName
+                                @obj.storyUserName
                             </span>
                         </div>
                     </div>

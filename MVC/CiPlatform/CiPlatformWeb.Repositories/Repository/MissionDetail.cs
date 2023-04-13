@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,22 +20,37 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
-        public Mission GetMissionDetails (long MissionId)
+        public MissionDetailsModel GetMissionDetails (long MissionId, long userId)
         {
-            Mission mission = _db.Missions
-                .Include(m => m.Country)
-                .Include(m => m.City)
-                .Include(m => m.MissionRatings)
-                .Include(m => m.Theme)
-                .Include(m => m.MissionSkills).ThenInclude(m => m.Skill)
-                .Include(m => m.MissionApplications)
-                .Include(m => m.GoalMissions)
-                .Include(m => m.FavouriteMissions)
-                .Include(m => m.MissionMedia)
-                .Include(m => m.Timesheets)
-                .FirstOrDefault(m => m.MissionId == MissionId);
+            var missions = _db.Missions.Where(m => m.MissionId == MissionId).AsQueryable();
 
-            return mission;
+            var list = missions.Select(m => new MissionDetailsModel()
+            {
+                mission = m,
+                missionId = m.MissionId,
+                cityName = m.City.Name,
+                themeName = m.Theme.Title,
+                isFavorite = m.FavouriteMissions.Any(m => m.UserId == userId),
+                rating = m.MissionRatings.Select(m => m.Rating).FirstOrDefault(),
+                ratedByVols = m.MissionRatings.Count(),
+                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count(),
+                hasDeadlinePassed = m.StartDate.Value.AddDays(-1) < DateTime.Now,
+                haEndDatePassed = m.EndDate < DateTime.Now,
+                isOngoing = (m.StartDate < DateTime.Now) && (m.EndDate > DateTime.Now),
+                hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
+                goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
+                totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
+                achievedGoal = m.Timesheets.Sum(m => m.Action),
+                mediaPath = m.MissionMedia.Select(m => m.MediaPath).ToList(),
+                skills = m.MissionSkills.Select(m => m.Skill.SkillName).ToList(),
+                ApprovedComments = m.Comments.ToList(),
+                MissionDocuments = m.MissionDocuments.ToList(),
+                hasAppliedApprove = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "APPROVE"),
+                hasAppliedPending = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "PENDING"),
+                hasAppliedDecline = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "DECLINE")
+            }).FirstOrDefault();
+
+            return list;
         }
 
         public bool HasAlreadyApplied (long missionId, long userId)

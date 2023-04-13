@@ -83,7 +83,7 @@ namespace CiPlatformWeb.Controllers
 
                 var data = _missionlist.GetMissions(viewmodel, UserId);
                 vm.MissionList = data.Item1;
-                ViewBag.totalRecords = data.Item2;
+                vm.MissionCount = data.Item2;
                 vm.UserList = _missionlist.GetUserList(UserId);
 
                 return PartialView("_MissionDisplayPartial", vm);
@@ -119,11 +119,9 @@ namespace CiPlatformWeb.Controllers
 
                 var vm = new VolunteeringMissionViewModel();
 
-                vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId);
+                vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
                 vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId);
-                vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
                 vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
-                vm.MissionDocuments = _missiondetail.GetMissionDocuments(MissionId);
 
                 return View(vm);
             }

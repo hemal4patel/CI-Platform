@@ -49,10 +49,10 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Skills.ToList();
         }
 
-        public (List<Mission> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
+        public (List<MissionListModel> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
         {
 
-            var missions = _db.Missions.AsNoTracking();
+            var missions = _db.Missions.AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -91,11 +91,11 @@ namespace CiPlatformWeb.Repositories.Repository
                     break;
 
                 case 3:
-                    missions = missions.OrderByDescending(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    missions = missions.OrderBy(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
                     break;
 
                 case 4:
-                    missions = missions.OrderBy(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    missions = missions.OrderByDescending(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
                     break;
 
                 case 5:
@@ -110,21 +110,31 @@ namespace CiPlatformWeb.Repositories.Repository
             int count = missions.Count();
 
             missions = missions
-                .Include(m => m.Country)
-                .Include(m => m.City)
-                .Include(m => m.MissionRatings)
-                .Include(m => m.Theme)
-                .Include(m => m.MissionSkills).ThenInclude(m => m.Skill)
-                .Include(m => m.MissionApplications)
-                .Include(m => m.GoalMissions)
-                .Include(m => m.FavouriteMissions)
-                .Include(m => m.Timesheets)
-                .Include(m => m.MissionMedia)
-                .Skip(Math.Max((viewmodel.pageNo - 1) * viewmodel.pagesize, 0))
-                .Take(viewmodel.pagesize);
+            .Skip(Math.Max((viewmodel.pageNo - 1) * viewmodel.pagesize, 0))
+            .Take(viewmodel.pagesize);
+
+            var list = missions.Select(m => new MissionListModel()
+            {
+                mission = m,
+                missionId = m.MissionId,
+                cityName = m.City.Name,
+                themeName = m.Theme.Title,
+                isFavorite = m.FavouriteMissions.Any(m => m.UserId == userId),
+                rating = m.MissionRatings.Select(m => m.Rating).FirstOrDefault(),
+                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count(),
+                hasDeadlinePassed = m.StartDate.Value.AddDays(-1) < DateTime.Now,
+                haEndDatePassed = m.EndDate < DateTime.Now,
+                isOngoing = (m.StartDate < DateTime.Now) && (m.EndDate > DateTime.Now),
+                hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
+                goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
+                totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
+                achievedGoal = m.Timesheets.Sum(m => m.Action),
+                mediaPath = m.MissionMedia.Where(m => m.Default == 1).Select(m => m.MediaPath).FirstOrDefault(),
+                skill = m.MissionSkills.Select(m => m.Skill.SkillName).FirstOrDefault()
+            });
 
 
-            return (missions.ToList(), count);
+            return (list.ToList(), count);
         }
 
         public List<User> GetUserList (long userId)

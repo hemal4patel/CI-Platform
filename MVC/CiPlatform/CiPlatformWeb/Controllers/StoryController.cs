@@ -67,7 +67,7 @@ namespace CiPlatformWeb.Controllers
 
                 var data = _storyList.GetStories(viewmodel);
                 vm.StoryList = data.Item1;
-                ViewBag.totalRecords = data.Item2;
+                vm.StoryCount = data.Item2;
 
                 return PartialView("_StoryListing", vm);
             }

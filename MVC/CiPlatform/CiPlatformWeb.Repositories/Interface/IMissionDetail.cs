@@ -1,4 +1,5 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IMissionDetail
     {
-        public Mission GetMissionDetails (long MissionId);
+        public MissionDetailsModel GetMissionDetails (long MissionId, long userId);
 
         public bool HasAlreadyApplied (long missionId, long userId);
 

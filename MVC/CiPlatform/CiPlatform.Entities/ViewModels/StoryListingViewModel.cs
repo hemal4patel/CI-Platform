@@ -17,7 +17,23 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public List<Skill> SkillList { get; set; }
 
-        public List<Story> StoryList { get; set; }
+        //to store data
+        public List<StoryListModel> StoryList { get; set; }
 
+        public int StoryCount { get; set; }
+
+    }
+
+    public class StoryListModel
+    {
+        public Story story { get; set; }
+
+        public string? mediaPath { get; set; }
+
+        public string themeName { get; set; }
+
+        public string? storyUserAvatar { get; set; }
+
+        public string storyUserName { get; set; }
     }
 }

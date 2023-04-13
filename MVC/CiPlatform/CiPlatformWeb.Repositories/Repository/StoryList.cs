@@ -30,9 +30,9 @@ namespace CiPlatformWeb.Repositories.Repository
             return sessionUser;
         }
 
-        public (List<Story> stories, int count) GetStories (StoryQueryParams viewmodel)
+        public (List<StoryListModel> stories, int count) GetStories (StoryQueryParams viewmodel)
         {
-            var stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsNoTracking();
+            var stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -62,14 +62,20 @@ namespace CiPlatformWeb.Repositories.Repository
             int count = stories.Count();
 
             stories = stories
-                .Include(s => s.StoryMedia)
-                .Include(s => s.Mission)
-                .ThenInclude(s => s.Theme)
-                .Include(s => s.User)
-                .Skip(Math.Max((viewmodel.pageNo - 1) * viewmodel.pagesize, 0))
-                .Take(viewmodel.pagesize);
+            .Skip(Math.Max((viewmodel.pageNo - 1) * viewmodel.pagesize, 0))
+            .Take(viewmodel.pagesize);
 
-            return (stories.ToList(), count);
+
+            var list = stories.Select(s => new StoryListModel()
+            {
+                story = s,
+                mediaPath = s.StoryMedia.Select(s => s.Path).FirstOrDefault(),
+                themeName = s.Mission.Theme.Title,
+                storyUserAvatar = s.User.Avatar,
+                storyUserName = s.User.FirstName + " " + s.User.LastName
+            });
+
+            return (list.ToList(), count);
         }
 
         public List<MissionApplication> GetMissions (long userId)
