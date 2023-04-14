@@ -24,6 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             IQueryable<AdminUserModel> list = users.Select(u => new AdminUserModel()
             {
+                userId = u.UserId,
                 firstName = u.FirstName,
                 lastName = u.LastName,
                 email = u.Email,
@@ -45,6 +46,12 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             return _db.Cities.Where(c => c.CountryId == countryId).ToList();
         }
+
+        public User GetUserToEdit (long userId)
+        {
+            return _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+        }
+
 
         public bool UserExistsForNew (string email)
         {
@@ -70,7 +77,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 CityId = user.cityId,
                 CountryId = user.countryId,
                 ProfileText = user.profileText,
-                Status = user.status
+                Status = user.status,
+                CreatedAt = DateTime.Now
             };
 
             if(user.avatar is not null)
@@ -113,6 +121,9 @@ namespace CiPlatformWeb.Repositories.Repository
             existingUser.CountryId = user.countryId;
             existingUser.ProfileText = user.profileText;
             existingUser.Status = user.status;
+            existingUser.UpdatedAt = DateTime.Now;
+
+            _db.SaveChanges();
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿
-$('.countryList').on('change', function () {
+//get cities from country
+$('.countryList').on('click', function () {
     var countryId = $(this).val();
     console.log(countryId)
     $.ajax({
@@ -20,6 +21,48 @@ $('.countryList').on('change', function () {
         }
     });
 });
+
+
+//open modal to edit a user
+$('.editUser').on('click', function () {
+    var userId = $(this).closest('tr').attr('id');
+    console.log(userId)
+    $.ajax({
+        type: 'GET',
+        url: "/Admin/GetUserToEdit",
+        data: { userId: userId },
+        success: function (data) {
+            $("#addUserModal").modal("show");
+            console.log($('#profileText').val())
+            $('#userId').val(data.userId)
+            $('#firstName').val(data.firstName)
+            $('#lastName').val(data.lastName)
+            $('#email').val(data.email)
+            $('#password').val(data.password)
+            $('#profileText').val(data.profileText)
+            $('#phoneNumber').val(data.phoneNumber)
+            $('#employeeId').val(data.employeeId)
+            $('#department').val(data.department)
+            $('#countryId').val(data.countryId)
+            $('#cityId').val(data.cityId)
+            $('#status').val(data.status)
+
+            console.log($('#profileText').val())
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
+
+
+//delete user
+$('.deleteUser').on('click', function () {
+    var userId = $(this).closest('tr').attr('id')
+    console.log(userId)
+});
+
 
 //Admin user table
 var userTable = $('#userTable').DataTable({

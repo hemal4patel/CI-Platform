@@ -40,6 +40,12 @@ namespace CiPlatformWeb.Controllers
             return Json(cities);
         }
 
+        public IActionResult GetUserToEdit(long userId)
+        {
+            User user = _adminUser.GetUserToEdit(userId);
+            return Json(user);
+        }
+
         [HttpPost]
         public IActionResult AdminUser (AdminUserViewModel vm)
         {
@@ -74,7 +80,7 @@ namespace CiPlatformWeb.Controllers
                 {
                     _adminUser.UpdateUser(vm.newUser);
                     TempData["icon"] = "success";
-                    TempData["message"] = "User added successfully!!!";
+                    TempData["message"] = "User updated successfully!!!";
                 }
             }
 

@@ -43,6 +43,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Phone Number is required.")]
         [MaxLength(10, ErrorMessage = "Phone number must be of 10 digits only")]
         [MinLength(10, ErrorMessage = "Phone number must be of 10 digits only")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Phone number must contain only digits")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Employee Id is required.")]
