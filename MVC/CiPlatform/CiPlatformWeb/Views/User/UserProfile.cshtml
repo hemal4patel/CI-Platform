@@ -165,6 +165,20 @@
                         <div class="row row-cols-1 row-cols-md-2 g-4 g-md-4">
 
                             <div class="form-group">
+                                <label asp-for="CountryId" class="form-label">Country<span class="required-field"></span></label>
+                                <select asp-for="CountryId" class="form-select" id="countryDropdown" aria-label="Default select example">
+                                    <option value="">
+                                        Select your country
+                                    </option>
+                                    @foreach (var country in Model.CountryList)
+                                    {
+                                        <option value="@country.CountryId">@country.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="CountryId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-label">City<span class="required-field"></span></label>
                                 <select asp-for="CityId" class="form-select" id="CityDropdown" aria-label="Default select example">
                                     <option value="">
@@ -179,21 +193,7 @@
                                     }
                                 </select>
                                 <span asp-validation-for="CityId" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="CountryId" class="form-label">Country<span class="required-field"></span></label>
-                                <select asp-for="CountryId" class="form-select" id="countryDropdown" aria-label="Default select example">
-                                    <option value="">
-                                        Select your country
-                                    </option>
-                                    @foreach (var country in Model.CountryList)
-                                    {
-                                        <option value="@country.CountryId">@country.Name</option>
-                                    }
-                                </select>
-                                <span asp-validation-for="CountryId" class="text-danger"></span>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>

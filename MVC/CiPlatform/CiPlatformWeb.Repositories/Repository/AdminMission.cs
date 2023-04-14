@@ -20,7 +20,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<AdminMissionList> GetMissions ()
         {
-            IQueryable<Mission> missions = _db.Missions.AsQueryable();
+            IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null).AsQueryable();
 
             IQueryable<AdminMissionList> list = missions.Select(m => new AdminMissionList()
             {

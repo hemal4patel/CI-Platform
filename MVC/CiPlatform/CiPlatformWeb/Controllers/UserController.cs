@@ -254,7 +254,8 @@ namespace CiPlatformWeb.Controllers
             if (userId != null)
             {
                 var timesheet = _timesheet.GetEntry(id);
-                return Json(timesheet);
+                var startDate = _db.Missions.Where(m => m.MissionId == timesheet.MissionId).Select(m => m.StartDate).FirstOrDefault();
+                return Json(new { timesheet = timesheet, startDate = startDate });
             }
             else
             {

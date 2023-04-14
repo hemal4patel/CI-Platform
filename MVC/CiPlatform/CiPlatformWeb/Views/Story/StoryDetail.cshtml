@@ -111,9 +111,20 @@
 
             <div class="row gy-4 buttons mt-4">
                 <div class="col-md-7">
-                    <button class="rounded-pill recommend-btn p-2 w-100 text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                        <i class="bi bi-person-plus"></i> &nbsp; Recommend to a Co-Worker
-                    </button>
+                    
+
+                    @if (Model.storyDetail.Status == "DRAFT")
+                    {
+                        <button class="rounded-pill recommend-btn p-2 w-100 text-decoration-none" disabled data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                            <i class="bi bi-person-plus"></i> &nbsp; Recommend to a Co-Worker
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="rounded-pill recommend-btn p-2 w-100 text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                            <i class="bi bi-person-plus"></i> &nbsp; Recommend to a Co-Worker
+                        </button>
+                    }
 
                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -155,7 +166,7 @@
                 <div class="col-md-5">
                     <button class="rounded-pill mission-btn p-2 w-100 text-decoration-none" onclick="openMission()" id="openMission">
                         Open Mission &nbsp; <i class="bi bi-arrow-right"></i>
-                    </button>
+                    </button>                    
                 </div>
             </div>
 

@@ -30,15 +30,120 @@
                     <input type="text" id="searchUser" placeholder="Search" />
                 </div>
                 <div class="">
-                    <button class="addBtn rounded-pill py-1 px-2">
+                    <button class="addBtn rounded-pill py-1 px-2" data-bs-toggle="modal"
+                            data-bs-target="#addUserModal">
                         <i class="bi bi-plus-lg"></i> &nbsp; Add
                     </button>
+
+                    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body px-5">
+                                    <div class="vol-time-modal-heading d-flex justify-content-between align-items-center my-3">
+                                        <h3 class="d-inline mb-0">Add</h3>
+                                        <button type="button" class="btn-close text-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <form class="" method="post">
+
+                                        <input type="text" class="d-none" asp-for="newUser.userId" />
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.firstName" class="form-label">Name<span class="required-field"></span></label>
+                                            <input asp-for="newUser.firstName" type="text" id="firstName" class="form-control">
+                                            <span asp-validation-for="newUser.firstName" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.lastName" class="form-label">Surname<span class="required-field"></span></label>
+                                            <input asp-for="newUser.lastName" type="text" id="lastName" class="form-control">
+                                            <span asp-validation-for="newUser.lastName" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.email" class="form-label">Email<span class="required-field"></span></label>
+                                            <input asp-for="newUser.email" type="email" id="email" class="form-control">
+                                            <span asp-validation-for="newUser.email" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.password" class="form-label">Password<span class="required-field"></span></label>
+                                            <input asp-for="newUser.password" type="password" id="password" class="form-control">
+                                            <span asp-validation-for="newUser.password" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.profileText" class="form-label">Profile Text</label>
+                                            <input asp-for="newUser.profileText" type="text" id="profileText" class="form-control">
+                                            <span asp-validation-for="newUser.profileText" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.PhoneNumber" class="form-label">Phone Number<span class="required-field"></span></label>
+                                            <input asp-for="newUser.PhoneNumber" type="text" id="PhoneNumber" class="form-control">
+                                            <span asp-validation-for="newUser.PhoneNumber" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.employeeId" class="form-label">Employee Id<span class="required-field"></span></label>
+                                            <input asp-for="newUser.employeeId" type="text" id="employeeId" class="form-control">
+                                            <span asp-validation-for="newUser.employeeId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.department" class="form-label">Department<span class="required-field"></span></label>
+                                            <input asp-for="newUser.department" type="text" id="department" class="form-control">
+                                            <span asp-validation-for="newUser.department" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.countryId" class="form-label">Country<span class="required-field"></span></label>
+                                            <select asp-for="newUser.countryId" class="form-select countryList">
+                                                <option value="">Select country</option>
+                                                @foreach (var country in Model.countryList)
+                                                {
+                                                    <option value="@country.CountryId">@country.Name</option>
+                                                }
+                                            </select>
+                                            <span asp-validation-for="newUser.countryId" class="text-danger"></span>
+
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.cityId" class="form-label">City<span class="required-field"></span></label>
+                                            <select asp-for="newUser.cityId" class="form-select cityList">
+                                                <option value="">Select city</option>
+                                            </select>
+                                            <span asp-validation-for="newUser.cityId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label asp-for="newUser.status" class="form-label">Status<span class="required-field"></span></label>
+                                            <select asp-for="newUser.status" class="form-select">
+                                                <option value="">Status</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">In-Active</option>
+                                            </select>
+                                            <span asp-validation-for="newUser.status" class="text-danger"></span>
+                                        </div>
+
+
+
+                                        <div class="d-flex justify-content-end mt-5">
+                                            <button type="button" class="btn btn-outline-secondary rounded-pill cancel-btn" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" id="" class="btn mt-0 card-button ms-2 me-0 rounded-pill submit-btn">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="table-responsive">
-            <table class="table" id="userTable">
+            <table class="table" id="userTable" style="border: 1px solid #D9D9D9;">
                 <thead class="table-light">
                     <tr>
                         <th scope="col">First Name</th>
@@ -60,7 +165,7 @@
                             <td>@user.employeeId</td>
                             <td>@user.department</td>
                             <td>
-                                @if(user.status == 1)
+                                @if (user.status == 1)
                                 {
                                     <span style="color: #14C506;">Active</span>
                                 }
@@ -88,6 +193,18 @@
     }
 }
 
-@*<script>
-    
-</script>*@
+
+@if (TempData["message"] != null && TempData["icon"] != null)
+{
+    <script>
+        window.onload = function () {
+            swal.fire({
+                position: 'center',
+                icon: '@Html.Raw(TempData["icon"])',
+                title: '@Html.Raw(TempData["message"])',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        };
+    </script>
+}

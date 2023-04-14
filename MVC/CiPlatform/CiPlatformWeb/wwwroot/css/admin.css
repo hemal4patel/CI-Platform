@@ -1,6 +1,6 @@
 ﻿
 * {
-    font-family: 'NotoSans' ;
+    font-family: 'NotoSans';
 }
 
 .vertical-nav-admin {
@@ -83,8 +83,13 @@
 th,
 td {
     white-space: nowrap;
+    padding: 17px !important; 
+    vertical-align: middle; 
 }
 
+thead tr th {
+    border-bottom: 1px solid #D9D9D9 !important;
+}
 
 .pagination li {
     margin: 10px 5px;
@@ -114,6 +119,10 @@ td {
     display: none;
 }
 
+.dataTables_info {
+    display: none;
+}
+
 .dataTables_paginate {
     margin-top: 10px !important;
 }
@@ -134,9 +143,59 @@ td {
         background-color: #F88634;
     }
 
-.dataTables_info {
-    display: none;
+.viewStory {
+    border-color: #F88634;
+    color: #F88634;
+    font-size: 14px;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 1px solid #F88634;
+    letter-spacing: 0px;
+    opacity: 1;
 }
+
+    .viewStory:hover {
+        color: #fff;
+        border-color: #F88634;
+        background-color: #F88634;
+    }
+
+.required-field::before {
+    content: "*";
+    color: rgb(221 51 51);
+}
+
+.cancel-btn {
+    border-color: #757575;
+    color: #757575;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #757575;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .cancel-btn:hover {
+        color: #fff;
+        border-color: #757575;
+        background-color: #757575;
+    }
+
+.submit-btn {
+    border-color: #F88634;
+    color: #F88634;
+    font-weight: 500;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 2px solid #F88634;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .submit-btn:hover {
+        color: #fff;
+        border-color: #F88634;
+        background-color: #F88634;
+    }
+
 
 
 @media screen and (max-width:991px) {
@@ -151,7 +210,7 @@ td {
         text-align: center;
     }
 
-    .addBtn{
+    .addBtn {
         margin-top: 17px;
     }
 }

@@ -1,0 +1,88 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+@{
+    ViewData["Title"] = "Story";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model CiPlatformWeb.Entities.ViewModels.AdminStoryViewModel
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+
+<div class="container-fluid px-4">
+    <div class="tabs d-flex flex-column" style="font-size: 15px;">
+        <ul class="nav nav-tabs mt-3">
+            <li class="nav-item">
+                <a class="nav-link active disabled"
+                   style="font-size: 22px;">Story</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="my-3">
+
+        <div class="my-4">
+            <div class="options d-flex justify-content-between">
+                <div class="">
+                    <label>Search : </label>
+                    <input type="text" id="searchStory" placeholder="Search" />
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table" id="storyTable" style="border: 1px solid #D9D9D9;">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Story Title</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Mission Title</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (AdminStoryModel story in Model.stories)
+                    {
+                        <tr>
+                            <td scope="row">@story.storyTitle</td>
+                            <td>@story.userName</td>
+                            <td>@story.missionTitle</td>
+                            <td>
+                                <span class="rounded-pill px-1 py-1 viewStory">View</span>
+                                @if (story.status == "PUBLISHED")
+                                {
+                                    <i class="bi bi-check-circle-fill ms-2" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle ms-2" style="color: #f20707;"></i>
+                                }
+                                else if (story.status == "DECLINE")
+                                {
+                                    <i class="bi bi-check-circle ms-2" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle-fill ms-2" style="color: #f20707;"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-check-circle ms-2" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle ms-2" style="color: #f20707;"></i>
+                                }
+                                <i class="bi bi-trash3 ms-2"></i>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+@*<script>
+
+</script>*@

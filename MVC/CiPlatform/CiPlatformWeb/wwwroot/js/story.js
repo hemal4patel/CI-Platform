@@ -42,7 +42,7 @@ $('#missionId').click(function () {
 
                         blobData(file)
 
-                       
+
 
                         closebtn.on('click', function () {
                             var index = $(this).parent().index();
@@ -67,9 +67,9 @@ $('#missionId').click(function () {
 
 
 
-                //$('.submit-button').prop('disabled', false);
-                //$('.save-button').prop('disabled', false);
-                //$('.preview-button').prop('disabled', false)
+                $('#saveStory').prop('disabled', false);
+                $('#previewStory').prop('disabled', false);
+                $('#submitStory').prop('disabled', false)
 
             }
             else {
@@ -78,8 +78,9 @@ $('#missionId').click(function () {
                 $('.note-editable').text('');
                 $('#videoUrls').val('');
                 $('#image-list').empty();
-                //$('.submit-button').prop('disabled', true);
-                //$('.preview-button').prop('disabled', true);
+
+                $('#previewStory').prop('disabled', true);
+                $('#submitStory').prop('disabled', true)
             }
         },
         error: function () {
@@ -351,41 +352,44 @@ var allfiles = [];
 var fileInput = document.getElementById('file-input');
 var fileList;
 function handleFiles(e) {
-
-    // Add dropped images or selected images to the list
     var files = e.target.files || e.originalEvent.dataTransfer.files;
+    if (allfiles.length < 20) {
 
-    // Add selected images to the list
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        var reader = new FileReader();
-        allfiles.push(files[i]);
-        //formData.append('file', file);
+        for (var i = 0; i < files.length && allfiles.length < 20; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+            if (file.type === "image/jpeg" || file.type === "image/png") {
+                allfiles.push(files[i]);
 
-        // Create image preview and close icon
-        reader.onload = (function (file) {
-            return function (e) {
-                var image = $('<img>').attr('src', e.target.result);
-                var closeIcon = $('<span>').addClass('close-icon').text('x');
+                reader.onload = (function (file) {
+                    return function (e) {
+                        var image = $('<img>').attr('src', e.target.result);
+                        var closeIcon = $('<span>').addClass('close-icon').text('x');
 
-                // Add image and close icon to the list
-                var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
-                imageList.append(item);
+                        var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
+                        imageList.append(item);
 
-                // Handle close icon click event
-                closeIcon.on('click', function () {
-                    item.remove();
-                    allfiles.splice(allfiles.indexOf(file), 1);
-                });
-            };
-        })(file);
+                        closeIcon.on('click', function () {
+                            item.remove();
+                            allfiles.splice(allfiles.indexOf(file), 1);
+                        });
+                    };
+                })(file);
 
-        // Read image file as data URL
-        reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            }
+            else {
+                $('.valImages').show();
+            }
+        }
+
     }
-    // Create a new DataTransfer object
+    else {
+        $('.valImages').show();
+    }
     var dataTransfer = new DataTransfer();
     fileList = dataTransfer.files;
+    console.log(allfiles)
 }
 
 var dropzone = $('#dropzone');
@@ -397,6 +401,8 @@ dropzone.on('drop', function (e) {
 
     dropzone.removeClass('dragover');
     $('.note-dropzone').remove();
+
+    $('.valImages').hide();
     handleFiles(e);
 });
 
@@ -415,6 +421,7 @@ dropzone.on('dragleave', function (e) {
 });
 
 $('#file-input').on('change', function (e) {
+    $('.valImages').hide();
     handleFiles(e);
 });
 

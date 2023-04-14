@@ -10,6 +10,18 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IAdminUser
     {
-        public List<AdminUserModel> GetUsers();
+        public List<AdminUserModel> GetUsers ();
+
+        public List<Country> GetCountries ();
+
+        public List<City> GetCitiesByCountry (long countryId);
+
+        public bool UserExistsForNew (string email);
+
+        public bool UserExistsForUpdate (string email, long? userId);
+
+        public void AddNewUser (AdminUserModel user);
+
+        public void UpdateUser (AdminUserModel user);
     }
 }

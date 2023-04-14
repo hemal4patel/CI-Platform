@@ -81,6 +81,7 @@
                     <label class="drag-drop mb-4" for="file-input" id="file-button">
                         <img src="~/images/drag-and-drop.png" />
                     </label>
+                    <span class="text-danger valImages" style="display: none">Only 20 png, jpg and jpeg images are allowed.</span>
                 </div>
                 <div id="image-list" class="d-flex">
                     <!-- Selected images will be displayed here -->
@@ -111,9 +112,8 @@
 <script src="~/js/story.js" asp-append-version="true"></script>
 <script>
     $('#editor').summernote({
-        height: 200, // set the height of the editor
+        height: 200,
         toolbar: [
-            // add formatting options to the toolbar
             ['style', ['bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'underline']]
         ]
     });

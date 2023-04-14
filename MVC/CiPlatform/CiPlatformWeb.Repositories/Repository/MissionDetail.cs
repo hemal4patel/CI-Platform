@@ -72,15 +72,6 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-
-        //public List<Comment> GetApprovedComments (long MissionId)
-        //{
-        //    var approvedComments = _db.Comments.Where(c => c.MissionId == MissionId && c.ApprovalStatus == "PUBLISHED")
-        //        .Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
-
-        //    return approvedComments;
-        //}
-
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId)
         {
             var mission = _db.Missions.Where(m => m.MissionId == MissionId).FirstOrDefault();
@@ -143,12 +134,6 @@ namespace CiPlatformWeb.Repositories.Repository
 
             return (recentVolunteers.ToList(), count);
         }
-
-
-        //public List<MissionDocument> GetMissionDocuments (long MissionId)
-        //{
-        //    return _db.MissionDocuments.Where(m => m.MissionId == MissionId).ToList();
-        //}
 
         public void AddComment (long missionId, long userId, string comment)
         {

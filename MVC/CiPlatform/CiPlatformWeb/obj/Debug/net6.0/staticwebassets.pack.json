@@ -217,16 +217,16 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\teachingRural4.jfif"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\0bd79_c19cc_678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\0bd79_c19cc_678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\670b4_Animal-welfare-&-save-birds-campaign.png",
       "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\670b4_Animal-welfare-&-save-birds-campaign.png"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
-      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\8950f_37014_404-Page-image.png",
-      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\8950f_37014_404-Page-image.png"
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\a1d31_ad446_8950f_37014_404-Page-image.png",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\a1d31_ad446_8950f_37014_404-Page-image.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity1.jfif",
@@ -243,6 +243,10 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity4.jfif",
       "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\cleanCommunity4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\e0c03_cleanCommunity1.jfif",
+      "PackagePath": "staticwebassets\\Upload\\StoryPhotos\\e0c03_cleanCommunity1.jfif"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\feedHomeless1.jfif",

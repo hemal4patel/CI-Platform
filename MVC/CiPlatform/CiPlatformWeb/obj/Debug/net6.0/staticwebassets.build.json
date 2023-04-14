@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BoAW2qJN5WBPYhqaq7U1wchqJZTYy41csEyDyMLsQXI=",
+  "Hash": "8MqN1AyqQTehCXjGuGCI15v813iRXV7VHB691x5cK74=",
   "Source": "CiPlatformWeb",
   "BasePath": "_content/CiPlatformWeb",
   "Mode": "Default",
@@ -4012,6 +4012,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\teachingRural4.jfif"
     },
     {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\0bd79_c19cc_678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/StoryPhotos/0bd79_c19cc_678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\0bd79_c19cc_678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
+    },
+    {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\670b4_Animal-welfare-&-save-birds-campaign.png",
       "SourceId": "CiPlatformWeb",
       "SourceType": "Discovered",
@@ -4029,12 +4046,12 @@
       "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\670b4_Animal-welfare-&-save-birds-campaign.png"
     },
     {
-      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\a1d31_ad446_8950f_37014_404-Page-image.png",
       "SourceId": "CiPlatformWeb",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
       "BasePath": "_content/CiPlatformWeb",
-      "RelativePath": "Upload/StoryPhotos/678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png",
+      "RelativePath": "Upload/StoryPhotos/a1d31_ad446_8950f_37014_404-Page-image.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -4043,24 +4060,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\678a5_CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png"
-    },
-    {
-      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\8950f_37014_404-Page-image.png",
-      "SourceId": "CiPlatformWeb",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
-      "BasePath": "_content/CiPlatformWeb",
-      "RelativePath": "Upload/StoryPhotos/8950f_37014_404-Page-image.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\8950f_37014_404-Page-image.png"
+      "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\a1d31_ad446_8950f_37014_404-Page-image.png"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\cleanCommunity1.jfif",
@@ -4129,6 +4129,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\cleanCommunity4.jfif"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\e0c03_cleanCommunity1.jfif",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/StoryPhotos/e0c03_cleanCommunity1.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\e0c03_cleanCommunity1.jfif"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\StoryPhotos\\feedHomeless1.jfif",

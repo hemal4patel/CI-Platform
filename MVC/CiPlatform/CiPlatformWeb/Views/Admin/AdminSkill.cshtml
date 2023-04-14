@@ -1,0 +1,85 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+@{
+    ViewData["Title"] = "Mission Skills";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model CiPlatformWeb.Entities.ViewModels.AdminSkillViewModel
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+
+<div class="container-fluid px-4">
+    <div class="tabs d-flex flex-column" style="font-size: 15px;">
+        <ul class="nav nav-tabs mt-3">
+            <li class="nav-item">
+                <a class="nav-link active disabled"
+                   style="font-size: 22px;">User</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="my-3">
+
+        <div class="my-4">
+            <div class="options d-flex justify-content-between">
+                <div class="">
+                    <label>Search : </label>
+                    <input type="text" id="searchSkill" placeholder="Search" />
+                </div>
+                <div class="">
+                    <button class="addBtn rounded-pill py-1 px-2">
+                        <i class="bi bi-plus-lg"></i> &nbsp; Add
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table" id="skillTable" style="border: 1px solid #D9D9D9;">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Skill Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (AdminSkillModel skill in Model.skills)
+                    {
+                        <tr>
+                            <td scope="row">@skill.skillName</td>
+                            <td>
+                                @if (skill.status == 1)
+                                {
+                                    <span style="color: #14C506;">Active</span>
+                                }
+                                else
+                                {
+                                    <span style="color: #f20707;">In-Active</span>
+                                }
+                            </td>
+                            <td>
+                                <i class="bi bi-pencil-square text-danger"></i>
+                                <i class="bi bi-trash3 ms-2"></i>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+@*<script>
+
+</script>*@

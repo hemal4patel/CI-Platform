@@ -213,8 +213,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 ViewBag.UserId = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(ViewBag.UserId);
                 User sessionUser = _storyList.sessionUser(userId);
