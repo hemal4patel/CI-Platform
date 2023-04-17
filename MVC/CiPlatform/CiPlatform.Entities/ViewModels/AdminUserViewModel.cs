@@ -16,6 +16,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         public AdminUserModel newUser { get; set; }
 
         public List<Country> countryList { get; set; }
+
+        public List<City> cityList { get; set; }
     }
 
     public class AdminUserModel
@@ -36,10 +38,6 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Password is required")]
         public string password { get; set; }
 
-        public IFormFile? avatar { get; set; }
-
-        public string? avatarName { get; set; }
-
         [Required(ErrorMessage = "Phone Number is required.")]
         [MaxLength(10, ErrorMessage = "Phone number must be of 10 digits only")]
         [MinLength(10, ErrorMessage = "Phone number must be of 10 digits only")]
@@ -53,12 +51,10 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string department { get; set; }
 
         [Required(ErrorMessage = "Country is required.")]
-        public long countryId { get; set; }
+        public long? countryId { get; set; }
 
         [Required(ErrorMessage = "City is required.")]
-        public long cityId { get; set; }
-
-        public string? profileText { get; set; }
+        public long? cityId { get; set; }
 
         [Required(ErrorMessage = "Status is required.")]
         public int status { get; set; }

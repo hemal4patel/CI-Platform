@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CiPlatformWeb.Entities.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,11 +14,15 @@ namespace CiPlatformWeb.Entities.ViewModels
 
     public class AdminStoryModel
     {
+        public long? storyId { get; set; }
+
         public string storyTitle { get; set; }
 
         public string userName { get; set; }
 
         public string missionTitle { get; set; }
+
+        public List<StoryMedium> storyMedia { get; set; }
 
         public string status { get; set; }
     }

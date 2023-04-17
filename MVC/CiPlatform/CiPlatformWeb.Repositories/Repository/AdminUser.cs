@@ -42,14 +42,30 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Countries.ToList();
         }
 
-        public List<City> GetCitiesByCountry (long countryId)
+        public List<City> GetCitiesByCountry (long? countryId)
         {
             return _db.Cities.Where(c => c.CountryId == countryId).ToList();
         }
 
-        public User GetUserToEdit (long userId)
+        public AdminUserModel GetUserToEdit (long userId)
         {
-            return _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            IQueryable<User> user = _db.Users.Where(u => u.UserId == userId && u.DeletedAt == null);
+
+            AdminUserModel list = user.Select(u => new AdminUserModel()
+            {
+                userId = u.UserId,
+                firstName = u.FirstName,
+                lastName = u.LastName,
+                email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                employeeId = u.EmployeeId,
+                department = u.Department,
+                countryId = u.CountryId,
+                cityId = u.CityId,
+                status = u.Status
+            }).FirstOrDefault();
+
+            return list;
         }
 
 
@@ -76,23 +92,9 @@ namespace CiPlatformWeb.Repositories.Repository
                 Department = user.department,
                 CityId = user.cityId,
                 CountryId = user.countryId,
-                ProfileText = user.profileText,
                 Status = user.status,
                 CreatedAt = DateTime.Now
             };
-
-            if(user.avatar is not null)
-            {
-                var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + user.avatar.FileName;
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "UserProfile", fileName);
-
-                newUser.Avatar = fileName;
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    user.avatar.CopyTo(stream);
-                }
-            }
 
             _db.Users.Add(newUser);
             _db.SaveChanges();
@@ -106,20 +108,11 @@ namespace CiPlatformWeb.Repositories.Repository
             existingUser.LastName = user.lastName;
             existingUser.Email = user.email;
             existingUser.Password = user.password;
-            existingUser.PhoneNumber = user.PhoneNumber;
-            //if(user.avatarName != null)
-            //{
-            //    existingUser.Avatar = user.avatarName;
-            //}
-            //else
-            //{
-            //    existingUser.Avatar = null;
-            //}   
+            existingUser.PhoneNumber = user.PhoneNumber; 
             existingUser.EmployeeId= user.employeeId;
             existingUser.Department = user.department;
             existingUser.CityId = user.cityId;
             existingUser.CountryId = user.countryId;
-            existingUser.ProfileText = user.profileText;
             existingUser.Status = user.status;
             existingUser.UpdatedAt = DateTime.Now;
 

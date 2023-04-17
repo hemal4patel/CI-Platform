@@ -24,6 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             IQueryable<AdminStoryModel> list = stories.Select(s => new AdminStoryModel()
             {
+                storyId = s.StoryId,
                 storyTitle = s.Title,
                 userName = s.User.FirstName + " " + s.User.LastName,
                 missionTitle = s.Mission.Title,
@@ -31,6 +32,23 @@ namespace CiPlatformWeb.Repositories.Repository
             });
 
             return list.ToList();
+        }
+
+        public void ChangeStoryStatus (long storyId, int status)
+        {
+            Story story = _db.Stories.Where(s => s.StoryId == storyId).FirstOrDefault();
+
+            if(status == 0)
+            {
+                story.Status = "DECLINED";
+            }
+            else
+            {
+                story.Status = "PUBLISHED";
+            }
+            story.UpdatedAt = DateTime.Now;
+
+            _db.SaveChanges();
         }
     }
 }

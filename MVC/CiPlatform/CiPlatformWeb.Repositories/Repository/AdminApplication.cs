@@ -24,6 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             IQueryable<AdminApplicationModel> list = appplications.Select(a => new AdminApplicationModel()
             {
+                applicationId = a.MissionApplicationId,
                 missionTitle = a.Mission.Title,
                 missionId = a.MissionId,
                 userId = a.UserId,
@@ -34,5 +35,23 @@ namespace CiPlatformWeb.Repositories.Repository
 
             return list.ToList();
         }
+
+        public void ChangeApplicationStatus (long applicationId, int status)
+        {
+            MissionApplication missionApplication = _db.MissionApplications.Where(m => m.MissionApplicationId == applicationId).FirstOrDefault();
+
+            if (status == 0)
+            {
+                missionApplication.ApprovalStatus = "DECLINE";
+            }
+            else
+            {
+                missionApplication.ApprovalStatus = "APPROVE";
+            }
+            missionApplication.UpdatedAt = DateTime.Now;
+
+            _db.SaveChanges();
+        }
+
     }
 }

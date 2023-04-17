@@ -10,5 +10,7 @@ namespace CiPlatformWeb.Repositories.Interface
     public interface IAdminApplication
     {
         public List<AdminApplicationModel> GetApplications ();
+
+        public void ChangeApplicationStatus (long applicationId, int status);
     }
 }

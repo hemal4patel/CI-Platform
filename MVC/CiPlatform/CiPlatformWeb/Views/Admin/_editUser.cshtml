@@ -1,0 +1,108 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+
+@model CiPlatformWeb.Entities.ViewModels.AdminUserViewModel
+
+
+
+<form class="validateAdminForm" method="post">
+    <div class="card mx-3 my-5">
+        <div class="card-header">
+            <h3>Edit User</h3>
+        </div>
+        <div class="card-body pb-5">
+
+            <input type="text" class="d-none" id="userId" asp-for="newUser.userId" />
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.firstName" class="form-label">Name<span class="required-field"></span></label>
+                <input asp-for="newUser.firstName" type="text" id="firstName" class="form-control">
+                <span asp-validation-for="newUser.firstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.lastName" class="form-label">Surname<span class="required-field"></span></label>
+                <input asp-for="newUser.lastName" type="text" id="lastName" class="form-control">
+                <span asp-validation-for="newUser.lastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.email" class="form-label">Email<span class="required-field"></span></label>
+                <input asp-for="newUser.email" type="email" id="email" class="form-control">
+                <span asp-validation-for="newUser.email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.password" class="form-label">Password<span class="required-field"></span></label>
+                <input asp-for="newUser.password" type="text" id="password" class="form-control">
+                <span asp-validation-for="newUser.password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.PhoneNumber" class="form-label">Phone Number<span class="required-field"></span></label>
+                <input asp-for="newUser.PhoneNumber" type="text" id="phoneNumber" class="form-control">
+                <span asp-validation-for="newUser.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.employeeId" class="form-label">Employee Id<span class="required-field"></span></label>
+                <input asp-for="newUser.employeeId" type="text" id="employeeId" class="form-control">
+                <span asp-validation-for="newUser.employeeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.department" class="form-label">Department<span class="required-field"></span></label>
+                <input asp-for="newUser.department" type="text" id="department" class="form-control">
+                <span asp-validation-for="newUser.department" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.countryId" class="form-label">Country<span class="required-field"></span></label>
+                <select asp-for="newUser.countryId" id="countryId" class="form-select countryList">
+                    <option value="">Select country</option>
+                    @foreach (var country in Model.countryList)
+                    {
+                        <option value="@country.CountryId">@country.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="newUser.countryId" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.cityId" class="form-label">City<span class="required-field"></span></label>
+                <select asp-for="newUser.cityId" id="cityId" class="form-select cityList">
+                    <option value="">Select city</option>
+                    @foreach (var city in Model.cityList)
+                    {
+                        <option value="@city.CityId">@city.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="newUser.cityId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newUser.status" class="form-label">Status<span class="required-field"></span></label>
+                <select asp-for="newUser.status" id="status" class="form-select">
+                    <option value="">Status</option>
+                    <option value="1">Active</option>
+                    <option value="0">In-Active</option>
+                </select>
+                <span asp-validation-for="newUser.status" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="d-flex justify-content-end my-5 me-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill cancel-btn">Cancel</button>
+        <button asp-action="AdminUser" type="submit" id="" class="btn mt-0 card-button ms-2 me-0 rounded-pill submit-btn">Submit</button>
+    </div>
+</form>
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+<script src="~/js/admin.js" asp-append-version="true"></script>

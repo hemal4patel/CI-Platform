@@ -47,27 +47,27 @@
                 <tbody>
                     @foreach (AdminApplicationModel application in Model.applications)
                     {
-                        <tr>
+                        <tr id="@application.applicationId">
                             <td scope="row">@application.missionTitle</td>
                             <td>@application.missionId</td>
                             <td>@application.userId</td>
                             <td>@application.userName</td>
                             <td>@application.appliedAt</td>
-                            <td>
+                            <td class="showApplicationButtons-@application.applicationId">
                                 @if (application.status == "APPROVE")
                                 {
-                                    <i class="bi bi-check-circle-fill" style="color: #14C506;"></i>
-                                    <i class="bi bi-x-circle ms-2" style="color: #f20707;"></i>
+                                    <i class="bi bi-check-circle-fill" data-value="1" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle ms-2 changeApplicationStatus" data-value="0" style="color: #f20707;"></i>
                                 }
                                 else if(application.status == "DECLINE")
                                 {
-                                    <i class="bi bi-check-circle" style="color: #14C506;"></i>
-                                    <i class="bi bi-x-circle-fill ms-2" style="color: #f20707;"></i>
+                                    <i class="bi bi-check-circle changeApplicationStatus" data-value="1" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle-fill ms-2" data-value="0"  style="color: #f20707;"></i>
                                 }
                                 else
                                 {
-                                    <i class="bi bi-check-circle" style="color: #14C506;"></i>
-                                    <i class="bi bi-x-circle ms-2" style="color: #f20707;"></i>
+                                    <i class="bi bi-check-circle changeApplicationStatus" data-value="1" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle ms-2 changeApplicationStatus" data-value="0" style="color: #f20707;"></i>
                                 }
                             </td>
                         </tr>

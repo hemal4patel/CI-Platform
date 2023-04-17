@@ -23,32 +23,81 @@ $('.countryList').on('click', function () {
 });
 
 
-//open modal to edit a user
+//validation
+$('.validateAdminForm').removeData('validator').removeData('unobtrusiveValidation');
+$.validator.unobtrusive.parse('.validateAdminForm');
+
+//add user
+$('#addUser').on('click', function () {
+
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/AddUser',
+        success: function (data) {
+            var container = $('.adminUserContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//edit user
 $('.editUser').on('click', function () {
     var userId = $(this).closest('tr').attr('id');
     console.log(userId)
     $.ajax({
         type: 'GET',
-        url: "/Admin/GetUserToEdit",
+        url: "/Admin/EditUser",
         data: { userId: userId },
         success: function (data) {
-            $("#addUserModal").modal("show");
-            console.log($('#profileText').val())
-            $('#userId').val(data.userId)
-            $('#firstName').val(data.firstName)
-            $('#lastName').val(data.lastName)
-            $('#email').val(data.email)
-            $('#password').val(data.password)
-            $('#profileText').val(data.profileText)
-            $('#phoneNumber').val(data.phoneNumber)
-            $('#employeeId').val(data.employeeId)
-            $('#department').val(data.department)
-            $('#countryId').val(data.countryId)
-            $('#cityId').val(data.cityId)
-            $('#status').val(data.status)
+            var container = $('.adminUserContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
 
-            console.log($('#profileText').val())
+//delete user
+$('.deleteUser').on('click', function () {
+    var userId = $(this).closest('tr').attr('id')
+    console.log(userId)
+});
 
+
+//add cms
+$('#addCms').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/AddCms',
+        success: function (data) {
+            var container = $('.adminCmsContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//edit user
+$('.editCms').on('click', function () {
+    var userId = $(this).closest('tr').attr('id');
+    console.log(userId)
+    $.ajax({
+        type: 'GET',
+        url: "/Admin/EditCms",
+        data: { userId: userId },
+        success: function (data) {
+            var container = $('.adminCmsContainer');
+            container.empty();
+            container.append(data);
         },
         error: function (error) {
             console.log(error)
@@ -57,11 +106,149 @@ $('.editUser').on('click', function () {
 });
 
 
-//delete user
-$('.deleteUser').on('click', function () {
-    var userId = $(this).closest('tr').attr('id')
-    console.log(userId)
+//add theme
+$('#addTheme').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/AddTheme',
+        success: function (data) {
+            var container = $('.adminThemeContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//edit theme
+$('.editTheme').on('click', function () {
+    var themeId = $(this).closest('tr').attr('id');
+    console.log(themeId)
+    $.ajax({
+        type: 'GET',
+        url: "/Admin/EditTheme",
+        data: { themeId: themeId },
+        success: function (data) {
+            var container = $('.adminThemeContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
 });
+
+
+//add skill
+$('#addSkill').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/AddSkill',
+        success: function (data) {
+            var container = $('.adminSkillContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//edit skill
+$('.editSkill').on('click', function () {
+    var skillId = $(this).closest('tr').attr('id');
+    console.log(skillId)
+    $.ajax({
+        type: 'GET',
+        url: "/Admin/EditSkill",
+        data: { skillId: skillId },
+        success: function (data) {
+            var container = $('.adminSkillContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
+
+//change application status
+$('.changeApplicationStatus').click(function () {
+    var applicationId = $(this).closest('tr').attr('id');
+    var status = $(this).data('value')
+
+    $.ajax({
+        type: "POST",
+        url: "/Admin/ChangeApplicationStatus",
+        data: { applicationId: applicationId, status: status },
+        success: function () {
+            var container = $('.showApplicationButtons-' + applicationId);
+            container.empty();
+            if (status == 0) {
+                container.html('<i class="bi bi-check-circle changeApplicationStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0"  style="color: #f20707;"></i>');
+            }
+            else {
+                container.html('<i class="bi bi-check-circle-fill" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeApplicationStatus" data-value="0" style="color: #f20707;"></i>');
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+
+//change story status
+$('.changeStoryStatus').click(function () {
+    var storyId = $(this).closest('tr').attr('id');
+    var status = $(this).data('value')
+    console.log(storyId, status)
+
+    $.ajax({
+        type: "POST",
+        url: "/Admin/ChangeStoryStatus",
+        data: { storyId: storyId, status: status },
+        success: function () {
+            var container = $('.showStoryButtons-' + storyId);
+            container.empty();
+            if (status == 0) {
+                container.html('<i class="bi bi-check-circle ms-2 changeStoryStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0" style="color: #f20707;"></i>');
+            }
+            else {
+                container.html('<i class="bi bi-check-circle-fill ms-2" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeStoryStatus" data-value="0" style="color: #f20707;"></i>');
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+
+//view story details
+$('.viewStory').click(function () {
+    var storyId = $(this).closest('tr').attr('id');
+    console.log(storyId)
+    
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/ViewStory',
+        data: { storyId: storyId },
+        success: function (data) {
+            var container = $('.adminStoryContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
 
 
 //Admin user table

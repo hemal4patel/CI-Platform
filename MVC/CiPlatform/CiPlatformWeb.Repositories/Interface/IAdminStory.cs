@@ -10,5 +10,8 @@ namespace CiPlatformWeb.Repositories.Interface
     public interface IAdminStory
     {
         public List<AdminStoryModel> GetStories();
+
+        public void ChangeStoryStatus (long storyId, int status);
+
     }
 }

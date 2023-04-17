@@ -14,9 +14,9 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public List<Country> GetCountries ();
 
-        public List<City> GetCitiesByCountry (long countryId);
+        public List<City> GetCitiesByCountry (long? countryId);
 
-        public User GetUserToEdit(long userId);
+        public AdminUserModel GetUserToEdit (long userId);
 
         public bool UserExistsForNew (string email);
 

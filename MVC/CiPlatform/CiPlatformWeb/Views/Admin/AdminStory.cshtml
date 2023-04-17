@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 adminStoryContainer">
     <div class="tabs d-flex flex-column" style="font-size: 15px;">
         <ul class="nav nav-tabs mt-3">
             <li class="nav-item">
@@ -45,27 +45,29 @@
                 <tbody>
                     @foreach (AdminStoryModel story in Model.stories)
                     {
-                        <tr>
+                        <tr id="@story.storyId">
                             <td scope="row">@story.storyTitle</td>
                             <td>@story.userName</td>
                             <td>@story.missionTitle</td>
-                            <td>
+                            <td class="">
                                 <span class="rounded-pill px-1 py-1 viewStory">View</span>
-                                @if (story.status == "PUBLISHED")
-                                {
-                                    <i class="bi bi-check-circle-fill ms-2" style="color: #14C506;"></i>
-                                    <i class="bi bi-x-circle ms-2" style="color: #f20707;"></i>
-                                }
-                                else if (story.status == "DECLINE")
-                                {
-                                    <i class="bi bi-check-circle ms-2" style="color: #14C506;"></i>
-                                    <i class="bi bi-x-circle-fill ms-2" style="color: #f20707;"></i>
-                                }
-                                else
-                                {
-                                    <i class="bi bi-check-circle ms-2" style="color: #14C506;"></i>
-                                    <i class="bi bi-x-circle ms-2" style="color: #f20707;"></i>
-                                }
+                                <span class="showStoryButtons-@story.storyId">
+                                    @if (story.status == "PUBLISHED")
+                                    {
+                                        <i class="bi bi-check-circle-fill ms-2" data-value="1" style="color: #14C506;"></i>
+                                        <i class="bi bi-x-circle ms-2 changeStoryStatus" data-value="0" style="color: #f20707;"></i>
+                                    }
+                                    else if (story.status == "DECLINED")
+                                    {
+                                        <i class="bi bi-check-circle ms-2 changeStoryStatus" data-value="1" style="color: #14C506;"></i>
+                                        <i class="bi bi-x-circle-fill ms-2" data-value="0" style="color: #f20707;"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-check-circle ms-2 changeStoryStatus" data-value="1" style="color: #14C506;"></i>
+                                        <i class="bi bi-x-circle ms-2 changeStoryStatus" data-value="0" style="color: #f20707;"></i>
+                                    }
+                                </span>
                                 <i class="bi bi-trash3 ms-2"></i>
                             </td>
                         </tr>

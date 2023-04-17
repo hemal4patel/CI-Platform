@@ -13,6 +13,8 @@ namespace CiPlatformWeb.Entities.ViewModels
 
     public class AdminApplicationModel
     {
+        public long? applicationId { get; set; }
+
         public string missionTitle { get; set; }
 
         public long missionId { get; set; }
