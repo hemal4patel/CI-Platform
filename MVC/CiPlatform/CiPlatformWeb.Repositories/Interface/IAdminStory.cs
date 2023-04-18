@@ -13,5 +13,6 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void ChangeStoryStatus (long storyId, int status);
 
+        public void DeleteStory (long storyId);
     }
 }

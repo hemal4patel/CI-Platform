@@ -15,7 +15,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public AdminMission (ApplicationDbContext db)
         {
-            _db = db;   
+            _db = db;
         }
 
         public List<AdminMissionList> GetMissions ()
@@ -24,6 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             IQueryable<AdminMissionList> list = missions.Select(m => new AdminMissionList()
             {
+                missionId = m.MissionId,
                 misssionTitle = m.Title,
                 missionType = m.MissionType,
                 startDate = m.StartDate,
@@ -42,5 +43,13 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             return _db.Skills.ToList();
         }
+
+        public void DeleteMission (long missionId)
+        {
+            Mission mission = _db.Missions.FirstOrDefault(m => m.MissionId == missionId);
+            mission.DeletedAt = DateTime.Now;
+            _db.SaveChanges();
+        }
+
     }
 }

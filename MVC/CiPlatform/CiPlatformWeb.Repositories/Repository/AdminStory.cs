@@ -41,14 +41,24 @@ namespace CiPlatformWeb.Repositories.Repository
             if(status == 0)
             {
                 story.Status = "DECLINED";
+                story.PublishedAt = null;
             }
             else
             {
                 story.Status = "PUBLISHED";
+                story.PublishedAt = DateTime.Now;
             }
             story.UpdatedAt = DateTime.Now;
 
             _db.SaveChanges();
         }
+
+        public void DeleteStory (long storyId)
+        {
+            Story story = _db.Stories.FirstOrDefault(s => s.StoryId == storyId);
+            story.DeletedAt = DateTime.Now;
+            _db.SaveChanges();
+        }
+
     }
 }

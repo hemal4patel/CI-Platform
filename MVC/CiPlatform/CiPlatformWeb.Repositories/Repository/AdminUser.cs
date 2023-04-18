@@ -119,5 +119,12 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
+        public void DeleteUser (long userId)
+        {
+            User user = _db.Users.FirstOrDefault(u => u.UserId == userId);
+            user.DeletedAt = DateTime.Now;
+            _db.SaveChanges();
+        }
+
     }
 }

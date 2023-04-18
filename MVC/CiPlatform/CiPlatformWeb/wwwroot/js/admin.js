@@ -2,7 +2,6 @@
 //get cities from country
 $('.countryList').on('change', function () {
     var countryId = $(this).val();
-    console.log(countryId)
     $.ajax({
         type: "GET",
         url: "/Admin/GetCitiesByCountry",
@@ -58,6 +57,7 @@ $('.editUser').on('click', function () {
             var container = $('.adminUserContainer');
             container.empty();
             container.append(data);
+            $('.addEditUser').text('Edit User')
         },
         error: function (error) {
             console.log(error)
@@ -68,7 +68,40 @@ $('.editUser').on('click', function () {
 //delete user
 $('.deleteUser').on('click', function () {
     var userId = $(this).closest('tr').attr('id')
-    console.log(userId)
+    var row = $(this).closest('tr')
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteUser",
+                data: { userId: userId },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'User deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
 });
 
 
@@ -98,7 +131,6 @@ $('#missionType').on('change', function () {
 
     if (type === "Time") {
         $('#totalSeats').attr('disabled', false)
-        $('#registrationDeadline').attr('disabled', false)
         $('#goalObjectiveText').attr('disabled', true)
         $('#goalValue').attr('disabled', true)
     }
@@ -106,9 +138,57 @@ $('#missionType').on('change', function () {
         $('#goalObjectiveText').attr('disabled', false)
         $('#goalValue').attr('disabled', false)
         $('#totalSeats').attr('disabled', true)
-        $('#registrationDeadline').attr('disabled', true)
     }
 })
+
+//checked skills in input
+$('.allSkills').on('click', function () {
+    var selectedSkillsArray = [];
+    $('.allSkills input[type="checkbox"]:checked').each(function () {
+        selectedSkillsArray.push($(this).val());
+    })
+    $('#selectedSkills').val(selectedSkillsArray.join())
+    console.log($('#selectedSkills').val())
+})
+
+//delete mission
+$('.deleteMission').on('click', function () {
+    var missionId = $(this).closest('tr').attr('id')
+    var row = $(this).closest('tr')
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteMission",
+                data: { missionId: missionId },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Mission deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+});
 
 
 
@@ -131,7 +211,7 @@ $('#addCms').on('click', function () {
     });
 })
 
-//edit user
+//edit cms
 $('.editCms').on('click', function () {
     var cmsId = $(this).closest('tr').attr('id');
     console.log(cmsId)
@@ -149,6 +229,45 @@ $('.editCms').on('click', function () {
             console.log(error)
         }
     });
+});
+
+//delete cms
+$('.deleteCms').on('click', function () {
+    var cmsId = $(this).closest('tr').attr('id')
+    var row = $(this).closest('tr')
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteCmsPage",
+                data: { cmsId: cmsId },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Cms Page deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
 });
 
 
@@ -184,11 +303,51 @@ $('.editTheme').on('click', function () {
             var container = $('.adminThemeContainer');
             container.empty();
             container.append(data);
+            $('.addEditTheme').text('Edit Theme')
         },
         error: function (error) {
             console.log(error)
         }
     });
+});
+
+//delete theme
+$('.deleteTheme').on('click', function () {
+    var themeId = $(this).closest('tr').attr('id')
+    var row = $(this).closest('tr')
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteTheme",
+                data: { themeId: themeId },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Theme deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
 });
 
 
@@ -225,6 +384,7 @@ $('.editSkill').on('click', function () {
             var container = $('.adminSkillContainer');
             container.empty();
             container.append(data);
+            $('.addEditSkill').text('Edit Skill')
         },
         error: function (error) {
             console.log(error)
@@ -257,6 +417,45 @@ $(document).on('click', '.changeApplicationStatus', function () {
         }
     });
 })
+
+// delete skill
+$('.deleteSkill').on('click', function () {
+    var skillId = $(this).closest('tr').attr('id')
+    var row = $(this).closest('tr')
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteSkill",
+                data: { skillId: skillId },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Skill deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+});
 
 
 
@@ -322,6 +521,45 @@ $('.viewStory').click(function () {
         }
     });
 })
+
+// delete story
+$('.deleteStory').on('click', function () {
+    var storyId = $(this).closest('tr').attr('id')
+    var row = $(this).closest('tr')
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteStory",
+                data: { storyId: storyId },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Story deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+});
 
 
 

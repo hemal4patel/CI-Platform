@@ -20,5 +20,7 @@ namespace CiPlatformWeb.Repositories.Interface
         public bool SkillExistsForUpdate (long? skillId, string skillName);
 
         public void UpdateSkill (AdminSkillModel vm);
+
+        public void DeleteSkill (long skillId);
     }
 }

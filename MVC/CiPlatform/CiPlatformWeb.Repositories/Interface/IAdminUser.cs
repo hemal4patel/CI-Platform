@@ -25,5 +25,7 @@ namespace CiPlatformWeb.Repositories.Interface
         public void AddNewUser (AdminUserModel user);
 
         public void UpdateUser (AdminUserModel user);
+
+        public void DeleteUser (long userId);
     }
 }

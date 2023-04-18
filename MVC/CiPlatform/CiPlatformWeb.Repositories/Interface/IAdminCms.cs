@@ -20,5 +20,7 @@ namespace CiPlatformWeb.Repositories.Interface
         public AdminCmsModel GetCmsToEdit (long cmsId);
 
         public void EditCmsPage (AdminCmsModel model);
+
+        public void DeleteCmsPage (long cmsId);
     }
 }

@@ -54,24 +54,27 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "End date is required")]
         public DateTime? endDate { get; set; }
 
+        [Required(ErrorMessage = "Registration date is required")]
+        public DateTime registrationDeadline { get; set; }
+
         [Required(ErrorMessage = "Mission type is required")]
         public string missionType { get; set; }
 
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Actions must contain only digits.")]
-        public int totalSeats { get; set; }
+        public int? totalSeats { get; set; }
 
-        public DateTime registrationDeadline { get; set; }
+        [Required(ErrorMessage = "Goal objective text is required")]
+        public string? goalObjectiveText { get; set; }
 
-        public string goalObjectiveText { get; set; }
-
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Actions must contain only digits.")]
-        public int goalValue { get; set; }
+        [Required(ErrorMessage = "Goal value is required")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Goal value must contain only digits.")]
+        public int? goalValue { get; set; }
 
         [Required(ErrorMessage = "Mission theme is required")]
         public long missionTheme { get; set; }
 
         [Required(ErrorMessage = "Mission skills are required")]
-        public long[] missionSkills { get; set; }
+        public string missionSkills { get; set; }
 
         [Required(ErrorMessage = "Mission availability is required")]
         public string availability { get; set; }

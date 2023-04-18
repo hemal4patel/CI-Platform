@@ -80,5 +80,12 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
+        public void DeleteSkill (long skillId)
+        {
+            Skill skill = _db.Skills.FirstOrDefault(s => s.SkillId == skillId);
+            skill.DeletedAt = DateTime.Now;
+            _db.SaveChanges();
+        }
+
     }
 }

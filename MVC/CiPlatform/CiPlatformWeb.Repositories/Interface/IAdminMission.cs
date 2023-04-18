@@ -15,5 +15,7 @@ namespace CiPlatformWeb.Repositories.Interface
         public List<MissionTheme> GetThemes ();
 
         public List<Skill> GetSkills ();
+
+        public void DeleteMission (long missionId);
     }
 }

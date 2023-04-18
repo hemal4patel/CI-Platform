@@ -80,5 +80,12 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
+        public void DeleteTheme (long themeId)
+        {
+            MissionTheme theme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == themeId);
+            theme.DeletedAt = DateTime.Now;
+            _db.SaveChanges();
+        }
+
     }
 }

@@ -8,7 +8,7 @@
 <form class="validateAdminForm" id="addMissionForm" method="post" data-validation="true">
     <div class="card mx-3 my-5">
         <div class="card-header">
-            <h3 class="addEditCms">Add Cms Page</h3>
+            <h3 class="addEditMission">Add Mission</h3>
         </div>
         <div class="card-body pb-5">
 
@@ -69,9 +69,21 @@
             </div>
 
             <div class="form-group mt-3">
+                <label asp-for="newMission.startDate" class="form-label">Start Date<span class="required-field"></span></label>
+                <input asp-for="newMission.startDate" type="date" id="startDate" class="form-control">
+                <span asp-validation-for="newMission.startDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
                 <label asp-for="newMission.endDate" class="form-label">End Date<span class="required-field"></span></label>
                 <input asp-for="newMission.endDate" type="date" id="endDate" class="form-control">
                 <span asp-validation-for="newMission.endDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.registrationDeadline" class="form-label">Registration Deadline<span class="required-field"></span></label>
+                <input asp-for="newMission.registrationDeadline" type="date" id="registrationDeadline" class="form-control">
+                <span asp-validation-for="newMission.registrationDeadline" class="text-danger"></span>
             </div>
 
             <div class="form-group mt-3">
@@ -88,12 +100,6 @@
                 <label asp-for="newMission.totalSeats" class="form-label">Total Seats</label>
                 <input asp-for="newMission.totalSeats" type="text" id="totalSeats" class="form-control">
                 <span asp-validation-for="newMission.totalSeats" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mt-3">
-                <label asp-for="newMission.registrationDeadline" class="form-label">Registration Deadline</label>
-                <input asp-for="newMission.registrationDeadline" type="date" id="registrationDeadline" class="form-control">
-                <span asp-validation-for="newMission.registrationDeadline" class="text-danger"></span>
             </div>
 
             <div class="form-group mt-3">
@@ -122,14 +128,19 @@
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.missionSkills" class="form-label">Mission Skills<span class="required-field"></span></label>
-                <select asp-for="newMission.missionSkills" multiple size="@Model.skillList.Count" id="missionSkills" class="form-select">
+                <div class="allSkills border rounded p-2" style="border-color: #cdd2d8 !important">
                     @foreach (var skill in Model.skillList)
                     {
-                        <option value="@skill.SkillId">@skill.SkillName</option>
+                        <div class="form-check">
+                            <input type="checkbox" value="@skill.SkillId" class="form-check-input">
+                            <label class="form-check-label">@skill.SkillName</label>
+                        </div>
                     }
-                </select>
+                </div>
+                <input asp-for="newMission.missionSkills" type="hidden" id="selectedSkills" />
                 <span asp-validation-for="newMission.missionSkills" class="text-danger"></span>
             </div>
+
 
             @*image documnet video left*@
 

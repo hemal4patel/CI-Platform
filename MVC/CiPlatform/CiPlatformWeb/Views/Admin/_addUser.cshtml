@@ -8,7 +8,7 @@
 <form class="validateAdminForm" method="post" data-validation="true">
     <div class="card mx-3 my-5">
         <div class="card-header">
-            <h3>Add User</h3>
+            <h3 class="addEditUser">Add User</h3>
         </div>
         <div class="card-body pb-5">
 
@@ -73,6 +73,10 @@
                 <label asp-for="newUser.cityId" class="form-label">City<span class="required-field"></span></label>
                 <select asp-for="newUser.cityId" id="cityId" class="form-select cityList">
                     <option value="">Select city</option>
+                    @foreach (var city in Model.cityList)
+                    {
+                        <option value="@city.CityId">@city.Name</option>
+                    }
                 </select>
                 <span asp-validation-for="newUser.cityId" class="text-danger"></span>
             </div>

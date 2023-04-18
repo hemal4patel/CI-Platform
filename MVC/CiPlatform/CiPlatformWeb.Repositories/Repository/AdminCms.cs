@@ -86,5 +86,12 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
+        public void DeleteCmsPage (long cmsId)
+        {
+            CmsPage cmsPage = _db.CmsPages.FirstOrDefault(c => c.CmsPageId==cmsId);
+            cmsPage.DeletedAt = DateTime.Now;
+            _db.SaveChanges();
+        }
+
     }
 }

@@ -58,9 +58,14 @@ namespace CiPlatformWeb.Controllers
                 vm.cityList = _adminUser.GetCitiesByCountry(countryId);
             }
 
-            return PartialView("_editUser", vm);
+            return PartialView("_addUser", vm);
         }
 
+        public IActionResult DeleteUser (long userId)
+        {
+            _adminUser.DeleteUser(userId);
+            return Ok();
+        }
 
         [HttpPost]
         public IActionResult AdminUser (AdminUserViewModel vm)
@@ -122,6 +127,12 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addCms", vm);
         }
 
+        public IActionResult DeleteCmsPage (long cmsId)
+        {
+            _adminCms.DeleteCmsPage(cmsId);
+            return Ok();
+        }
+
         [HttpPost]
         public IActionResult AdminCms (AdminCmsViewModel vm)
         {
@@ -172,6 +183,12 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addMission", vm);
         }
 
+        public IActionResult DeleteMission (long missionId)
+        {
+            _adminMission.DeleteMission(missionId);
+            return Ok();
+        }
+
         [HttpPost]
         public IActionResult AdminMission (AdminMissionViewModel vm)
         {
@@ -194,7 +211,13 @@ namespace CiPlatformWeb.Controllers
         {
             AdminThemeViewModel vm = new();
             vm.newTheme = _adminTheme.GetThemeToEdit(themeId);
-            return PartialView("_editTheme", vm);
+            return PartialView("_addTheme", vm);
+        }
+
+        public IActionResult DeleteTheme (long themeId)
+        {
+            _adminTheme.DeleteTheme(themeId);
+            return Ok();
         }
 
         [HttpPost]
@@ -254,7 +277,13 @@ namespace CiPlatformWeb.Controllers
         {
             AdminSkillViewModel vm = new();
             vm.newSkill = _adminSkill.GetSkillToEdit(skillId);
-            return PartialView("_editSkill", vm);
+            return PartialView("_addSkill", vm);
+        }
+
+        public IActionResult DeleteSkill (long skillId)
+        {
+            _adminSkill.DeleteSkill(skillId);
+            return Ok();
         }
 
         [HttpPost]
@@ -303,7 +332,7 @@ namespace CiPlatformWeb.Controllers
             AdminApplicationViewModel vm = new();
             vm.applications = _adminApplication.GetApplications();
             return View(vm);
-        }
+        }        
 
         [HttpPost]
         public IActionResult ChangeApplicationStatus (long applicationId, int status)
@@ -322,6 +351,12 @@ namespace CiPlatformWeb.Controllers
         public IActionResult ViewStory (long storyId)
         {
             return PartialView("_viewStory");
+        }
+
+        public IActionResult DeleteStory (long storyId)
+        {
+            _adminStory.DeleteStory(storyId);
+            return Ok();
         }
 
         [HttpPost]
