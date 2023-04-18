@@ -24,11 +24,66 @@ namespace CiPlatformWeb.Repositories.Repository
 
             IQueryable<AdminCmsModel> list = pages.Select(c => new AdminCmsModel()
             {
+                cmsId = c.CmsPageId,
                 title = c.Title,
                 status = c.Status
             });
 
             return list.ToList();
+        }
+
+        public bool CmsExistsForNew (string slug)
+        {
+            return _db.CmsPages.Any(c => c.Slug.ToLower().Trim().Replace(" ", "") == slug.ToLower().Trim().Replace(" ", ""));
+        }
+
+        public bool CmsExistsForUpdate (long? cmsId, string slug)
+        {
+            return _db.CmsPages.Any(c => c.Slug.ToLower().Trim().Replace(" ", "") == slug.ToLower().Trim().Replace(" ", "") && c.CmsPageId != cmsId);
+        }
+
+        public void AddCmsPage (AdminCmsModel vm)
+        {
+            CmsPage newCmsPage = new CmsPage()
+            {
+                Title = vm.title,
+                Description= vm.description,
+                Slug= vm.slug,
+                Status= vm.status,
+                CreatedAt = DateTime.Now
+            };
+
+            _db.CmsPages.Add(newCmsPage);
+            _db.SaveChanges();
+        }
+
+        public AdminCmsModel GetCmsToEdit (long cmsId)
+        {
+            IQueryable<CmsPage> cmsPage = _db.CmsPages.Where(c => c.CmsPageId == cmsId);
+
+            AdminCmsModel list = cmsPage.Select(c => new AdminCmsModel()
+            {
+                cmsId = c.CmsPageId,
+                title = c.Title,
+                description = c.Description,
+                slug = c.Slug,
+                status = c.Status,
+            }).FirstOrDefault();
+
+            return list;
+        }
+
+        public void EditCmsPage (AdminCmsModel vm)
+        {
+            CmsPage existingCms = _db.CmsPages.Where(c => c.CmsPageId == vm.cmsId).FirstOrDefault();
+
+            existingCms.Title = vm.title; 
+            existingCms.Description = vm.description;
+            existingCms.Slug = vm.slug.ToLower().Trim().Replace(" ","-");
+            existingCms.Status = vm.status;
+            existingCms.UpdatedAt = DateTime.Now;
+
+            _db.SaveChanges();
         }
 
     }

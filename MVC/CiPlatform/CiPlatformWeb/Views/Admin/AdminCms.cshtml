@@ -95,6 +95,17 @@
     }
 }
 
-@*<script>
-
-</script>*@
+@if (TempData["message"] != null && TempData["icon"] != null)
+{
+    <script>
+        window.onload = function () {
+            swal.fire({
+                position: 'center',
+                icon: '@Html.Raw(TempData["icon"])',
+                title: '@Html.Raw(TempData["message"])',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        };
+    </script>
+}

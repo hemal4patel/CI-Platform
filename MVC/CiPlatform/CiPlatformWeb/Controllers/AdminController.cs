@@ -115,10 +115,45 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addCms");
         }
 
+        public IActionResult EditCms (long cmsId)
+        {
+            AdminCmsViewModel vm = new();
+            vm.newCms = _adminCms.GetCmsToEdit(cmsId);
+            return PartialView("_addCms", vm);
+        }
+
         [HttpPost]
         public IActionResult AdminCms (AdminCmsViewModel vm)
         {
-            return View();
+            if (vm.newCms.cmsId is not null)
+            {
+                if (_adminCms.CmsExistsForUpdate(vm.newCms.cmsId, vm.newCms.slug))
+                {
+                    TempData["icon"] = "error";
+                    TempData["message"] = "Slug already exists!!!";
+                }
+                else
+                {
+                    _adminCms.EditCmsPage(vm.newCms);
+                    TempData["icon"] = "success";
+                    TempData["message"] = "Cms page updated successfully!!!";
+                }
+            }
+            else
+            {
+                if (_adminCms.CmsExistsForNew(vm.newCms.slug))
+                {
+                    TempData["icon"] = "error";
+                    TempData["message"] = "Slug already exists!!!";
+                }
+                else
+                {
+                    _adminCms.AddCmsPage(vm.newCms);
+                    TempData["icon"] = "success";
+                    TempData["message"] = "Cms page added successfully!!!";
+                }
+            }
+            return RedirectToAction("AdminCms");
         }
 
         public IActionResult AdminMission ()
@@ -126,6 +161,21 @@ namespace CiPlatformWeb.Controllers
             AdminMissionViewModel vm = new();
             vm.missions = _adminMission.GetMissions();
             return View(vm);
+        }
+
+        public IActionResult AddMission ()
+        {
+            AdminMissionViewModel vm = new();
+            vm.countryList = _adminUser.GetCountries();
+            vm.themeList = _adminMission.GetThemes();
+            vm.skillList = _adminMission.GetSkills();
+            return PartialView("_addMission", vm);
+        }
+
+        [HttpPost]
+        public IActionResult AdminMission (AdminMissionViewModel vm)
+        {
+            return RedirectToAction("AdminMission");
         }
 
         public IActionResult AdminTheme ()
@@ -269,7 +319,7 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-        public IActionResult ViewStory(long storyId)
+        public IActionResult ViewStory (long storyId)
         {
             return PartialView("_viewStory");
         }

@@ -18,6 +18,8 @@ namespace CiPlatformWeb.Repositories.Interface
 
         List<Timesheet> GetGoalBasedEntries (long userId);
 
+        public bool TimeSheetExists (long missionId, long userId, DateTime dateVolunteered);
+
         Timesheet GetEntry (long? timesheetId);
 
         void AddTimeBasedEntry (TimeBasedSheetViewModel viewmodel, long userId);

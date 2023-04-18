@@ -132,7 +132,7 @@
                     <a asp-action="PrivacyPolicy" asp-controller="User" class="text-decoration-none" style="color: #212529;">Privacy Policy</a>
                 </div>
                 <div class="ms-5">
-                    <button data-bs-toggle="modal" data-bs-target="#contactUs" class="border-none" style="color: #212529;">Contact Us</button>
+                    <button data-bs-toggle="modal" data-bs-target="#contactUs" class="border-none resetFormButton" style="color: #212529;">Contact Us</button>
                     <!-- Modal -->
                     <div class="modal fade" id="contactUs" tabindex="-1"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -145,6 +145,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
+                                <form class="resetForm">
                                 <div class="modal-body py-1">
                                     <div class="form-group">
                                         <label class="form-label">Name*</label>
@@ -159,13 +160,13 @@
                                     <div class="form-group mt-3">
                                         <label class="form-label">Subject<span class="required-field"></span></label>
                                         <input type="text" id="contactSubject" class="form-control" maxlength="255" placeholder="Enter your subject">
-                                        <span class="valContactSubject text-danger" style="display: none;">Subject is required.</span>
+                                        <span class="valContactSubject text-danger errorMsg" style="display: none;">Subject is required.</span>
                                     </div>
 
                                     <div class="form-group mt-3">
                                         <label class="form-label">Message<span class="required-field"></span></label>
                                         <textarea id="contactMessage" class="form-control" maxlength="60000" placeholder="Enter your message" rows="4"></textarea>
-                                        <span class="valContactMessage text-danger" style="display: none;">Message is required.</span>
+                                            <span class="valContactMessage text-danger errorMsg" style="display: none;">Message is required.</span>
                                     </div>
                                 </div>
                                 <div class="modal-footer mt-2">
@@ -178,6 +179,7 @@
                                         Submit
                                     </button>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

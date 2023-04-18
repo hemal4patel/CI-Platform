@@ -11,5 +11,9 @@ namespace CiPlatformWeb.Repositories.Interface
     public interface IAdminMission
     {
         public List<AdminMissionList> GetMissions ();
+
+        public List<MissionTheme> GetThemes ();
+
+        public List<Skill> GetSkills ();
     }
 }

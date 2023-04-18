@@ -16,7 +16,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
     public class AdminCmsModel
     {
-        public int? cmsId { get; set; }
+        public long? cmsId { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
         public string title { get; set; }

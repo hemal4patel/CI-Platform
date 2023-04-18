@@ -1,0 +1,162 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+
+
+@model CiPlatformWeb.Entities.ViewModels.AdminMissionViewModel
+
+
+<form class="validateAdminForm" id="addMissionForm" method="post" data-validation="true">
+    <div class="card mx-3 my-5">
+        <div class="card-header">
+            <h3 class="addEditCms">Add Cms Page</h3>
+        </div>
+        <div class="card-body pb-5">
+
+            <input type="text" class="d-none" id="missionId" asp-for="newMission.missionId" />
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.misssionTitle" class="form-label">Title<span class="required-field"></span></label>
+                <input asp-for="newMission.misssionTitle" type="text" id="misssionTitle" class="form-control">
+                <span asp-validation-for="newMission.misssionTitle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.shortDescription" class="form-label">Short Description<span class="required-field"></span></label>
+<textarea asp-for="newMission.shortDescription" id="shortDescription" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="newMission.shortDescription" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.description" class="form-label">Description<span class="required-field"></span></label>
+<textarea asp-for="newMission.description" id="missionDescription" name="editordata" class="form-control"></textarea>
+                <span asp-validation-for="newMission.description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.countryId" class="form-label">Country<span class="required-field"></span></label>
+                <select asp-for="newMission.countryId" id="missionCountryId" class="form-select countryList">
+                    <option value="">Select country</option>
+                    @foreach (var country in Model.countryList)
+                    {
+                        <option value="@country.CountryId">@country.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="newMission.countryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.cityId" class="form-label">City<span class="required-field"></span></label>
+                <select asp-for="newMission.cityId" id="cityId" class="form-select cityList">
+                    <option value="">Select city</option>
+                    @*@foreach (var city in Model.cityList)
+                    {
+                    <option value="@city.CityId">@city.Name</option>
+                    }*@
+                </select>
+                <span asp-validation-for="newMission.cityId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.organizationName" class="form-label">Organization Name<span class="required-field"></span></label>
+                <input asp-for="newMission.organizationName" type="text" id="organizationName" class="form-control">
+                <span asp-validation-for="newMission.organizationName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.organizationDetail" class="form-label">Organization Detail<span class="required-field"></span></label>
+                <input asp-for="newMission.organizationDetail" type="text" id="organizationDetail" class="form-control">
+                <span asp-validation-for="newMission.organizationDetail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.endDate" class="form-label">End Date<span class="required-field"></span></label>
+                <input asp-for="newMission.endDate" type="date" id="endDate" class="form-control">
+                <span asp-validation-for="newMission.endDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.missionType" class="form-label">Mission Type<span class="required-field"></span></label>
+                <select asp-for="newMission.missionType" id="missionType" class="form-select">
+                    <option value="">Select mission type</option>
+                    <option value="Time">Time</option>
+                    <option value="Goal">Goal</option>
+                </select>
+                <span asp-validation-for="newMission.missionType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.totalSeats" class="form-label">Total Seats</label>
+                <input asp-for="newMission.totalSeats" type="text" id="totalSeats" class="form-control">
+                <span asp-validation-for="newMission.totalSeats" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.registrationDeadline" class="form-label">Registration Deadline</label>
+                <input asp-for="newMission.registrationDeadline" type="date" id="registrationDeadline" class="form-control">
+                <span asp-validation-for="newMission.registrationDeadline" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.goalObjectiveText" class="form-label">Goal Objective Text</label>
+                <input asp-for="newMission.goalObjectiveText" type="text" id="goalObjectiveText" class="form-control">
+                <span asp-validation-for="newMission.goalObjectiveText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.goalValue" class="form-label">Goal Value</label>
+                <input asp-for="newMission.goalValue" type="text" id="goalValue" class="form-control">
+                <span asp-validation-for="newMission.goalValue" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.missionTheme" class="form-label">Mission Theme<span class="required-field"></span></label>
+                <select asp-for="newMission.missionTheme" id="missionTheme" class="form-select countryList">
+                    <option value="">Select theme</option>
+                    @foreach (var theme in Model.themeList)
+                    {
+                        <option value="@theme.MissionThemeId">@theme.Title</option>
+                    }
+                </select>
+                <span asp-validation-for="newMission.missionTheme" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.missionSkills" class="form-label">Mission Skills<span class="required-field"></span></label>
+                <select asp-for="newMission.missionSkills" multiple size="@Model.skillList.Count" id="missionSkills" class="form-select">
+                    @foreach (var skill in Model.skillList)
+                    {
+                        <option value="@skill.SkillId">@skill.SkillName</option>
+                    }
+                </select>
+                <span asp-validation-for="newMission.missionSkills" class="text-danger"></span>
+            </div>
+
+            @*image documnet video left*@
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.availability" class="form-label">Mission Availability<span class="required-field"></span></label>
+                <select asp-for="newMission.availability" id="availability" class="form-select">
+                    <option value="">Select mission availability</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+                <span asp-validation-for="newMission.availability" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+    <div class="d-flex justify-content-end my-5 me-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill cancel-btn">Cancel</button>
+        <button asp-action="AdminMission" type="submit" id="" class="btn mt-0 card-button ms-2 me-0 rounded-pill submit-btn">Submit</button>
+    </div>
+</form>
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+<script src="~/js/admin.js" asp-append-version="true"></script>

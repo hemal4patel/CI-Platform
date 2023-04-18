@@ -45,6 +45,11 @@ namespace CiPlatformWeb.Repositories.Repository
             return goalBasedEnteries;
         }
 
+        public bool TimeSheetExists (long missionId, long userId, DateTime dateVolunteered)
+        {
+            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered);
+        }
+
         public Timesheet GetEntry (long? timesheetId)
         {
             var entry = _db.Timesheets.Where(t => t.TimesheetId == timesheetId).FirstOrDefault();

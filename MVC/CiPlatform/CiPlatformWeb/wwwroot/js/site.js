@@ -6,6 +6,7 @@ function validateChangePassword() {
     var newPassword = $('#newPassword').val();
     var confirmPassword = $('#confirmPassword').val();
 
+
     if (oldPassoword == "") {
         $('.valOldPassword').show();
         flag = false;
@@ -17,7 +18,7 @@ function validateChangePassword() {
             }
         })
     }
-    if (newPassword == "") {
+    if (newPassword == "" || newPassword.length < 8 || newPassword.length > 16) {
         $('.valnewPassword').show();
         $(".valMatchingPassword").hide();
         flag = false;
@@ -400,4 +401,22 @@ $('#Gmission').on('change', function () {
     var dateGoal = document.getElementById("Gdate");
     dateGoal.max = maxDate;
     dateGoal.min = minDate;
+})
+
+
+//reset form
+$('.resetFormButton').click(function () {
+    $('.resetForm').each(function () {
+        this.reset();
+        $(this).find('.field-validation-error').text('');
+        $(this).find('.field-validation-valid').text('');
+        $(this).find('.errorMsg').hide()
+    });
+})
+
+$('.changePasswordForm').click(function () {
+    $('.inputField').each(function () {
+        $(this).val('')
+    })
+    $('.errorMsg').hide();
 })

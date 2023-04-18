@@ -1,6 +1,6 @@
 ﻿
 //get cities from country
-$('.countryList').on('click', function () {
+$('.countryList').on('change', function () {
     var countryId = $(this).val();
     console.log(countryId)
     $.ajax({
@@ -22,10 +22,12 @@ $('.countryList').on('click', function () {
     });
 });
 
-
 //validation
 $('.validateAdminForm').removeData('validator').removeData('unobtrusiveValidation');
 $.validator.unobtrusive.parse('.validateAdminForm');
+
+
+
 
 //add user
 $('#addUser').on('click', function () {
@@ -70,6 +72,49 @@ $('.deleteUser').on('click', function () {
 });
 
 
+
+
+
+
+//add mission
+$('.addMission').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/AddMission',
+        success: function (data) {
+            var container = $('.adminMissionContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//mission type
+$('#missionType').on('change', function () {
+    var type = $(this).val();
+
+    if (type === "Time") {
+        $('#totalSeats').attr('disabled', false)
+        $('#registrationDeadline').attr('disabled', false)
+        $('#goalObjectiveText').attr('disabled', true)
+        $('#goalValue').attr('disabled', true)
+    }
+    else {
+        $('#goalObjectiveText').attr('disabled', false)
+        $('#goalValue').attr('disabled', false)
+        $('#totalSeats').attr('disabled', true)
+        $('#registrationDeadline').attr('disabled', true)
+    }
+})
+
+
+
+
+
+
 //add cms
 $('#addCms').on('click', function () {
     $.ajax({
@@ -88,22 +133,27 @@ $('#addCms').on('click', function () {
 
 //edit user
 $('.editCms').on('click', function () {
-    var userId = $(this).closest('tr').attr('id');
-    console.log(userId)
+    var cmsId = $(this).closest('tr').attr('id');
+    console.log(cmsId)
     $.ajax({
         type: 'GET',
         url: "/Admin/EditCms",
-        data: { userId: userId },
+        data: { cmsId: cmsId },
         success: function (data) {
             var container = $('.adminCmsContainer');
             container.empty();
             container.append(data);
+            $('.addEditCms').text('Edit Cms Page')
         },
         error: function (error) {
             console.log(error)
         }
     });
 });
+
+
+
+
 
 
 //add theme
@@ -142,6 +192,11 @@ $('.editTheme').on('click', function () {
 });
 
 
+
+
+
+
+
 //add skill
 $('#addSkill').on('click', function () {
     $.ajax({
@@ -178,7 +233,8 @@ $('.editSkill').on('click', function () {
 });
 
 //change application status
-$('.changeApplicationStatus').click(function () {
+$(document).on('click', '.changeApplicationStatus', function () {
+    console.log('called')
     var applicationId = $(this).closest('tr').attr('id');
     var status = $(this).data('value')
 
@@ -203,8 +259,13 @@ $('.changeApplicationStatus').click(function () {
 })
 
 
+
+
+
+
+
 //change story status
-$('.changeStoryStatus').click(function () {
+$(document).on('click', '.changeStoryStatus', function () {
     var storyId = $(this).closest('tr').attr('id');
     var status = $(this).data('value')
     console.log(storyId, status)
@@ -229,12 +290,24 @@ $('.changeStoryStatus').click(function () {
     });
 })
 
+$(document).on('click', '.storyButtons button', function () {
+    var status = $(this).data('value')
+    console.log(status)
+    var container = $('.storyButtons');
+    container.empty();
+    if (status == 0) {
+
+        container.html('<button type="button" class="btn btn-outline-success storyButtons" data-value="1"><i class="bi bi-check-circle me-2"></i>Approve</button><button type="button" class="btn btn-danger" data-value="0"><i class="bi bi-x-circle me-2"></i>Declined</button><button type="button" class="btn btn-outline-dark"><i class="bi bi-trash3 me-2"></i>Delete</button>');
+    }
+    else {
+        container.html('<button type="button" class="btn btn-success" data-value="1"><i class="bi bi-check-circle me-2"></i>Approved</button><button type="button" class="btn btn-outline-danger storyButtons" data-value="0"><i class="bi bi-x-circle me-2"></i>Decline</button><button type="button" class="btn btn-outline-dark"><i class="bi bi-trash3 me-2"></i>Delete</button>');
+    }
+
+})
 
 //view story details
 $('.viewStory').click(function () {
     var storyId = $(this).closest('tr').attr('id');
-    console.log(storyId)
-    
     $.ajax({
         type: 'GET',
         url: '/Admin/ViewStory',
@@ -249,6 +322,11 @@ $('.viewStory').click(function () {
         }
     });
 })
+
+
+
+
+
 
 
 //Admin user table

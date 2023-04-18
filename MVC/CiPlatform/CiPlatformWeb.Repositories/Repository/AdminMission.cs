@@ -26,11 +26,21 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 misssionTitle = m.Title,
                 missionType = m.MissionType,
-                startDate = m.StartDate.Value.ToShortDateString(),
-                endDate = m.EndDate.Value.ToShortDateString()
+                startDate = m.StartDate,
+                endDate = m.EndDate
             });
 
             return list.ToList();
+        }
+
+        public List<MissionTheme> GetThemes ()
+        {
+            return _db.MissionThemes.ToList();
+        }
+
+        public List<Skill> GetSkills ()
+        {
+            return _db.Skills.ToList();
         }
     }
 }

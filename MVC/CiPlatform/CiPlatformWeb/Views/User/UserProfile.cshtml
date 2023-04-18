@@ -39,7 +39,7 @@
                     <a> <i class="bi bi-linkedin text-primary"></i> </a>
                     </div>*@
                     <div class="changePassword mt-2">
-                        <a class="text-decoration-none text-secondary" style="font-size: 17px;" data-bs-toggle="modal"
+                        <a class="text-decoration-none text-secondary changePasswordForm" style="font-size: 17px;" data-bs-toggle="modal"
                            data-bs-target="#changePassword"> Change Password </a>
 
                         <!-- Modal -->
@@ -56,20 +56,20 @@
                                     </div>
                                     <div class="modal-body py-1">
                                         <div class="form-group">
-                                            <input type="text" id="oldPassword" class="form-control" placeholder="Enter old password">
-                                            <span class="valOldPassword text-danger" style="display: none;">Old passowrd is required.</span>
-                                            <span class="valInvalidPassword text-danger" style="display: none;">Passowrd is incorrect.</span>
+                                            <input type="text" id="oldPassword" class="form-control inputField" placeholder="Enter old password">
+                                            <span class="valOldPassword text-danger errorMsg" style="display: none;">Old passowrd is required.</span>
+                                            <span class="valInvalidPassword text-danger errorMsg" style="display: none;">Passowrd is incorrect.</span>
                                         </div>
 
                                         <div class="form-group mt-3">
-                                            <input type="text" id="newPassword" class="form-control" placeholder="Enter new password">
-                                            <span class="valNewPassword text-danger" style="display: none;">New passowrd is required.</span>
+                                            <input type="text" id="newPassword" class="form-control inputField" placeholder="Enter new password">
+                                            <span class="valNewPassword text-danger errorMsg" style="display: none;">New passowrd must be between 8 to 16 characters.</span>
                                         </div>
 
                                         <div class="form-group mt-3">
-                                            <input type="text" id="confirmPassword" class="form-control" placeholder="Enter confirm passord">
-                                            <span class="valConfirmPassword text-danger" style="display: none;">New passowrd is required.</span>
-                                            <span class="valMatchingPassword text-danger" style="display: none;">Password doesn't match.</span>
+                                            <input type="text" id="confirmPassword" class="form-control inputField" placeholder="Enter confirm passord">
+                                            <span class="valConfirmPassword text-danger errorMsg" style="display: none;">New passowrd is required.</span>
+                                            <span class="valMatchingPassword text-danger errorMsg" style="display: none;">Password doesn't match.</span>
                                         </div>
                                     </div>
                                     <div class="modal-footer mt-2">
@@ -193,7 +193,7 @@
                                     }
                                 </select>
                                 <span asp-validation-for="CityId" class="text-danger"></span>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>

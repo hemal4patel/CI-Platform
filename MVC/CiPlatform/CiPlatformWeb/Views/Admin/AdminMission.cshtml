@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 adminMissionContainer">
     <div class="tabs d-flex flex-column" style="font-size: 15px;">
         <ul class="nav nav-tabs mt-3">
             <li class="nav-item">
@@ -30,7 +30,7 @@
                     <input type="text" id="searchMission" placeholder="Search" />
                 </div>
                 <div class="">
-                    <button class="addBtn rounded-pill py-1 px-2">
+                    <button class="addBtn rounded-pill py-1 px-2 addMission">
                         <i class="bi bi-plus-lg"></i> &nbsp; Add
                     </button>
                 </div>
@@ -54,8 +54,8 @@
                         <tr>
                             <td scope="row">@mission.misssionTitle</td>
                             <td>@mission.missionType</td>
-                            <td>@mission.startDate</td>
-                            <td>@mission.endDate</td>
+                            <td>@mission.startDate.Value.ToShortDateString()</td>
+                            <td>@mission.endDate.Value.ToShortDateString()</td>
                             <td>
                                 <i class="bi bi-pencil-square text-danger"></i>
                                 <i class="bi bi-trash3 ms-2"></i>

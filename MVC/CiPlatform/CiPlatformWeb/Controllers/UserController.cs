@@ -85,7 +85,7 @@ namespace CiPlatformWeb.Controllers
                         viewmodel.CityList = _userProfile.GetCityList(countryId);
                     }
 
-                    
+
                     TempData["message"] = "Profile updated successfully!!!";
 
                     return RedirectToAction("UserProfile");
@@ -193,47 +193,69 @@ namespace CiPlatformWeb.Controllers
                 ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
                 ViewBag.UserAvatar = sessionUser.Avatar;
 
+
                 //TIME BASED
                 if (viewmodel.timeBasedSheet is not null)
                 {
-                    //EXISTING TIME ENTRY UPDATE
-                    if (viewmodel.timeBasedSheet.timeSheetId is not null)
+                    if (_timesheet.TimeSheetExists(viewmodel.timeBasedSheet.timeMissions, userId, viewmodel.timeBasedSheet.dateVolunteered))
                     {
-                        var timeBasedEntry = _timesheet.GetEntry(viewmodel.timeBasedSheet.timeSheetId);
-                        if (timeBasedEntry is not null)
-                        {
-                            _timesheet.UpdateTimeBasedEntry(timeBasedEntry, viewmodel.timeBasedSheet);
-                        }
-                        TempData["message"] = "Entry updated successfully!!!";
+                        TempData["icon"] = "error";
+                        TempData["message"] = "Entry alredy exists!!!";
                     }
-                    //NEW TIME ENTRY ADD
                     else
                     {
-                        _timesheet.AddTimeBasedEntry(viewmodel.timeBasedSheet, userId);
-                        TempData["message"] = "Entry added successfully!!!";
+                        //EXISTING TIME ENTRY UPDATE
+                        if (viewmodel.timeBasedSheet.timeSheetId is not null)
+                        {
+                            var timeBasedEntry = _timesheet.GetEntry(viewmodel.timeBasedSheet.timeSheetId);
+                            if (timeBasedEntry is not null)
+                            {
+                                _timesheet.UpdateTimeBasedEntry(timeBasedEntry, viewmodel.timeBasedSheet);
+                            }
+                            TempData["icon"] = "success";
+                            TempData["message"] = "Entry updated successfully!!!";
+                        }
+                        //NEW TIME ENTRY ADD
+                        else
+                        {
+                            _timesheet.AddTimeBasedEntry(viewmodel.timeBasedSheet, userId);
+                            TempData["icon"] = "success";
+                            TempData["message"] = "Entry added successfully!!!";
+                        }
                     }
                 }
 
                 //GOAL BASED
                 else
                 {
-                    //EXISTING GOAL ENTRY UPDATE
-                    if (viewmodel.goalBasedSheet.timeSheetId is not null)
+                    if (_timesheet.TimeSheetExists(viewmodel.goalBasedSheet.goalMissions, userId, viewmodel.goalBasedSheet.dateVolunteered))
                     {
-                        var goalBasedEntry = _timesheet.GetEntry(viewmodel.goalBasedSheet.timeSheetId);
-                        if (goalBasedEntry is not null)
-                        {
-                            _timesheet.UpdateGoalBasedEntry(goalBasedEntry, viewmodel.goalBasedSheet);
-                        }
-                        TempData["message"] = "Entry updated successfully!!!";
+                        TempData["icon"] = "error";
+                        TempData["message"] = "Entry alredy exists!!!";
                     }
-                    //NEW GOAL ENTRY ADD
                     else
                     {
-                        _timesheet.AddGoalBasedEntry(viewmodel.goalBasedSheet, userId);
-                        TempData["message"] = "Entry added successfully!!!";
+                        //EXISTING GOAL ENTRY UPDATE
+                        if (viewmodel.goalBasedSheet.timeSheetId is not null)
+                        {
+                            var goalBasedEntry = _timesheet.GetEntry(viewmodel.goalBasedSheet.timeSheetId);
+                            if (goalBasedEntry is not null)
+                            {
+                                _timesheet.UpdateGoalBasedEntry(goalBasedEntry, viewmodel.goalBasedSheet);
+                            }
+                            TempData["icon"] = "success";
+                            TempData["message"] = "Entry updated successfully!!!";
+                        }
+                        //NEW GOAL ENTRY ADD
+                        else
+                        {
+                            _timesheet.AddGoalBasedEntry(viewmodel.goalBasedSheet, userId);
+                            TempData["icon"] = "success";
+                            TempData["message"] = "Entry added successfully!!!";
+                        }
                     }
                 }
+
 
                 return RedirectToAction("VolunteeringTimesheet");
             }

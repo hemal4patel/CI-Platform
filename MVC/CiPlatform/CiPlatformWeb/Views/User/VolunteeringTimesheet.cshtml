@@ -37,7 +37,7 @@
                         </div>
                         <div class="div">
                             @*ADD BUTTON*@
-                            <button class="add-btn rounded-pill py-1 px-2 w-100" data-bs-toggle="modal"
+                            <button class="add-btn rounded-pill py-1 px-2 w-100 resetFormButton" data-bs-toggle="modal"
                                     data-bs-target="#addVolHours">
                                 <i class="bi bi-plus-lg"></i> &nbsp; Add
                             </button>
@@ -57,7 +57,7 @@
                                         </div>
 
                                         @*TIME BASED FORM*@
-                                        <form method="post">
+                                        <form method="post" class="resetForm">
 
                                             <input type="hidden" id="timesheetId" asp-for="@Model.timeBasedSheet.timeSheetId" />
 
@@ -176,7 +176,7 @@
 
                         @*ADD GOAL ENTRY BUTTON*@
                         <div class="div">
-                            <button class="add-btn rounded-pill py-1 px-2 w-100" data-bs-toggle="modal"
+                            <button class="add-btn rounded-pill py-1 px-2 w-100 resetFormButton" data-bs-toggle="modal"
                                     data-bs-target="#addVolGoal">
                                 <i class="bi bi-plus-lg"></i> &nbsp; Add
                             </button>
@@ -196,7 +196,7 @@
                                         </div>
 
                                         @*GOAL FORM*@
-                                        <form method="post">
+                                        <form method="post" class="resetForm">
 
                                             <input type="hidden" id="GtimesheetId" asp-for="@Model.goalBasedSheet.timeSheetId" />
 
@@ -337,13 +337,13 @@
     });
 </script>
 
-@if (TempData["message"] != null)
+@if (TempData["message"] != null && TempData["icon"] != null)
 {
     <script>
         window.onload = function () {
             swal.fire({
                 position: 'center',
-                icon: 'success',
+                icon: '@Html.Raw(TempData["icon"])',
                 title: '@Html.Raw(TempData["message"])',
                 showConfirmButton: false,
                 timer: 3000
