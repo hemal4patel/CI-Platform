@@ -44,6 +44,35 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Skills.ToList();
         }
 
+        public AdminMissionList GetMissionToEdit (long missionId)
+        {
+            var mission = _db.Missions.Where(m => m.MissionId == missionId);
+
+            var list = mission.Select(m => new AdminMissionList()
+            {
+                missionId = m.MissionId,
+                misssionTitle = m.Title,
+                shortDescription = m.ShortDescription,
+                missionDescription = m.Description,
+                countryId = m.CountryId,
+                cityId = m.CityId,
+                organizationName = m.OrganizationName,
+                organizationDetail = m.OrganizationDetail,
+                startDate = m.StartDate,
+                endDate = m.EndDate,
+                missionType = m.MissionType,
+                totalSeats = m.TotalSeats,
+                goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
+                goalValue = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
+                missionTheme = m.Theme.MissionThemeId,
+                missionSkills = string.Join(",", m.MissionSkills.Select(m => m.Skill.SkillId)),
+                availability = m.Availability,
+                imageName = string.Join(",", m.MissionMedia.Where(m => m.MediaType == "img").Select(m => $"{m.MediaPath}:{m.Default}"))
+            }).FirstOrDefault();
+
+            return list;
+        }
+
         public void DeleteMission (long missionId)
         {
             Mission mission = _db.Missions.FirstOrDefault(m => m.MissionId == missionId);

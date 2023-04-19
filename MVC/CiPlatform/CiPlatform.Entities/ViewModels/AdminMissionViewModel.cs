@@ -17,9 +17,17 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public List<Country> countryList { get; set; }
 
+        public List<City> cityList { get; set; }
+
         public List<MissionTheme> themeList { get; set; }
 
         public List<Skill> skillList { get; set; }
+
+        public IFormFile[]? images { get; set; }
+
+        public string[]? documents { get; set; }
+
+        public string[]? videos { get; set; }
     }
 
     public class AdminMissionList
@@ -34,7 +42,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string shortDescription { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
-        public string description { get; set; }
+        public string missionDescription { get; set; }
 
         [Required(ErrorMessage = "Country is required")]
         public long countryId { get; set; }
@@ -79,10 +87,6 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Mission availability is required")]
         public string availability { get; set; }
 
-        public IFormFile[]? images { get; set; }
-
-        public string? documents { get; set; }
-
-        public string? videos { get; set; }
+        public string? imageName { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8MqN1AyqQTehCXjGuGCI15v813iRXV7VHB691x5cK74=",
+  "Hash": "Kqewt22lwrJp2p4Us2/FwDuQD/IWQtElQiArDqqxmb4=",
   "Source": "CiPlatformWeb",
   "BasePath": "_content/CiPlatformWeb",
   "Mode": "Default",
@@ -4386,12 +4386,12 @@
       "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\24a02_volunteer7.png"
     },
     {
-      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\8538a_volunteer2.png",
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\65bba_404-Page-image.png",
       "SourceId": "CiPlatformWeb",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
       "BasePath": "_content/CiPlatformWeb",
-      "RelativePath": "Upload/UserProfile/8538a_volunteer2.png",
+      "RelativePath": "Upload/UserProfile/65bba_404-Page-image.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -4400,7 +4400,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\8538a_volunteer2.png"
+      "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\65bba_404-Page-image.png"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar1.png",

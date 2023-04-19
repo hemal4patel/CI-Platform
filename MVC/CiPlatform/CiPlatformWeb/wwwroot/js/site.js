@@ -5,6 +5,7 @@ function validateChangePassword() {
     var oldPassoword = $('#oldPassword').val();
     var newPassword = $('#newPassword').val();
     var confirmPassword = $('#confirmPassword').val();
+    console.log(newPassword.length)
 
 
     if (oldPassoword == "") {
@@ -24,7 +25,7 @@ function validateChangePassword() {
         flag = false;
 
         $('#newPassword').on('input', function () {
-            if ($('#newPassword').val().length != 0) {
+            if (newPassword.length >= 8 && newPassword.length <= 16) {
                 $('.valnewPassword').hide();
                 $(".valMatchingPassword").hide();
                 flag = true;
@@ -44,12 +45,12 @@ function validateChangePassword() {
         })
     }
     else {
-        if (newPassword !== confirmPassword) {
+        if (newPassword !== confirmPassword || newPassword.length < 8 || newPassword.length > 16) {
             $('.valMatchingPassword').show();
             flag = false;
 
             $("#ConfirmPassword").on('input', function () {
-                if ($("#ConfirmPassword").val().lenght != 0) {
+                if ($("#ConfirmPassword").val().length >= 8 && $("#ConfirmPassword").val().length <= 16) {
                     $(".valMatchingPassword").hide();
                     flag = true;
                 }
@@ -60,7 +61,7 @@ function validateChangePassword() {
             flag = true;
         }
     }
-
+    console.log(flag)
     return flag;
 }
 
@@ -294,7 +295,7 @@ $('.editTimeTimesheet').click(function () {
             var d = String(today.getDate()).padStart(2, '0');
             var maxDate = y + '-' + m + '-' + d;
             var startDate = data.startDate.split('T')[0]
-            var minDate = startDate;        
+            var minDate = startDate;
             var dateTime = document.getElementById("date");
             dateTime.max = maxDate;
             dateTime.min = minDate;

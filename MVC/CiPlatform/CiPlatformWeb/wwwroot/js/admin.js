@@ -2,6 +2,7 @@
 //get cities from country
 $('.countryList').on('change', function () {
     var countryId = $(this).val();
+    
     $.ajax({
         type: "GET",
         url: "/Admin/GetCitiesByCountry",
@@ -24,6 +25,7 @@ $('.countryList').on('change', function () {
 //validation
 $('.validateAdminForm').removeData('validator').removeData('unobtrusiveValidation');
 $.validator.unobtrusive.parse('.validateAdminForm');
+
 
 
 
@@ -118,6 +120,16 @@ $('.addMission').on('click', function () {
             var container = $('.adminMissionContainer');
             container.empty();
             container.append(data);
+
+            var today = new Date();
+            var tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            var yyyy = tomorrow.getFullYear();
+            var mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            var dd = String(tomorrow.getDate()).padStart(2, '0');
+            var minDate = yyyy + '-' + mm + '-' + dd;
+            var startDate = document.getElementById("startDate");
+            startDate.min = minDate;
         },
         error: function (error) {
             console.log(error)
@@ -125,19 +137,46 @@ $('.addMission').on('click', function () {
     });
 })
 
+//date min max from start date
+$('#startDate').on('change', function () {
+    var startDate = $(this).val();
+
+    var endDate = document.getElementById("endDate");
+    endDate.min = startDate;
+
+    var regDate = document.getElementById("registrationDeadline");
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var dd = String(today.getDate()).padStart(2, '0');
+    var minDate = yyyy + '-' + mm + '-' + dd;
+    regDate.min = minDate
+
+    var max = new Date(startDate);
+    max.setDate(max.getDate() - 1);
+    var y = max.getFullYear();
+    var m = String(max.getMonth() + 1).padStart(2, '0');
+    var d = String(max.getDate()).padStart(2, '0');
+    var maxDate = y + '-' + m + '-' + d;
+    regDate.max = maxDate;
+
+})
+
 //mission type
 $('#missionType').on('change', function () {
     var type = $(this).val();
 
     if (type === "Time") {
-        $('#totalSeats').attr('disabled', false)
-        $('#goalObjectiveText').attr('disabled', true)
-        $('#goalValue').attr('disabled', true)
+        $('#totalSeats').show()
+        $('#registration').show()
+        $('#goalObjectiveText').hide()
+        $('#goalValue').hide()
     }
     else {
-        $('#goalObjectiveText').attr('disabled', false)
-        $('#goalValue').attr('disabled', false)
-        $('#totalSeats').attr('disabled', true)
+        $('#goalObjectiveText').show()
+        $('#goalValue').show()
+        $('#totalSeats').hide()
+        $('#registration').hide()
     }
 })
 
@@ -148,7 +187,6 @@ $('.allSkills').on('click', function () {
         selectedSkillsArray.push($(this).val());
     })
     $('#selectedSkills').val(selectedSkillsArray.join())
-    console.log($('#selectedSkills').val())
 })
 
 //delete mission
@@ -190,6 +228,215 @@ $('.deleteMission').on('click', function () {
     })
 });
 
+// drag and drop images in admin mission
+var allfiles = [];
+var fileInput = document.getElementById('file-input');
+var fileList;
+function handleFiles(e) {
+    var files = e.target.files || e.originalEvent.dataTransfer.files;
+    if (allfiles.length < 20) {
+
+        for (var i = 0; i < files.length && allfiles.length < 20; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+            if (file.type === "image/jpeg" || file.type === "image/png") {
+                allfiles.push(files[i]);
+
+                reader.onload = (function (file) {
+                    return function (e) {
+                        var image = $('<img>').attr('src', e.target.result);
+                        var closeIcon = $('<span>').addClass('close-icon').text('x');
+
+                        var item = $('<div>').addClass('image-item').append(image).append(closeIcon);
+                        imageList.append(item);
+
+                        closeIcon.on('click', function () {
+                            item.remove();
+                            allfiles.splice(allfiles.indexOf(file), 1);
+                        });
+                    };
+                })(file);
+
+                reader.readAsDataURL(file);
+            }
+            else {
+                $('.valImages').show();
+            }
+        }
+
+    }
+    else {
+        $('.valImages').show();
+    }
+    var dataTransfer = new DataTransfer();
+    fileList = dataTransfer.files;
+    console.log(allfiles)
+}
+
+var dropzone = $('#dropzone');
+var imageList = $('#image-list');
+
+dropzone.on('drop', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    dropzone.removeClass('dragover');
+    $('.note-dropzone').remove();
+
+    $('.valImages').hide();
+    handleFiles(e);
+});
+
+dropzone.on('dragover', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    dropzone.addClass('dragover');
+});
+
+dropzone.on('dragleave', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    dropzone.removeClass('dragover');
+});
+
+$('#file-input').on('change', function (e) {
+    $('.valImages').hide();
+    handleFiles(e);
+});
+
+//submit mission form
+$('#addMissionForm').on('submit', function (e) {
+    e.preventDefault();
+    if ($(this).valid()) {
+        var formData = new FormData($(this)[0]);
+
+        if (allfiles.length != 0) {
+            for (var i = 0; i < allfiles.length; i++) {
+                formData.append("images", allfiles[i]);
+            }
+        }
+
+        var urls = null;
+        var u = $('#videoUrls').val();
+        if (u != null) {
+            urls = u.split('\n');
+
+            for (var i = 0; i < urls.length; i++) {
+                formData.append("videos", urls[i]);
+            }
+        }
+        else {
+            formData.append("videos", null);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/AdminMission',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function () {
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+})
+
+//edit mission
+$('.editMission').click(function () {
+    var missionId = $(this).closest('tr').attr('id')
+
+    $.ajax({
+        type: 'GET',
+        url: "/Admin/EditMission",
+        data: { missionId: missionId },
+        success: function (data) {
+            var container = $('.adminMissionContainer');
+            container.empty();
+            container.append(data);
+            $('.addEditMission').text('Edit Mission')
+
+            //check skills
+            var skills = []
+            skills = $('#selectedSkills').val().split(',')
+            $('.form-check-input').each(function () {
+                var skillId = $(this).val();
+                if (skills.includes(skillId)) {
+                    $(this).prop('checked', true);
+                }
+            });
+
+            //mission type
+            if ($('#missionType').val() === "Time") {
+                $('#totalSeats').show()
+                $('#registration').show()
+                $('#goalObjectiveText').hide()
+                $('#goalValue').hide()
+            }
+            else {
+                $('#goalObjectiveText').show()
+                $('#goalValue').show()
+                $('#totalSeats').hide()
+                $('#registration').hide()
+            }
+
+            //image name
+            var imageNames = []
+            imageNames = $('#imageName').val().split(',')
+            for (var i = 0; i < imageNames.length; i++) {
+                var array = (imageNames[i].split(':'))
+                var name = array[0]
+                var defaultVal = array[1]
+                var image = $('<img>').attr('src', '/Upload/MissionPhotos/' + name);
+                var closebtn = $('<span>').text('x');
+                var item = $('<div>').addClass('image-item').append(image).append(closebtn);
+                $('#image-list').append(item);
+                blobData(name)
+                closebtn.on('click', function () {
+                    var index = $(this).parent().index();
+                    allfiles.splice(index, 1);
+                    $(this).parent().remove();
+                    console.log(allfiles)
+                });
+            }
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
+
+async function blobData(file) {
+    const response = await fetch('/Upload/MissionPhotos/' + file);
+    const blob = await response.blob();
+    const files = new File([blob], file, { type: blob.type });
+    allfiles.push(files);
+}
+
+//set default image
+$(document).on('click', '.image-item', function () {
+    console.log('called')
+
+    const Selected = document.createElement('div');
+    Selected.className = 'default-image';
+    Selected.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+
+    $(this).siblings('.image-item').addBack().each(function () {
+        $(this).removeClass('selected').find('.default-image').remove();
+    });
+
+    $(this).addClass('selected')
+    $(this).append(Selected)
+})
+
+
+
 
 
 
@@ -214,7 +461,7 @@ $('#addCms').on('click', function () {
 //edit cms
 $('.editCms').on('click', function () {
     var cmsId = $(this).closest('tr').attr('id');
-    console.log(cmsId)
+
     $.ajax({
         type: 'GET',
         url: "/Admin/EditCms",
@@ -467,7 +714,6 @@ $('.deleteSkill').on('click', function () {
 $(document).on('click', '.changeStoryStatus', function () {
     var storyId = $(this).closest('tr').attr('id');
     var status = $(this).data('value')
-    console.log(storyId, status)
 
     $.ajax({
         type: "POST",
@@ -598,7 +844,6 @@ $('#searchUser').on('keyup', function () {
     userTable.search($(this).val()).draw();
 })
 
-
 //Admin cms table
 var cmsTable = $('#cmsTable').DataTable({
     lengthChange: false,
@@ -629,7 +874,6 @@ var cmsTable = $('#cmsTable').DataTable({
 $('#searchCms').on('keyup', function () {
     cmsTable.search($(this).val()).draw();
 })
-
 
 //Admin mission table
 var missionTable = $('#missionTable').DataTable({
@@ -662,7 +906,6 @@ $('#searchMission').on('keyup', function () {
     missionTable.search($(this).val()).draw();
 })
 
-
 //Admin theme table
 var themeTable = $('#themeTable').DataTable({
     lengthChange: false,
@@ -693,7 +936,6 @@ var themeTable = $('#themeTable').DataTable({
 $('#searchTheme').on('keyup', function () {
     themeTable.search($(this).val()).draw();
 })
-
 
 //Admin skill table
 var skillTable = $('#skillTable').DataTable({
@@ -726,9 +968,6 @@ $('#searchSkill').on('keyup', function () {
     skillTable.search($(this).val()).draw();
 })
 
-
-
-
 //Admin application table
 var applicationTable = $('#applicationTable').DataTable({
     lengthChange: false,
@@ -759,8 +998,6 @@ var applicationTable = $('#applicationTable').DataTable({
 $('#searchApplication').on('keyup', function () {
     applicationTable.search($(this).val()).draw();
 })
-
-
 
 //Admin story table
 var storyTable = $('#storyTable').DataTable({

@@ -767,19 +767,3 @@ $('#notificationDropdown').click(function () {
 })
 
 
-//var modals = document.getElementsByClassName("modal");
-//for (var i = 0; i < modals.length; i++) {
-//    modals[i].addEventListener("show.bs.modal", function () {
-//        var inputs = this.querySelectorAll("input:not([readonly]), select");
-//        for (var j = 0; j < inputs.length; j++) {
-//            inputs[j].value = "";
-//        }
-//        var dateInputs = document.querySelectorAll('input[type="date"]');
-//        for (var i = 0; i < dateInputs.length; i++) {
-//            dateInputs[i].removeAttribute("min");
-//            dateInputs[i].removeAttribute("max");
-//        }
-//    });
-
-
-//}

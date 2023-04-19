@@ -183,6 +183,21 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addMission", vm);
         }
 
+        public IActionResult EditMission (long missionId)
+        {
+            AdminMissionViewModel vm = new();
+            vm.newMission = _adminMission.GetMissionToEdit(missionId);
+            vm.countryList = _adminUser.GetCountries();
+            if (vm.newMission.countryId != null)
+            {
+                long? countryId = vm.newMission.countryId;
+                vm.cityList = _adminUser.GetCitiesByCountry(countryId);
+            }
+            vm.themeList = _adminMission.GetThemes();
+            vm.skillList = _adminMission.GetSkills();
+            return PartialView("_addMission", vm);
+        }
+
         public IActionResult DeleteMission (long missionId)
         {
             _adminMission.DeleteMission(missionId);
@@ -192,7 +207,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult AdminMission (AdminMissionViewModel vm)
         {
-            return RedirectToAction("AdminMission");
+            return Ok();
         }
 
         public IActionResult AdminTheme ()

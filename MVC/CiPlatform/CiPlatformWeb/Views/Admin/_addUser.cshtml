@@ -73,10 +73,13 @@
                 <label asp-for="newUser.cityId" class="form-label">City<span class="required-field"></span></label>
                 <select asp-for="newUser.cityId" id="cityId" class="form-select cityList">
                     <option value="">Select city</option>
-                    @foreach (var city in Model.cityList)
+                    @if (Model.cityList is not null)
                     {
-                        <option value="@city.CityId">@city.Name</option>
-                    }
+                        @foreach (var city in Model.cityList)
+                        {
+                            <option value="@city.CityId">@city.Name</option>
+                        }
+                    }                    
                 </select>
                 <span asp-validation-for="newUser.cityId" class="text-danger"></span>
             </div>

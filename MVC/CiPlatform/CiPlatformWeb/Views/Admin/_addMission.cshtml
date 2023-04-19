@@ -5,7 +5,7 @@
 @model CiPlatformWeb.Entities.ViewModels.AdminMissionViewModel
 
 
-<form class="validateAdminForm" id="addMissionForm" method="post" data-validation="true">
+<form class="validateAdminForm" id="addMissionForm" data-validation="true">
     <div class="card mx-3 my-5">
         <div class="card-header">
             <h3 class="addEditMission">Add Mission</h3>
@@ -22,15 +22,18 @@
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.shortDescription" class="form-label">Short Description<span class="required-field"></span></label>
-<textarea asp-for="newMission.shortDescription" id="shortDescription" class="form-control" rows="4"></textarea>
+                <textarea asp-for="newMission.shortDescription" id="shortDescription" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="newMission.shortDescription" class="text-danger"></span>
             </div>
 
             <div class="form-group mt-3">
-                <label asp-for="newMission.description" class="form-label">Description<span class="required-field"></span></label>
-<textarea asp-for="newMission.description" id="missionDescription" name="editordata" class="form-control"></textarea>
-                <span asp-validation-for="newMission.description" class="text-danger"></span>
+                <label asp-for="newMission.missionDescription" class="form-label">Mission Description<span class="required-field"></span></label>
+                <textarea asp-for="newMission.missionDescription" id="missionDescription" class="form-control"></textarea>
+                @*  <textarea asp-for="newCms.description" id="cmsDescriptionHidden" name="newCms.description" style="display: none;"></textarea>*@
+                <span asp-validation-for="newMission.missionDescription" class="text-danger"></span>
             </div>
+
+            
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.countryId" class="form-label">Country<span class="required-field"></span></label>
@@ -48,10 +51,13 @@
                 <label asp-for="newMission.cityId" class="form-label">City<span class="required-field"></span></label>
                 <select asp-for="newMission.cityId" id="cityId" class="form-select cityList">
                     <option value="">Select city</option>
-                    @*@foreach (var city in Model.cityList)
+                    @if (Model.cityList is not null)
                     {
-                    <option value="@city.CityId">@city.Name</option>
-                    }*@
+                        @foreach (var city in Model.cityList)
+                        {
+                            <option value="@city.CityId">@city.Name</option>
+                        }
+                    }
                 </select>
                 <span asp-validation-for="newMission.cityId" class="text-danger"></span>
             </div>
@@ -64,7 +70,8 @@
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.organizationDetail" class="form-label">Organization Detail<span class="required-field"></span></label>
-                <input asp-for="newMission.organizationDetail" type="text" id="organizationDetail" class="form-control">
+                <textarea asp-for="newMission.organizationDetail" id="organizationDetail" class="form-control"></textarea>
+                @*  <textarea asp-for="newCms.description" id="cmsDescriptionHidden" name="newCms.description" style="display: none;"></textarea>*@
                 <span asp-validation-for="newMission.organizationDetail" class="text-danger"></span>
             </div>
 
@@ -81,12 +88,6 @@
             </div>
 
             <div class="form-group mt-3">
-                <label asp-for="newMission.registrationDeadline" class="form-label">Registration Deadline<span class="required-field"></span></label>
-                <input asp-for="newMission.registrationDeadline" type="date" id="registrationDeadline" class="form-control">
-                <span asp-validation-for="newMission.registrationDeadline" class="text-danger"></span>
-            </div>
-
-            <div class="form-group mt-3">
                 <label asp-for="newMission.missionType" class="form-label">Mission Type<span class="required-field"></span></label>
                 <select asp-for="newMission.missionType" id="missionType" class="form-select">
                     <option value="">Select mission type</option>
@@ -96,27 +97,33 @@
                 <span asp-validation-for="newMission.missionType" class="text-danger"></span>
             </div>
 
-            <div class="form-group mt-3">
-                <label asp-for="newMission.totalSeats" class="form-label">Total Seats</label>
-                <input asp-for="newMission.totalSeats" type="text" id="totalSeats" class="form-control">
+            <div class="form-group mt-3" id="registration">
+                <label asp-for="newMission.registrationDeadline" class="form-label">Registration Deadline<span class="required-field"></span></label>
+                <input asp-for="newMission.registrationDeadline" type="date" id="registrationDeadline" class="form-control">
+                <span asp-validation-for="newMission.registrationDeadline" class="text-danger"></span>
+            </div>                       
+
+            <div class="form-group mt-3" id="totalSeats">
+                <label asp-for="newMission.totalSeats" class="form-label">Total Seats<span class="required-field"></span></label>
+                <input asp-for="newMission.totalSeats" type="text" id="" class="form-control">
                 <span asp-validation-for="newMission.totalSeats" class="text-danger"></span>
             </div>
 
-            <div class="form-group mt-3">
-                <label asp-for="newMission.goalObjectiveText" class="form-label">Goal Objective Text</label>
-                <input asp-for="newMission.goalObjectiveText" type="text" id="goalObjectiveText" class="form-control">
+            <div class="form-group mt-3" id="goalObjectiveText">
+                <label asp-for="newMission.goalObjectiveText" class="form-label">Goal Objective Text<span class="required-field"></span></label>
+                <input asp-for="newMission.goalObjectiveText" type="text" id="" class="form-control">
                 <span asp-validation-for="newMission.goalObjectiveText" class="text-danger"></span>
             </div>
 
-            <div class="form-group mt-3">
-                <label asp-for="newMission.goalValue" class="form-label">Goal Value</label>
-                <input asp-for="newMission.goalValue" type="text" id="goalValue" class="form-control">
+            <div class="form-group mt-3" id="goalValue">
+                <label asp-for="newMission.goalValue" class="form-label">Goal Value<span class="required-field"></span></label>
+                <input asp-for="newMission.goalValue" type="text" id="" class="form-control">
                 <span asp-validation-for="newMission.goalValue" class="text-danger"></span>
             </div>
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.missionTheme" class="form-label">Mission Theme<span class="required-field"></span></label>
-                <select asp-for="newMission.missionTheme" id="missionTheme" class="form-select countryList">
+                <select asp-for="newMission.missionTheme" id="missionTheme" class="form-select">
                     <option value="">Select theme</option>
                     @foreach (var theme in Model.themeList)
                     {
@@ -132,17 +139,14 @@
                     @foreach (var skill in Model.skillList)
                     {
                         <div class="form-check">
-                            <input type="checkbox" value="@skill.SkillId" class="form-check-input">
-                            <label class="form-check-label">@skill.SkillName</label>
+                            <input type="checkbox" value="@skill.SkillId" id="skill-@skill.SkillId" class="form-check-input">
+                            <label class="form-check-label" for="skill-@skill.SkillId">@skill.SkillName</label>
                         </div>
                     }
                 </div>
                 <input asp-for="newMission.missionSkills" type="hidden" id="selectedSkills" />
                 <span asp-validation-for="newMission.missionSkills" class="text-danger"></span>
             </div>
-
-
-            @*image documnet video left*@
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.availability" class="form-label">Mission Availability<span class="required-field"></span></label>
@@ -156,11 +160,40 @@
                 <span asp-validation-for="newMission.availability" class="text-danger"></span>
             </div>
 
+            <div class="form-group mt-3">
+                <label class="form-label">Enter Video URL</label>
+                <textarea class="form-control" id="videoUrls" placeholder="Enter your url (Youtube links only)" rows="5"></textarea>
+                <span class="valUrlCount text-danger" style="display: none;">Enter only 20 URLs at maximum.</span>
+                <span class="valUrl text-danger" style="display: none;">Enter valid URLs only.</span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="hidden" asp-for="newMission.imageName" id="imageName" />
+                <div class="upload">
+                    <label class="form-label">Upload your Photos</label>
+                    <div id="dropzone" class="dropzone">
+                        <input type="file" class="d-none" accept=".jpg,.png, .jpeg" multiple id="file-input" />
+                        <label class="drag-drop mb-4" for="file-input" id="file-button">
+                            <img src="~/images/drag-and-drop.png" />
+                        </label>
+                        <span class="text-danger valImages" style="display: none">Only 20 png, jpg and jpeg images are allowed.</span>
+                    </div>
+                    <div id="image-list" class="d-flex">
+                        <!-- Selected images will be displayed here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+               @* <input type="file" name="Document" multiple id="Document" accept=".docx,.pdf" />
+                <div id="DocumentsContainer"></div>*@
+            </div>
+
         </div>
     </div>
     <div class="d-flex justify-content-end my-5 me-3">
         <button type="button" class="btn btn-outline-secondary rounded-pill cancel-btn">Cancel</button>
-        <button asp-action="AdminMission" type="submit" id="" class="btn mt-0 card-button ms-2 me-0 rounded-pill submit-btn">Submit</button>
+        <button type="submit" id="" class="btn mt-0 card-button ms-2 me-0 rounded-pill submit-btn">Submit</button>
     </div>
 </form>
 
@@ -171,3 +204,35 @@
 }
 
 <script src="~/js/admin.js" asp-append-version="true"></script>
+
+<script>
+    tinymce.init({
+        selector: "#missionDescription",
+        height: 300,
+        plugins: "lists advlist code emoticons link media",
+        toolbar:
+            " bold italic underline strikethrough emoticons numlist bullist " +
+            "subscript superscript undo redo",
+        //setup: function (editor) {
+        //    editor.on('change', function () {
+        //        var content = editor.getContent();
+        //        document.getElementById('cmsDescriptionHidden').value = content;
+        //    });
+        //}
+    });
+
+    //tinymce.init({
+    //        selector: "#organizationDetail",
+    //    height: 300,
+    //    plugins: "lists advlist code emoticons link media",
+    //    toolbar:
+    //        " bold italic underline strikethrough emoticons numlist bullist " +
+    //        "subscript superscript undo redo",
+    //    //setup: function (editor) {
+    //    //    editor.on('change', function () {
+    //    //        var content = editor.getContent();
+    //    //        document.getElementById('cmsDescriptionHidden').value = content;
+    //    //    });
+    //    //}
+    //});
+</script>

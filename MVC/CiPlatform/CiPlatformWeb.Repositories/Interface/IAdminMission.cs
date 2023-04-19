@@ -16,6 +16,8 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public List<Skill> GetSkills ();
 
+        public AdminMissionList GetMissionToEdit (long missionId);
+
         public void DeleteMission (long missionId);
     }
 }
