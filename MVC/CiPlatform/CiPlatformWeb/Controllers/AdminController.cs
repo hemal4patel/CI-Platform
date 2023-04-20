@@ -207,7 +207,36 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult AdminMission (AdminMissionViewModel vm)
         {
-            return Ok();
+            if (vm.newMission.missionId is not null)
+            {
+                if (_adminMission.MissionExistsForUpdate(vm.newMission.missionId, vm.newMission.misssionTitle, vm.newMission.organizationName))
+                {
+                    //TempData["icon"] = "error";
+                    //TempData["message"] = "Mission already exists!!!";
+                }
+                //else
+                //{
+                //    _adminCms.EditCmsPage(vm.newCms);
+                //    TempData["icon"] = "success";
+                //    TempData["message"] = "Mission updated successfully!!!";
+                //}
+            }
+            else
+            {
+                if (_adminMission.MissionExistsForNew(vm.newMission.misssionTitle, vm.newMission.organizationName))
+                {
+                    //TempData["icon"] = "error";
+                    //TempData["message"] = "Mission already exists!!!";
+                }
+                else
+                {
+                    _adminMission.AddMission(vm);
+                    //TempData["icon"] = "success";
+                    //TempData["message"] = "Mission added successfully!!!";
+                }
+            }
+
+            return Ok(new {vm = vm});
         }
 
         public IActionResult AdminTheme ()

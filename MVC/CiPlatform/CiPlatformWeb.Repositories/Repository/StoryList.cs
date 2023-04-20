@@ -130,7 +130,6 @@ namespace CiPlatformWeb.Repositories.Repository
                     _db.StoryMedia.Add(newMedia);
                 }
             }
-
             _db.SaveChanges();
         }
 

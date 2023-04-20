@@ -16,7 +16,15 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public List<Skill> GetSkills ();
 
+        public bool MissionExistsForNew (string title, string organizationName);
+
+        public bool MissionExistsForUpdate (long? missionId, string title, string organizationName);
+
+        public void AddMission (AdminMissionViewModel model);
+
         public AdminMissionList GetMissionToEdit (long missionId);
+
+        //public void EditMission (AdminMissionViewModel model);
 
         public void DeleteMission (long missionId);
     }

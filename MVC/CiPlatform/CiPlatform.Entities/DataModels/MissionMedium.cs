@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CiPlatformWeb.Entities.DataModels;
 
@@ -23,5 +24,6 @@ public partial class MissionMedium
 
     public DateTime? DeletedAt { get; set; }
 
+    [JsonIgnore]
     public virtual Mission Mission { get; set; } = null!;
 }

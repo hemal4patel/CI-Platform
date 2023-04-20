@@ -29,11 +29,9 @@
             <div class="form-group mt-3">
                 <label asp-for="newMission.missionDescription" class="form-label">Mission Description<span class="required-field"></span></label>
                 <textarea asp-for="newMission.missionDescription" id="missionDescription" class="form-control"></textarea>
-                @*  <textarea asp-for="newCms.description" id="cmsDescriptionHidden" name="newCms.description" style="display: none;"></textarea>*@
+                @*  <textarea asp-for="newMission.description" id="missionDescriptionHidden" name="newMission.missionDescription" style="display: none;"></textarea>*@
                 <span asp-validation-for="newMission.missionDescription" class="text-danger"></span>
             </div>
-
-            
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.countryId" class="form-label">Country<span class="required-field"></span></label>
@@ -70,7 +68,7 @@
 
             <div class="form-group mt-3">
                 <label asp-for="newMission.organizationDetail" class="form-label">Organization Detail<span class="required-field"></span></label>
-                <textarea asp-for="newMission.organizationDetail" id="organizationDetail" class="form-control"></textarea>
+                <textarea asp-for="newMission.organizationDetail" id="organizationDetail" class="form-control" rows="4"></textarea>
                 @*  <textarea asp-for="newCms.description" id="cmsDescriptionHidden" name="newCms.description" style="display: none;"></textarea>*@
                 <span asp-validation-for="newMission.organizationDetail" class="text-danger"></span>
             </div>
@@ -101,7 +99,7 @@
                 <label asp-for="newMission.registrationDeadline" class="form-label">Registration Deadline<span class="required-field"></span></label>
                 <input asp-for="newMission.registrationDeadline" type="date" id="registrationDeadline" class="form-control">
                 <span asp-validation-for="newMission.registrationDeadline" class="text-danger"></span>
-            </div>                       
+            </div>
 
             <div class="form-group mt-3" id="totalSeats">
                 <label asp-for="newMission.totalSeats" class="form-label">Total Seats<span class="required-field"></span></label>
@@ -177,6 +175,7 @@
                             <img src="~/images/drag-and-drop.png" />
                         </label>
                         <span class="text-danger valImages" style="display: none">Only 20 png, jpg and jpeg images are allowed.</span>
+                        <span class="text-danger valDefImg" style="display: none">Please select a default image.</span>
                     </div>
                     <div id="image-list" class="d-flex">
                         <!-- Selected images will be displayed here -->
@@ -185,8 +184,28 @@
             </div>
 
             <div class="form-group mt-3">
-               @* <input type="file" name="Document" multiple id="Document" accept=".docx,.pdf" />
-                <div id="DocumentsContainer"></div>*@
+                <input type="hidden" asp-for="newMission.documentName" id="documentName" />
+                <label class="form-label">Upload your Documents</label>
+                <div id="docs-dropzone" class="docs-dropzone">
+                    <input type="file" class="d-none" accept=".docx, .pdf, .xlsx" multiple id="doc-input" />
+                    <label class="drag-drop mb-4" for="doc-input" id="file-button">
+                        <img src="~/images/drag-and-drop.png" />
+                    </label>
+                    <span class="text-danger valDocs" style="display: none">Only 5 .docx, .pdf andd .xlsx documents are allowed.</span>
+                </div>
+                <div id="docs-list" class="d-flex flex-wrap p-2">
+                    <!-- Selected docs will be displayed here -->
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newMission.status" class="form-label">Status<span class="required-field"></span></label>
+                <select asp-for="newMission.status" id="status" class="form-select">
+                    <option value="">Status</option>
+                    <option value="1">Active</option>
+                    <option value="0">In-Active</option>
+                </select>
+                <span asp-validation-for="newMission.status" class="text-danger"></span>
             </div>
 
         </div>
@@ -212,27 +231,14 @@
         plugins: "lists advlist code emoticons link media",
         toolbar:
             " bold italic underline strikethrough emoticons numlist bullist " +
-            "subscript superscript undo redo",
-        //setup: function (editor) {
-        //    editor.on('change', function () {
-        //        var content = editor.getContent();
-        //        document.getElementById('cmsDescriptionHidden').value = content;
-        //    });
-        //}
+            "subscript superscript undo redo"
     });
-
-    //tinymce.init({
-    //        selector: "#organizationDetail",
-    //    height: 300,
-    //    plugins: "lists advlist code emoticons link media",
-    //    toolbar:
-    //        " bold italic underline strikethrough emoticons numlist bullist " +
-    //        "subscript superscript undo redo",
-    //    //setup: function (editor) {
-    //    //    editor.on('change', function () {
-    //    //        var content = editor.getContent();
-    //    //        document.getElementById('cmsDescriptionHidden').value = content;
-    //    //    });
-    //    //}
-    //});
+    tinymce.init({
+        selector: "#organizationDetail",
+        height: 300,
+        plugins: "lists advlist code emoticons link media",
+        toolbar:
+            " bold italic underline strikethrough emoticons numlist bullist " +
+            "subscript superscript undo redo"
+    });
 </script>

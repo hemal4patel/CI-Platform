@@ -385,6 +385,9 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("organization_name");
+            entity.Property(e => e.RegistrationDeadline)
+                .HasColumnType("datetime")
+                .HasColumnName("registration_deadline");
             entity.Property(e => e.ShortDescription)
                 .IsUnicode(false)
                 .HasColumnName("short_description");

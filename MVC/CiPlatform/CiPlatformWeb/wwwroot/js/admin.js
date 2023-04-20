@@ -2,7 +2,7 @@
 //get cities from country
 $('.countryList').on('change', function () {
     var countryId = $(this).val();
-    
+
     $.ajax({
         type: "GET",
         url: "/Admin/GetCitiesByCountry",
@@ -270,7 +270,6 @@ function handleFiles(e) {
     }
     var dataTransfer = new DataTransfer();
     fileList = dataTransfer.files;
-    console.log(allfiles)
 }
 
 var dropzone = $('#dropzone');
@@ -309,15 +308,38 @@ $('#file-input').on('change', function (e) {
 //submit mission form
 $('#addMissionForm').on('submit', function (e) {
     e.preventDefault();
+
+    if (!validateUrls()) {
+        return;
+    }
+
+    var defaultImg = $('.image-item.selected').index();
+    if (defaultImg == -1) {
+        $('.valDefImg').show();
+        return;
+    }
+
     if ($(this).valid()) {
         var formData = new FormData($(this)[0]);
 
+        //images
         if (allfiles.length != 0) {
             for (var i = 0; i < allfiles.length; i++) {
                 formData.append("images", allfiles[i]);
             }
         }
 
+        //default image
+        formData.append("defaultImage", defaultImg)
+
+        //documents
+        if (allDocs.length != 0) {
+            for (var i = 0; i < allDocs.length; i++) {
+                formData.append("documents", allDocs[i]);
+            }
+        }
+
+        //urls
         var urls = null;
         var u = $('#videoUrls').val();
         if (u != null) {
@@ -331,14 +353,26 @@ $('#addMissionForm').on('submit', function (e) {
             formData.append("videos", null);
         }
 
+        //mission description
+        var editor = tinymce.get('missionDescription');
+        var content = editor.getContent();
+        var description = content;
+        formData.append("description", description);
+
+        //organization detail
+        var editor = tinymce.get('organizationDetail');
+        var content = editor.getContent();
+        var orgDetail = content;
+        formData.append("orgDetail", description);
+
         $.ajax({
             type: 'POST',
             url: '/Admin/AdminMission',
             data: formData,
             contentType: false,
             processData: false,
-            success: function () {
-
+            success: function (data) {
+                console.log(data)
             },
             error: function (error) {
                 console.log(error)
@@ -355,7 +389,7 @@ $('.editMission').click(function () {
         type: 'GET',
         url: "/Admin/EditMission",
         data: { missionId: missionId },
-        success: function (data) {
+        success: async function (data) {
             var container = $('.adminMissionContainer');
             container.empty();
             container.append(data);
@@ -385,6 +419,9 @@ $('.editMission').click(function () {
                 $('#registration').hide()
             }
 
+            //description
+            //$('#tinymce p').html($('#missionDescription').val())
+
             //image name
             var imageNames = []
             imageNames = $('#imageName').val().split(',')
@@ -393,7 +430,7 @@ $('.editMission').click(function () {
                 var name = array[0]
                 var defaultVal = array[1]
                 var image = $('<img>').attr('src', '/Upload/MissionPhotos/' + name);
-                var closebtn = $('<span>').text('x');
+                var closebtn = $('<span>').addClass('close-icon').text('x');
                 var item = $('<div>').addClass('image-item').append(image).append(closebtn);
                 $('#image-list').append(item);
                 blobData(name)
@@ -401,7 +438,76 @@ $('.editMission').click(function () {
                     var index = $(this).parent().index();
                     allfiles.splice(index, 1);
                     $(this).parent().remove();
-                    console.log(allfiles)
+                });
+            }
+
+            //dates
+            var todayDate = new Date();
+            var startDate = $('#startDate').val();
+            startDate = new Date(startDate)
+            var endDate = $('#endDate').val()
+            endDate = new Date(endDate)
+            if (startDate > todayDate) { //not started
+                var yyyy = todayDate.getFullYear();
+                var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+                var dd = String(todayDate.getDate()).padStart(2, '0');
+                var minDate = yyyy + '-' + mm + '-' + dd;
+                $('#startDate').prop('min', minDate)
+
+                var yyyy = startDate.getFullYear();
+                var mm = String(startDate.getMonth() + 1).padStart(2, '0');
+                var dd = String(startDate.getDate()).padStart(2, '0');
+                var minDate = yyyy + '-' + mm + '-' + dd;
+                $('#endDate').prop('min', minDate)
+
+                var yyyy = todayDate.getFullYear();
+                var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+                var dd = String(todayDate.getDate()).padStart(2, '0');
+                var minDate = yyyy + '-' + mm + '-' + dd;
+                console.log(minDate)
+                $('#registrationDeadline').prop('min', minDate)
+
+                var max = new Date(startDate);
+                max.setDate(max.getDate() - 1);
+                var y = max.getFullYear();
+                var m = String(max.getMonth() + 1).padStart(2, '0');
+                var d = String(max.getDate()).padStart(2, '0');
+                var maxDate = y + '-' + m + '-' + d;
+                $('#registrationDeadline').prop('max', maxDate)
+            }
+            else if (startDate < todayDate) { //ongoing
+                $('#startDate').attr('disabled', true)
+                $('#registrationDeadline').attr('disabled', true)
+                if (endDate > todayDate) { //ongoing
+                    var yyyy = todayDate.getFullYear();
+                    var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+                    var dd = String(todayDate.getDate()).padStart(2, '0');
+                    var minDate = yyyy + '-' + mm + '-' + dd;
+                    $('#endDate').prop('min', minDate)
+                }
+                else { //closed
+                    $('#endDate').attr('disabled', true)
+                }
+            }
+
+            //document name
+            var documentNames = []
+            documentNames = $('#documentName').val().split(',')
+            for (var i = 0; i < documentNames.length; i++) {
+                var fileName = documentNames[i];
+                var docIcon = $('<i>').addClass('far fa-file-alt');
+                var docName = $('<div>').addClass('doc-name ms-3').text(fileName);
+                var closeIcon = $('<span>').addClass('close-icon ms-3').text('x');
+                var item = $('<div>').addClass('doc-item d-flex align-items-center justify-content-between me-2 mt-2').append(docIcon).append(docName).append(closeIcon);
+                docList.append(item);
+                const response = await fetch('/Upload/MissionDocuments/' + fileName);
+                const blob = await response.blob();
+                const files = new File([blob], fileName, { type: blob.type });
+                allDocs.push(files);
+                closeIcon.on('click', function () {
+                    var index = $(this).parent().index();
+                    allDocs.splice(index, 1);
+                    $(this).parent().remove();
                 });
             }
 
@@ -421,8 +527,6 @@ async function blobData(file) {
 
 //set default image
 $(document).on('click', '.image-item', function () {
-    console.log('called')
-
     const Selected = document.createElement('div');
     Selected.className = 'default-image';
     Selected.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
@@ -433,7 +537,120 @@ $(document).on('click', '.image-item', function () {
 
     $(this).addClass('selected')
     $(this).append(Selected)
+
+    $('.valDefImg').hide();
 })
+
+//youtube url validation
+function isYoutubeUrl(url) {
+    var pattern = /^.*(youtube.com\/|youtu.be\/|\/v\/|\/e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
+    return pattern.test(url);
+}
+
+function validateUrls() {
+    var urls = $('#videoUrls').val().split('\n');
+
+    if (urls.length > 20) {
+        $('.valUrlCount').show();
+        return false;
+    }
+    else {
+        $('.valUrlCount').hide();
+    }
+
+    for (var i = 0; i < urls.length; i++) {
+        var url = urls[i].trim();
+        if (url.length > 0 && !isYoutubeUrl(url)) {
+            $('.valUrl').show();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+$('#videoUrls').on('input', function () {
+    $('.valUrlCount').hide();
+    $('.valUrl').hide();
+})
+
+//documents grag drop
+var allDocs = [];
+var docInput = document.getElementById('doc-input');
+
+function handleDocs(e) {
+    var files = e.target.files || e.originalEvent.dataTransfer.files;
+    if (allDocs.length < 5) {
+        for (var i = 0; i < files.length && allDocs.length < 5; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+
+            if (file.type === "application/pdf" ||
+                file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+                allDocs.push(files[i]);
+
+                reader.onload = (function (file) {
+                    return function (e) {
+                        var fileName = file.name;
+                        var docIcon = $('<i>').addClass('far fa-file-alt');
+                        var docName = $('<div>').addClass('doc-name ms-3').text(fileName);
+                        var closeIcon = $('<span>').addClass('close-icon ms-3').text('x');
+                        var item = $('<div>').addClass('doc-item d-flex align-items-center justify-content-between me-2 mt-2').append(docIcon).append(docName).append(closeIcon);
+                        docList.append(item);
+
+                        closeIcon.on('click', function () {
+                            item.remove();
+                            allDocs.splice(allDocs.indexOf(file), 1);
+                        });
+                    };
+                })(file);
+
+                reader.readAsDataURL(file);
+            }
+            else {
+                $('.valDocs').show();
+            }
+        }
+    } else {
+        $('.valDocs').show();
+    }
+}
+
+var docsdropzone = $('#docs-dropzone');
+var docList = $('#docs-list');
+
+docsdropzone.on('drop', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    docsdropzone.removeClass('dragover');
+    $('.note-dropzone').remove();
+
+    $('.valDocs').hide();
+    handleDocs(e);
+});
+
+docsdropzone.on('dragover', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    docsdropzone.addClass('dragover');
+});
+
+docsdropzone.on('dragleave', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    docsdropzone.removeClass('dragover');
+});
+
+$('#doc-input').on('change', function (e) {
+    $('.valDocs').hide();
+    console.log(allDocs)
+    handleDocs(e);
+});
+
 
 
 

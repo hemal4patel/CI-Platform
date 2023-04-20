@@ -25,9 +25,15 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public IFormFile[]? images { get; set; }
 
-        public string[]? documents { get; set; }
+        public int? defaultImage { get; set; }
+
+        public IFormFile[]? documents { get; set; }
 
         public string[]? videos { get; set; }
+
+        public string description { get; set; }
+
+        public string orgDetail { get; set; }
     }
 
     public class AdminMissionList
@@ -41,8 +47,10 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Short description is required")]
         public string shortDescription { get; set; }
 
-        [Required(ErrorMessage = "Description is required")]
-        public string missionDescription { get; set; }
+        //[Required(ErrorMessage = "Description is required")]
+        //public string missionDescription { get; set; }
+
+        public string? missionDescription { get; set; }
 
         [Required(ErrorMessage = "Country is required")]
         public long countryId { get; set; }
@@ -69,6 +77,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string missionType { get; set; }
 
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Actions must contain only digits.")]
+        [Required(ErrorMessage = "Total seats is required")]
         public int? totalSeats { get; set; }
 
         [Required(ErrorMessage = "Goal objective text is required")]
@@ -76,7 +85,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         [Required(ErrorMessage = "Goal value is required")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Goal value must contain only digits.")]
-        public int? goalValue { get; set; }
+        public int goalValue { get; set; }
 
         [Required(ErrorMessage = "Mission theme is required")]
         public long missionTheme { get; set; }
@@ -88,5 +97,10 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string availability { get; set; }
 
         public string? imageName { get; set; }
+
+        public string? documentName { get; set; }
+
+        [Required(ErrorMessage = "Status is requred")]
+        public int? status { get; set; }
     }
 }

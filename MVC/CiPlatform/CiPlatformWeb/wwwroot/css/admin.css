@@ -257,6 +257,15 @@ thead tr th {
     vertical-align: middle !important;
 }
 
+.doc-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
 
 @media screen and (max-width:991px) {
     .vertical-nav-admin ul li a {
