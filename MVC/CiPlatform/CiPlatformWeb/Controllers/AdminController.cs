@@ -207,19 +207,23 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult AdminMission (AdminMissionViewModel vm)
         {
-            if (vm.newMission.missionId is not null)
+            if (vm.newMission.missionId != 0)
             {
                 if (_adminMission.MissionExistsForUpdate(vm.newMission.missionId, vm.newMission.misssionTitle, vm.newMission.organizationName))
                 {
                     //TempData["icon"] = "error";
                     //TempData["message"] = "Mission already exists!!!";
+                    return Ok(new { msg = "Mission already exists!!!" });
+
                 }
-                //else
-                //{
-                //    _adminCms.EditCmsPage(vm.newCms);
-                //    TempData["icon"] = "success";
-                //    TempData["message"] = "Mission updated successfully!!!";
-                //}
+                else
+                {
+                    _adminMission.EditMission(vm);
+                    //TempData["icon"] = "success";
+                    //TempData["message"] = "Mission updated successfully!!!";
+                    return Ok(new { msg = "Mission updated successfully!!!" });
+                }
+
             }
             else
             {
@@ -227,16 +231,18 @@ namespace CiPlatformWeb.Controllers
                 {
                     //TempData["icon"] = "error";
                     //TempData["message"] = "Mission already exists!!!";
+                    return Ok(new { msg = "Mission already exists!!!" });
+
                 }
                 else
                 {
                     _adminMission.AddMission(vm);
                     //TempData["icon"] = "success";
                     //TempData["message"] = "Mission added successfully!!!";
+                    return Ok(new { msg = "Mission added successfully!!!" });
                 }
             }
 
-            return Ok(new {vm = vm});
         }
 
         public IActionResult AdminTheme ()
@@ -376,7 +382,7 @@ namespace CiPlatformWeb.Controllers
             AdminApplicationViewModel vm = new();
             vm.applications = _adminApplication.GetApplications();
             return View(vm);
-        }        
+        }
 
         [HttpPost]
         public IActionResult ChangeApplicationStatus (long applicationId, int status)

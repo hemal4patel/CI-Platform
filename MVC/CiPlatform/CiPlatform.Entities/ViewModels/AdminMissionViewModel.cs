@@ -39,7 +39,7 @@ namespace CiPlatformWeb.Entities.ViewModels
     public class AdminMissionList
     {
 
-        public long? missionId { get; set; }
+        public long missionId { get; set; }
 
         [Required(ErrorMessage = "Mission title is required")]
         public string misssionTitle { get; set; }
@@ -71,7 +71,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public DateTime? endDate { get; set; }
 
         [Required(ErrorMessage = "Registration date is required")]
-        public DateTime registrationDeadline { get; set; }
+        public DateTime? registrationDeadline { get; set; }
 
         [Required(ErrorMessage = "Mission type is required")]
         public string missionType { get; set; }

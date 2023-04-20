@@ -94,21 +94,30 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 Title = vm.newMission.misssionTitle,
                 ShortDescription = vm.newMission.shortDescription,
-                Description = vm.newMission.missionDescription,
+                Description = vm.description,
                 CountryId = vm.newMission.countryId,
                 CityId = vm.newMission.cityId,
                 OrganizationName = vm.newMission.organizationName,
-                OrganizationDetail = vm.newMission.organizationDetail,
+                OrganizationDetail = vm.orgDetail,
                 StartDate = vm.newMission.startDate,
                 EndDate = vm.newMission.endDate,
                 MissionType = vm.newMission.missionType,
-                TotalSeats = vm.newMission.totalSeats,
                 ThemeId = vm.newMission.missionTheme,
                 Availability = vm.newMission.availability,
                 Status = vm.newMission.status,
                 CreatedAt = DateTime.Now
             };
-            //mission.Description = vm.missionDescription;
+            //time
+            if (mission.MissionType == "Time")
+            {
+                mission.TotalSeats = vm.newMission.totalSeats;
+                mission.RegistrationDeadline = vm.newMission.registrationDeadline;
+            }
+            else
+            {
+                mission.TotalSeats = null;
+                mission.RegistrationDeadline = null;
+            }
             _db.Missions.Add(mission);
             _db.SaveChanges();
             long missionId = mission.MissionId;
@@ -124,19 +133,8 @@ namespace CiPlatformWeb.Repositories.Repository
                     CreatedAt = DateTime.Now
                 };
                 _db.GoalMissions.Add(goal);
-                _db.SaveChanges(); 
+                _db.SaveChanges();
             }
-
-            //remove skills
-            //IQueryable<MissionSkill> skills = _db.MissionSkills.Where(s => s.MissionId == missionId);
-            //if (skills.Any())
-            //{
-            //    foreach (MissionSkill skill in skills)
-            //    {
-            //        skill.DeletedAt = DateTime.Now;
-            //    }
-            //    _db.SaveChanges();
-            //}
 
             //skills
             string[] userSelectedSkillsStr = vm.newMission.missionSkills.Split(',');
@@ -154,39 +152,26 @@ namespace CiPlatformWeb.Repositories.Repository
             }
             _db.SaveChanges();
 
-            //delete old medias
-            //var media = _db.MissionMedia.Where(m => m.MissionId == missionId);
-            //foreach (var m in media)
-            //{
-            //    if (m != null)
-            //    {
-            //        if (m.MediaType == "img")
-            //        {
-            //            var fileName = m.MediaPath;
-            //            File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName));
-            //        }
-            //        m.DeletedAt = DateTime.Now;
-            //    }
-            //}
-
             //images
             int count = 0;
-            if (vm.images != null)
+            if (vm.images is not null)
             {
                 foreach (IFormFile u in vm.images)
                 {
-                    if (u != null)
+                    if (u is not null)
                     {
                         string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName);
+                        var onlyName = Path.GetFileNameWithoutExtension(fileName);
                         MissionMedium newMedia = new MissionMedium()
                         {
                             MissionId = missionId,
                             MediaType = "img",
                             MediaPath = fileName,
+                            MediaName = onlyName,
                             CreatedAt = DateTime.Now,
                         };
-                        if(count == vm.defaultImage)
+                        if (count == vm.defaultImage)
                         {
                             newMedia.Default = 1;
                         }
@@ -210,7 +195,7 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 foreach (string u in vm.videos)
                 {
-                    if (u != null)
+                    if (u is not null)
                     {
                         MissionMedium newMedia = new MissionMedium()
                         {
@@ -227,11 +212,11 @@ namespace CiPlatformWeb.Repositories.Repository
             }
 
             //documents
-            if(vm.documents is not null)
+            if (vm.documents is not null)
             {
-                foreach(IFormFile d in vm.documents)
+                foreach (IFormFile d in vm.documents)
                 {
-                    if(d is not null)
+                    if (d is not null)
                     {
                         string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + d.FileName;
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionDocuments", fileName);
@@ -246,7 +231,193 @@ namespace CiPlatformWeb.Repositories.Repository
                         {
                             d.CopyTo(stream);
                         }
-                        _db.MissionDocuments.Add(document);                        
+                        _db.MissionDocuments.Add(document);
+                    }
+                }
+                _db.SaveChanges();
+            }
+        }
+
+        public void EditMission (AdminMissionViewModel vm)
+        {
+            Mission mission = _db.Missions.Where(m => m.MissionId == vm.newMission.missionId).FirstOrDefault();
+            mission.Title = vm.newMission.misssionTitle;
+            mission.ShortDescription = vm.newMission.shortDescription;
+            mission.Description = vm.description;
+            mission.CountryId = vm.newMission.countryId;
+            mission.CityId = vm.newMission.cityId;
+            mission.OrganizationName = vm.newMission.organizationName;
+            mission.OrganizationDetail = vm.orgDetail;
+            if (vm.newMission.startDate is not null)
+            {
+                mission.StartDate = vm.newMission.startDate;
+            }
+            if (vm.newMission.endDate is not null)
+            {
+                mission.EndDate = vm.newMission.endDate;
+            }
+            mission.MissionType = vm.newMission.missionType;
+            if (vm.newMission.missionType == "Time")
+            {
+                if (vm.newMission.registrationDeadline is not null)
+                {
+                    mission.RegistrationDeadline = vm.newMission.registrationDeadline;
+                }
+                mission.TotalSeats = vm.newMission.totalSeats;
+            }
+            else
+            {
+                mission.TotalSeats = null;
+                mission.RegistrationDeadline = null;
+            }
+            mission.ThemeId = vm.newMission.missionTheme;
+            mission.Availability = vm.newMission.availability;
+            mission.Status = vm.newMission.status;
+            mission.UpdatedAt = DateTime.Now;
+            _db.SaveChanges();
+
+            //goal
+            if (vm.newMission.missionType == "Goal")
+            {
+                GoalMission goal = _db.GoalMissions.Where(g => g.MissionId == mission.MissionId).FirstOrDefault();
+                goal.GoalValue = vm.newMission.goalValue;
+                goal.GoalObjectiveText = vm.newMission.goalObjectiveText;
+                goal.UpdatedAt = DateTime.Now;
+                _db.SaveChanges();
+            }
+
+            //remove skills
+            IQueryable<MissionSkill> skills = _db.MissionSkills.Where(s => s.MissionId == vm.newMission.missionId);
+            if (skills.Any())
+            {
+                foreach (MissionSkill skill in skills)
+                {
+                    skill.DeletedAt = DateTime.Now;
+                }
+                _db.SaveChanges();
+            }
+            //skills
+            string[] userSelectedSkillsStr = vm.newMission.missionSkills.Split(',');
+            long[] userSelectedSkills = new long[userSelectedSkillsStr.Length];
+            for (int i = 0; i < userSelectedSkillsStr.Length; i++)
+            {
+                userSelectedSkills[i] = long.Parse(userSelectedSkillsStr[i]);
+                MissionSkill newSkill = new MissionSkill()
+                {
+                    MissionId = vm.newMission.missionId,
+                    SkillId = userSelectedSkills[i],
+                    CreatedAt = DateTime.Now,
+                };
+                _db.MissionSkills.Add(newSkill);
+            }
+            _db.SaveChanges();
+
+            //delete old medias
+            IQueryable<MissionMedium> media = _db.MissionMedia.Where(m => m.MissionId == vm.newMission.missionId);
+            foreach (MissionMedium m in media)
+            {
+                if (m is not null)
+                {
+                    if (m.MediaType == "img")
+                    {
+                        string fileName = m.MediaPath;
+                        File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName));
+                    }
+                    m.DeletedAt = DateTime.Now;
+                }
+            }
+            IQueryable<MissionDocument> documents = _db.MissionDocuments.Where(m => m.MissionId == vm.newMission.missionId);
+            foreach (MissionDocument d in documents)
+            {
+                if (d is not null)
+                {
+                    string fileName = d.DocumentPath;
+                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionDocuments", fileName));
+                }
+                d.DeletedAt = DateTime.Now;
+            }
+            _db.SaveChanges();
+
+            //images
+            int count = 0;
+            if (vm.images is not null)
+            {
+                foreach (IFormFile u in vm.images)
+                {
+                    if (u is not null)
+                    {
+                        string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName);
+                        var onlyName = Path.GetFileNameWithoutExtension(fileName);
+                        MissionMedium newMedia = new MissionMedium()
+                        {
+                            MissionId = vm.newMission.missionId,
+                            MediaType = "img",
+                            MediaPath = fileName,
+                            MediaName = onlyName,
+                            CreatedAt = DateTime.Now,
+                        };
+                        if (count == vm.defaultImage)
+                        {
+                            newMedia.Default = 1;
+                        }
+                        else
+                        {
+                            newMedia.Default = 0;
+                        }
+                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            u.CopyTo(stream);
+                        }
+                        _db.MissionMedia.Add(newMedia);
+                        count++;
+                    }
+                }
+                _db.SaveChanges();
+            }
+
+            //url
+            if (vm.videos is not null)
+            {
+                foreach (string u in vm.videos)
+                {
+                    if (u is not null)
+                    {
+                        MissionMedium newMedia = new MissionMedium()
+                        {
+                            MissionId = vm.newMission.missionId,
+                            MediaType = "vid",
+                            MediaPath = u,
+                            Default = 0,
+                            CreatedAt = DateTime.Now,
+                        };
+                        _db.MissionMedia.Add(newMedia);
+                    }
+                    _db.SaveChanges();
+                }
+            }
+
+            //documents
+            if (vm.documents is not null)
+            {
+                foreach (IFormFile d in vm.documents)
+                {
+                    if (d is not null)
+                    {
+                        string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + d.FileName;
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionDocuments", fileName);
+                        MissionDocument document = new MissionDocument()
+                        {
+                            MissionId = vm.newMission.missionId,
+                            DocumentName = fileName,
+                            DocumentType = Path.GetExtension(fileName).Trim('.'),
+                            DocumentPath = fileName
+                        };
+                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            d.CopyTo(stream);
+                        }
+                        _db.MissionDocuments.Add(document);
                     }
                 }
                 _db.SaveChanges();

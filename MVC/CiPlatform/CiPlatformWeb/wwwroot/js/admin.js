@@ -313,10 +313,12 @@ $('#addMissionForm').on('submit', function (e) {
         return;
     }
 
-    var defaultImg = $('.image-item.selected').index();
-    if (defaultImg == -1) {
-        $('.valDefImg').show();
-        return;
+    if (allfiles.length != 0) {
+        var defaultImg = $('.image-item.selected').index();
+        if (defaultImg == -1) {
+            $('.valDefImg').show();
+            return;
+        }
     }
 
     if ($(this).valid()) {
@@ -363,7 +365,7 @@ $('#addMissionForm').on('submit', function (e) {
         var editor = tinymce.get('organizationDetail');
         var content = editor.getContent();
         var orgDetail = content;
-        formData.append("orgDetail", description);
+        formData.append("orgDetail", orgDetail);
 
         $.ajax({
             type: 'POST',

@@ -125,12 +125,19 @@
                     }
                     else
                     {
-                        int? percent = Model.MissionDetails.achievedGoal * (100 / Model.MissionDetails.totalGoal);
+                        double? percent = 0;
+                        if (Model.MissionDetails.achievedGoal is not null)
+                        {
+                            percent = ((double) Model.MissionDetails.achievedGoal / Model.MissionDetails.totalGoal) * 100;
+                        }
                         <img src="~/images/achieved.png" alt="deadline"
                          style="margin-right: 10px; width: 30px; height: 30px;">
                         <div class="card-detail-text">
                             <div class="progress" style="width: 150px">
-                                <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar" role="progressbar" aria-label="Warning example"
+                                 style="background-color: #F88634; width: @percent%"
+                                 aria-valuemin="0" aria-valuemax="100">
+                                </div>
                             </div>
                             <span> @Model.MissionDetails.achievedGoal achieved </span>
                         </div>
@@ -509,7 +516,7 @@
     <hr>
     <!-- RALATED MISSION CARDS -->
     <h2 class="text-center mt-5 mb-5">Related Missions</h2>
-    @if(Model.RelatedMissions.Count == 0)
+    @if (Model.RelatedMissions.Count == 0)
     {
         <h3 class="mb-3 text-center"> No related missions found </h3>
     }

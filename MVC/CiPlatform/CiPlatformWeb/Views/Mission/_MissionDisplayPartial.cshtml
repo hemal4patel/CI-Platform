@@ -189,13 +189,19 @@
                                     }
                                     else
                                     {
-                                        int? percent = obj.achievedGoal * (100 / obj.totalGoal);
-
+                                        double? percent = 0;
+                                        if (obj.achievedGoal is not null)
+                                        {
+                                            percent = ((double) obj.achievedGoal / obj.totalGoal) * 100;
+                                        }
                                         <img src="~/images/achieved.png" alt="deadline"
                                      style="margin-right: 10px; width: 30px; height: 30px;">
                                         <div class="card-detail-text">
                                             <div class="progress" style="width: 150px">
-                                                <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar" role="progressbar" aria-label="Warning example"
+                                             style="background-color: #F88634; width: @percent%"
+                                             aria-valuemin="0" aria-valuemax="100">
+                                                </div>
                                             </div>
                                             <span> @obj.achievedGoal achieved </span>
                                         </div>
@@ -399,13 +405,19 @@
                                     }
                                     else
                                     {
-                                        int? percent = obj.achievedGoal * (100 / obj.totalGoal);
-
+                                        double? percent = 0;
+                                        if (obj.achievedGoal is not null)
+                                        {
+                                            percent = ((double) obj.achievedGoal / obj.totalGoal) * 100;
+                                        }
                                         <img src="~/images/achieved.png" alt="deadline"
                                      style="margin-right: 10px; width: 30px; height: 30px;">
                                         <div class="card-detail-text">
                                             <div class="progress" style="width: 150px">
-                                                <div class="progress-bar" role="progressbar" aria-label="Warning example" style="background-color: #F88634; width:@percent%" aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar" role="progressbar" aria-label="Warning example"
+                                             style="background-color: #F88634; width: @percent%"
+                                             aria-valuemin="0" aria-valuemax="100">
+                                                </div>
                                             </div>
                                             <span> @obj.achievedGoal achieved </span>
                                         </div>

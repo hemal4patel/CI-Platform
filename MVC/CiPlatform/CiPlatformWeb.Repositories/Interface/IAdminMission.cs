@@ -24,7 +24,7 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public AdminMissionList GetMissionToEdit (long missionId);
 
-        //public void EditMission (AdminMissionViewModel model);
+        public void EditMission (AdminMissionViewModel vm);
 
         public void DeleteMission (long missionId);
     }
