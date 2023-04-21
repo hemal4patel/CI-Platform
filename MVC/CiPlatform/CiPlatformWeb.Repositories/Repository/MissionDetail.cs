@@ -72,6 +72,11 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
+        public List<Comment> GetApprovedComments (long MissionId)
+        {
+            return _db.Comments.Where(c => c.ApprovalStatus == "PUBLISHED" && c.MissionId == MissionId).Include(c => c.User).ToList();
+        }
+
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId)
         {
             var mission = _db.Missions.Where(m => m.MissionId == MissionId).FirstOrDefault();

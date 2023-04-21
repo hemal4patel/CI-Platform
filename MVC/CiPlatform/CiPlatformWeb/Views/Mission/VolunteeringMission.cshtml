@@ -391,7 +391,7 @@
                      aria-labelledby="mission-tab">
                     <h4 class="mb-3">Introduction</h4>
                     <p style="font: 15px;">
-                        @Model.MissionDetails.mission.Description
+                        @Html.Raw(Model.MissionDetails.mission.Description)
                     </p>
 
                     <h4 class="mb-3 mt-4">Documents</h4>
@@ -420,7 +420,7 @@
                      aria-labelledby="organization-tab">
                     <h4 class="mb-3">About Organization</h4>
                     <p style="font: 15px;">
-                        @Model.MissionDetails.mission.OrganizationDetail
+                        @Html.Raw(Model.MissionDetails.mission.OrganizationDetail)
                     </p>
                 </div>
 
@@ -438,26 +438,33 @@
 
                     <div class="comment-box mt-4" style=" height: auto; max-height: 70vh; overflow-y: scroll;">
                         <div class="p-4">
-
-                            @foreach (Comment com in Model.MissionDetails.ApprovedComments)
+                            @if (Model.ApprovedComments.Count != 0)
                             {
-                                <div class="card mb-3">
-                                    <div class="row g-0">
-                                        <div class="col-md-2 d-flex align-items-center justify-content-center">
-                                            <img src="~/images/volunteer1.png" alt=""
+
+                                @foreach (Comment com in Model.ApprovedComments)
+                                {
+                                    <div class="card mb-3">
+                                        <div class="row g-0">
+                                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                                <img src="~/images/volunteer1.png" alt=""
                                              class="rounded-circle vol-img">
-                                        </div>
-                                        <div class="col-md-10">
-                                            <div class="card-body">
-                                                <h5>@com.User.FirstName @com.User.LastName</h5>
-                                                <p>
-                                                    @com.CreatedAt.Value.ToString("dddd, MMMM dd, yyyy, h:mm tt")
-                                                </p>
-                                                <p>@com.CommentText</p>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="card-body">
+                                                    <h5>@com.User.FirstName @com.User.LastName</h5>
+                                                    <p>
+                                                        @com.CreatedAt.Value.ToString("dddd, MMMM dd, yyyy, h:mm tt")
+                                                    </p>
+                                                    <p>@com.CommentText</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
+                            }
+                            else
+                            {
+                                <span style="font-size: 20px;">No comments added</span>
                             }
                         </div>
                     </div>

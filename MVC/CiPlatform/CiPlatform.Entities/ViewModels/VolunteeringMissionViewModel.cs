@@ -14,6 +14,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public List<User> UserList { get; set; } = null;
 
+        public List<Comment> ApprovedComments { get; set; }
 
         public List<MissionApplication> RecentVolunteers { get; set; }
 

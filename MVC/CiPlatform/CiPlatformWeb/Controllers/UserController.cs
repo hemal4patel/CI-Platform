@@ -28,15 +28,8 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _userProfile.sessionUser(userId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
-
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
 
                 var vm = new UserProfileViewModel();
                 vm = _userProfile.GetUserDetails(userId);
@@ -63,19 +56,12 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _userProfile.sessionUser(userId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
 
                 if (ModelState.IsValid)
                 {
                     viewmodel = _userProfile.UpdateUserProfile(viewmodel);
-
                     viewmodel.CountryList = _userProfile.GetCountryList();
                     viewmodel.SkillList = _userProfile.GetSkillList();
                     viewmodel.UserSkills = _userProfile.GetUserSkills(userId);
@@ -84,7 +70,6 @@ namespace CiPlatformWeb.Controllers
                         long countryId = Convert.ToInt64(viewmodel.CountryId);
                         viewmodel.CityList = _userProfile.GetCityList(countryId);
                     }
-
 
                     TempData["message"] = "Profile updated successfully!!!";
 
@@ -109,11 +94,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult ChangePassword (string oldPassoword, string newPassword, string confirmPassword)
         {
-            ViewBag.Email = HttpContext.Session.GetString("Email");
-            ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
-            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             var user = _userProfile.CheckPassword(userId, oldPassoword);
 
@@ -131,11 +113,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult ContactUs (string subject, string message)
         {
-            ViewBag.Email = HttpContext.Session.GetString("Email");
-            ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
-            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             if (userId != null)
             {
@@ -154,14 +133,8 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _userProfile.sessionUser(userId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
 
                 var vm = new VolunteeringTimesheetViewModel();
 
@@ -184,14 +157,8 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _userProfile.sessionUser(userId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
 
 
                 //TIME BASED
@@ -255,8 +222,6 @@ namespace CiPlatformWeb.Controllers
                         }
                     }
                 }
-
-
                 return RedirectToAction("VolunteeringTimesheet");
             }
             else
@@ -267,11 +232,8 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult GetTimesheetData (long id)
         {
-            ViewBag.Email = HttpContext.Session.GetString("Email");
-            ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
-            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             if (userId != null)
             {
@@ -289,11 +251,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult DeleteTimesheetData (long id)
         {
-            ViewBag.Email = HttpContext.Session.GetString("Email");
-            ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
-            ViewBag.UserAvatar = _db.Users.Where(u => u.UserId == userId).Select(u => u.Avatar).FirstOrDefault();
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             if (userId != null)
             {
@@ -308,24 +267,6 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult PrivacyPolicy ()
         {
-            //if (HttpContext.Session.GetString("UserId") != null)
-            //{
-            //    //ViewBag.Email = HttpContext.Session.GetString("Email");
-            //    //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            //    ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            //    long userId = Convert.ToInt64(ViewBag.UserId);
-            //    User sessionUser = _userProfile.sessionUser(userId);
-            //    ViewBag.Email = sessionUser.Email;
-            //    ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-            //    ViewBag.UserAvatar = sessionUser.Avatar;
-
-            //    return View();
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-
             return View();
         }
     }

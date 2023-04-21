@@ -747,10 +747,12 @@ $('#notificationDropdown').click(function () {
                     if (item.missionId) {
                         url = '/Mission/VolunteeringMission?MissionId=' + item.missionId
                         items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this mission - <strong>' + item.mission.title + '</strong></a></li>'
+                        items += '<li><hr class="dropdown-divider"></li>'
                     }
                     else {
                         url = '/Story/StoryDetail?MissionId=' + item.story.missionId + '&UserId=' + item.story.userId
                         items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this story - <strong>' + item.story.title + '</strong></a></li>'
+                        items += '<li><hr class="dropdown-divider"></li>'
                     }
 
                 })

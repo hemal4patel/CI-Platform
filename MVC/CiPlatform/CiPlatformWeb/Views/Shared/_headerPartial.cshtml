@@ -1,0 +1,91 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+@model SessionUserViewModel
+
+<nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+        <div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#headerContent" aria-controls="headerContent" aria-expanded="false"
+                    aria-label="Toggle navigation" style="border:none">
+                <span><img src="~/images/list.png"></span>
+            </button>
+            <a class="navbar-brand" asp-controller="Mission" asp-action="PlatformLanding">
+                <img src="~/images/logo.png" alt="">
+            </a>
+        </div>
+
+        <div class="offcanvas offcanvas-start" id="headerContent">
+            <div class="offcanvas-header flex-row-reverse">
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+            </div>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 offcanvas-body">
+                <li class="nav-item">
+                    <a asp-controller="Story" asp-action="StoryListing" class="nav-link" aria-current="page">Stories</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Policy
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @*<li><a class="dropdown-item" href="#">Volunteering</a></li>
+                        <li><a class="dropdown-item" href="#">Sponsored</a></li>*@
+                        @if (Model.cmsPages.Count != 0)
+                        {
+                            @foreach (CmsPage cms in Model.cmsPages)
+                            {
+                                <li><a class="dropdown-item" "@Url.Action("CmsPage", "Home", new { CmsId = cms.CmsPageId })"> @cms.Title </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="text-center" style="font-size: 21px;">No pages available</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="d-flex">
+            <div class="dropdown">
+                <a class="nav-link" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    <span>
+                        <img src="~/images/bell.png" alt="" class="m-2">
+                    </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-md-end dropdown-position scroll-menu" id="invitesDropdown" aria-labelledby="notificationDropdown" style="width: 300px;">
+                </ul>
+            </div>
+
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>
+                        @if (Model.avatarName is not null)
+                        {
+                            <img src="~/Upload/UserProfile/@Model.avatarName" alt="" class="rounded-circle me-2"
+                             width="40" height="40">
+                        }
+                        else
+                        {
+                            <img src="~/Upload/UserProfile/no-avatar.jpg" alt="" class="rounded-circle me-2"
+                             width="40" height="40">
+                        }
+                    </span>
+                    <p class="d-inline" id="profileText">
+                        @Model.userName
+                    </p>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" asp-controller="User" asp-action="UserProfile">My Profile</a></li>
+                    <li><a class="dropdown-item" asp-controller="User" asp-action="VolunteeringTimesheet">Volunteering Timesheet</a></li>
+                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

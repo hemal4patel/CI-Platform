@@ -33,14 +33,8 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _missionlist.sessionUser(userId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
 
                 var vm = new DisplayMissionCards();
 
@@ -70,21 +64,15 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long UserId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _missionlist.sessionUser(UserId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
 
                 var vm = new DisplayMissionCards();
 
-                var data = _missionlist.GetMissions(viewmodel, UserId);
+                var data = _missionlist.GetMissions(viewmodel, userId);
                 vm.MissionList = data.Item1;
                 vm.MissionCount = data.Item2;
-                vm.UserList = _missionlist.GetUserList(UserId);
+                vm.UserList = _missionlist.GetUserList(userId);
 
                 return PartialView("_MissionDisplayPartial", vm);
             }
@@ -95,8 +83,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult AddToFavorites (int missionId)
         {
-            string Id = HttpContext.Session.GetString("UserId");
-            var userId = Convert.ToInt64(Id);
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             _missionlist.AddToFavorites(missionId, userId);
             return Ok();
@@ -108,20 +96,15 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                //ViewBag.Email = HttpContext.Session.GetString("Email");
-                //ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                ViewBag.UserId = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(ViewBag.UserId);
-                User sessionUser = _missionlist.sessionUser(userId);
-                ViewBag.Email = sessionUser.Email;
-                ViewBag.UserName = sessionUser.FirstName + " " + sessionUser.LastName;
-                ViewBag.UserAvatar = sessionUser.Avatar;
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
 
                 var vm = new VolunteeringMissionViewModel();
 
                 vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
                 vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId, userId);
                 vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
+                vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
 
                 return View(vm);
             }
@@ -134,8 +117,8 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult showRecentVounteers(int currVolPage, long missionId)
         {
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             var vm = new VolunteeringMissionViewModel();
 
@@ -149,8 +132,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult RateMission (int rating, long missionId)
         {
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             _missionlist.RateMission(missionId, userId, rating);
 
@@ -160,9 +143,9 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult ApplyToMission (long missionId)
         {
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
-            
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
+
             _missiondetail.ApplyToMission(missionId, userId);
             return Ok(new { icon = "success", message = "Successfully applied to the mission!!!" });
 
@@ -183,8 +166,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult PostComment (string comment, long missionId)
         {
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
 
             if (comment != null)
             {
@@ -200,7 +183,6 @@ namespace CiPlatformWeb.Controllers
         public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
         {
             var MissionInvite = _missionlist.HasAlreadyInvited(ToUserId, MissionId, FromUserId);
-
             if (MissionInvite != null)
             {
                 _missiondetail.ReInviteToMission(MissionInvite);
@@ -209,7 +191,6 @@ namespace CiPlatformWeb.Controllers
             {
                 _missiondetail.InviteToMission(FromUserId, ToUserId, MissionId);
             }
-
             var MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
             string link = MissionLink;
             await _missionlist.SendInvitationToCoWorker(ToUserId, FromUserId, link);
@@ -221,9 +202,8 @@ namespace CiPlatformWeb.Controllers
         //[HttpPost]
         public IActionResult GetInvitations ()
         {
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(ViewBag.UserId);
-
+            string userIdStr = HttpContext.Session.GetString("UserId");
+            long userId = Convert.ToInt64(userIdStr);
             List<MissionInvite> missionInvites = _missionlist.GetMissionInvites(userId);
             List<StoryInvite> storyInvites = _missionlist.GetStoryInvites(userId);
             var result = new { missionInvites = missionInvites, storyInvites = storyInvites };

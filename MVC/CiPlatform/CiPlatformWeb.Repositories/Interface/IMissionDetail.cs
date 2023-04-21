@@ -15,8 +15,8 @@ namespace CiPlatformWeb.Repositories.Interface
         public bool HasAlreadyApplied (long missionId, long userId);
 
         public void ApplyToMission (long missionId, long userId);
-        
-        //public List<Comment> GetApprovedComments (long MissionId);
+
+        public List<Comment> GetApprovedComments (long MissionId);
 
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId);
 
