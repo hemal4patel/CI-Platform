@@ -41,10 +41,10 @@ namespace CiPlatformWeb.Repositories.Repository
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
                 achievedGoal = m.Timesheets.Sum(m => m.Action),
-                mediaPath = m.MissionMedia.Select(m => m.MediaPath).ToList(),
+                missionMedia = m.MissionMedia.Where(m => m.DeletedAt == null).ToList(),
                 skills = m.MissionSkills.Select(m => m.Skill.SkillName).ToList(),
                 ApprovedComments = m.Comments.ToList(),
-                MissionDocuments = m.MissionDocuments.ToList(),
+                MissionDocuments = m.MissionDocuments.Where(m => m.DeletedAt == null).ToList(),
                 hasAppliedApprove = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "APPROVE"),
                 hasAppliedPending = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "PENDING"),
                 hasAppliedDecline = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "DECLINE")

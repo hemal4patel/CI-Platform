@@ -98,6 +98,8 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public string? imageName { get; set; }
 
+        public string? videosUrl { get; set; }
+
         public string? documentName { get; set; }
 
         [Required(ErrorMessage = "Status is requred")]

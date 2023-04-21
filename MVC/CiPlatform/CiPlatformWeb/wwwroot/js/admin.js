@@ -321,6 +321,34 @@ $('#addMissionForm').on('submit', function (e) {
         }
     }
 
+    var editorDesc = tinymce.get('missionDescription');
+    editorDesc.on('change', function () {
+        var text = editorDesc.getContent().trim();
+        console.log(text)
+        if (text !== '') {
+            $('#valDesc').hide();
+        }
+    });
+    var description = editorDesc.getContent().trim();
+    if (description === '') {
+        $('#valDesc').show();
+        return;
+    }
+
+    var editor = tinymce.get('organizationDetail');
+    editor.on('change', function () {
+        var text = editor.getContent().trim();
+        console.log(text)
+        if (text !== '') {
+            $('#orgDetails').hide();
+        }
+    });
+    var orgDetail = editor.getContent().trim();
+    if (orgDetail.trim() === "") {
+        $('#orgDetails').show();
+        return;
+    }
+
     if ($(this).valid()) {
         var formData = new FormData($(this)[0]);
 
@@ -355,16 +383,10 @@ $('#addMissionForm').on('submit', function (e) {
             formData.append("videos", null);
         }
 
-        //mission description
-        var editor = tinymce.get('missionDescription');
-        var content = editor.getContent();
-        var description = content;
+        //mission description        
         formData.append("description", description);
 
-        //organization detail
-        var editor = tinymce.get('organizationDetail');
-        var content = editor.getContent();
-        var orgDetail = content;
+        //organization detail        
         formData.append("orgDetail", orgDetail);
 
         $.ajax({
@@ -434,6 +456,14 @@ $('.editMission').click(function () {
                 var image = $('<img>').attr('src', '/Upload/MissionPhotos/' + name);
                 var closebtn = $('<span>').addClass('close-icon').text('x');
                 var item = $('<div>').addClass('image-item').append(image).append(closebtn);
+                if (defaultVal == 1) {
+                    const Selected = document.createElement('div');
+                    Selected.className = 'default-image';
+                    Selected.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+
+                    item.addClass('selected');
+                    item.append(Selected)
+                }
                 $('#image-list').append(item);
                 blobData(name)
                 closebtn.on('click', function () {

@@ -214,7 +214,6 @@ namespace CiPlatformWeb.Controllers
                     //TempData["icon"] = "error";
                     //TempData["message"] = "Mission already exists!!!";
                     return Ok(new { msg = "Mission already exists!!!" });
-
                 }
                 else
                 {
@@ -232,7 +231,6 @@ namespace CiPlatformWeb.Controllers
                     //TempData["icon"] = "error";
                     //TempData["message"] = "Mission already exists!!!";
                     return Ok(new { msg = "Mission already exists!!!" });
-
                 }
                 else
                 {
@@ -398,7 +396,7 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-        public IActionResult ViewStory (long storyId)
+        public IActionResult ViewStory ()
         {
             return PartialView("_viewStory");
         }

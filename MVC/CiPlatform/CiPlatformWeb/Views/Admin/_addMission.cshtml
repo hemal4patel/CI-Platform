@@ -30,7 +30,7 @@
                 <label asp-for="newMission.missionDescription" class="form-label">Mission Description<span class="required-field"></span></label>
                 <textarea asp-for="newMission.missionDescription" id="missionDescription" class="form-control"></textarea>
                 @*  <textarea asp-for="newMission.description" id="missionDescriptionHidden" name="newMission.missionDescription" style="display: none;"></textarea>*@
-                <span asp-validation-for="newMission.missionDescription" class="text-danger"></span>
+                <span id="valDesc" class="text-danger" style="display: none;">Mission description is required</span>
             </div>
 
             <div class="form-group mt-3">
@@ -70,7 +70,7 @@
                 <label asp-for="newMission.organizationDetail" class="form-label">Organization Detail<span class="required-field"></span></label>
                 <textarea asp-for="newMission.organizationDetail" id="organizationDetail" class="form-control" rows="4"></textarea>
                 @*  <textarea asp-for="newCms.description" id="cmsDescriptionHidden" name="newCms.description" style="display: none;"></textarea>*@
-                <span asp-validation-for="newMission.organizationDetail" class="text-danger"></span>
+                <span id="orgDetails" class="text-danger" style="display: none;">Organization details is required</span>
             </div>
 
             <div class="form-group mt-3">
@@ -159,8 +159,8 @@
             </div>
 
             <div class="form-group mt-3">
-                <label class="form-label">Enter Video URL</label>
-                <textarea class="form-control" id="videoUrls" placeholder="Enter your url (Youtube links only)" rows="5"></textarea>
+                <label asp-for="newMission.videosUrl" class="form-label">Enter Video URL</label>
+                <textarea asp-for="newMission.videosUrl" class="form-control" id="videoUrls" placeholder="Enter your url (Youtube links only)" rows="5"></textarea>
                 <span class="valUrlCount text-danger" style="display: none;">Enter only 20 URLs at maximum.</span>
                 <span class="valUrl text-danger" style="display: none;">Enter valid URLs only.</span>
             </div>
