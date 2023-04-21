@@ -74,7 +74,7 @@ namespace CiPlatformWeb.Controllers
                 }
                 else
                 {
-                    if (user.Password == obj.Password)
+                    if (BCrypt.Net.BCrypt.Verify(obj.Password, user.Password))
                     {
                         HttpContext.Session.SetString("UserId", user.UserId.ToString());
 

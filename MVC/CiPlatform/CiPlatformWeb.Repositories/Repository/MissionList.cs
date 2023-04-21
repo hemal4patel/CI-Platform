@@ -157,7 +157,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
             var toEmail = new MailAddress(Email.Email);
-            var fromEmailPassword = "oretveqrckcgcoog";
+            var fromEmailPassword = "pdckerdmuutmdzhz";
             string subject = "Mission Invitation";
             string body = "You Have Recieved Mission Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 

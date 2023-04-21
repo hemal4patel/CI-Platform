@@ -10,6 +10,8 @@ namespace CiPlatformWeb.Entities.ViewModels
     public class AdminStoryViewModel
     {
         public List<AdminStoryModel> stories { get; set; }
+
+        public Story storyDetail { get; set; }
     }
 
     public class AdminStoryModel

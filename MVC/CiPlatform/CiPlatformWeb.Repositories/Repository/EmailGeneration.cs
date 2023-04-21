@@ -58,7 +58,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
             var toEmail = new MailAddress(obj.Email);
-            var fromEmailPassword = "oretveqrckcgcoog"; 
+            var fromEmailPassword = "pdckerdmuutmdzhz"; 
             string subject = "Reset Password";
             string body = PasswordResetLink;
 

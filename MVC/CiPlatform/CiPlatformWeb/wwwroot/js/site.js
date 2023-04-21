@@ -288,6 +288,8 @@ $('.editTimeTimesheet').click(function () {
         data: { id: id },
         success: function (data) {
             $("#addVolHours").modal("show");
+            $('.field-validation-error').text('');
+            $('.field-validation-valid').text('');
 
             var today = new Date();
             var y = today.getFullYear();

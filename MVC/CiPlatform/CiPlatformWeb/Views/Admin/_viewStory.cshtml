@@ -1,7 +1,10 @@
-﻿
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+
+@model CiPlatformWeb.Entities.ViewModels.AdminStoryViewModel
+
 <link rel="stylesheet" href="~/css/story.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/slider.css" asp-append-version="true" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 
@@ -10,113 +13,145 @@
         <div class="col-lg-6">
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="~/images/Animal-welfare-&-save-birds-campaign-1.png" class="card-img-top"
-                             alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
-                             class="card-img-top" alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-1.png"
-                             class="card-img-top" alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                             class="card-img-top" alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Nourish-the-Children-in--African-country-1.png" class="card-img-top"
-                             alt="" style="height: 100%; width: 100%;">
-                    </div>
+                    @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
+                    {
+                        @foreach (var image in Model.storyDetail.StoryMedia)
+                        {
+                            if (image.Type == "img")
+                            {
+                                <div class="swiper-slide">
+                                    <img src="~/Upload/StoryPhotos/@image.Path" class="card-img-top" alt="" style="height: 100%; width: 100%;">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="swiper-slide">
+                                    <iframe src="//www.youtube.com/embed/@image.Path.Split("v=").ElementAt(1)" style="height: 100%; width: 100%;" allowfullscreen></iframe>
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <img src="~/Upload/StoryPhotos/no-image-found.png" class="card-img-top" alt="" />
+                    }
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="~/images/Animal-welfare-&-save-birds-campaign-1.png" class="card-img-top"
-                             alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
-                             class="card-img-top" alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold-1.png"
-                             class="card-img-top" alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                             class="card-img-top" alt="" style="height: 100%; width: 100%;">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/images/Nourish-the-Children-in--African-country-1.png" class="card-img-top"
-                             alt="" style="height: 100%; width: 100%;">
-                    </div>
+                    @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
+                    {
+                        @foreach (var image in Model.storyDetail.StoryMedia)
+                        {
+                            if (image.Type == "img")
+                            {
+                                <div class="swiper-slide">
+                                    <img src="~/Upload/StoryPhotos/@image.Path" class="card-img-top" alt="">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="swiper-slide">
+                                    <img src="https://img.youtube.com/vi/@image.Path.Split("v=").ElementAt(1)/0.jpg" />
+                                </div>
+                            }
+                        }
+                    }
                 </div>
             </div>
         </div>
-
         <!-- DATA -->
         <div class="col-lg-6">
-
             <!-- USER IMAGE -->
             <div class="user-img mt-5">
-                @*  @if (Model.storyDetail.User.Avatar is not null)
+                @if (Model.storyDetail.User.Avatar is not null)
                 {
-                <img src="~/images/404-Page-image.png" alt="" class="rounded-circle"
-                style="width: 100px; height: 100px;">
-                }*@
-
-                <img src="~/Upload/UserProfile/no-avatar.jpg" alt="" class="rounded-circle"
+                    <img src="~/Upload/UserProfile/@Model.storyDetail.User.Avatar" alt="" class="rounded-circle"
                      style="width: 100px; height: 100px;">
+                }
+                else
+                {
+                    <img src="~/Upload/UserProfile/no-avatar.jpg" alt="" class="rounded-circle"
+                     style="width: 100px; height: 100px;">
+                }
 
             </div>
 
             <!-- USER NAME AND VIEWS -->
             <div class="d-flex justify-content-between mt-2 user-data">
-                <div class="">FirstName LastName</div>
+                <div class="">@Model.storyDetail.User.FirstName @Model.storyDetail.User.LastName</div>
 
             </div>
 
-            <div class="user-intro mt-4">
-                <p style="font: 15px;">
-                    Model.storyDetail.User.WhyIVolunteer
-                </p>
+            <div class="row gy-4 buttons mt-5">
+                <strong style="font-size: 22px;">Mision: @Model.storyDetail.Mission.Title</strong>
             </div>
 
-            <div class="row gy-4 buttons mt-4">
-                <strong>Mision Title: hdfskjhfsek</strong>
+            <input type="hidden" value="@Model.storyDetail.StoryId" id="storyId" />
+            <div class="d-flex flex-wrap mt-5 storyButtons">
+                @if (Model.storyDetail.Status == "PUBLISHED")
+                {
+                    <button type="button" class="btn btn-success m-2" data-value="1">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Approved
+                    </button>
+                    <button type="button" class="btn btn-outline-danger m-2 storyStatusButtons" data-value="0">
+                        <i class="bi bi-x-circle me-2"></i>
+                        Decline
+                    </button>
+                }
+                else if (Model.storyDetail.Status == "DECLINED")
+                {
+                    <button type="button" class="btn btn-outline-success m-2 storyStatusButtons" data-value="1">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Approve
+                    </button>
+                    <button type="button" class="btn btn-danger m-2" data-value="0">
+                        <i class="bi bi-x-circle me-2"></i>
+                        Declined
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-outline-success m-2 storyStatusButtons" data-value="1">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Approve
+                    </button>
+                    <button type="button" class="btn btn-outline-danger m-2 storyStatusButtons" data-value="0">
+                        <i class="bi bi-x-circle me-2"></i>
+                        Decline
+                    </button>
+                }
+                <button type="button" class="btn btn-outline-dark m-2 delStory">
+                    <i class="bi bi-trash3 me-2"></i>
+                    Delete
+                </button>
             </div>
-
         </div>
-
     </div>
-
 
     <div class="row">
         <div class="tabs d-flex flex-column" style="font-size: 15px;">
             <ul class="nav nav-tabs mt-3">
                 <li class="nav-item">
                     <a class="nav-link active disabled" aria-current="page" href="#"
-                       style="font-size: 22px;"> Model.storyDetail.Title </a>
+                       style="font-size: 22px;"> @Model.storyDetail.Title </a>
                 </li>
             </ul>
 
 
             <div class="row mt-4">
                 <p style="font: 15px;">
-                   @* @Html.Raw(Model.storyDetail.Description)*@
-                   kydscuykjshewcikrlusewdi
+                    @Html.Raw(Model.storyDetail.Description)
                 </p>
             </div>
 
         </div>
     </div>
 </div>
+
 <!-- SLIDER SCRIPT -->
 <script>
     var swiper = new Swiper(".mySwiper", {

@@ -72,12 +72,21 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public User CheckPassword (long userId, string oldPassoword)
         {
-            return _db.Users.Where(u => u.UserId == userId && u.Password == oldPassoword).FirstOrDefault();
+            User user = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            if (BCrypt.Net.BCrypt.Verify(oldPassoword, user.Password))
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void UpdatePassword (User user, string newPassoword)
         {
-            user.Password = newPassoword;
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassoword);
+            user.Password = hashedPassword;
             user.UpdatedAt = DateTime.Now;
             _db.SaveChanges();
         }

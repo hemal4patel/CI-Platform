@@ -213,14 +213,14 @@ namespace CiPlatformWeb.Controllers
                 {
                     //TempData["icon"] = "error";
                     //TempData["message"] = "Mission already exists!!!";
-                    return Ok(new { msg = "Mission already exists!!!" });
+                    return Ok(new { icon = "error", message = "Mission already exists!!!" });
                 }
                 else
                 {
                     _adminMission.EditMission(vm);
                     //TempData["icon"] = "success";
                     //TempData["message"] = "Mission updated successfully!!!";
-                    return Ok(new { msg = "Mission updated successfully!!!" });
+                    return Ok(new { icon = "success", message = "Mission updated successfully!!!" });
                 }
 
             }
@@ -230,14 +230,14 @@ namespace CiPlatformWeb.Controllers
                 {
                     //TempData["icon"] = "error";
                     //TempData["message"] = "Mission already exists!!!";
-                    return Ok(new { msg = "Mission already exists!!!" });
+                    return Ok(new { icon = "error", message = "Mission already exists!!!" });
                 }
                 else
                 {
                     _adminMission.AddMission(vm);
                     //TempData["icon"] = "success";
                     //TempData["message"] = "Mission added successfully!!!";
-                    return Ok(new { msg = "Mission added successfully!!!" });
+                    return Ok(new { icon = "success", message = "Mission added successfully!!!" });
                 }
             }
 
@@ -396,9 +396,11 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-        public IActionResult ViewStory ()
+        public IActionResult ViewStory (long storyId)
         {
-            return PartialView("_viewStory");
+            AdminStoryViewModel vm = new();
+            vm.storyDetail = _adminStory.GetStoryDetails(storyId);
+            return PartialView("_viewStory", vm);
         }
 
         public IActionResult DeleteStory (long storyId)

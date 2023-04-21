@@ -258,8 +258,7 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 mission.EndDate = vm.newMission.endDate;
             }
-            mission.MissionType = vm.newMission.missionType;
-            if (vm.newMission.missionType == "Time")
+            if (mission.MissionType == "Time")
             {
                 if (vm.newMission.registrationDeadline is not null)
                 {

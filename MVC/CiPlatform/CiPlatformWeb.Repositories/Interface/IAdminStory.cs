@@ -1,4 +1,5 @@
-﻿using CiPlatformWeb.Entities.ViewModels;
+﻿using CiPlatformWeb.Entities.DataModels;
+using CiPlatformWeb.Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IAdminStory
     {
-        public List<AdminStoryModel> GetStories();
+        public List<AdminStoryModel> GetStories ();
+
+        public Story GetStoryDetails (long storyId);
 
         public void ChangeStoryStatus (long storyId, int status);
 

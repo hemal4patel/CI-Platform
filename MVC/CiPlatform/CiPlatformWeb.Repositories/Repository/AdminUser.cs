@@ -81,12 +81,13 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void AddNewUser (AdminUserModel user)
         {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
             User newUser = new User()
             {
                 FirstName = user.firstName,
                 LastName = user.lastName,
                 Email = user.email,
-                Password = user.password,
+                Password = hashedPassword,
                 PhoneNumber = user.PhoneNumber,
                 EmployeeId = user.employeeId,
                 Department = user.department,
@@ -103,11 +104,12 @@ namespace CiPlatformWeb.Repositories.Repository
         public void UpdateUser (AdminUserModel user)
         {
             User existingUser = _db.Users.Where(u => u.UserId == user.userId).FirstOrDefault();
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(existingUser.Password);
 
             existingUser.FirstName = user.firstName;
             existingUser.LastName = user.lastName;
             existingUser.Email = user.email;
-            existingUser.Password = user.password;
+            existingUser.Password = hashedPassword;
             existingUser.PhoneNumber = user.PhoneNumber; 
             existingUser.EmployeeId= user.employeeId;
             existingUser.Department = user.department;

@@ -1,4 +1,5 @@
-﻿using CiPlatformWeb.Entities.DataModels;
+﻿using BCrypt.Net;
+using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
@@ -22,12 +23,13 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void RegisterUser (RegistrationValidation obj)
         {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(obj.Password);
             var newUser = new User()
             {
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
                 Email = obj.Email,
-                Password = obj.Password,
+                Password = hashedPassword,
                 PhoneNumber = obj.PhoneNumber,
                 CreatedAt = DateTime.Now,
             };
@@ -42,8 +44,9 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void UpdatePassword (ResetPasswordValidation obj)
         {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(obj.Password);
             var x = _db.Users.FirstOrDefault(e => e.Email == obj.Email);
-            x.Password = obj.Password;
+            x.Password = hashedPassword;
             x.UpdatedAt = DateTime.Now;
             _db.Users.Update(x);
             _db.SaveChanges();

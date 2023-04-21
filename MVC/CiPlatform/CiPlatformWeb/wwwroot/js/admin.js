@@ -396,7 +396,16 @@ $('#addMissionForm').on('submit', function (e) {
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log(data)
+                swal.fire({
+                    position: 'center',
+                    icon: data.icon,
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
             },
             error: function (error) {
                 console.log(error)
@@ -443,8 +452,7 @@ $('.editMission').click(function () {
                 $('#registration').hide()
             }
 
-            //description
-            //$('#tinymce p').html($('#missionDescription').val())
+            $('#missionType').attr('disabled', true)
 
             //image name
             var imageNames = []
@@ -984,19 +992,28 @@ $(document).on('click', '.changeStoryStatus', function () {
     });
 })
 
-$(document).on('click', '.storyButtons button', function () {
+$(document).on('click', '.storyStatusButtons', function () {
     var status = $(this).data('value')
-    console.log(status)
-    var container = $('.storyButtons');
-    container.empty();
-    if (status == 0) {
+    var storyId = $('#storyId').val()
 
-        container.html('<button type="button" class="btn btn-outline-success storyButtons" data-value="1"><i class="bi bi-check-circle me-2"></i>Approve</button><button type="button" class="btn btn-danger" data-value="0"><i class="bi bi-x-circle me-2"></i>Declined</button><button type="button" class="btn btn-outline-dark"><i class="bi bi-trash3 me-2"></i>Delete</button>');
-    }
-    else {
-        container.html('<button type="button" class="btn btn-success" data-value="1"><i class="bi bi-check-circle me-2"></i>Approved</button><button type="button" class="btn btn-outline-danger storyButtons" data-value="0"><i class="bi bi-x-circle me-2"></i>Decline</button><button type="button" class="btn btn-outline-dark"><i class="bi bi-trash3 me-2"></i>Delete</button>');
-    }
-
+    $.ajax({
+        type: "POST",
+        url: "/Admin/ChangeStoryStatus",
+        data: { storyId: storyId, status: status },
+        success: function () {
+            var container = $('.storyButtons');
+            container.empty();
+            if (status == 0) {
+                container.html('<button type="button" class="btn btn-outline-success storyStatusButtons m-2" data-value="1"><i class="bi bi-check-circle me-2"></i>Approve</button><button type="button" class="btn btn-danger m-2" data-value="0"><i class="bi bi-x-circle me-2"></i>Declined</button><button type="button" class="btn btn-outline-dark m-2 delStory"><i class="bi bi-trash3 me-2"></i>Delete</button>');
+            }
+            else {
+                container.html('<button type="button" class="btn btn-success m-2" data-value="1"><i class="bi bi-check-circle me-2"></i>Approved</button><button type="button" class="btn btn-outline-danger storyStatusButtons m-2" data-value="0"><i class="bi bi-x-circle me-2"></i>Decline</button><button type="button" class="btn btn-outline-dark m-2 delStory"><i class="bi bi-trash3 me-2"></i>Delete</button>');
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
 })
 
 //view story details
@@ -1056,11 +1073,56 @@ $('.deleteStory').on('click', function () {
     })
 });
 
+$(document).on('click', '.delStory', function () {
+    var storyId = $('#storyId').val()
+    
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteStory",
+                data: { storyId: storyId },
+                success: function () {
+                    location.reload();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Story deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+})
 
 
 
 
 
+
+
+
+
+
+
+//cancel button
+$(document).on('click', '.cancelButton', function () {
+    console.log('called')
+    window.history.back();
+});
 
 //Admin user table
 var userTable = $('#userTable').DataTable({
@@ -1281,3 +1343,8 @@ $('#searchStory').on('keyup', function () {
 
 
 
+//toggle
+//$('.vertical-nav-admin li').on('click', function () {
+//    console.log('called')
+//    $(this).addClass('admin-nav-active').siblings().removeClass('admin-nav-active');
+//})

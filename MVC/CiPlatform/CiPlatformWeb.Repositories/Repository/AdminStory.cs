@@ -1,6 +1,7 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,15 @@ namespace CiPlatformWeb.Repositories.Repository
             });
 
             return list.ToList();
+        }
+
+        public Story GetStoryDetails(long storyId)
+        {
+            return _db.Stories.Where(s => s.StoryId == storyId)
+                .Include(s => s.User)
+                .Include(s => s.Mission)
+                .Include(s => s.StoryMedia)
+                .FirstOrDefault();
         }
 
         public void ChangeStoryStatus (long storyId, int status)

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "gHEYcWW2tqhtwFa30m3U1FdUosR2QNSHcEHL6gQ7+YGV40O0+CAvFGajPxgViwb9mimOSjs9lozDQDGI9g1w5Q==",
+  "dgSpecHash": "Nj2j7AMzEFmWmzFu+GPJ7hBi+/3J+1+bznzpsaEr3sPxiA5jYgdK/mmFkPDdyrgEcOmXckWBtyWjGyFf3Rmjyw==",
   "success": true,
   "projectFilePath": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\CiPlatformWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pci94\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pci94\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\pci94\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\pci94\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\pci94\\.nuget\\packages\\jquery\\1.6.3\\jquery.1.6.3.nupkg.sha512",
     "C:\\Users\\pci94\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
