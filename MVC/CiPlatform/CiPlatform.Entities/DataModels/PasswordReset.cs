@@ -12,4 +12,6 @@ public partial class PasswordReset
     public DateTime? CreatedAt { get; set; }
 
     public long Id { get; set; }
+
+    public DateTime? DeletedAt { get; set; }
 }

@@ -155,13 +155,17 @@ namespace CiPlatformWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ResetPasswordData = _db.PasswordResets.Any(e => e.Email == obj.Email && e.Token == obj.Token);
+                var ResetPasswordData = _db.PasswordResets.Any(e => e.Email == obj.Email && e.Token == obj.Token && e.DeletedAt == null);
+                // && DateTime.Now.Subtract(e.CreatedAt).TotalHours < 4
+                //var timeDifference = DateTime.Now - passwordReset.CreatedAt;
+                //if (timeDifference.TotalHours >= 4)
 
                 if (ResetPasswordData)
                 {
-                        _userRepository.UpdatePassword(obj);
-                        TempData["success"] = "Password updated!!!";
-                        return RedirectToAction("Index", "Home");                  
+                    _userRepository.UpdatePassword(obj);
+                    _userRepository.expireLink(obj.Email, obj.Token);
+                    TempData["success"] = "Password updated!!!";
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

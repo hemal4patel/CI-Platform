@@ -52,5 +52,11 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
+        public void expireLink (string email, string token)
+        {
+            PasswordReset data = _db.PasswordResets.Where(p => p.Email== email && p.Token == token).FirstOrDefault();
+            data.DeletedAt = DateTime.Now;
+        }
+
     }
 }

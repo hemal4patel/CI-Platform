@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CiPlatformWeb.Entities.DataModels;
 
@@ -22,7 +21,6 @@ public partial class StoryInvite
 
     public virtual User FromUser { get; set; } = null!;
 
-    [JsonIgnore]
     public virtual Story Story { get; set; } = null!;
 
     public virtual User ToUser { get; set; } = null!;
