@@ -66,6 +66,7 @@ namespace CiPlatformWeb.Controllers
             {
                 string userIdStr = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(userIdStr);
+                ViewBag.UserId = userId;
 
                 var vm = new DisplayMissionCards();
 
@@ -98,6 +99,7 @@ namespace CiPlatformWeb.Controllers
             {
                 string userIdStr = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(userIdStr);
+                ViewBag.UserId = userId;
 
                 var vm = new VolunteeringMissionViewModel();
 

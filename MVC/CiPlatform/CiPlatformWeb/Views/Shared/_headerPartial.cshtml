@@ -36,7 +36,7 @@
                         {
                             @foreach (CmsPage cms in Model.cmsPages)
                             {
-                                <li><a class="dropdown-item" "@Url.Action("CmsPage", "Home", new { CmsId = cms.CmsPageId })"> @cms.Title </a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("CmsPage", "Home", new { cmsId = cms.CmsPageId })"> @cms.Title </a></li>
                                 <li><hr class="dropdown-divider"></li>
                             }
                         }

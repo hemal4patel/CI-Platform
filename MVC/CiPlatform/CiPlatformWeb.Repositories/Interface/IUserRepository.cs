@@ -17,5 +17,7 @@ namespace CiPlatformWeb.Repositories.Interface
         void UpdatePassword (ResetPasswordValidation obj);
 
         void expireLink(string email, string token);
+
+        public CmsPage GetCmsPage (long id);
     }
 }

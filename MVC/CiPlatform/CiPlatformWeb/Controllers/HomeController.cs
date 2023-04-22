@@ -141,12 +141,23 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult ResetPassword (string email, string token)
         {
-            ResetPasswordValidation obj = new ResetPasswordValidation()
+            var cutoffTime = DateTime.Now.AddHours(-4);
+            var ResetPasswordData = _db.PasswordResets.Any(e => e.Email == email && e.Token == token && e.CreatedAt >= cutoffTime && e.DeletedAt == null);
+
+            if (ResetPasswordData)
             {
-                Email = email,
-                Token = token
-            };
-            return View(obj);
+                ResetPasswordValidation obj = new ResetPasswordValidation()
+                {
+                    Email = email,
+                    Token = token
+                };
+                return View(obj);
+            }
+            else
+            {
+                TempData["error"] = "Link is not valid!!!";
+                return View("ForgotPassword");
+            }
         }
 
         //POST
@@ -155,27 +166,21 @@ namespace CiPlatformWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var ResetPasswordData = _db.PasswordResets.Any(e => e.Email == obj.Email && e.Token == obj.Token && e.DeletedAt == null);
-                // && DateTime.Now.Subtract(e.CreatedAt).TotalHours < 4
-                //var timeDifference = DateTime.Now - passwordReset.CreatedAt;
-                //if (timeDifference.TotalHours >= 4)
+                _userRepository.UpdatePassword(obj);
+                _userRepository.expireLink(obj.Email, obj.Token);
+                TempData["success"] = "Password updated!!!";
+                return RedirectToAction("Index", "Home");
 
-                if (ResetPasswordData)
-                {
-                    _userRepository.UpdatePassword(obj);
-                    _userRepository.expireLink(obj.Email, obj.Token);
-                    TempData["success"] = "Password updated!!!";
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    TempData["error"] = "Link is not valid!!!";
-                    return View("ForgotPassword");
-                }
             }
             return View();
         }
 
+        public IActionResult CmsPage (long cmsId)
+        {
+            var viewmodel = new SessionUserViewModel();
+            viewmodel.selectedCmsPage = _userRepository.GetCmsPage(cmsId);
+            return View(viewmodel);
+        }
 
         //Logout
         public IActionResult Logout ()

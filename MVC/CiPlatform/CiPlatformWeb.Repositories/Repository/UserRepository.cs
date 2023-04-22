@@ -56,6 +56,12 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             PasswordReset data = _db.PasswordResets.Where(p => p.Email== email && p.Token == token).FirstOrDefault();
             data.DeletedAt = DateTime.Now;
+            _db.SaveChanges();
+        }
+
+        public CmsPage GetCmsPage (long id)
+        {
+            return _db.CmsPages.Where(c => c.CmsPageId == id).FirstOrDefault();
         }
 
     }

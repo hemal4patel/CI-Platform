@@ -71,6 +71,7 @@ namespace CiPlatformWeb.Controllers
             {
                 string userIdStr = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(userIdStr);
+                ViewBag.UserId = userId;
 
                 var vm = new ShareStoryViewModel();
                 vm.MissionTitles = _storyList.GetMissions(userId);
@@ -173,6 +174,7 @@ namespace CiPlatformWeb.Controllers
             {
                 string userIdStr = HttpContext.Session.GetString("UserId");
                 long userId = Convert.ToInt64(userIdStr);
+                ViewBag.UserId = userId;
 
                 _storyList.IncreaseViewCount(MissionId, UserId);
 

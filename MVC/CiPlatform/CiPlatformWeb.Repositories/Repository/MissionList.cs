@@ -129,7 +129,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
                 achievedGoal = m.Timesheets.Sum(m => m.Action),
-                mediaPath = m.MissionMedia.Where(m => m.Default == 1).Select(m => m.MediaPath).FirstOrDefault(),
+                mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
                 skill = m.MissionSkills.Select(m => m.Skill.SkillName).FirstOrDefault()
             });
 
