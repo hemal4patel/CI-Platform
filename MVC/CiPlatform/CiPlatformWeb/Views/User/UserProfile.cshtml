@@ -35,9 +35,6 @@
                     <div class="userName mt-2">
                         <span style="font-size: 23px;"> @Model.FirstName @Model.LastName </span>
                     </div>
-                    @*<div class="links mt-2">
-                    <a> <i class="bi bi-linkedin text-primary"></i> </a>
-                    </div>*@
                     <div class="changePassword mt-2">
                         <a class="text-decoration-none text-secondary changePasswordForm" style="font-size: 17px;" data-bs-toggle="modal"
                            data-bs-target="#changePassword"> Change Password </a>
@@ -247,7 +244,7 @@
                                         <div class="userSkill" data-value="@s.SkillId">@s.Skill.SkillName</div>
                                     }
                                 </div>
-                                <input asp-for="UserSelectedSkills" type="hidden" id="selectedSkills" class="selectedSkills" />
+                                <input asp-for="UserSelectedSkills" type="hidden" id="selectedSkills" class="" />
                             </div>
                         </div>
                     </div>
@@ -276,7 +273,7 @@
                                                 {
                                                     if (s.UserSkills.Any(us => us.SkillId == s.SkillId))
                                                     {
-                                                        <option selected value="@s.SkillId"> @s.SkillName </option>
+                                                        <option selected value="@s.SkillId" class="activeSkill"> @s.SkillName </option>
                                                     }
                                                     else
                                                     {
@@ -286,14 +283,14 @@
                                             </select>
                                         </div>
                                         <div class="col col-2 d-flex flex-column align-items-center justify-content-center">
-                                            <button type="button" class="border-0 bg-transparent selectSkills mb-3">
+                                            <button type="button" class="border-0 bg-transparent selectSkill mb-3">
                                                 <img src="~/images/right-arrow1.png">
                                             </button>
-                                            <button type="button" class="border-0 bg-transparent deselectSkills">
+                                            <button type="button" class="border-0 bg-transparent deselectSkill">
                                                 <img src="~/images/left.png">
                                             </button>
                                         </div>
-                                        <div class="col col-5 upSkillsSelected">
+                                        <div class="col col-5 selectedSkills">
                                             <select class="form-select" size="10" multiple>
                                                 @foreach (var s in Model.UserSkills)
                                                 {
@@ -302,6 +299,48 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    @*<div class="row d-flex justify-content-center p-0 m-0">
+                                    <div class="col-5 p-0">
+                                    <div class="skill-menu">
+                                    <select name="selectSkill" id="selectSkill" size=20 multiple="multiple" class="">
+                                    @foreach (var skill in @Model.SkillList)
+                                    {
+                                    bool isSkillSelected = Model.UserSkills != null && Model.UserSkills.Any(us => us.SkillId == skill.SkillId);
+                                    if (isSkillSelected)
+                                    {
+                                    <option class="p-1 activeSkill" value="@skill.SkillId" selected>@skill.SkillName</option>
+                                    }
+                                    else
+                                    {
+                                    <option class="p-1" value="@skill.SkillId">@skill.SkillName</option>
+                                    }
+                                    }
+                                    </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-1 p-0 d-flex flex-column arrows justify-content-center align-items-center ">
+                                    <img class="my-2" onclick="rightClick()" src="~/images/right-arrow1.png" />
+                                    <img class="my-2" onclick="leftClick()" src="~/images/left.png" />
+                                    </div>
+                                    <div class="col-5 p-0">
+                                    <div class="skill-menu" id="">
+                                    <select name="selectedSkill" id="selectedSkill" size=20 multiple="multiple" class="">
+                                    @{
+                                    var skillcount = @Model.UserSkills;
+                                    if (skillcount != null)
+                                    {
+                                    @foreach (var skillname in skillcount)
+                                    {
+                                    <option class="p-1" value="@skillname.SkillId">@skillname.Skill.SkillName</option>
+                                    }
+                                    }
+                                    }
+                                    </select>
+                                    </div>
+                                    </div>
+                                    </div>*@
+
                                 </div>
                                 <div class="modal-footer mt-2" style="display: flex; justify-content: left;">
                                     <button type="button" class="cancel-btn rounded-pill py-1 px-4"

@@ -122,48 +122,118 @@ $("#countryDropdown").click(function () {
 });
 
 
-$('.selectSkills').click(function () {
-    var newOption;
-    var displaySkillsDiv = $('.upSkillsSelected select');
-    var selectedSkills = $('.skillOptions select option:selected');
-    displaySkillsDiv.empty();
-    selectedSkills.each(function () {
+//$('.selectSkills').click(function () {
+//    var newOption;
+//    var displaySkillsDiv = $('.upSkillsSelected select');
+//    var selectedSkills = $('.skillOptions select option:selected');
+//    displaySkillsDiv.empty();
+//    selectedSkills.each(function () {
+//        newOption = $('<option>', {
+//            value: $(this).val(),
+//            text: $(this).text(),
+//        })
+//        displaySkillsDiv.append(newOption)
+//    })
+
+
+//})
+
+////removing skills
+//$('.deselectSkills').click(function () {
+//    var selectedSkills = $('.upSkillsSelected select option:selected');
+//    selectedSkills.each(function () {
+//        $(this).remove();
+//    })
+//})
+
+//function saveSkills() {
+//    var container = $('.skillsContainer');
+//    container.empty();
+//    var selectedUserSkills = [];
+//    skills = "";
+
+//    $('.upSkillsSelected select option').each(function () {
+//        var value = $(this).val();
+//        var text = $(this).html();
+//        skills += ` <div class="userSkill" data-value=${value}>${text}</div>`
+//        selectedUserSkills.push($(this).val());
+//    })
+//    container.append(skills);
+//    $('#selectedSkills').val(selectedUserSkills.join());
+//}
+
+
+//let array = new Array();
+//function rightClick() {
+//    $("#selectSkill option:selected").each(function () {
+//        $(this).addClass("activeSkill");
+//        var temp = $(this).text();
+//        var skillId = $(this).val();
+//        var obj = 0;
+//        $("#selectedSkill option").each(function () {
+
+//            if ($(this).val() == skillId) {
+//                obj = 1;
+//            }
+//        });
+//        if (obj == 0) {
+//            $("#selectedSkill").append($(`<option class="p-1" value=` + skillId + `>` + temp + `</option>`));
+//            userskill.add(skillId);
+//        }
+//    });
+//}
+
+//function leftClick() {
+//    $("#selectedSkill option:selected").each(function () {
+//        var skillId = $(this).remove().val();
+//        $("#selectSkill option[value='" + skillId + "']").removeClass("activeSkill");
+//        $("#selectSkill option[value='" + skillId + "']").prop("selected", false);
+//        userskill.delete(skillId);
+//    });
+//}
+
+$('.selectSkill').on('click', function () {
+    var selectedSkill = $('.skillOptions select option:selected')
+    selectedSkill.prop('selected', true)
+    var isSelected = false
+    $('.selectedSkills select option').each(function () {
+        if (selectedSkill.val() == $(this).val()) {
+            isSelected = true;
+        }
+    })
+    if (!isSelected) {
         newOption = $('<option>', {
-            value: $(this).val(),
-            text: $(this).text(),
+            value: selectedSkill.val(),
+            text: selectedSkill.text(),
         })
-        displaySkillsDiv.append(newOption)
-    })
-
-
+        $('.selectedSkills select').append(newOption)
+    }
 })
 
-//removing skills
-$('.deselectSkills').click(function () {
-    var selectedSkills = $('.upSkillsSelected select option:selected');
-    selectedSkills.each(function () {
-        $(this).remove();
+$('.deselectSkill').on('click', function () {
+    var deselectedSkill = $('.selectedSkills select option:selected')
+    $('.skillOptions select option:selected').each(function () {
+        if ($(this).val() == deselectedSkill.val()){
+            $(this).prop('selected', false)
+        }
     })
+    deselectedSkill.remove();
 })
-
 
 function saveSkills() {
-    var container = $('.skillsContainer');
-    container.empty();
-    var selectedUserSkills = [];
-    skills = "";
-
-    $('.upSkillsSelected select option').each(function () {
-        var value = $(this).val();
-        var text = $(this).html();
-        skills += ` <div class="userSkill" data-value=${value}>${text}</div>`
-        selectedUserSkills.push($(this).val());
-
+    var container = $('.skillsContainer')
+    container.empty()
+    var selectedSkills = []
+    skills = ""
+    $('.selectedSkills select option').each(function () {
+        var skillId = $(this).val()
+        var skillName = $(this).text();
+        selectedSkills.push(skillId)
+        skills += '<div class="userSkill" data-value="' + skillId + '">' + skillName + '</div>'
     })
-    container.append(skills);
-    $('#selectedSkills').val(selectedUserSkills.join());
+    container.append(skills)
+    $('#selectedSkills').val(selectedSkills.join())
 }
-
 
 // Add change event listener to profile image file input
 $('#avatarFile').change(function () {

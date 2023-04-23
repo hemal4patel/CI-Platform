@@ -105,9 +105,32 @@ form {
             color: white;
         }
 
+.skill-menu {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #D9D9D9;
+}
+
+    .skill-menu select {
+        padding: 0px;
+        border: none !important;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+
+        .skill-menu select option {
+            padding: 1px 16px !important;
+            margin: 15px 0px;
+            font-size: 14px;
+            color: #414141;
+            line-height: 30px;
+        }
+
+            .skill-menu select option .activeSkill {
+                background-color: lightgrey!important;
+            }
 
 /*RESPONSIVE*/
-
 @media (max-width: 1199.98px) {
     .container-fluid {
         flex-direction: column;
