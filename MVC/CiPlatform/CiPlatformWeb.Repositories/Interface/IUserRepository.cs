@@ -19,5 +19,8 @@ namespace CiPlatformWeb.Repositories.Interface
         void expireLink(string email, string token);
 
         public CmsPage GetCmsPage (long id);
+
+        public List<Banner> GetBanners ();
+
     }
 }

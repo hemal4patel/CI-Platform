@@ -32,7 +32,9 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult Registration ()
         {
-            return View();
+            RegistrationValidation vm = new();
+            vm.banners = _userRepository.GetBanners();
+            return View(vm);
         }
 
         //POST
@@ -61,7 +63,9 @@ namespace CiPlatformWeb.Controllers
         public IActionResult Index ()
         {
             HttpContext.Session.Remove("UserId");
-            return View();
+            LoginValidation vm = new();
+            vm.banners = _userRepository.GetBanners();
+            return View(vm);
         }
 
         //POST
@@ -120,7 +124,9 @@ namespace CiPlatformWeb.Controllers
         //GET
         public IActionResult ForgotPassword ()
         {
-            return View();
+            ForgotPasswordValidation vm = new();
+            vm.banners = _userRepository.GetBanners();
+            return View(vm);
         }
 
         //POST
@@ -160,12 +166,13 @@ namespace CiPlatformWeb.Controllers
                     Email = email,
                     Token = token
                 };
+                obj.banners = _userRepository.GetBanners();
                 return View(obj);
             }
             else
             {
                 TempData["error"] = "Link is not valid!!!";
-                return View("ForgotPassword");
+                return RedirectToAction("ForgotPassword");
             }
         }
 

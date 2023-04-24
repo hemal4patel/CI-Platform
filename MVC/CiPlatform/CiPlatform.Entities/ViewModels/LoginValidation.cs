@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CiPlatformWeb.Entities.DataModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; } = null!;
+
+        public List<Banner> banners { get; set; }
     }
 }

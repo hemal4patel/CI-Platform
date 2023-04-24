@@ -1,4 +1,5 @@
-﻿using Microsoft.Build.Framework;
+﻿using CiPlatformWeb.Entities.DataModels;
+using Microsoft.Build.Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,5 +15,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         [RegularExpression(@"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$",
         ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = null!;
+
+        public List<Banner> banners { get; set; }
+
     }
 }

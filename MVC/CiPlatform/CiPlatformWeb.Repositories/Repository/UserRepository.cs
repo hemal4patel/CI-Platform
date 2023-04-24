@@ -64,5 +64,10 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.CmsPages.Where(c => c.CmsPageId == id).FirstOrDefault();
         }
 
+        public List<Banner> GetBanners ()
+        {
+            return _db.Banners.Where(b => b.DeletedAt == null).ToList();
+        }
+
     }
 }
