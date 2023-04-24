@@ -58,6 +58,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 lastName = u.LastName,
                 email = u.Email,
                 PhoneNumber = u.PhoneNumber,
+                role = u.Role,
                 employeeId = u.EmployeeId,
                 department = u.Department,
                 countryId = u.CountryId,
@@ -89,6 +90,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 Email = user.email,
                 Password = hashedPassword,
                 PhoneNumber = user.PhoneNumber,
+                Role = user.role,
                 EmployeeId = user.employeeId,
                 Department = user.department,
                 CityId = user.cityId,
@@ -110,8 +112,9 @@ namespace CiPlatformWeb.Repositories.Repository
             existingUser.LastName = user.lastName;
             existingUser.Email = user.email;
             existingUser.Password = hashedPassword;
-            existingUser.PhoneNumber = user.PhoneNumber; 
-            existingUser.EmployeeId= user.employeeId;
+            existingUser.PhoneNumber = user.PhoneNumber;
+            existingUser.Role = user.role;
+            existingUser.EmployeeId = user.employeeId;
             existingUser.Department = user.department;
             existingUser.CityId = user.cityId;
             existingUser.CountryId = user.countryId;

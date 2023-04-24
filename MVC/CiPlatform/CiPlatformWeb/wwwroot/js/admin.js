@@ -1075,7 +1075,7 @@ $('.deleteStory').on('click', function () {
 
 $(document).on('click', '.delStory', function () {
     var storyId = $('#storyId').val()
-    
+
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -1113,6 +1113,142 @@ $(document).on('click', '.delStory', function () {
 
 
 
+//add banner
+$('#addBanner').on('click', function () {
+
+    $.ajax({
+        type: 'GET',
+        url: '/Admin/AddBanner',
+        success: function (data) {
+            var container = $('.adminBannerContainer');
+            container.empty();
+            container.append(data);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//display selected banner image
+$('#bannerImage').on('change', function (e) {
+    $('#valBanner').hide();
+    var imagePreview = $('#imagePreview')
+
+    var uploadedFile = e.target.files[0];
+    var imageUrl = URL.createObjectURL(uploadedFile);
+    var imagePreview = $('#imagePreview')
+    imagePreview.empty();
+    var image = $('<img>').attr('src', imageUrl);
+    var item = $('<div>').addClass('image-banner').append(image);
+    imagePreview.append(item);
+})
+
+//edit banner
+$('.editBanner').on('click', function () {
+    var bannerId = $(this).closest('tr').attr('id');
+
+    $.ajax({
+        type: 'GET',
+        url: "/Admin/EditBanner",
+        data: { bannerId: bannerId },
+        success: function (data) {
+            var container = $('.adminBannerContainer');
+            container.empty();
+            container.append(data);
+            $('.addEditBanner').text('Edit Banner')
+
+            var imageName = $('#imageName').val()
+            var imagePreview = $('#imagePreview')
+            imagePreview.empty();
+            var image = $('<img>').attr('src', '/Upload/Banner/' + imageName);
+            var item = $('<div>').addClass('image-banner').append(image);
+            imagePreview.append(item);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//submit banner form
+$('#addBannerForm').on('submit', function (e) {
+    e.preventDefault();
+
+    var image = $('#imagePreview').find('img').attr('src');
+    if (image == null) {
+        $('#valBanner').show();
+        return false;
+    }
+
+    if ($(this).valid()) {
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/AdminBanner',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                swal.fire({
+                    position: 'center',
+                    icon: data.icon,
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+})
+
+// delete banner
+$('.deleteBanner').on('click', function () {
+    var bannerId = $(this).closest('tr').attr('id')
+    var row = $(this).closest('tr')
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteBanner",
+                data: { bannerId: bannerId },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Banner deleted successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+});
+
+
 
 
 
@@ -1121,7 +1257,7 @@ $(document).on('click', '.delStory', function () {
 //cancel button
 $(document).on('click', '.cancelButton', function () {
     console.log('called')
-    window.history.back();
+    window.location.reload()
 });
 
 //Admin user table
@@ -1341,10 +1477,71 @@ $('#searchStory').on('keyup', function () {
     storyTable.search($(this).val()).draw();
 })
 
+//Admin banner table
+var bannerTable = $('#bannerTable').DataTable({
+    lengthChange: false,
+    ordering: false,
+    paging: true,
+    searching: true,
+    pageLength: 7,
+    pagingType: "full_numbers",
+    language: {
+        paginate: {
+            first: '<span class="image-class-first"><i class="bi bi-chevron-double-left"></i></span>',
+            previous: '<span class="image-class-previous"><i class="bi bi-chevron-left"></i></span>',
+            next: '<span class="image-class-next"><i class="bi bi-chevron-right"></i></span>',
+            last: '<span class="image-class-last"><i class="bi bi-chevron-double-right"></i></span>'
+        }
+    },
+    drawCallback: function (settings) {
+        var api = this.api();
+        var numRows = api.rows({ search: "applied" }).count();
+        if (numRows === 0) {
+            $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
+        } else {
+            $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
+        }
+    }
+});
+
+$('#searchBanner').on('keyup', function () {
+    bannerTable.search($(this).val()).draw();
+})
 
 
 //toggle
-//$('.vertical-nav-admin li').on('click', function () {
-//    console.log('called')
-//    $(this).addClass('admin-nav-active').siblings().removeClass('admin-nav-active');
-//})
+$(document).ready(function () {
+
+    var location = window.location.href;
+    if (location.includes('AdminUser')) {
+        $("a[href='/Admin/AdminUser']").addClass("admin-nav-active");
+    }
+
+    else if (location.includes('AdminCms')) {
+        $("a[href='/Admin/AdminCms']").addClass("admin-nav-active");
+    }
+
+    else if (location.includes('AdminMission')) {
+        $("a[href='/Admin/AdminMission']").addClass("admin-nav-active");
+    }
+
+    else if (location.includes('AdminTheme')) {
+        $("a[href='/Admin/AdminTheme']").addClass("admin-nav-active");
+    }
+
+    else if (location.includes('AdminSkill')) {
+        $("a[href='/Admin/AdminSkill']").addClass("admin-nav-active");
+    }
+
+    else if (location.includes('AdminApplication')) {
+        $("a[href='/Admin/AdminApplication']").addClass("admin-nav-active");
+    }
+
+    else if (location.includes('AdminStory')) {
+        $("a[href='/Admin/AdminStory']").addClass("admin-nav-active");
+    }
+    else {
+        $("a[href='/Admin/AdminBanner']").addClass("admin-nav-active");
+    }
+})
+

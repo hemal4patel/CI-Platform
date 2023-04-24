@@ -17,6 +17,8 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public string? avatarName { get; set; }
 
+        public string role { get; set; }
+
         public List<CmsPage> cmsPages { get; set; }
 
         public CmsPage selectedCmsPage { get; set; }

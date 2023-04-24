@@ -1,4 +1,6 @@
-﻿using CiPlatformWeb.Entities.DataModels;
+﻿using CiPlatformWeb.Auth;
+using CiPlatformWeb.Entities.Auth;
+using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Models;
 using CiPlatformWeb.Repositories.Interface;
@@ -14,14 +16,16 @@ namespace CiPlatformWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IUserRepository _userRepository;
         private readonly IEmailGeneration _emailGeneration;
+        private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _db;
 
-        public HomeController (ILogger<HomeController> logger, IUserRepository userRepository, IEmailGeneration emailGeneration, ApplicationDbContext db)
+        public HomeController (ILogger<HomeController> logger, IUserRepository userRepository, IEmailGeneration emailGeneration, ApplicationDbContext db, IConfiguration configuration)
         {
             _logger = logger;
             _userRepository = userRepository;
             _emailGeneration = emailGeneration;
             _db = db;
+            _configuration = configuration;
         }
 
 
@@ -77,6 +81,11 @@ namespace CiPlatformWeb.Controllers
                     if (BCrypt.Net.BCrypt.Verify(obj.Password, user.Password))
                     {
                         HttpContext.Session.SetString("UserId", user.UserId.ToString());
+
+                        var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
+                        var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
+                        HttpContext.Session.SetString("Token", token);
+                        TempData["success"] = "Logged In!!!";
 
                         var missionId = HttpContext.Session.GetString("MissionId");
                         var storyMissionId = HttpContext.Session.GetString("StoryMissionId");

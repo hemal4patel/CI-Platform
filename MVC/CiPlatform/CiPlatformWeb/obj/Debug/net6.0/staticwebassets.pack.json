@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\CiPlatformWeb.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\Banner\\banner1.jpg",
+      "PackagePath": "staticwebassets\\Upload\\Banner\\banner1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\Banner\\d6e91_404-Page-image.png",
+      "PackagePath": "staticwebassets\\Upload\\Banner\\d6e91_404-Page-image.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\0d07e_document5.pdf",
       "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\0d07e_document5.pdf"
     },

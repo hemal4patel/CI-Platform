@@ -926,6 +926,10 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.ProfileText)
                 .IsUnicode(false)
                 .HasColumnName("profile_text");
+            entity.Property(e => e.Role)
+                .HasMaxLength(6)
+                .HasDefaultValueSql("(user_name())")
+                .HasColumnName("role");
             entity.Property(e => e.Status)
                 .HasDefaultValueSql("((1))")
                 .HasColumnName("status");

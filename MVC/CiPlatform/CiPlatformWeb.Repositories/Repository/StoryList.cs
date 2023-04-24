@@ -69,12 +69,11 @@ namespace CiPlatformWeb.Repositories.Repository
             var list = stories.Select(s => new StoryListModel()
             {
                 story = s,
-                mediaPath = s.StoryMedia.Select(s => s.Path).FirstOrDefault(),
+                mediaPath = s.StoryMedia.Where(s => s.DeletedAt == null).Select(s => s.Path).FirstOrDefault(),
                 themeName = s.Mission.Theme.Title,
                 storyUserAvatar = s.User.Avatar,
                 storyUserName = s.User.FirstName + " " + s.User.LastName
             });
-
             return (list.ToList(), count);
         }
 
@@ -86,7 +85,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public Story GetDraftedStory (long missionId, long userId)
         {
             return _db.Stories.Where(s => s.MissionId == missionId && s.UserId == userId && s.Status == "DRAFT")
-                .Include(s => s.StoryMedia)
+                .Include(s => s.StoryMedia.Where(s => s.DeletedAt == null))
                 .FirstOrDefault();
         }
 
@@ -112,9 +111,11 @@ namespace CiPlatformWeb.Repositories.Repository
             var media = _db.StoryMedia.Where(s => s.StoryId == storyId && s.Type == "video");
             if (media.Any())
             {
-                _db.RemoveRange(media);
+                foreach(var u in media)
+                {
+                    u.DeletedAt = DateTime.Now;
+                }
             }
-
             //add records
             foreach (var u in url)
             {
@@ -141,9 +142,9 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 if (m != null)
                 {
-                    var fileName = m.Path;
+                    string fileName = m.Path;
                     File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName));
-                    _db.Remove(m);
+                    m.DeletedAt = DateTime.Now;
                 }
             }
 
@@ -156,7 +157,6 @@ namespace CiPlatformWeb.Repositories.Repository
                     {
                         var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
                         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName);
-
                         var newMedia = new StoryMedium()
                         {
                             StoryId = storyId,
@@ -164,17 +164,14 @@ namespace CiPlatformWeb.Repositories.Repository
                             Path = fileName,
                             CreatedAt = DateTime.Now,
                         };
-
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
                             u.CopyTo(stream);
                         }
-
                         _db.StoryMedia.Add(newMedia);
                     }
                 }
             }
-
             _db.SaveChanges();
         }
 
@@ -234,7 +231,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public Story GetStoryDetails (long MissionId, long UserId)
         {
             Story storyDetails = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
-                    .Include(s => s.StoryMedia)
+                    .Include(s => s.StoryMedia.Where(s => s.DeletedAt == null))
                     .Include(s => s.Mission)
                     .Include(s => s.User).FirstOrDefault();
             return storyDetails;
@@ -302,7 +299,6 @@ namespace CiPlatformWeb.Repositories.Repository
             message.IsBodyHtml = true;
 
             await smtp.SendMailAsync(message);
-
         }
     }
 }

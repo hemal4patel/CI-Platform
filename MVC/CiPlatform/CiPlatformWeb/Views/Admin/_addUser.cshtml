@@ -45,6 +45,19 @@
             </div>
 
             <div class="form-group mt-3">
+                <label asp-for="newUser.role">Role :</label>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="user" class="userRole" name="role" value="user" asp-for="newUser.role" />
+                    <label for="user">User</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="admin" class="userRole" name="role" value="admin" asp-for="newUser.role" />
+                    <label for="admin">Admin</label>
+                </div>
+                <span asp-validation-for="newUser.role" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
                 <label asp-for="newUser.employeeId" class="form-label">Employee Id<span class="required-field"></span></label>
                 <input asp-for="newUser.employeeId" type="text" id="employeeId" class="form-control">
                 <span asp-validation-for="newUser.employeeId" class="text-danger"></span>
@@ -79,7 +92,7 @@
                         {
                             <option value="@city.CityId">@city.Name</option>
                         }
-                    }                    
+                    }
                 </select>
                 <span asp-validation-for="newUser.cityId" class="text-danger"></span>
             </div>

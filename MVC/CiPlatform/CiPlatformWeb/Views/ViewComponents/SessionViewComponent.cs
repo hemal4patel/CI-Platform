@@ -1,6 +1,7 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CiPlatformWeb.Views.ViewComponents
 {
@@ -15,22 +16,36 @@ namespace CiPlatformWeb.Views.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync (string view)
         {
-            long userId = Convert.ToInt64(HttpContext.Session.GetString("UserId"));
-            User sessionUser = _db.Users.Where(user => user.UserId == userId).FirstOrDefault();
+            long userId = 0;
+            string userName = "";
+            string emailId = "";
+            string avatarName = null;
+            string role = "";
+
+            userId = Convert.ToInt64(HttpContext.Session.GetString("UserId"));
+            if (userId != 0)
+            {
+                User sessionUser = _db.Users.Where(user => user.UserId == userId).FirstOrDefault();
+                userId = userId;
+                userName = sessionUser.FirstName + " " + sessionUser.LastName;
+                emailId = sessionUser.Email;
+                role = sessionUser.Role;
+                if (sessionUser.Avatar is not null)
+                {
+                    avatarName = sessionUser.Avatar;
+                }
+                else
+                {
+                    avatarName = null;
+                }
+            }
 
             SessionUserViewModel vm = new();
-
             vm.userId = userId;
-            vm.userName = sessionUser.FirstName + " " + sessionUser.LastName;
-            vm.emailId = sessionUser.Email;
-            if(sessionUser.Avatar is not null)
-            {
-                vm.avatarName = sessionUser.Avatar;
-            }
-            else
-            {
-                vm.avatarName = null;
-            }
+            vm.userName = userName;
+            vm.emailId = emailId;
+            vm.role = role;
+            vm.avatarName = avatarName;
             vm.cmsPages = _db.CmsPages.Where(cms => cms.DeletedAt == null).ToList();
 
             return View(view, vm);

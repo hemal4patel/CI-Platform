@@ -1,0 +1,50 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+
+@model CiPlatformWeb.Entities.ViewModels.AdminBannerViewModel
+
+
+<form class="validateAdminForm" id="addBannerForm" data-validation="true" enctype="multipart/form-data">
+
+    <div class="card mx-3 my-5">
+        <div class="card-header">
+            <h3 class="addEditBanner">Add Banner</h3>
+        </div>
+        <div class="card-body pb-5">
+            <input type="text" class="d-none" id="bannerId" asp-for="newBanner.bannerId" />
+
+            <div class="form-group mt-3">
+                <input asp-for="newBanner.imageName" type="hidden" id="imageName" class="form-control">
+                <label asp-for="newBanner.image" class="form-label">Image<span class="required-field"></span></label>
+                <input asp-for="newBanner.image" type="file" id="bannerImage" class="form-control" accept="image/*">
+                <span id="valBanner" class="text-danger" style="display: none;">Image is required.</span>
+
+                <div id="imagePreview"></div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newBanner.text" class="form-label">Text<span class="required-field"></span></label>
+                <textarea asp-for="newBanner.text" id="text" class="form-control"></textarea>
+                <span asp-validation-for="newBanner.text" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="newBanner.sortOrder" class="form-label">Sort Order<span class="required-field"></span></label>
+                <input asp-for="newBanner.sortOrder" type="number" id="sortOrder" class="form-control">
+                <span asp-validation-for="newBanner.sortOrder" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end my-5 me-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill cancel-btn cancelButton">Cancel</button>
+        <button type="submit" id="" class="btn mt-0 card-button ms-2 me-0 rounded-pill submit-btn">Submit</button>
+    </div>
+</form>
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+<script src="~/js/admin.js" asp-append-version="true"></script>

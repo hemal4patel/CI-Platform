@@ -44,6 +44,9 @@ namespace CiPlatformWeb.Entities.ViewModels
         [RegularExpression(@"^[0-9]*$", ErrorMessage = "Phone number must contain only digits")]
         public string PhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Role is required.")]
+        public string role { get; set; }
+
         [Required(ErrorMessage = "Employee Id is required.")]
         public string employeeId { get; set; }
 

@@ -30,8 +30,6 @@
                         Policy
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @*<li><a class="dropdown-item" href="#">Volunteering</a></li>
-                        <li><a class="dropdown-item" href="#">Sponsored</a></li>*@
                         @if (Model.cmsPages.Count != 0)
                         {
                             @foreach (CmsPage cms in Model.cmsPages)
@@ -83,7 +81,18 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" asp-controller="User" asp-action="UserProfile">My Profile</a></li>
                     <li><a class="dropdown-item" asp-controller="User" asp-action="VolunteeringTimesheet">Volunteering Timesheet</a></li>
-                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                    @if(Model.role == "admin")
+                    {
+                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="AdminUser">Admin Panel</a></li>
+                    }
+                    @if (Model.userId != 0)
+                    {
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Index">Log In</a></li>
+                    }
                 </ul>
             </div>
         </div>

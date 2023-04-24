@@ -295,3 +295,4 @@ C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debu
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\pci94\Desktop\Project\CI Platform\MVC\CiPlatform\CiPlatformWeb\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

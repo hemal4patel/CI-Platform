@@ -1,0 +1,40 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+@model SessionUserViewModel
+
+<div class="admin-header d-flex justify-content-between">
+
+    <div class="date-container d-md-block d-none" style="margin-top: 10px;">
+        <span class="today-date align-self-center">@DateTime.Now.ToString("dddd, MMMM d, yyyy, h:mm tt")</span>
+    </div>
+    <div class="date-container d-block d-md-none" style="margin-top: 10px;">
+        <span class="today-date align-self-center">@DateTime.Now.ToString("MMMM d, yyyy")</span>
+    </div>
+    <div class="dropdown">
+        <a class="nav-link dropdown-toggle" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            @if (Model.avatarName is not null)
+            {
+                <img src="~/Upload/UserProfile/@Model.avatarName" style="height: 40px !important; width: 40px !important" class="rounded-circle me-2" />
+            }
+            else
+            {
+                <img src="~/Upload/UserProfile/no-avatar.jpg" style="height: 40px !important; width: 40px !important" class="rounded-circle me-2" />
+            }
+            <p class="d-inline d-none d-md-inline" id="profileText">
+                @Model.userName
+            </p>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <li>
+                <a class="dropdown-item" asp-controller="User" asp-action="UserProfile">My Profile</a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-controller="User" asp-action="VolunteeringTimesheet">Volunteering Timesheet</a>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CiPlatformWeb.Controllers
@@ -14,18 +15,20 @@ namespace CiPlatformWeb.Controllers
         private readonly IAdminApplication _adminApplication;
         private readonly IAdminStory _adminStory;
         private readonly IAdminCms _adminCms;
+        private readonly IAdminBanner _adminBanner;
 
-        public AdminController (IAdminUser adminUser, IAdminMission adminMission, IAdminTheme adminTheme, IAdminSkill adminSkill, IAdminApplication adminApplication, IAdminStory adminStory, IAdminCms adminCms)
+        public AdminController (IAdminUser adminUser, IAdminMission adminMission, IAdminTheme adminTheme, IAdminSkill adminSkill, IAdminApplication adminApplication, IAdminStory adminStory, IAdminCms adminCms, IAdminBanner adminBanner)
         {
             _adminUser = adminUser;
             _adminMission = adminMission;
-            _adminTheme = adminTheme;
-            _adminSkill = adminSkill;
+            _adminTheme = adminTheme; _adminSkill = adminSkill;
             _adminApplication = adminApplication;
             _adminStory = adminStory;
             _adminCms = adminCms;
+            _adminBanner = adminBanner;
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AdminUser ()
         {
             AdminUserViewModel vm = new();
@@ -34,12 +37,14 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult GetCitiesByCountry (long? countryId)
         {
             List<City> cities = _adminUser.GetCitiesByCountry(countryId);
             return Json(cities);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AddUser ()
         {
             AdminUserViewModel vm = new();
@@ -47,6 +52,7 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addUser", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult EditUser (long userId)
         {
             AdminUserViewModel vm = new();
@@ -61,12 +67,14 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addUser", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteUser (long userId)
         {
             _adminUser.DeleteUser(userId);
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AdminUser (AdminUserViewModel vm)
         {
@@ -108,6 +116,7 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminUser");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AdminCms ()
         {
             AdminCmsViewModel vm = new();
@@ -115,11 +124,13 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AddCms ()
         {
             return PartialView("_addCms");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult EditCms (long cmsId)
         {
             AdminCmsViewModel vm = new();
@@ -127,12 +138,14 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addCms", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteCmsPage (long cmsId)
         {
             _adminCms.DeleteCmsPage(cmsId);
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AdminCms (AdminCmsViewModel vm)
         {
@@ -167,6 +180,7 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminCms");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AdminMission ()
         {
             AdminMissionViewModel vm = new();
@@ -174,6 +188,7 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AddMission ()
         {
             AdminMissionViewModel vm = new();
@@ -183,6 +198,7 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addMission", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult EditMission (long missionId)
         {
             AdminMissionViewModel vm = new();
@@ -198,12 +214,14 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addMission", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteMission (long missionId)
         {
             _adminMission.DeleteMission(missionId);
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AdminMission (AdminMissionViewModel vm)
         {
@@ -243,6 +261,7 @@ namespace CiPlatformWeb.Controllers
 
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AdminTheme ()
         {
             AdminThemeViewModel vm = new();
@@ -250,11 +269,13 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AddTheme ()
         {
             return PartialView("_addTheme");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult EditTheme (long themeId)
         {
             AdminThemeViewModel vm = new();
@@ -262,12 +283,14 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addTheme", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteTheme (long themeId)
         {
             _adminTheme.DeleteTheme(themeId);
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AdminTheme (AdminThemeViewModel vm)
         {
@@ -309,6 +332,7 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminTheme");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AdminSkill ()
         {
             AdminSkillViewModel vm = new();
@@ -316,11 +340,13 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AddSkill ()
         {
             return PartialView("_addSkill");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult EditSkill (long skillId)
         {
             AdminSkillViewModel vm = new();
@@ -328,12 +354,14 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_addSkill", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteSkill (long skillId)
         {
             _adminSkill.DeleteSkill(skillId);
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AdminSkill (AdminSkillViewModel vm)
         {
@@ -375,6 +403,7 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminSkill");
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AdminApplication ()
         {
             AdminApplicationViewModel vm = new();
@@ -382,6 +411,7 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult ChangeApplicationStatus (long applicationId, int status)
         {
@@ -389,6 +419,7 @@ namespace CiPlatformWeb.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult AdminStory ()
         {
             AdminStoryViewModel vm = new();
@@ -396,6 +427,7 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult ViewStory (long storyId)
         {
             AdminStoryViewModel vm = new();
@@ -403,17 +435,69 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_viewStory", vm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteStory (long storyId)
         {
             _adminStory.DeleteStory(storyId);
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult ChangeStoryStatus (long storyId, int status)
         {
             _adminStory.ChangeStoryStatus(storyId, status);
             return Ok();
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult AdminBanner ()
+        {
+            AdminBannerViewModel vm = new();
+            vm.banners = _adminBanner.GetBanners();
+            return View(vm);
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult AddBanner ()
+        {
+            return PartialView("_addBanner");
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult EditBanner (long bannerId)
+        {
+            AdminBannerViewModel vm = new();
+            vm.newBanner = _adminBanner.GetBannerToEdit(bannerId);
+            return PartialView("_addBanner", vm);
+        }
+
+        [Authorize(Roles = "admin")]
+        public IActionResult DeleteBanner (long bannerId)
+        {
+            _adminBanner.DeleteBanner(bannerId);
+            return Ok();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public IActionResult AdminBanner (AdminBannerViewModel vm)
+        {
+            //addnew
+            if (vm.newBanner.bannerId == null)
+            {
+                _adminBanner.AddNewBanner(vm.newBanner);
+                TempData["icon"] = "success";
+                TempData["message"] = "Skill added successfully!!!";
+            }
+            //update
+            else
+            {
+                _adminBanner.UpdateBanner(vm.newBanner);
+                TempData["icon"] = "success";
+                TempData["message"] = "Skill updated successfully!!!";
+            }
+            return RedirectToAction("AdminBanner");
         }
     }
 }

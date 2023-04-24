@@ -69,7 +69,6 @@ namespace CiPlatformWeb.Repositories.Repository
                 missionTheme = m.Theme.MissionThemeId,
                 missionSkills = string.Join(",", m.MissionSkills.Select(m => m.Skill.SkillId)),
                 availability = m.Availability,
-                //videosUrl = m.MissionMedia.Where(m => m.MediaType == "vid" && m.DeletedAt == null).Select(m => m.MediaPath).ToArray(),
                 videosUrl = string.Join("\n", m.MissionMedia.Where(m => m.MediaType== "vid" && m.DeletedAt == null).Select(m => m.MediaPath)),
                 imageName = string.Join(",", m.MissionMedia.Where(m => m.MediaType == "img" && m.DeletedAt == null).Select(m => $"{m.MediaPath}:{m.Default}")),
                 documentName = string.Join(",", m.MissionDocuments.Where(m => m.DeletedAt == null).Select(m => m.DocumentPath)),
