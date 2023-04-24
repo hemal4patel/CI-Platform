@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NyA8Azp+ecSEVfTvLkSinLjseQZv2V3VbDOdQokT4RM=",
+  "Hash": "NcDTDJOlWSvTbrCOfjqmYoRtsMIoeV4vnBtbSI+EmAU=",
   "Source": "CiPlatformWeb",
   "BasePath": "_content/CiPlatformWeb",
   "Mode": "Default",
@@ -3128,12 +3128,12 @@
       "OriginalItemSpec": "wwwroot\\Upload\\Banner\\banner1.jpg"
     },
     {
-      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\Banner\\d6e91_404-Page-image.png",
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\Banner\\f9d3f_cleanCommunity4.jfif",
       "SourceId": "CiPlatformWeb",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
       "BasePath": "_content/CiPlatformWeb",
-      "RelativePath": "Upload/Banner/d6e91_404-Page-image.png",
+      "RelativePath": "Upload/Banner/f9d3f_cleanCommunity4.jfif",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -3142,7 +3142,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Upload\\Banner\\d6e91_404-Page-image.png"
+      "OriginalItemSpec": "wwwroot\\Upload\\Banner\\f9d3f_cleanCommunity4.jfif"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\0d07e_document5.pdf",
@@ -3366,6 +3366,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\10083_teachingRural1.png"
     },
     {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\41901_81bf2_440d4_plantTrees2.png",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/MissionPhotos/41901_81bf2_440d4_plantTrees2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\41901_81bf2_440d4_plantTrees2.png"
+    },
+    {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\440d4_plantTrees2.png",
       "SourceId": "CiPlatformWeb",
       "SourceType": "Discovered",
@@ -3466,6 +3483,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\a6894_teachingRural3.jfif"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\ad8c5_4c7fb_animalShelter1.jpg",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/MissionPhotos/ad8c5_4c7fb_animalShelter1.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\ad8c5_4c7fb_animalShelter1.jpg"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalShelter1.jpg",
@@ -3621,6 +3655,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\animalWelfare5.jpg"
     },
     {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\b6689_4ac8e_578fc_plantTrees1.png",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/MissionPhotos/b6689_4ac8e_578fc_plantTrees1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\b6689_4ac8e_578fc_plantTrees1.png"
+    },
+    {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\be2e3_home3.jfif",
       "SourceId": "CiPlatformWeb",
       "SourceType": "Discovered",
@@ -3636,6 +3687,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\be2e3_home3.jfif"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\c7a0b_4c097_animalShelter3.jpg",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/MissionPhotos/c7a0b_4c097_animalShelter3.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\c7a0b_4c097_animalShelter3.jpg"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\cleanCommunity1.jfif",
@@ -4488,6 +4556,23 @@
       "OriginalItemSpec": "wwwroot\\Upload\\StoryPhotos\\teachSenior4.jfif"
     },
     {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\1b05c_volunteer6.png",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/UserProfile/1b05c_volunteer6.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\1b05c_volunteer6.png"
+    },
+    {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\24a02_volunteer7.png",
       "SourceId": "CiPlatformWeb",
       "SourceType": "Discovered",
@@ -4588,23 +4673,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\avatar3.png"
-    },
-    {
-      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar4.png",
-      "SourceId": "CiPlatformWeb",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
-      "BasePath": "_content/CiPlatformWeb",
-      "RelativePath": "Upload/UserProfile/avatar4.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Upload\\UserProfile\\avatar4.png"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\UserProfile\\avatar6.png",

@@ -487,17 +487,14 @@ namespace CiPlatformWeb.Controllers
             if (vm.newBanner.bannerId == null)
             {
                 _adminBanner.AddNewBanner(vm.newBanner);
-                TempData["icon"] = "success";
-                TempData["message"] = "Skill added successfully!!!";
+                return Ok(new { icon = "success", message = "Banner added successfully!!!" });
             }
             //update
             else
             {
                 _adminBanner.UpdateBanner(vm.newBanner);
-                TempData["icon"] = "success";
-                TempData["message"] = "Skill updated successfully!!!";
+                return Ok(new { icon = "success", message = "Banner updated successfully!!!" });
             }
-            return RedirectToAction("AdminBanner");
         }
     }
 }

@@ -535,20 +535,22 @@ $('.editMission').click(function () {
             documentNames = $('#documentName').val().split(',')
             for (var i = 0; i < documentNames.length; i++) {
                 var fileName = documentNames[i];
-                var docIcon = $('<i>').addClass('far fa-file-alt');
-                var docName = $('<div>').addClass('doc-name ms-3').text(fileName);
-                var closeIcon = $('<span>').addClass('close-icon ms-3').text('x');
-                var item = $('<div>').addClass('doc-item d-flex align-items-center justify-content-between me-2 mt-2').append(docIcon).append(docName).append(closeIcon);
-                docList.append(item);
-                const response = await fetch('/Upload/MissionDocuments/' + fileName);
-                const blob = await response.blob();
-                const files = new File([blob], fileName, { type: blob.type });
-                allDocs.push(files);
-                closeIcon.on('click', function () {
-                    var index = $(this).parent().index();
-                    allDocs.splice(index, 1);
-                    $(this).parent().remove();
-                });
+                if (fileName != "") {
+                    var docIcon = $('<i>').addClass('far fa-file-alt');
+                    var docName = $('<div>').addClass('doc-name ms-3').text(fileName);
+                    var closeIcon = $('<span>').addClass('close-icon ms-3').text('x');
+                    var item = $('<div>').addClass('doc-item d-flex align-items-center justify-content-between me-2 mt-2').append(docIcon).append(docName).append(closeIcon);
+                    docList.append(item);
+                    const response = await fetch('/Upload/MissionDocuments/' + fileName);
+                    const blob = await response.blob();
+                    const files = new File([blob], fileName, { type: blob.type });
+                    allDocs.push(files);
+                    closeIcon.on('click', function () {
+                        var index = $(this).parent().index();
+                        allDocs.splice(index, 1);
+                        $(this).parent().remove();
+                    });
+                }
             }
 
         },

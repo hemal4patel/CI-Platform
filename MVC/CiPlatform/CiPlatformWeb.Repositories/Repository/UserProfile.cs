@@ -61,12 +61,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Skill> GetSkillList ()
         {
-            return _db.Skills.ToList();
+            return _db.Skills.Where(s => s.DeletedAt == null).ToList();
         }
 
         public List<UserSkill> GetUserSkills (long userId)
         {
-            return _db.UserSkills.Where(u => u.UserId == userId).Include(u => u.Skill).ToList();
+            return _db.UserSkills.Where(u => u.UserId == userId && u.DeletedAt == null).Include(u => u.Skill).ToList();
         }
 
 
@@ -139,17 +139,17 @@ namespace CiPlatformWeb.Repositories.Repository
                 if (viewmodel.UserSelectedSkills != null)
                 {
                     //remove skills
-                    var skills = _db.UserSkills.Where(s => s.UserId == viewmodel.UserId);
+                    IQueryable<UserSkill> skills = _db.UserSkills.Where(s => s.UserId == viewmodel.UserId);
                     if (skills.Any())
                     {
-                        _db.RemoveRange(skills);
+                        foreach (UserSkill skill in skills)
+                        {
+                            skill.DeletedAt = DateTime.Now;
+                        }
+                        _db.SaveChanges();
                     }
-                    //long[] userSkills = viewmodel.UserSelectedSkills.Split(',');
-
                     string[] selectedSkillsStr = viewmodel.UserSelectedSkills.Split(',');
-
                     long[] selectedSkills = new long[selectedSkillsStr.Length];
-
                     for (int i = 0; i < selectedSkillsStr.Length; i++)
                     {
                         selectedSkills[i] = long.Parse(selectedSkillsStr[i]);
@@ -162,7 +162,6 @@ namespace CiPlatformWeb.Repositories.Repository
                         _db.UserSkills.Add(newSkill);
                     }
                 }
-
                 _db.SaveChanges();
             }
 
@@ -181,7 +180,5 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.ContactUs.Add(data);
             _db.SaveChanges();
         }
-
-
     }
 }

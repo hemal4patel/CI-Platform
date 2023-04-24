@@ -52,7 +52,13 @@
                     {
                         <tr id="@banner.bannerId">
                             <td scope="row">@banner.imageName</td>
-                            <td>@banner.text</td>
+                            @{
+                                int maxLength = 20;
+                                string text = banner.text.Length > maxLength
+                                ? @banner.text.Substring(0, maxLength) + "..."
+                                : @banner.text;
+                            }
+                            <td>@text</td>
                             <td>@banner.sortOrder</td>
                             <td>
                                 <i class="bi bi-pencil-square text-danger editBanner"></i>

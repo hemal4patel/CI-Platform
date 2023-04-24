@@ -82,20 +82,20 @@ namespace CiPlatformWeb.Repositories.Repository
             var mission = _db.Missions.Where(m => m.MissionId == MissionId).FirstOrDefault();
 
             var relatedMissions = _db.Missions
-                .Where(m => m.MissionId != MissionId && m.CityId == mission.CityId)
+                .Where(m => m.MissionId != MissionId && m.CityId == mission.CityId && m.DeletedAt == null)
                     .Take(3);
 
             if (relatedMissions.Count() < 3)
             {
                 relatedMissions = relatedMissions.Union(
-                    _db.Missions.Where(m => m.MissionId != MissionId && m.CountryId == mission.CountryId)
+                    _db.Missions.Where(m => m.MissionId != MissionId && m.CountryId == mission.CountryId && m.DeletedAt == null)
                         .Take(3 - relatedMissions.Count()));
             }
 
             if (relatedMissions.Count() < 3)
             {
                 relatedMissions = relatedMissions.Union(
-                    _db.Missions.Where(m => m.MissionId != MissionId && m.ThemeId == mission.ThemeId)
+                    _db.Missions.Where(m => m.MissionId != MissionId && m.ThemeId == mission.ThemeId && m.DeletedAt == null)
                         .Take(3 - relatedMissions.Count()));
             }
 

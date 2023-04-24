@@ -66,7 +66,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Banner> GetBanners ()
         {
-            return _db.Banners.Where(b => b.DeletedAt == null).ToList();
+            return _db.Banners.Where(b => b.DeletedAt == null).OrderByDescending(b => b.SortOrder).ToList();
         }
 
     }

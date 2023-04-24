@@ -106,7 +106,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public void UpdateUser (AdminUserModel user)
         {
             User existingUser = _db.Users.Where(u => u.UserId == user.userId).FirstOrDefault();
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(existingUser.Password);
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
 
             existingUser.FirstName = user.firstName;
             existingUser.LastName = user.lastName;

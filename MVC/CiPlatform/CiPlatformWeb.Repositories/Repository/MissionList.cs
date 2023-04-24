@@ -52,7 +52,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public (List<MissionListModel> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
         {
 
-            var missions = _db.Missions.AsQueryable();
+            var missions = _db.Missions.Where(m => m.DeletedAt == null).AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -139,7 +139,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            var recentVolunteers = _db.Users.Where(u => u.UserId != userId).ToList();
+            var recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null).ToList();
 
             return recentVolunteers;
         }

@@ -47,11 +47,11 @@
             <div class="form-group mt-3">
                 <label asp-for="newUser.role">Role :</label>
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="user" class="userRole" name="role" value="user" asp-for="newUser.role" />
+                    <input type="radio" id="user" class="userRole" name="newUser.role" value="user" asp-for="newUser.role" />
                     <label for="user">User</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="admin" class="userRole" name="role" value="admin" asp-for="newUser.role" />
+                    <input type="radio" id="admin" class="userRole" name="newUser.role" value="admin" asp-for="newUser.role" />
                     <label for="admin">Admin</label>
                 </div>
                 <span asp-validation-for="newUser.role" class="text-danger"></span>

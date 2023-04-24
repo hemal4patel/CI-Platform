@@ -16,7 +16,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         ErrorMessage = "Invalid email address")]
         public string Email { get; set; } = null!;
 
-        public List<Banner> banners { get; set; }
+        public List<Banner>? banners { get; set; }
 
     }
 }

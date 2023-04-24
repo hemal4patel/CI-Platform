@@ -27,6 +27,6 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public string Token { get; set; }
 
-        public List<Banner> banners { get; set; }
+        public List<Banner>? banners { get; set; }
     }
 }

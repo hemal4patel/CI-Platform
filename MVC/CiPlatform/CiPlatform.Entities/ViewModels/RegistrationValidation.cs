@@ -35,6 +35,6 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Compare("Password", ErrorMessage = "Password doesn't match")]
         public string ConfirmPassword { get; set; } = null!;
 
-        public List<Banner> banners { get; set; }
+        public List<Banner>? banners { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult Registration (RegistrationValidation obj)
         {
+            obj.banners = _userRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 var user = _userRepository.CheckUser(obj.Email);
@@ -72,6 +73,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult Index (LoginValidation obj)
         {
+            obj.banners = _userRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 var user = _userRepository.CheckUser(obj.Email);
@@ -133,6 +135,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult ForgotPassword (ForgotPasswordValidation obj)
         {
+            obj.banners = _userRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 var user = _userRepository.CheckUser(obj.Email);
@@ -180,6 +183,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult ResetPassword (ResetPasswordValidation obj, IFormCollection form)
         {
+            obj.banners = _userRepository.GetBanners();
             if (ModelState.IsValid)
             {
                 _userRepository.UpdatePassword(obj);

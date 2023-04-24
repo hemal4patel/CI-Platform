@@ -36,6 +36,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+        [MaxLength(16, ErrorMessage = "Password must be between 8 to 16 characters")]
+        [MinLength(8, ErrorMessage = "Password must be between 8 to 16 characters")]
         public string password { get; set; }
 
         [Required(ErrorMessage = "Phone Number is required.")]

@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
 </head>
-@model CiPlatformWeb.Entities.ViewModels.LoginValidation
+@using CiPlatformWeb.Entities.DataModels
+@using CiPlatformWeb.Entities.ViewModels
+
 <body>
 
     <div class="container-fluid">
@@ -18,56 +20,27 @@
             <div class="col-xl-8 left">
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                       @* <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
-                                aria-label="Slide 4"></button>*@
-                        
+                        @foreach(Banner banner in Model.banners)
+                        {
+                            int index = Model.banners.IndexOf(banner);
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@index"
+                                class="@((index == 0) ? "active" : "")" aria-current="@((index == 0) ? "true" : "false")" aria-label="Slide @(index + 1)"></button>
+                        }
+
                     </div>
                     <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="3000">
-
-                            <div class="imgCarousel"></div>
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>First slide label</h5>
-                                <p>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi eum officiis
-                                    aperiam a, consequuntur voluptatem vitae distinctio minus quaerat incidunt ipsum in
-                                    atque dolores iste maxime, rerum, odio reiciendis porro?
-                                </p>
+                        @foreach (Banner banner in Model.banners)
+                        {
+                            int index = Model.banners.IndexOf(banner);
+                            <div class="carousel-item @((index == 0) ? "active" : "")" data-bs-interval="3000">
+                                <img src="~/Upload/Banner/@banner.Image" class="d-block w-100 imgCarousel" alt="@banner.Image">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <p>
+                                        @Html.Raw(banner.Text)
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-
-                            <div class="imgCarousel"></div>
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Second slide label</h5>
-                                <p>
-                                    Some representative placeholder content for the second slide.
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-
-                            <div class="imgCarousel"></div>
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Third slide label</h5>
-                                <p>Some representative placeholder content for the third slide.</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-
-                            <div class="imgCarousel"></div>
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Fourth slide label</h5>
-                                <p>Some representative placeholder content for the fourth slide.</p>
-                            </div>
-                        </div>
+                        }
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
                             data-bs-slide="prev">
