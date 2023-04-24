@@ -2,8 +2,10 @@
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using CiPlatformWeb.Repositories.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -23,6 +25,7 @@ namespace CiPlatformWeb.Controllers
             _timesheet = timesheet;
         }
 
+        [Authorize(Roles = "admin, user")]
         //GET
         public IActionResult UserProfile ()
         {
@@ -51,6 +54,8 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+        
+        [Authorize(Roles = "admin, user")]
         [HttpPost]
         public IActionResult UserProfile (UserProfileViewModel viewmodel)
         {
@@ -84,6 +89,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+        [Authorize(Roles = "admin, user")]
         public IActionResult GetCitiesByCountry (int countryId)
         {
             var vm = new UserProfileViewModel();
@@ -91,6 +97,8 @@ namespace CiPlatformWeb.Controllers
             return Json(vm.CityList);
         }
 
+        
+        [Authorize(Roles = "admin, user")]
         [HttpPost]
         public IActionResult ChangePassword (string oldPassoword, string newPassword, string confirmPassword)
         {
@@ -110,6 +118,8 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+        
+        [Authorize(Roles = "admin, user")]
         [HttpPost]
         public IActionResult ContactUs (string subject, string message)
         {
@@ -129,6 +139,7 @@ namespace CiPlatformWeb.Controllers
 
 
         //GET
+        [Authorize(Roles = "admin, user")]
         public IActionResult VolunteeringTimesheet ()
         {
             if (HttpContext.Session.GetString("UserId") != null)
@@ -152,6 +163,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+        [Authorize(Roles = "admin, user")]
         [HttpPost]
         public IActionResult VolunteeringTimesheet (VolunteeringTimesheetViewModel viewmodel)
         {
@@ -230,6 +242,8 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+        
+        [Authorize(Roles = "admin, user")]
         public IActionResult GetTimesheetData (long id)
         {
             string userIdStr = HttpContext.Session.GetString("UserId");
@@ -248,6 +262,8 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+        
+        [Authorize(Roles = "admin, user")]
         [HttpPost]
         public IActionResult DeleteTimesheetData (long id)
         {
@@ -265,6 +281,7 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+        [Authorize(Roles = "admin, user")]
         public IActionResult PrivacyPolicy ()
         {
             return View();

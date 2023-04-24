@@ -52,7 +52,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public (List<MissionListModel> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
         {
 
-            var missions = _db.Missions.Where(m => m.DeletedAt == null).AsQueryable();
+            IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null && m.MissionSkills.All(ms => ms.Skill.DeletedAt == null) && m.Theme.DeletedAt == null).AsQueryable();
 
             if (viewmodel.CountryId != null)
             {

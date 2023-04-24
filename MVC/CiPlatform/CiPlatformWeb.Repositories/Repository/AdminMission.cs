@@ -64,6 +64,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 endDate = m.EndDate,
                 missionType = m.MissionType,
                 totalSeats = m.TotalSeats,
+                registrationDeadline = m.RegistrationDeadline,
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 goalValue = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
                 missionTheme = m.Theme.MissionThemeId,
