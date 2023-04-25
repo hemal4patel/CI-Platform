@@ -24,25 +24,8 @@
                 <li class="nav-item">
                     <a asp-controller="Story" asp-action="StoryListing" class="nav-link" aria-current="page">Stories</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Policy
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @if (Model.cmsPages.Count != 0)
-                        {
-                            @foreach (CmsPage cms in Model.cmsPages)
-                            {
-                                <li><a class="dropdown-item" href="@Url.Action("CmsPage", "Home", new { cmsId = cms.CmsPageId })"> @cms.Title </a></li>
-                                <li><hr class="dropdown-divider"></li>
-                            }
-                        }
-                        else
-                        {
-                            <li class="text-center" style="font-size: 21px;">No pages available</li>
-                        }
-                    </ul>
+                <li class="nav-item">
+                    <a asp-action="PrivacyPolicy" asp-controller="User" class="nav-link" aria-current="page">Policy</a>
                 </li>
             </ul>
         </div>
@@ -81,10 +64,6 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" asp-controller="User" asp-action="UserProfile">My Profile</a></li>
                     <li><a class="dropdown-item" asp-controller="User" asp-action="VolunteeringTimesheet">Volunteering Timesheet</a></li>
-                    @if(Model.role == "admin")
-                    {
-                        <li><a class="dropdown-item" asp-controller="Admin" asp-action="AdminUser">Admin Panel</a></li>
-                    }
                     @if (Model.userId != 0)
                     {
                         <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Logout</a></li>

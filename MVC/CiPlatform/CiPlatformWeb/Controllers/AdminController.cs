@@ -329,15 +329,11 @@ namespace CiPlatformWeb.Controllers
                 {
                     if (_adminMission.MissionExistsForUpdate(vm.newMission.missionId, vm.newMission.misssionTitle, vm.newMission.organizationName))
                     {
-                        //TempData["icon"] = "error";
-                        //TempData["message"] = "Mission already exists!!!";
                         return Ok(new { icon = "error", message = "Mission already exists!!!" });
                     }
                     else
                     {
                         _adminMission.EditMission(vm);
-                        //TempData["icon"] = "success";
-                        //TempData["message"] = "Mission updated successfully!!!";
                         return Ok(new { icon = "success", message = "Mission updated successfully!!!" });
                     }
 
@@ -346,15 +342,11 @@ namespace CiPlatformWeb.Controllers
                 {
                     if (_adminMission.MissionExistsForNew(vm.newMission.misssionTitle, vm.newMission.organizationName))
                     {
-                        //TempData["icon"] = "error";
-                        //TempData["message"] = "Mission already exists!!!";
                         return Ok(new { icon = "error", message = "Mission already exists!!!" });
                     }
                     else
                     {
                         _adminMission.AddMission(vm);
-                        //TempData["icon"] = "success";
-                        //TempData["message"] = "Mission added successfully!!!";
                         return Ok(new { icon = "success", message = "Mission added successfully!!!" });
                     }
                 }
@@ -462,7 +454,6 @@ namespace CiPlatformWeb.Controllers
                         TempData["message"] = "Theme updated successfully!!!";
                     }
                 }
-
                 return RedirectToAction("AdminTheme");
             }
             else
@@ -568,7 +559,6 @@ namespace CiPlatformWeb.Controllers
                         TempData["message"] = "Skill updated successfully!!!";
                     }
                 }
-
                 return RedirectToAction("AdminSkill");
             }
             else

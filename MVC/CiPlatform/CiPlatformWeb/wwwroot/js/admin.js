@@ -76,8 +76,8 @@ $('.deleteUser').on('click', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -198,8 +198,8 @@ $('.deleteMission').on('click', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -461,24 +461,26 @@ $('.editMission').click(function () {
                 var array = (imageNames[i].split(':'))
                 var name = array[0]
                 var defaultVal = array[1]
-                var image = $('<img>').attr('src', '/Upload/MissionPhotos/' + name);
-                var closebtn = $('<span>').addClass('close-icon').text('x');
-                var item = $('<div>').addClass('image-item').append(image).append(closebtn);
-                if (defaultVal == 1) {
-                    const Selected = document.createElement('div');
-                    Selected.className = 'default-image';
-                    Selected.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+                if (name != "") {
+                    var image = $('<img>').attr('src', '/Upload/MissionPhotos/' + name);
+                    var closebtn = $('<span>').addClass('close-icon').text('x');
+                    var item = $('<div>').addClass('image-item').append(image).append(closebtn);
+                    if (defaultVal == 1) {
+                        const Selected = document.createElement('div');
+                        Selected.className = 'default-image';
+                        Selected.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
 
-                    item.addClass('selected');
-                    item.append(Selected)
+                        item.addClass('selected');
+                        item.append(Selected)
+                    }
+                    $('#image-list').append(item);
+                    blobData(name)
+                    closebtn.on('click', function () {
+                        var index = $(this).parent().index();
+                        allfiles.splice(index, 1);
+                        $(this).parent().remove();
+                    });
                 }
-                $('#image-list').append(item);
-                blobData(name)
-                closebtn.on('click', function () {
-                    var index = $(this).parent().index();
-                    allfiles.splice(index, 1);
-                    $(this).parent().remove();
-                });
             }
 
             //dates
@@ -569,6 +571,7 @@ async function blobData(file) {
 
 //set default image
 $(document).on('click', '.image-item', function () {
+
     const Selected = document.createElement('div');
     Selected.className = 'default-image';
     Selected.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
@@ -746,8 +749,8 @@ $('.deleteCms').on('click', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -826,8 +829,8 @@ $('.deleteTheme').on('click', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -898,32 +901,6 @@ $('.editSkill').on('click', function () {
     });
 });
 
-//change application status
-$(document).on('click', '.changeApplicationStatus', function () {
-    console.log('called')
-    var applicationId = $(this).closest('tr').attr('id');
-    var status = $(this).data('value')
-
-    $.ajax({
-        type: "POST",
-        url: "/Admin/ChangeApplicationStatus",
-        data: { applicationId: applicationId, status: status },
-        success: function () {
-            var container = $('.showApplicationButtons-' + applicationId);
-            container.empty();
-            if (status == 0) {
-                container.html('<i class="bi bi-check-circle changeApplicationStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0"  style="color: #f20707;"></i>');
-            }
-            else {
-                container.html('<i class="bi bi-check-circle-fill" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeApplicationStatus" data-value="0" style="color: #f20707;"></i>');
-            }
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    });
-})
-
 // delete skill
 $('.deleteSkill').on('click', function () {
     var skillId = $(this).closest('tr').attr('id')
@@ -933,8 +910,8 @@ $('.deleteSkill').on('click', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -967,55 +944,180 @@ $('.deleteSkill').on('click', function () {
 
 
 
+//change application status
+$(document).on('click', '.changeApplicationStatus', function () {
+    var applicationId = $(this).closest('tr').attr('id');
+    var row = $(this).closest('tr')
+    var status = $(this).data('value')
+    var s = "";
+    var confirmButtonColor = ''
+    if (status == 1) {
+        s = "approve"
+        confirmButtonColor = '#198754'
+    }
+    else {
+        s = "decline"
+        confirmButtonColor = '#d33'
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: confirmButtonColor,
+        cancelButtonColor: '#414141',
+        confirmButtonText: 'Yes, ' + s + ' it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ChangeApplicationStatus",
+                data: { applicationId: applicationId, status: status },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Application ' + s + 'd successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+})
+
+
+
+
 
 
 //change story status
 $(document).on('click', '.changeStoryStatus', function () {
     var storyId = $(this).closest('tr').attr('id');
+    var row = $(this).closest('tr')
     var status = $(this).data('value')
 
-    $.ajax({
-        type: "POST",
-        url: "/Admin/ChangeStoryStatus",
-        data: { storyId: storyId, status: status },
-        success: function () {
-            var container = $('.showStoryButtons-' + storyId);
-            container.empty();
-            if (status == 0) {
-                container.html('<i class="bi bi-check-circle ms-2 changeStoryStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0" style="color: #f20707;"></i>');
-            }
-            else {
-                container.html('<i class="bi bi-check-circle-fill ms-2" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeStoryStatus" data-value="0" style="color: #f20707;"></i>');
-            }
-        },
-        error: function (error) {
-            console.log(error)
+    var s = "";
+    var confirmButtonColor = ''
+    if (status == 1) {
+        s = "approve"
+        confirmButtonColor = '#198754'
+    }
+    else {
+        s = "decline"
+        confirmButtonColor = '#d33'
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: confirmButtonColor,
+        cancelButtonColor: '#414141',
+        confirmButtonText: 'Yes, ' + s + ' it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ChangeStoryStatus",
+                data: { storyId: storyId, status: status },
+                success: function () {
+                    row.remove();
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Story ' + s + 'd successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
         }
-    });
+    })
+
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/Admin/ChangeStoryStatus",
+    //    data: { storyId: storyId, status: status },
+    //    success: function () {
+    //        var container = $('.showStoryButtons-' + storyId);
+    //        container.empty();
+    //        if (status == 0) {
+    //            container.html('<i class="bi bi-check-circle ms-2 changeStoryStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0" style="color: #f20707;"></i>');
+    //        }
+    //        else {
+    //            container.html('<i class="bi bi-check-circle-fill ms-2" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeStoryStatus" data-value="0" style="color: #f20707;"></i>');
+    //        }
+    //    },
+    //    error: function (error) {
+    //        console.log(error)
+    //    }
+    //});
 })
 
 $(document).on('click', '.storyStatusButtons', function () {
     var status = $(this).data('value')
     var storyId = $('#storyId').val()
 
-    $.ajax({
-        type: "POST",
-        url: "/Admin/ChangeStoryStatus",
-        data: { storyId: storyId, status: status },
-        success: function () {
-            var container = $('.storyButtons');
-            container.empty();
-            if (status == 0) {
-                container.html('<button type="button" class="btn btn-outline-success storyStatusButtons m-2" data-value="1"><i class="bi bi-check-circle me-2"></i>Approve</button><button type="button" class="btn btn-danger m-2" data-value="0"><i class="bi bi-x-circle me-2"></i>Declined</button><button type="button" class="btn btn-outline-dark m-2 delStory"><i class="bi bi-trash3 me-2"></i>Delete</button>');
-            }
-            else {
-                container.html('<button type="button" class="btn btn-success m-2" data-value="1"><i class="bi bi-check-circle me-2"></i>Approved</button><button type="button" class="btn btn-outline-danger storyStatusButtons m-2" data-value="0"><i class="bi bi-x-circle me-2"></i>Decline</button><button type="button" class="btn btn-outline-dark m-2 delStory"><i class="bi bi-trash3 me-2"></i>Delete</button>');
-            }
-        },
-        error: function (error) {
-            console.log(error)
+    var s = "";
+    var confirmButtonColor = ''
+    if (status == 1) {
+        s = "approve"
+        confirmButtonColor = '#198754'
+    }
+    else {
+        s = "decline"
+        confirmButtonColor = '#d33'
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: confirmButtonColor,
+        cancelButtonColor: '#414141',
+        confirmButtonText: 'Yes, ' + s + ' it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ChangeStoryStatus",
+                data: { storyId: storyId, status: status },
+                success: function () {
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Story ' + s + 'd successfully!!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
         }
-    });
+    })
 })
 
 //view story details
@@ -1045,8 +1147,8 @@ $('.deleteStory').on('click', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -1083,8 +1185,8 @@ $(document).on('click', '.delStory', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -1109,6 +1211,7 @@ $(document).on('click', '.delStory', function () {
         }
     })
 })
+
 
 
 
@@ -1220,8 +1323,8 @@ $('.deleteBanner').on('click', function () {
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#414141',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -1485,7 +1588,7 @@ var bannerTable = $('#bannerTable').DataTable({
     ordering: false,
     paging: true,
     searching: true,
-    pageLength: 7,
+    pageLength: 3,
     pagingType: "full_numbers",
     language: {
         paginate: {

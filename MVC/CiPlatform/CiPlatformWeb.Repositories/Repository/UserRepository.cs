@@ -69,5 +69,6 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Banners.Where(b => b.DeletedAt == null).OrderByDescending(b => b.SortOrder).ToList();
         }
 
+        
     }
 }

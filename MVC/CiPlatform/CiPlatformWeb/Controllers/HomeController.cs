@@ -91,31 +91,46 @@ namespace CiPlatformWeb.Controllers
                 {
                     if (BCrypt.Net.BCrypt.Verify(obj.Password, user.Password))
                     {
-                        HttpContext.Session.SetString("UserId", user.UserId.ToString());
-
-                        var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
-                        var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
-                        HttpContext.Session.SetString("Token", token);
-                        TempData["success"] = "Logged In!!!";
-
-                        var missionId = HttpContext.Session.GetString("MissionId");
-                        var storyMissionId = HttpContext.Session.GetString("StoryMissionId");
-                        var storyUserId = HttpContext.Session.GetString("StoryUserId");
-                        if (!string.IsNullOrEmpty(missionId))
+                        if (user.DeletedAt == null && user.Status == 1)
                         {
-                            HttpContext.Session.Remove("MissionId");
-                            return RedirectToAction("VolunteeringMission", "Mission", new { missionId = Convert.ToInt64(missionId) });
+                            HttpContext.Session.SetString("UserId", user.UserId.ToString());
 
-                        }
-                        else if (!string.IsNullOrEmpty(storyMissionId) && !string.IsNullOrEmpty(storyUserId))
-                        {
-                            HttpContext.Session.Remove("StoryMissionId");
-                            HttpContext.Session.Remove("StoryUserId");
-                            return RedirectToAction("StoryDetail", "Story", new { missionId = Convert.ToInt64(storyMissionId), userId = Convert.ToInt64(storyUserId) });
+                            var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
+                            var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
+                            HttpContext.Session.SetString("Token", token);
+
+                            if (user.Role == "user")
+                            {
+                                TempData["success"] = "Logged In!!!";
+                                var missionId = HttpContext.Session.GetString("MissionId");
+                                var storyMissionId = HttpContext.Session.GetString("StoryMissionId");
+                                var storyUserId = HttpContext.Session.GetString("StoryUserId");
+                                if (!string.IsNullOrEmpty(missionId))
+                                {
+                                    HttpContext.Session.Remove("MissionId");
+                                    return RedirectToAction("VolunteeringMission", "Mission", new { missionId = Convert.ToInt64(missionId) });
+
+                                }
+                                else if (!string.IsNullOrEmpty(storyMissionId) && !string.IsNullOrEmpty(storyUserId))
+                                {
+                                    HttpContext.Session.Remove("StoryMissionId");
+                                    HttpContext.Session.Remove("StoryUserId");
+                                    return RedirectToAction("StoryDetail", "Story", new { missionId = Convert.ToInt64(storyMissionId), userId = Convert.ToInt64(storyUserId) });
+                                }
+                                else
+                                {
+                                    return RedirectToAction("PlatformLanding", "Mission");
+                                }
+                            }
+                            else
+                            {
+                                return RedirectToAction("AdminUser", "Admin");
+                            }
                         }
                         else
                         {
-                            return RedirectToAction("PlatformLanding", "Mission");
+                            TempData["error"] = "Login failed!!!";
+                            return RedirectToAction("Index", "Home");
                         }
                     }
                     else

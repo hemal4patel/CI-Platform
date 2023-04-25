@@ -41,18 +41,18 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionTheme> GetThemeList ()
         {
-            return _db.MissionThemes.ToList();
+            return _db.MissionThemes.Where(m => m.DeletedAt == null).ToList();
         }
 
         public List<Skill> GetSkillList ()
         {
-            return _db.Skills.ToList();
+            return _db.Skills.Where(m => m.DeletedAt == null).ToList();
         }
 
         public (List<MissionListModel> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
         {
 
-            IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null && m.MissionSkills.All(ms => ms.Skill.DeletedAt == null) && m.Theme.DeletedAt == null).AsQueryable();
+            IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null).AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -91,11 +91,11 @@ namespace CiPlatformWeb.Repositories.Repository
                     break;
 
                 case 3:
-                    missions = missions.OrderBy(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    missions = missions.Where(m => m.MissionType == "Time").OrderBy(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
                     break;
 
                 case 4:
-                    missions = missions.OrderByDescending(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    missions = missions.Where(m => m.MissionType == "Time").OrderByDescending(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
                     break;
 
                 case 5:
@@ -120,7 +120,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 cityName = m.City.Name,
                 themeName = m.Theme.Title,
                 isFavorite = m.FavouriteMissions.Any(m => m.UserId == userId),
-                rating = m.MissionRatings.Select(m => m.Rating).FirstOrDefault(),
+                rating = m.MissionRatings.Any() ? m.MissionRatings.Average(m => m.Rating) : 0,
                 seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count(),
                 hasDeadlinePassed = m.StartDate.Value.AddDays(-1) < DateTime.Now,
                 haEndDatePassed = m.EndDate < DateTime.Now,

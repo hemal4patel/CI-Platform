@@ -237,7 +237,7 @@
                 <div class="col-6 text-center border border-secondary rounded-pill rateMission">
                     @for (int i = 0; i < 5; i++)
                     {
-                        if (i < Model.MissionDetails.rating)
+                        if (i < Model.MissionDetails.ratingByUser)
                         {
                             <i class="bi bi-star-fill text-warning m-1" data-mission-Id="@Model.MissionDetails.missionId"></i>
                         }
@@ -395,12 +395,12 @@
                     </p>
 
                     <h4 class="mb-3 mt-4">Documents</h4>
-                    <div class="row gy-4">
+                    <div class="d-flex justify-content-between flex-wrap">
                         @if (Model.MissionDetails.MissionDocuments.Any())
                         {
                             @foreach (MissionDocument doc in Model.MissionDetails.MissionDocuments)
                             {
-                                <div class="col-sm-4">
+                                <div class="px-2 pb-4">
                                     <a class="text-decoration-none text-dark py-2 px-2 rounded-pill border border-secondary" href="@Url.Action("DisplayDocument", "Mission", new { fileName = @doc.DocumentPath })" target="_blank">
                                         <img src="~/images/xlsx.png" alt="">
                                         &nbsp; @doc.DocumentName
@@ -517,7 +517,7 @@
                         <div class="ms-5">
                             @for (int i = 0; i < 5; i++)
                             {
-                                if (i < Model.MissionDetails.rating)
+                                if (i < Model.MissionDetails.ratingByAll)
                                 {
                                     <i class="bi bi-star-fill text-warning"></i>
                                 }

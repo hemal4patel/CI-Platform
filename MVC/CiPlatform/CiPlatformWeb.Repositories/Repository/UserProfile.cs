@@ -180,5 +180,10 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.ContactUs.Add(data);
             _db.SaveChanges();
         }
+
+        public List<CmsPage> GetPolicyPages ()
+        {
+            return _db.CmsPages.Where(c => c.DeletedAt == null).ToList();
+        }
     }
 }

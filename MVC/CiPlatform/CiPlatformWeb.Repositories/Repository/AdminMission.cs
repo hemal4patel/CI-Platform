@@ -38,12 +38,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionTheme> GetThemes ()
         {
-            return _db.MissionThemes.ToList();
+            return _db.MissionThemes.Where(t => t.DeletedAt == null).ToList();
         }
 
         public List<Skill> GetSkills ()
         {
-            return _db.Skills.ToList();
+            return _db.Skills.Where(s => s.DeletedAt == null).ToList();
         }
 
         public AdminMissionList GetMissionToEdit (long missionId)
@@ -68,7 +68,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 goalValue = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
                 missionTheme = m.Theme.MissionThemeId,
-                missionSkills = string.Join(",", m.MissionSkills.Select(m => m.Skill.SkillId)),
+                missionSkills = string.Join(",", m.MissionSkills.Where(s => s.DeletedAt == null).Select(m => m.Skill.SkillId)),
                 availability = m.Availability,
                 videosUrl = string.Join("\n", m.MissionMedia.Where(m => m.MediaType== "vid" && m.DeletedAt == null).Select(m => m.MediaPath)),
                 imageName = string.Join(",", m.MissionMedia.Where(m => m.MediaType == "img" && m.DeletedAt == null).Select(m => $"{m.MediaPath}:{m.Default}")),

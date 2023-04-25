@@ -121,77 +121,6 @@ $("#countryDropdown").click(function () {
     });
 });
 
-
-//$('.selectSkills').click(function () {
-//    var newOption;
-//    var displaySkillsDiv = $('.upSkillsSelected select');
-//    var selectedSkills = $('.skillOptions select option:selected');
-//    displaySkillsDiv.empty();
-//    selectedSkills.each(function () {
-//        newOption = $('<option>', {
-//            value: $(this).val(),
-//            text: $(this).text(),
-//        })
-//        displaySkillsDiv.append(newOption)
-//    })
-
-
-//})
-
-////removing skills
-//$('.deselectSkills').click(function () {
-//    var selectedSkills = $('.upSkillsSelected select option:selected');
-//    selectedSkills.each(function () {
-//        $(this).remove();
-//    })
-//})
-
-//function saveSkills() {
-//    var container = $('.skillsContainer');
-//    container.empty();
-//    var selectedUserSkills = [];
-//    skills = "";
-
-//    $('.upSkillsSelected select option').each(function () {
-//        var value = $(this).val();
-//        var text = $(this).html();
-//        skills += ` <div class="userSkill" data-value=${value}>${text}</div>`
-//        selectedUserSkills.push($(this).val());
-//    })
-//    container.append(skills);
-//    $('#selectedSkills').val(selectedUserSkills.join());
-//}
-
-
-//let array = new Array();
-//function rightClick() {
-//    $("#selectSkill option:selected").each(function () {
-//        $(this).addClass("activeSkill");
-//        var temp = $(this).text();
-//        var skillId = $(this).val();
-//        var obj = 0;
-//        $("#selectedSkill option").each(function () {
-
-//            if ($(this).val() == skillId) {
-//                obj = 1;
-//            }
-//        });
-//        if (obj == 0) {
-//            $("#selectedSkill").append($(`<option class="p-1" value=` + skillId + `>` + temp + `</option>`));
-//            userskill.add(skillId);
-//        }
-//    });
-//}
-
-//function leftClick() {
-//    $("#selectedSkill option:selected").each(function () {
-//        var skillId = $(this).remove().val();
-//        $("#selectSkill option[value='" + skillId + "']").removeClass("activeSkill");
-//        $("#selectSkill option[value='" + skillId + "']").prop("selected", false);
-//        userskill.delete(skillId);
-//    });
-//}
-
 $('.selectSkill').on('click', function () {
     var selectedSkill = $('.skillOptions select option:selected')
     selectedSkill.prop('selected', true)
@@ -233,6 +162,8 @@ function saveSkills() {
     })
     container.append(skills)
     $('#selectedSkills').val(selectedSkills.join())
+
+    $('#addSkillsModal').modal('hide');
 }
 
 // Add change event listener to profile image file input
@@ -484,6 +415,12 @@ $('.resetFormButton').click(function () {
         $(this).find('.field-validation-error').text('');
         $(this).find('.field-validation-valid').text('');
         $(this).find('.errorMsg').hide()
+
+        $('#mission option').prop("disabled", false);
+        $('#date').removeAttr('min').removeAttr('max');
+
+        $('#Gmission option').prop("disabled", false);
+        $('#Gdate').removeAttr('min').removeAttr('max');
     });
 })
 

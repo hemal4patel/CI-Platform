@@ -20,7 +20,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<AdminApplicationModel> GetApplications ()
         {
-            IQueryable<MissionApplication> appplications = _db.MissionApplications.Where(a => a.DeletedAt == null).AsQueryable();
+            IQueryable<MissionApplication> appplications = _db.MissionApplications.Where(a => a.DeletedAt == null && a.ApprovalStatus == "PENDING").AsQueryable();
 
             IQueryable<AdminApplicationModel> list = appplications.Select(a => new AdminApplicationModel()
             {

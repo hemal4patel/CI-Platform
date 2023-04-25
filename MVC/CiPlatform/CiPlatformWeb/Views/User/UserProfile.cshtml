@@ -5,13 +5,6 @@
 
 @model CiPlatformWeb.Entities.ViewModels.UserProfileViewModel
 
-@{
-    //string Email = ViewBag.Email;
-    //string UserName = ViewBag.UserName;
-    //var Id = Convert.ToInt64(ViewBag.UserId);
-    //string UserAvatar = ViewBag.UserAvatar;
-}
-
 
 <div class="container my-5">
     <form method="post" enctype="multipart/form-data">
@@ -53,18 +46,18 @@
                                     </div>
                                     <div class="modal-body py-1">
                                         <div class="form-group">
-                                            <input type="text" id="oldPassword" class="form-control inputField" placeholder="Enter old password">
+                                            <input type="password" id="oldPassword" class="form-control inputField" placeholder="Enter old password">
                                             <span class="valOldPassword text-danger errorMsg" style="display: none;">Old passowrd is required.</span>
                                             <span class="valInvalidPassword text-danger errorMsg" style="display: none;">Passowrd is incorrect.</span>
                                         </div>
 
                                         <div class="form-group mt-3">
-                                            <input type="text" id="newPassword" class="form-control inputField" placeholder="Enter new password">
+                                            <input type="password" id="newPassword" class="form-control inputField" placeholder="Enter new password">
                                             <span class="valNewPassword text-danger errorMsg" style="display: none;">New passowrd must be between 8 to 16 characters.</span>
                                         </div>
 
                                         <div class="form-group mt-3">
-                                            <input type="text" id="confirmPassword" class="form-control inputField" placeholder="Enter confirm passord">
+                                            <input type="password" id="confirmPassword" class="form-control inputField" placeholder="Enter confirm passord">
                                             <span class="valConfirmPassword text-danger errorMsg" style="display: none;">New passowrd is required.</span>
                                             <span class="valMatchingPassword text-danger errorMsg" style="display: none;">Password doesn't match.</span>
                                         </div>
@@ -299,47 +292,6 @@
                                             </select>
                                         </div>
                                     </div>
-
-                                    @*<div class="row d-flex justify-content-center p-0 m-0">
-                                    <div class="col-5 p-0">
-                                    <div class="skill-menu">
-                                    <select name="selectSkill" id="selectSkill" size=20 multiple="multiple" class="">
-                                    @foreach (var skill in @Model.SkillList)
-                                    {
-                                    bool isSkillSelected = Model.UserSkills != null && Model.UserSkills.Any(us => us.SkillId == skill.SkillId);
-                                    if (isSkillSelected)
-                                    {
-                                    <option class="p-1 activeSkill" value="@skill.SkillId" selected>@skill.SkillName</option>
-                                    }
-                                    else
-                                    {
-                                    <option class="p-1" value="@skill.SkillId">@skill.SkillName</option>
-                                    }
-                                    }
-                                    </select>
-                                    </div>
-                                    </div>
-                                    <div class="col-1 p-0 d-flex flex-column arrows justify-content-center align-items-center ">
-                                    <img class="my-2" onclick="rightClick()" src="~/images/right-arrow1.png" />
-                                    <img class="my-2" onclick="leftClick()" src="~/images/left.png" />
-                                    </div>
-                                    <div class="col-5 p-0">
-                                    <div class="skill-menu" id="">
-                                    <select name="selectedSkill" id="selectedSkill" size=20 multiple="multiple" class="">
-                                    @{
-                                    var skillcount = @Model.UserSkills;
-                                    if (skillcount != null)
-                                    {
-                                    @foreach (var skillname in skillcount)
-                                    {
-                                    <option class="p-1" value="@skillname.SkillId">@skillname.Skill.SkillName</option>
-                                    }
-                                    }
-                                    }
-                                    </select>
-                                    </div>
-                                    </div>
-                                    </div>*@
 
                                 </div>
                                 <div class="modal-footer mt-2" style="display: flex; justify-content: left;">

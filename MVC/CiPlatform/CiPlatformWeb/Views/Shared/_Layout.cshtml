@@ -23,7 +23,7 @@
                         @foreach(Banner banner in Model.banners)
                         {
                             int index = Model.banners.IndexOf(banner);
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@index"
+                            <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="@index"
                                 class="@((index == 0) ? "active" : "")" aria-current="@((index == 0) ? "true" : "false")" aria-label="Slide @(index + 1)"></button>
                         }
 
@@ -32,7 +32,7 @@
                         @foreach (Banner banner in Model.banners)
                         {
                             int index = Model.banners.IndexOf(banner);
-                            <div class="carousel-item @((index == 0) ? "active" : "")" data-bs-interval="3000">
+                            <div class="carousel-item @((index == 0) ? "active" : "")" data-bs-interval="2000">
                                 <img src="~/Upload/Banner/@banner.Image" class="d-block w-100 imgCarousel" alt="@banner.Image">
                                 <div class="carousel-caption d-none d-md-block">
                                     <p>

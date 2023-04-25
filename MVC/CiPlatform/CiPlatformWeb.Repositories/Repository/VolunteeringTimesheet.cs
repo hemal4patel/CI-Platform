@@ -21,14 +21,16 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionApplication> GetTimeBasedMission (long userId)
         {
-            var timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Time" && m.ApprovalStatus == "APPROVE").Include(m => m.Mission).ToList();
+            DateTime today = DateTime.Now;
+            var timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Time" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
 
             return timeMissions;
         }
 
         public List<MissionApplication> GetGoalBasedMission (long userId)
         {
-            var goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Goal" && m.ApprovalStatus == "APPROVE").Include(m => m.Mission).ToList();
+            DateTime today = DateTime.Now;
+            var goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Goal" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
 
             return goalMissions;
         }

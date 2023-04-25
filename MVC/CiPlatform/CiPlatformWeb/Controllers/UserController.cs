@@ -25,7 +25,7 @@ namespace CiPlatformWeb.Controllers
             _timesheet = timesheet;
         }
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         //GET
         public IActionResult UserProfile ()
         {
@@ -54,8 +54,8 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        
-        [Authorize(Roles = "admin, user")]
+
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult UserProfile (UserProfileViewModel viewmodel)
         {
@@ -89,7 +89,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         public IActionResult GetCitiesByCountry (int countryId)
         {
             var vm = new UserProfileViewModel();
@@ -97,8 +97,8 @@ namespace CiPlatformWeb.Controllers
             return Json(vm.CityList);
         }
 
-        
-        [Authorize(Roles = "admin, user")]
+
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult ChangePassword (string oldPassoword, string newPassword, string confirmPassword)
         {
@@ -118,28 +118,35 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        
-        [Authorize(Roles = "admin, user")]
+
+        //[Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult ContactUs (string subject, string message)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
-            if (userId != null)
+            if (HttpContext.Session.GetString("UserId") != null)
             {
-                _userProfile.ContactUs(userId, subject, message);
-                return Ok();
+                string userIdStr = HttpContext.Session.GetString("UserId");
+                long userId = Convert.ToInt64(userIdStr);
+
+                if (userId != null)
+                {
+                    _userProfile.ContactUs(userId, subject, message);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             else
             {
-                return BadRequest();
+                return RedirectToAction("Index", "Home"); 
             }
         }
 
 
         //GET
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         public IActionResult VolunteeringTimesheet ()
         {
             if (HttpContext.Session.GetString("UserId") != null)
@@ -163,7 +170,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult VolunteeringTimesheet (VolunteeringTimesheetViewModel viewmodel)
         {
@@ -242,8 +249,8 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        
-        [Authorize(Roles = "admin, user")]
+
+        [Authorize(Roles = "user")]
         public IActionResult GetTimesheetData (long id)
         {
             string userIdStr = HttpContext.Session.GetString("UserId");
@@ -262,8 +269,8 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        
-        [Authorize(Roles = "admin, user")]
+
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult DeleteTimesheetData (long id)
         {
@@ -281,10 +288,12 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        [Authorize(Roles = "admin, user")]
+        [AllowAnonymous]
         public IActionResult PrivacyPolicy ()
         {
-            return View();
+            UserProfileViewModel vm = new UserProfileViewModel();
+            vm.PolicyPages = _userProfile.GetPolicyPages();
+            return View(vm);
         }
     }
 }

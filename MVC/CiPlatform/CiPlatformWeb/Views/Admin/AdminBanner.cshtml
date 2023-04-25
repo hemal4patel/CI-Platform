@@ -51,9 +51,11 @@
                     @foreach (AdminBannerModel banner in Model.banners)
                     {
                         <tr id="@banner.bannerId">
-                            <td scope="row">@banner.imageName</td>
+                            <td scope="row"> 
+                                <img src="~/Upload/Banner/@banner.imageName" style="height: 100px; width: 100px;"/>
+                            </td>
                             @{
-                                int maxLength = 20;
+                                int maxLength = 30;
                                 string text = banner.text.Length > maxLength
                                 ? @banner.text.Substring(0, maxLength) + "..."
                                 : @banner.text;

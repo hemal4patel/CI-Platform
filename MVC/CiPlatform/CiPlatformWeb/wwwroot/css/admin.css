@@ -245,18 +245,10 @@ thead tr th {
     width: 12em;
     height: 12em;
     margin-top: 15px;
-    /* align-items: center; */
-    /* align-content: center; */
-    /* text-align: center; */
     margin-left: auto;
     display: flex;
     margin-right: auto;
 }
-
-/*#imagePreview .image-banner {
-    position: relative;
-    margin: 2px 10px 15px 0;
-}*/
 
 /*default image*/
 .default-image {

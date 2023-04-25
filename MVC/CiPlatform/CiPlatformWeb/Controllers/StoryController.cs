@@ -22,7 +22,7 @@ namespace CiPlatformWeb.Controllers
         }
 
         //GET
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         public IActionResult StoryListing ()
         {
             if (HttpContext.Session.GetString("UserId") != null)
@@ -44,7 +44,7 @@ namespace CiPlatformWeb.Controllers
         }
 
         //POST
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult StoryListing (StoryQueryParams viewmodel)
         {
@@ -68,7 +68,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         public IActionResult ShareStory ()
         {
             if (HttpContext.Session.GetString("UserId") != null)
@@ -89,7 +89,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         public IActionResult GetStory (long missionId)
         {
             string userIdStr = HttpContext.Session.GetString("UserId");
@@ -100,7 +100,7 @@ namespace CiPlatformWeb.Controllers
             return Json(story);
         }
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult SaveStory (ShareStoryViewModel viewmodel)
         {
@@ -137,7 +137,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult SubmitStory (ShareStoryViewModel viewmodel)
         {
@@ -175,7 +175,7 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "admin, user")]
+        [AllowAnonymous]
         public IActionResult StoryDetail (long MissionId, long UserId)
         {
             if (HttpContext.Session.GetString("UserId") != null)
@@ -203,7 +203,7 @@ namespace CiPlatformWeb.Controllers
 
 
 
-        [Authorize(Roles = "admin, user")]
+        [Authorize(Roles = "user")]
         [HttpPost]
         public async Task<IActionResult> StoryInvite (long ToUserId, long StoryId, long FromUserId, long storyUserId, long storyMissionId)
         {

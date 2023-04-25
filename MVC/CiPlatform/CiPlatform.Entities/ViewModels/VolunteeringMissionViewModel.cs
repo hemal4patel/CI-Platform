@@ -34,7 +34,9 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public bool isFavorite { get; set; }
 
-        public double rating { get; set; }
+        public double ratingByUser { get; set; }
+
+        public double ratingByAll { get; set; }
 
         public int? ratedByVols { get; set; }
 

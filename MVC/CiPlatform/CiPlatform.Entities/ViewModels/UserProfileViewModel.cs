@@ -54,5 +54,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public List<Skill>? SkillList {  get; set; }
 
         public List<UserSkill>? UserSkills { get; set; }
+
+        public List<CmsPage>? PolicyPages { get; set; }
     }
 }

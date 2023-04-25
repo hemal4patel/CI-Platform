@@ -310,12 +310,15 @@ $('#submitStory').click(function () {
             $('.note-editable').text('');
             $('#videoUrls').val('');
             $('#image-list').empty();
+
+            $('#previewStory').prop('disabled', true);
+            $('#submitStory').prop('disabled', true)
         },
         error: function (error) {
             console.log(error);
         }
     });
-});
+}); 
 
 function storyInvite(ToUserId) {
     var StoryId = $('#storyId').text();

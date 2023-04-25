@@ -21,7 +21,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<AdminStoryModel> GetStories ()
         {
-            IQueryable<Story> stories = _db.Stories.Where(s => s.Status != "DRAFT" && s.DeletedAt == null).AsQueryable();
+            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == "PENDING" && s.DeletedAt == null).AsQueryable();
 
             IQueryable<AdminStoryModel> list = stories.Select(s => new AdminStoryModel()
             {

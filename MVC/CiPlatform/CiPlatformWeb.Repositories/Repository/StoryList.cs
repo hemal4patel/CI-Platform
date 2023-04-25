@@ -69,7 +69,7 @@ namespace CiPlatformWeb.Repositories.Repository
             var list = stories.Select(s => new StoryListModel()
             {
                 story = s,
-                mediaPath = s.StoryMedia.Where(s => s.DeletedAt == null).Select(s => s.Path).FirstOrDefault(),
+                mediaPath = s.StoryMedia.Where(s => s.DeletedAt == null && s.Type == "img").Select(s => s.Path).FirstOrDefault(),
                 themeName = s.Mission.Theme.Title,
                 storyUserAvatar = s.User.Avatar,
                 storyUserName = s.User.FirstName + " " + s.User.LastName

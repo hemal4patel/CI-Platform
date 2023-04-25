@@ -29,5 +29,7 @@ namespace CiPlatformWeb.Repositories.Interface
         public UserProfileViewModel UpdateUserProfile (UserProfileViewModel user);
 
         public void ContactUs (long userId, string subject, string message);
+
+        public List<CmsPage> GetPolicyPages ();
     }
 }

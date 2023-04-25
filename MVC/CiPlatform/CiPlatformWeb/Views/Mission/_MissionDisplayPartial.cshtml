@@ -44,6 +44,19 @@
                                 <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
                             }
 
+                            @if (obj.hasApplied)
+                            {
+                                <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                                    <span>APPLIED</span>
+                                </div>
+                            }
+                            else if (obj.mission.MissionType.Equals("Time") && (obj.hasDeadlinePassed || obj.haEndDatePassed))
+                            {
+                                <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                                    <span>CLOSED</span>
+                                </div>
+                            }
+
                             <div class="mt-1 me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
                                 <div class="text-decoration-none text-white">
                                     <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
