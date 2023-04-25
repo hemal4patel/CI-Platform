@@ -13,6 +13,7 @@ else if (currentUrl.includes("StoryListing")) {
 
 var currVolPage = 1;
 showRecentVounteers(1);
+showComments();
 
 function showRecentVounteers(currVolPage) {
     var missionId = $('.missionId').text();
@@ -606,18 +607,30 @@ $('.rateMission i').click(function () {
     });
 });
 
+function showComments() {
+    var missionId = $('.missionId').text();
+
+    $.ajax({
+        type: 'POST',
+        url: '/Mission/GetComments',
+        data: { missionId: missionId },
+        success: function (data) {
+            $('.commentsContainer').empty()
+            $('.commentsContainer').append(data)
+        }
+    });
+}
+
 $('.commentButton').click(function () {
-    var comment = $('.newComment').val();
+    var comment = $('.newComment').val().trim();
     var missionId = $(this).data('mission-id');
     if (comment.length == 0) {
         $('.valComment').show();
-
         $('.newComment').on('input', function () {
             if ($('.newComment').val().length != 0) {
                 $('.valComment').hide();
             }
         })
-
         return;
     }
     $.ajax({
@@ -633,6 +646,7 @@ $('.commentButton').click(function () {
                 showConfirmButton: false,
                 timer: 3000
             })
+            showComments();
         },
         error: function (error) {
             console.log("error");

@@ -16,7 +16,7 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void ApplyToMission (long missionId, long userId);
 
-        public List<Comment> GetApprovedComments (long MissionId);
+        public List<Comment> GetComments (long MissionId);
 
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId);
 

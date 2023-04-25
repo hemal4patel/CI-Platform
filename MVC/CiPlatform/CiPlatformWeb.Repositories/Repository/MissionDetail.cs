@@ -43,7 +43,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
                 achievedGoal = m.Timesheets.Sum(m => m.Action),
                 missionMedia = m.MissionMedia.Where(m => m.DeletedAt == null).ToList(),
-                skills = m.MissionSkills.Select(m => m.Skill.SkillName).ToList(),
+                skills = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).ToList(),
                 ApprovedComments = m.Comments.ToList(),
                 MissionDocuments = m.MissionDocuments.Where(m => m.DeletedAt == null).ToList(),
                 hasAppliedApprove = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "APPROVE"),
@@ -73,9 +73,9 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-        public List<Comment> GetApprovedComments (long MissionId)
+        public List<Comment> GetComments (long MissionId)
         {
-            return _db.Comments.Where(c => c.ApprovalStatus == "PUBLISHED" && c.MissionId == MissionId).Include(c => c.User).ToList();
+            return _db.Comments.Where(c => c.DeletedAt == null && c.MissionId == MissionId).Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
         }
 
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId)

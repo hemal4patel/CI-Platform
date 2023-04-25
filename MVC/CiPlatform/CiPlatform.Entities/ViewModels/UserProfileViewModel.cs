@@ -39,6 +39,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public string? ProfileText { get; set; }
 
+        [RegularExpression(@"^https?://(?:www\.)?linkedin\.com/(?:in|company)/[\w-]+/?$", ErrorMessage = "Invalid LinkedIn url.")] 
         public string? LinkedInUrl { get; set; }
 
         public string? Title { get; set; }

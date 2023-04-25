@@ -112,7 +112,6 @@ namespace CiPlatformWeb.Controllers
                 vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
                 vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId, userId);
                 vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
-                vm.ApprovedComments = _missiondetail.GetApprovedComments(MissionId);
 
                 return View(vm);
             }
@@ -124,12 +123,21 @@ namespace CiPlatformWeb.Controllers
         }
 
         [Authorize(Roles = "user")]
+        public IActionResult GetComments(long missionId)
+        {
+            VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
+
+            vm.ApprovedComments = _missiondetail.GetComments(missionId);
+            return PartialView("_commentsPartial", vm);
+        }
+
+        [Authorize(Roles = "user")]
         public IActionResult showRecentVounteers(int currVolPage, long missionId)
         {
             string userIdStr = HttpContext.Session.GetString("UserId");
             long userId = Convert.ToInt64(userIdStr);
 
-            var vm = new VolunteeringMissionViewModel();
+            VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
 
             var data = _missiondetail.GetRecentVolunteers(missionId, userId, currVolPage);
             vm.RecentVolunteers = data.recentVolunteers;
@@ -169,9 +177,16 @@ namespace CiPlatformWeb.Controllers
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
             "wwwroot/Upload/MissionDocuments", fileName);
-            var fileStream = new FileStream(filePath, FileMode.Open);
-
-            return File(fileStream, "application/pdf");
+            if (Path.GetExtension(filePath).ToLower() == ".pdf")
+            {
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                return new FileStreamResult(fileStream, "application/pdf");
+            }
+            else
+            {
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                return File(fileBytes, "application/octet-stream", fileName);
+            }
         }
 
 

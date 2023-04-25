@@ -93,19 +93,19 @@
 
                             <div class="form-group">
                                 <label asp-for="FirstName" class="form-label">Name<span class="required-field"></span></label>
-                                <input asp-for="FirstName" id="firstName" type="text" class="form-control" placeholder="Enter your name">
+                                <input asp-for="FirstName" id="firstName" type="text" maxlength="16" class="form-control" placeholder="Enter your name">
                                 <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="LastName" class="form-label">Surname<span class="required-field"></span></label>
-                                <input asp-for="LastName" id="lastName" type="text" class="form-control" placeholder="Enter your surname">
+                                <input asp-for="LastName" id="lastName" type="text" maxlength="16" class="form-control" placeholder="Enter your surname">
                                 <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="EmployeeId" class="form-label">Employee ID</label>
-                                <input asp-for="EmployeeId" id="empId" type="text" class="form-control" placeholder="Enter your employee id">
+                                <input asp-for="EmployeeId" id="empId" type="text" maxlength="16" class="form-control" placeholder="Enter your employee id">
                             </div>
 
                             <div class="form-group">
@@ -115,12 +115,12 @@
 
                             <div class="form-group">
                                 <label asp-for="Title" class="form-label">Title</label>
-                                <input asp-for="Title" id="title" type="text" class="form-control" placeholder="Enter title">
+                                <input asp-for="Title" id="title" type="text" maxlength="255" class="form-control" placeholder="Enter title">
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="Department" class="form-label">Department</label>
-                                <input asp-for="Department" id="dept" type="text" class="form-control" placeholder="Enter your department details">
+                                <input asp-for="Department" id="dept" type="text" maxlength="16" class="form-control" placeholder="Enter your department details">
                             </div>
 
                         </div>
@@ -214,6 +214,7 @@
                             <div class="form-group">
                                 <label asp-for="LinkedInUrl" class="form-label">LinkedIn</label>
                                 <input asp-for="LinkedInUrl" id="linkedInUrl" type="text" class="form-control" placeholder="Enter LinkedIn URL">
+                                <span asp-validation-for="LinkedInUrl" class="text-danger"></span>
                             </div>
 
                         </div>

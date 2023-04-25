@@ -1,0 +1,44 @@
+﻿@using CiPlatformWeb.Entities.DataModels
+@using CiPlatformWeb.Entities.ViewModels
+
+
+<div class="comment-box mt-4" style=" height: auto; max-height: 70vh; overflow-y: scroll;">
+    <div class="p-4">
+        @if (Model.ApprovedComments.Count != 0)
+        {
+
+            @foreach (Comment com in Model.ApprovedComments)
+            {
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                            @if(com.User.Avatar is not null)
+                            {
+                                <img src="~/Upload/UserProfile/@com.User.Avatar" alt=""
+                         class="rounded-circle vol-img">
+                            }
+                            else
+                            {
+                                <img src="~/Upload/UserProfile/no-avatar.jpg" alt=""
+                         class="rounded-circle vol-img">
+                            }
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <h5>@com.User.FirstName @com.User.LastName</h5>
+                                <p>
+                                    @com.CreatedAt.Value.ToString("dddd, MMMM dd, yyyy, h:mm tt")
+                                </p>
+                                <p>@com.CommentText</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <span style="font-size: 20px;">No comments added</span>
+        }
+    </div>
+</div>
