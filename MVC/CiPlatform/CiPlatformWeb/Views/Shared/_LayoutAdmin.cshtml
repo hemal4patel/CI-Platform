@@ -70,6 +70,8 @@
                         <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Banner Management</span>
                     </a>
                 </li>
+
+                @*@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value*@
             </ul>
         </div>
 
