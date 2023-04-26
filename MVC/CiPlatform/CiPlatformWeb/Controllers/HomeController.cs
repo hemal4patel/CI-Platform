@@ -67,7 +67,7 @@ namespace CiPlatformWeb.Controllers
         [AllowAnonymous]
         public IActionResult Index ()
         {
-            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Clear();
             LoginValidation vm = new();
             vm.banners = _userRepository.GetBanners();
             return View(vm);
@@ -231,7 +231,7 @@ namespace CiPlatformWeb.Controllers
         [AllowAnonymous]
         public IActionResult Logout ()
         {
-            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
