@@ -50,7 +50,7 @@ $('#addUser').on('click', function () {
 //edit user
 $('.editUser').on('click', function () {
     var userId = $(this).closest('tr').attr('id');
-    console.log(userId)
+    
     $.ajax({
         type: 'GET',
         url: "/Admin/EditUser",
@@ -324,7 +324,7 @@ $('#addMissionForm').on('submit', function (e) {
     var editorDesc = tinymce.get('missionDescription');
     editorDesc.on('change', function () {
         var text = editorDesc.getContent().trim();
-        console.log(text)
+        
         if (text !== '') {
             $('#valDesc').hide();
         }
@@ -338,7 +338,7 @@ $('#addMissionForm').on('submit', function (e) {
     var editor = tinymce.get('organizationDetail');
     editor.on('change', function () {
         var text = editor.getContent().trim();
-        console.log(text)
+        
         if (text !== '') {
             $('#orgDetails').hide();
         }
@@ -506,7 +506,6 @@ $('.editMission').click(function () {
                 var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
                 var dd = String(todayDate.getDate()).padStart(2, '0');
                 var minDate = yyyy + '-' + mm + '-' + dd;
-                console.log(minDate)
                 $('#registrationDeadline').prop('min', minDate)
 
                 var max = new Date(startDate);
@@ -692,7 +691,6 @@ docsdropzone.on('dragleave', function (e) {
 
 $('#doc-input').on('change', function (e) {
     $('.valDocs').hide();
-    console.log(allDocs)
     handleDocs(e);
 });
 
@@ -803,7 +801,7 @@ $('#addTheme').on('click', function () {
 //edit theme
 $('.editTheme').on('click', function () {
     var themeId = $(this).closest('tr').attr('id');
-    console.log(themeId)
+    
     $.ajax({
         type: 'GET',
         url: "/Admin/EditTheme",
@@ -884,7 +882,7 @@ $('#addSkill').on('click', function () {
 //edit skill
 $('.editSkill').on('click', function () {
     var skillId = $(this).closest('tr').attr('id');
-    console.log(skillId)
+    
     $.ajax({
         type: 'GET',
         url: "/Admin/EditSkill",
@@ -1050,25 +1048,6 @@ $(document).on('click', '.changeStoryStatus', function () {
             });
         }
     })
-
-    //$.ajax({
-    //    type: "POST",
-    //    url: "/Admin/ChangeStoryStatus",
-    //    data: { storyId: storyId, status: status },
-    //    success: function () {
-    //        var container = $('.showStoryButtons-' + storyId);
-    //        container.empty();
-    //        if (status == 0) {
-    //            container.html('<i class="bi bi-check-circle ms-2 changeStoryStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0" style="color: #f20707;"></i>');
-    //        }
-    //        else {
-    //            container.html('<i class="bi bi-check-circle-fill ms-2" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeStoryStatus" data-value="0" style="color: #f20707;"></i>');
-    //        }
-    //    },
-    //    error: function (error) {
-    //        console.log(error)
-    //    }
-    //});
 })
 
 $(document).on('click', '.storyStatusButtons', function () {
@@ -1361,7 +1340,6 @@ $('.deleteBanner').on('click', function () {
 
 //cancel button
 $(document).on('click', '.cancelButton', function () {
-    console.log('called')
     window.location.reload()
 });
 

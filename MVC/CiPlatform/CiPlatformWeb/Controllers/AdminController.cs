@@ -115,14 +115,14 @@ namespace CiPlatformWeb.Controllers
                     if (_adminUser.UserExistsForNew(vm.newUser.email))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "User already exists!!!";
+                        TempData["message"] = "User " + Messages.exists;
                     }
                     //add
                     else
                     {
                         _adminUser.AddNewUser(vm.newUser);
                         TempData["icon"] = "success";
-                        TempData["message"] = "User added successfully!!!";
+                        TempData["message"] = "User " + Messages.add;
                     }
                 }
                 //update
@@ -132,14 +132,14 @@ namespace CiPlatformWeb.Controllers
                     if (_adminUser.UserExistsForUpdate(vm.newUser.email, vm.newUser.userId))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "User already exists!!!";
+                        TempData["message"] = "User " + Messages.exists;
                     }
                     //update
                     else
                     {
                         _adminUser.UpdateUser(vm.newUser);
                         TempData["icon"] = "success";
-                        TempData["message"] = "User updated successfully!!!";
+                        TempData["message"] = "User " + Messages.update;
                     }
                 }
 
@@ -219,13 +219,13 @@ namespace CiPlatformWeb.Controllers
                     if (_adminCms.CmsExistsForUpdate(vm.newCms.cmsId, vm.newCms.slug))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Slug already exists!!!";
+                        TempData["message"] = "Slug " + Messages.exists;
                     }
                     else
                     {
                         _adminCms.EditCmsPage(vm.newCms);
                         TempData["icon"] = "success";
-                        TempData["message"] = "Cms page updated successfully!!!";
+                        TempData["message"] = "Cms page " + Messages.update;
                     }
                 }
                 else
@@ -233,13 +233,13 @@ namespace CiPlatformWeb.Controllers
                     if (_adminCms.CmsExistsForNew(vm.newCms.slug))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Slug already exists!!!";
+                        TempData["message"] = "Slug " + Messages.exists;
                     }
                     else
                     {
                         _adminCms.AddCmsPage(vm.newCms);
                         TempData["icon"] = "success";
-                        TempData["message"] = "Cms page added successfully!!!";
+                        TempData["message"] = "Cms page " + Messages.add;
                     }
                 }
                 return RedirectToAction("AdminCms");
@@ -329,12 +329,12 @@ namespace CiPlatformWeb.Controllers
                 {
                     if (_adminMission.MissionExistsForUpdate(vm.newMission.missionId, vm.newMission.misssionTitle, vm.newMission.organizationName))
                     {
-                        return Ok(new { icon = "error", message = "Mission already exists!!!" });
+                        return Ok(new { icon = "error", message = "Mission " + Messages.exists });
                     }
                     else
                     {
                         _adminMission.EditMission(vm);
-                        return Ok(new { icon = "success", message = "Mission updated successfully!!!" });
+                        return Ok(new { icon = "success", message = "Mission " + Messages.update });
                     }
 
                 }
@@ -342,12 +342,12 @@ namespace CiPlatformWeb.Controllers
                 {
                     if (_adminMission.MissionExistsForNew(vm.newMission.misssionTitle, vm.newMission.organizationName))
                     {
-                        return Ok(new { icon = "error", message = "Mission already exists!!!" });
+                        return Ok(new { icon = "error", message = "Mission " + Messages.exists });
                     }
                     else
                     {
                         _adminMission.AddMission(vm);
-                        return Ok(new { icon = "success", message = "Mission added successfully!!!" });
+                        return Ok(new { icon = "success", message = "Mission " + Messages.add });
                     }
                 }
             }
@@ -427,14 +427,14 @@ namespace CiPlatformWeb.Controllers
                     if (_adminTheme.ThemeExistsForNew(vm.newTheme.themeName))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Theme already exists!!!";
+                        TempData["message"] = "Theme " + Messages.exists;
                     }
                     //add
                     else
                     {
                         _adminTheme.AddNewTheme(vm.newTheme);
                         TempData["icon"] = "success";
-                        TempData["message"] = "Theme added successfully!!!";
+                        TempData["message"] = "Theme " + Messages.add;
                     }
                 }
                 //update
@@ -444,14 +444,14 @@ namespace CiPlatformWeb.Controllers
                     if (_adminTheme.ThemeExistsForUpdate(vm.newTheme.themeId, vm.newTheme.themeName))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Theme already exists!!!";
+                        TempData["message"] = "Theme " + Messages.exists;
                     }
                     //update
                     else
                     {
                         _adminTheme.UpdateTheme(vm.newTheme);
                         TempData["icon"] = "success";
-                        TempData["message"] = "Theme updated successfully!!!";
+                        TempData["message"] = "Theme " + Messages.update;
                     }
                 }
                 return RedirectToAction("AdminTheme");
@@ -532,14 +532,14 @@ namespace CiPlatformWeb.Controllers
                     if (_adminSkill.SkillExistsForNew(vm.newSkill.skillName))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Skill already exists!!!";
+                        TempData["message"] = "Skill " + Messages.exists;
                     }
                     //add
                     else
                     {
                         _adminSkill.AddNewSkill(vm.newSkill);
                         TempData["icon"] = "success";
-                        TempData["message"] = "Skill added successfully!!!";
+                        TempData["message"] = "Skill " + Messages.add;
                     }
                 }
                 //update
@@ -549,14 +549,14 @@ namespace CiPlatformWeb.Controllers
                     if (_adminSkill.SkillExistsForUpdate(vm.newSkill.skillId, vm.newSkill.skillName))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Skill already exists!!!";
+                        TempData["message"] = "Skill " + Messages.exists;
                     }
                     //update
                     else
                     {
                         _adminSkill.UpdateSkill(vm.newSkill);
                         TempData["icon"] = "success";
-                        TempData["message"] = "Skill updated successfully!!!";
+                        TempData["message"] = "Skill " + Messages.update;
                     }
                 }
                 return RedirectToAction("AdminSkill");
@@ -723,13 +723,13 @@ namespace CiPlatformWeb.Controllers
                 if (vm.newBanner.bannerId == null)
                 {
                     _adminBanner.AddNewBanner(vm.newBanner);
-                    return Ok(new { icon = "success", message = "Banner added successfully!!!" });
+                    return Ok(new { icon = "success", message = "Banner " + Messages.add });
                 }
                 //update
                 else
                 {
                     _adminBanner.UpdateBanner(vm.newBanner);
-                    return Ok(new { icon = "success", message = "Banner updated successfully!!!" });
+                    return Ok(new { icon = "success", message = "Banner " + Messages.update });
                 }
             }
             else

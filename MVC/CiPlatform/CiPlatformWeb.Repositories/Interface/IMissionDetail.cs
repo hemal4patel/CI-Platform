@@ -22,8 +22,6 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public (List<MissionApplication> recentVolunteers, int count) GetRecentVolunteers (long MissionId, long userId, int pageno);
 
-        //public List<MissionDocument> GetMissionDocuments (long MissionId);
-
         public void AddComment (long MissionId, long userId, string comment);
 
         public void InviteToMission (long FromUserId, long ToUserId, long MissionId);

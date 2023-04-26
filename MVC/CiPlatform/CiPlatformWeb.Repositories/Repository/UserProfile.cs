@@ -23,14 +23,14 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public User sessionUser (long userId)
         {
-            var sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            User sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
             return sessionUser;
         }
 
         public UserProfileViewModel GetUserDetails (long userId)
         {
             User user = _db.Users.Where(u => u.UserId == userId).Include(u => u.UserSkills).FirstOrDefault();
-            var vm = new UserProfileViewModel()
+            UserProfileViewModel vm = new UserProfileViewModel()
             {
                 UserId = user.UserId,
                 FirstName = user.FirstName,
@@ -120,13 +120,13 @@ namespace CiPlatformWeb.Repositories.Repository
                         File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "UserProfile", user.Avatar));
                     }
 
-                    var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + viewmodel.AvatarImage.FileName;
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "UserProfile", fileName);
+                    string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + viewmodel.AvatarImage.FileName;
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "UserProfile", fileName);
 
                     user.Avatar = fileName;
                     viewmodel.AvatarName = fileName;
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     {
                         viewmodel.AvatarImage.CopyTo(stream);
                     }
@@ -153,7 +153,7 @@ namespace CiPlatformWeb.Repositories.Repository
                     for (int i = 0; i < selectedSkillsStr.Length; i++)
                     {
                         selectedSkills[i] = long.Parse(selectedSkillsStr[i]);
-                        var newSkill = new UserSkill()
+                        UserSkill newSkill = new UserSkill()
                         {
                             UserId = viewmodel.UserId,
                             SkillId = selectedSkills[i],
@@ -170,7 +170,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void ContactUs (long userId, string subject, string message)
         {
-            var data = new ContactU()
+            ContactU data = new ContactU()
             {
                 UserId = userId,
                 Subject = subject,

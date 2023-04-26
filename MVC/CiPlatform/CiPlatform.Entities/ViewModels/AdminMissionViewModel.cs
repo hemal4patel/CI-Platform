@@ -44,11 +44,10 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Mission title is required")]
         public string misssionTitle { get; set; }
 
+        [MinLength(10, ErrorMessage = "Department must be between 10 to 150 characters")]
+        [MaxLength(150, ErrorMessage = "Department must be between 10 to 150 characters")]
         [Required(ErrorMessage = "Short description is required")]
         public string shortDescription { get; set; }
-
-        //[Required(ErrorMessage = "Description is required")]
-        //public string missionDescription { get; set; }
 
         public string? missionDescription { get; set; }
 
@@ -76,7 +75,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Mission type is required")]
         public string missionType { get; set; }
 
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Actions must contain only digits.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Total seats cannot be 0.")]
         [Required(ErrorMessage = "Total seats is required")]
         public int? totalSeats { get; set; }
 
@@ -84,7 +83,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string? goalObjectiveText { get; set; }
 
         [Required(ErrorMessage = "Goal value is required")]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Goal value must contain only digits.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Goal value cannot be 0.")]
         public int goalValue { get; set; }
 
         [Required(ErrorMessage = "Mission theme is required")]

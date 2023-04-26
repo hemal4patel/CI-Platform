@@ -2,103 +2,104 @@
 function validateChangePassword() {
     var flag = true;
 
-    var oldPassoword = $('#oldPassword').val();
-    var newPassword = $('#newPassword').val();
-    var confirmPassword = $('#confirmPassword').val();
-    console.log(newPassword.length)
+    var oldPassoword = $('#oldPassword').val().trim();
+    var newPassword = $('#newPassword').val().trim();
+    var confirmPassword = $('#confirmPassword').val().trim();
 
-
-    if (oldPassoword == "") {
+    if (oldPassoword.length < 8 || oldPassoword.length > 16) {
         $('.valOldPassword').show();
         flag = false;
 
         $('#oldPassword').on('input', function () {
-            if ($('#oldPassword').val().length != 0) {
+            if ($('#oldPassword').val().trim().length >= 8 && $('#oldPassword').val().trim().length <= 16) {
                 $('.valOldPassword').hide();
                 flag = true;
             }
         })
     }
-    if (newPassword == "" || newPassword.length < 8 || newPassword.length > 16) {
+    if (newPassword.length < 8 || newPassword.length > 16) {
         $('.valnewPassword').show();
-        $(".valMatchingPassword").hide();
         flag = false;
 
         $('#newPassword').on('input', function () {
-            if (newPassword.length >= 8 && newPassword.length <= 16) {
+            if ($('#newPassword').val().trim().length >= 8 && $('#newPassword').val().trim().length <= 16) {
                 $('.valnewPassword').hide();
-                $(".valMatchingPassword").hide();
                 flag = true;
             }
+            else {
+                $('.valnewPassword').show();
+                flag = false;
+            }
+            $(".valMatchingPassword").hide();
         })
     }
-    if (confirmPassword == "") {
+    if (confirmPassword.length < 8 || confirmPassword.length > 16) {
         $('.valConfirmPassword').show();
         flag = false;
 
         $('#confirmPassword').on('input', function () {
-            if ($('#confirmPassword').val().length != 0) {
+            if ($('#confirmPassword').val().trim().length >= 8 && $('#confirmPassword').val().trim().length <= 16) {
                 $('.valConfirmPassword').hide();
-                $(".valMatchingPassword").hide();
                 flag = true;
             }
+            else {
+                $('.valConfirmPassword').show();
+                flag = false;
+            }
+            $(".valMatchingPassword").hide();
         })
     }
-    else {
-        if (newPassword !== confirmPassword || newPassword.length < 8 || newPassword.length > 16) {
-            $('.valMatchingPassword').show();
-            flag = false;
 
-            $("#ConfirmPassword").on('input', function () {
-                if ($("#ConfirmPassword").val().length >= 8 && $("#ConfirmPassword").val().length <= 16) {
-                    $(".valMatchingPassword").hide();
-                    flag = true;
-                }
-            });
-        }
-        else {
-            $(".valMatchingPassword").hide();
-            flag = true;
-        }
-    }
-    console.log(flag)
     return flag;
 }
 
+function comparePassword() {
+    var flag = true;
 
+    var newPassword = $('#newPassword').val().trim();
+    var confirmPassword = $('#confirmPassword').val().trim();
+
+    if (newPassword !== confirmPassword) {
+        $('.valMatchingPassword').show();
+        flag = false;
+    }
+
+    return flag;
+}
 
 $('#changePassowrd').click(function () {
 
     if (validateChangePassword()) {
-        var oldPassoword = $('#oldPassword').val();
-        var newPassword = $('#newPassword').val();
-        var confirmPassword = $('#confirmPassword').val();
+        if (comparePassword()) {
+            var oldPassoword = $('#oldPassword').val();
+            var newPassword = $('#newPassword').val();
+            var confirmPassword = $('#confirmPassword').val();
 
-        $.ajax({
-            type: "POST",
-            url: "/User/ChangePassword",
-            data: { oldPassoword: oldPassoword, newPassword: newPassword, confirmPassword: confirmPassword },
-            success: function (data) {
-                $('#changePassword').modal('hide');
-                swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: "Password updated successfully!!!",
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-            },
-            error: function () {
-                $('.valInvalidPassword').show();
-                $('#oldPassword').on('input', function () {
-                    if ($('#oldPassword').val().length != 0) {
-                        $('.valInvalidPassword').hide();
-                    }
-                })
-            }
-        });
+            $.ajax({
+                type: "POST",
+                url: "/User/ChangePassword",
+                data: { oldPassoword: oldPassoword, newPassword: newPassword, confirmPassword: confirmPassword },
+                success: function (data) {
+                    $('#changePassword').modal('hide');
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: "Password updated successfully!!!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                },
+                error: function () {
+                    $('.valInvalidPassword').show();
+                    $('#oldPassword').on('input', function () {
+                        if ($('#oldPassword').val().length != 0) {
+                            $('.valInvalidPassword').hide();
+                        }
+                    })
+                }
+            });
+        }
     }
-
 })
 
 $("#countryDropdown").click(function () {
@@ -142,7 +143,7 @@ $('.selectSkill').on('click', function () {
 $('.deselectSkill').on('click', function () {
     var deselectedSkill = $('.selectedSkills select option:selected')
     $('.skillOptions select option:selected').each(function () {
-        if ($(this).val() == deselectedSkill.val()){
+        if ($(this).val() == deselectedSkill.val()) {
             $(this).prop('selected', false)
         }
     })
@@ -166,9 +167,7 @@ function saveSkills() {
     $('#addSkillsModal').modal('hide');
 }
 
-// Add change event listener to profile image file input
 $('#avatarFile').change(function () {
-    // Read image file and display preview
     var reader = new FileReader();
     reader.onload = function (e) {
         $('.user-image').attr('src', e.target.result);
@@ -177,7 +176,6 @@ $('#avatarFile').change(function () {
 });
 
 $('.edit-icon').click(function () {
-    // Open file input dialog
     $('#avatarFile').click();
 });
 
@@ -186,27 +184,27 @@ $('.edit-icon').click(function () {
 function validateContactUsForm() {
     var flag = true;
 
-    var subject = $('#contactSubject').val().trim();
-    var message = $('#contactMessage').val().trim();
+    var subject = $('#contactSubject').val().trim().length;
+    var message = $('#contactMessage').val().trim().length;
 
-    if (subject == "") {
+    if (subject < 10 || subject > 255) {
         $('.valContactSubject').show();
         flag = false;
 
         $('#contactSubject').on('input', function () {
-            if ($('#contactSubject').val().length != 0) {
+            if ($('#contactSubject').val().trim().length >= 10 && $('#contactSubject').val().trim().length <= 255) {
                 $('.valContactSubject').hide();
                 flag = true;
             }
         })
     }
 
-    if (message == "") {
+    if (message < 10 || message > 60000) {
         $('.valContactMessage').show();
         flag = false;
 
         $('#contactMessage').on('input', function () {
-            if ($('#contactMessage').val().length != 0) {
+            if ($('#contactMessage').val().trim().length >= 10 && $('#contactMessage').val().trim().length <= 60000) {
                 $('.valContactMessage').hide();
                 flag = true;
             }
@@ -230,13 +228,18 @@ $('#submitContactForm').click(function () {
             data: { subject: subject, message: message },
             success: function (data) {
                 $('#contactUs').modal('hide');
-                swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: "Thank you for contacting us!!!",
-                    showConfirmButton: false,
-                    timer: 3000
-                });
+                if (data.status == 1) {
+                    swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: "Thank you for contacting us!!!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+                else {
+                    window.location.href = '/Home/Index'
+                }
             },
             error: function (error) {
                 console.log(error)

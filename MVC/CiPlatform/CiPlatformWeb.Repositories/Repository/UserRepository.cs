@@ -24,7 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public void RegisterUser (RegistrationValidation obj)
         {
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(obj.Password);
-            var newUser = new User()
+            User newUser = new User()
             {
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
@@ -45,7 +45,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public void UpdatePassword (ResetPasswordValidation obj)
         {
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(obj.Password);
-            var x = _db.Users.FirstOrDefault(e => e.Email == obj.Email);
+            User x = _db.Users.FirstOrDefault(e => e.Email == obj.Email);
             x.Password = hashedPassword;
             x.UpdatedAt = DateTime.Now;
             _db.Users.Update(x);

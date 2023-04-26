@@ -218,6 +218,10 @@ div {
         display: none !important;
     }
 
+    .companyLogo {
+        display: none !important;
+    }
+
     .img-filter {
         display: block;
     }

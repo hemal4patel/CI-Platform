@@ -1,4 +1,5 @@
 ﻿
+
 var selectedCountry = null;
 var selectedSortCase = null;
 var currentUrl = window.location.href;
@@ -578,10 +579,8 @@ function addToFavourites(missionId) {
 
         },
         error: function (error) {
-            console.log("error")
+            console.log(error)
             alert("Please login!!");
-            //var url = '/Home/Login';
-            //window.location.href = url;
             window.location.href = "/Home/Index";
         }
     });
@@ -624,10 +623,10 @@ function showComments() {
 $('.commentButton').click(function () {
     var comment = $('.newComment').val().trim();
     var missionId = $(this).data('mission-id');
-    if (comment.length == 0) {
+    if (comment.length == 0 || comment.length > 600) {
         $('.valComment').show();
         $('.newComment').on('input', function () {
-            if ($('.newComment').val().length != 0) {
+            if ($('.newComment').val().trim().length >0 && $('.newComment').val().trim().length <= 600) {
                 $('.valComment').hide();
             }
         })

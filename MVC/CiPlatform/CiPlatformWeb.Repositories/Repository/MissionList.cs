@@ -24,7 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public User sessionUser (long userId)
         {
-            var sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            User sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
             return sessionUser;
         }
 
@@ -113,7 +113,7 @@ namespace CiPlatformWeb.Repositories.Repository
             .Skip(Math.Max((viewmodel.pageNo - 1) * viewmodel.pagesize, 0))
             .Take(viewmodel.pagesize);
 
-            var list = missions.Select(m => new MissionListModel()
+            IQueryable<MissionListModel> list = missions.Select(m => new MissionListModel()
             {
                 mission = m,
                 missionId = m.MissionId,
@@ -139,7 +139,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            var recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null).ToList();
+            List<User> recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null).ToList();
 
             return recentVolunteers;
         }
@@ -151,17 +151,17 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public async Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link)
         {
-            var Email = await _db.Users.Where(u => u.UserId == ToUserId).FirstOrDefaultAsync();
+            User Email = await _db.Users.Where(u => u.UserId == ToUserId).FirstOrDefaultAsync();
 
-            var Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
+            User Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
-            var toEmail = new MailAddress(Email.Email);
-            var fromEmailPassword = "pdckerdmuutmdzhz";
+            MailAddress fromEmail = new MailAddress("ciplatformdemo@gmail.com");
+            MailAddress toEmail = new MailAddress(Email.Email);
+            string fromEmailPassword = "pdckerdmuutmdzhz";
             string subject = "Mission Invitation";
             string body = "You Have Recieved Mission Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 
-            var smtp = new SmtpClient
+            SmtpClient smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
                 Port = 587,
@@ -171,7 +171,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
             };
 
-            var message = new MailMessage(fromEmail, toEmail);
+            MailMessage message = new MailMessage(fromEmail, toEmail);
             message.Subject = subject;
             message.Body = body;
             message.IsBodyHtml = true;
@@ -183,13 +183,13 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             if (_db.FavouriteMissions.Any(fm => fm.MissionId == missionId && fm.UserId == userId))
             {
-                var FavoriteMissionId = _db.FavouriteMissions.Where(fm => fm.MissionId == missionId && fm.UserId == userId).FirstOrDefault();
+                FavouriteMission FavoriteMissionId = _db.FavouriteMissions.Where(fm => fm.MissionId == missionId && fm.UserId == userId).FirstOrDefault();
                 _db.FavouriteMissions.Remove(FavoriteMissionId);
                 _db.SaveChanges();
             }
             else
             {
-                var favoriteMission = new FavouriteMission { MissionId = missionId, UserId = userId };
+                FavouriteMission favoriteMission = new FavouriteMission { MissionId = missionId, UserId = userId };
                 _db.FavouriteMissions.Add(favoriteMission);
                 _db.SaveChanges();
             }
@@ -197,7 +197,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void RateMission (long missionId, long userId, int rating)
         {
-            var alredyRated = _db.MissionRatings.SingleOrDefault(mr => mr.MissionId == missionId && mr.UserId == userId);
+            MissionRating alredyRated = _db.MissionRatings.SingleOrDefault(mr => mr.MissionId == missionId && mr.UserId == userId);
 
             if (alredyRated != null)
             {
@@ -208,7 +208,7 @@ namespace CiPlatformWeb.Repositories.Repository
             }
             else
             {
-                var newRating = new MissionRating { UserId = userId, MissionId = missionId, Rating = rating };
+                MissionRating newRating = new MissionRating { UserId = userId, MissionId = missionId, Rating = rating };
                 _db.MissionRatings.Add(newRating);
                 _db.SaveChangesAsync();
             }
@@ -216,13 +216,13 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionInvite> GetMissionInvites (long userId)
         {
-            var missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Mission).ToList();
+            List<MissionInvite> missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Mission).ToList();
             return missionInvites;
         }
 
         public List<StoryInvite> GetStoryInvites (long userId)
         {
-            var storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Story).ToList();
+            List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Story).ToList();
             return storyInvites;
         }
     }

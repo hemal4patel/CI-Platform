@@ -16,8 +16,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 
-@*<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>*@
-@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!-- CONTENT -->
@@ -391,7 +389,7 @@
                         @Html.Raw(Model.MissionDetails.mission.Description)
                     </p>
 
-                    <h4 class="mb-3 mt-4">Documents</h4>
+                    <h4 class="mb-3 mt-4"> Documents </h4>
                     <div class="d-flex justify-content-between flex-wrap">
                         @if (Model.MissionDetails.MissionDocuments.Any())
                         {
@@ -427,7 +425,7 @@
                     <div class="mb-3">
                         <textarea class="form-control newComment" maxlength="600" placeholder="Enter your comments..."
                                   rows="3"></textarea>
-                        <span class="valComment text-danger" style="display: none;">Enter comment</span>
+                        <span class="valComment text-danger" style="display: none;">Comment must be less than 600 characters.</span>
                     </div>
                     <button class="btn-apply rounded-pill px-4 py-2 commentButton" data-mission-Id="@Model.MissionDetails.missionId">
                         Post Comment
@@ -501,7 +499,6 @@
             </div>
 
             <!-- VOLUNTEER BOX -->
-            @*<partial name="_RecentVolunteers" />*@
             <div class="recentVolunteersDiv"></div>
 
         </div>

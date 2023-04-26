@@ -76,7 +76,7 @@ namespace CiPlatformWeb.Controllers
                         viewmodel.CityList = _userProfile.GetCityList(countryId);
                     }
 
-                    TempData["message"] = "Profile updated successfully!!!";
+                    TempData["message"] = "Profile " + Messages.update;
 
                     return RedirectToAction("UserProfile");
                 }
@@ -131,7 +131,7 @@ namespace CiPlatformWeb.Controllers
                 if (userId != null)
                 {
                     _userProfile.ContactUs(userId, subject, message);
-                    return Ok();
+                    return Ok(new { status = 1 });
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace CiPlatformWeb.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home"); 
+                return Ok(new { status = 0 });
             }
         }
 
@@ -186,7 +186,7 @@ namespace CiPlatformWeb.Controllers
                     if (_timesheet.TimeSheetExists(viewmodel.timeBasedSheet.timeMissions, userId, viewmodel.timeBasedSheet.dateVolunteered))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Entry alredy exists!!!";
+                        TempData["message"] = "Entry " + Messages.exists;
                     }
                     else
                     {
@@ -199,14 +199,14 @@ namespace CiPlatformWeb.Controllers
                                 _timesheet.UpdateTimeBasedEntry(timeBasedEntry, viewmodel.timeBasedSheet);
                             }
                             TempData["icon"] = "success";
-                            TempData["message"] = "Entry updated successfully!!!";
+                            TempData["message"] = "Entry " + Messages.update;
                         }
                         //NEW TIME ENTRY ADD
                         else
                         {
                             _timesheet.AddTimeBasedEntry(viewmodel.timeBasedSheet, userId);
                             TempData["icon"] = "success";
-                            TempData["message"] = "Entry added successfully!!!";
+                            TempData["message"] = "Entry " + Messages.add;
                         }
                     }
                 }
@@ -217,7 +217,7 @@ namespace CiPlatformWeb.Controllers
                     if (_timesheet.TimeSheetExists(viewmodel.goalBasedSheet.goalMissions, userId, viewmodel.goalBasedSheet.dateVolunteered))
                     {
                         TempData["icon"] = "error";
-                        TempData["message"] = "Entry alredy exists!!!";
+                        TempData["message"] = "Entry " + Messages.exists;
                     }
                     else
                     {
@@ -230,14 +230,14 @@ namespace CiPlatformWeb.Controllers
                                 _timesheet.UpdateGoalBasedEntry(goalBasedEntry, viewmodel.goalBasedSheet);
                             }
                             TempData["icon"] = "success";
-                            TempData["message"] = "Entry updated successfully!!!";
+                            TempData["message"] = "Entry " + Messages.update;
                         }
                         //NEW GOAL ENTRY ADD
                         else
                         {
                             _timesheet.AddGoalBasedEntry(viewmodel.goalBasedSheet, userId);
                             TempData["icon"] = "success";
-                            TempData["message"] = "Entry added successfully!!!";
+                            TempData["message"] = "Entry " + Messages.add;
                         }
                     }
                 }

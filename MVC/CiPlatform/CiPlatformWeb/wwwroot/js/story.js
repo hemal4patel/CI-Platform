@@ -129,10 +129,10 @@ function formValidation() {
     var flag = true;
 
     var missionId = $('#missionId').val();
-    var storyTitle = $('#storyTitle').val();
+    var storyTitle = $('#storyTitle').val().trim();
     var date = $('#date').val();
-    var story = $('.note-editable').text();
-
+    var story = $('.note-editable').text().trim();
+    
     if (missionId == null) {
         $('.valMission').show();
         flag = false;
@@ -144,18 +144,18 @@ function formValidation() {
             }
         })
     }
-    if (storyTitle.length == 0) {
+    if (storyTitle.length < 10 || storyTitle.length > 255) {
         $('.valstoryTitle').show();
         flag = false;
 
         $('#storyTitle').on('input', function () {
-            if ($('#storyTitle').val().length != 0) {
+            if ($('#storyTitle').val().trim().length >= 10 && $('#storyTitle').val().trim().length <= 255) {
                 $('.valstoryTitle').hide();
                 flag = true;
             }
         })
     }
-    if (date.length == 0) {
+    if (date.length < 10) {
         $('.valDate').show();
         flag = false;
 
@@ -166,12 +166,12 @@ function formValidation() {
             }
         })
     }
-    if (story.length == 0) {
+    if (story.length < 20 || story.length > 40000) {
         $('.valStory').show();
         flag = false;
 
         $('.note-editable').on('input', function () {
-            if ($('.note-editable').text() != null) {
+            if ($('.note-editable').text().trim().length >= 20 && $('.note-editable').text().trim().length <= 40000) {
                 $('.valStory').hide();
                 flag = true;
             }
@@ -206,7 +206,7 @@ $('#saveStory').click(function () {
         }
 
         formData.append("MissionId", $('#missionId').val());
-        formData.append("StoryTitle", $('#storyTitle').val());
+        formData.append("StoryTitle", $('#storyTitle').val().trim());
         formData.append("Date", $('#date').val());
         formData.append("StoryDescription", $('.note-editable').html());
 
@@ -266,58 +266,60 @@ $('#previewStory').click(function () {
 
 $('#submitStory').click(function () {
 
-    var formData = new FormData();
+    if (formValidation()) {
+        var formData = new FormData();
 
-    var urls = null;
-    var u = $('#videoUrls').val();
-    if (u != null) {
-        urls = u.split('\n');
+        var urls = null;
+        var u = $('#videoUrls').val();
+        if (u != null) {
+            urls = u.split('\n');
 
-        for (var i = 0; i < urls.length; i++) {
-            formData.append("VideoUrl", urls[i]);
+            for (var i = 0; i < urls.length; i++) {
+                formData.append("VideoUrl", urls[i]);
+            }
         }
-    }
-    else {
-        formData.append("VideoUrl", null);
-    }
-
-    for (var i = 0; i < allfiles.length; i++) {
-        formData.append("Images", allfiles[i]);
-    }
-
-    formData.append("MissionId", $('#missionId').val());
-    formData.append("StoryTitle", $('#storyTitle').val());
-    formData.append("Date", $('#date').val());
-    formData.append("StoryDescription", $('.note-editable').html());
-
-    $.ajax({
-        type: 'POST',
-        url: '/Story/SubmitStory',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-            swal.fire({
-                position: 'center',
-                icon: result.icon,
-                title: result.message,
-                showConfirmButton: false,
-                timer: 3000
-            })
-            $('#missionId').val('default');
-            $('#storyTitle').val('');
-            $('#date').val('');
-            $('.note-editable').text('');
-            $('#videoUrls').val('');
-            $('#image-list').empty();
-
-            $('#previewStory').prop('disabled', true);
-            $('#submitStory').prop('disabled', true)
-        },
-        error: function (error) {
-            console.log(error);
+        else {
+            formData.append("VideoUrl", null);
         }
-    });
+
+        for (var i = 0; i < allfiles.length; i++) {
+            formData.append("Images", allfiles[i]);
+        }
+
+        formData.append("MissionId", $('#missionId').val());
+        formData.append("StoryTitle", $('#storyTitle').val().trim());
+        formData.append("Date", $('#date').val());
+        formData.append("StoryDescription", $('.note-editable').html());
+
+        $.ajax({
+            type: 'POST',
+            url: '/Story/SubmitStory',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                swal.fire({
+                    position: 'center',
+                    icon: result.icon,
+                    title: result.message,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                $('#missionId').val('default');
+                $('#storyTitle').val('');
+                $('#date').val('');
+                $('.note-editable').text('');
+                $('#videoUrls').val('');
+                $('#image-list').empty();
+
+                $('#previewStory').prop('disabled', true);
+                $('#submitStory').prop('disabled', true)
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 }); 
 
 function storyInvite(ToUserId) {
@@ -392,7 +394,6 @@ function handleFiles(e) {
     }
     var dataTransfer = new DataTransfer();
     fileList = dataTransfer.files;
-    console.log(allfiles)
 }
 
 var dropzone = $('#dropzone');

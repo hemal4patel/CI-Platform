@@ -24,7 +24,6 @@
             <div class="form-group mt-3">
                 <label asp-for="newCms.description" class="form-label">Description<span class="required-field"></span></label>
                 <textarea asp-for="newCms.description" id="cmsDescription" class="form-control"></textarea>
-              @*  <textarea asp-for="newCms.description" id="cmsDescriptionHidden" name="newCms.description" style="display: none;"></textarea>*@
                 <span asp-validation-for="newCms.description" class="text-danger"></span>
             </div>
 
@@ -71,11 +70,5 @@
         toolbar:
             " bold italic underline strikethrough emoticons numlist bullist " +
             "subscript superscript link media undo redo",
-        //setup: function (editor) {
-        //    editor.on('change', function () {
-        //        var content = editor.getContent();
-        //        document.getElementById('cmsDescriptionHidden').value = content;
-        //    });
-        //}
     });
 </script>

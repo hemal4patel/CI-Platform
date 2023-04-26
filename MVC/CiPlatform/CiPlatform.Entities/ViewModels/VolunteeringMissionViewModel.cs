@@ -12,7 +12,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public List<MissionListModel> RelatedMissions { get; set; }
 
-        public List<User> UserList { get; set; } = null;
+        public List<User> UserList { get; set; } 
 
         public List<Comment> ApprovedComments { get; set; }
 

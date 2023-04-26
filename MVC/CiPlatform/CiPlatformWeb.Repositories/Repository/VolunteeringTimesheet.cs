@@ -22,7 +22,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<MissionApplication> GetTimeBasedMission (long userId)
         {
             DateTime today = DateTime.Now;
-            var timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Time" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
+            List<MissionApplication> timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Time" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
 
             return timeMissions;
         }
@@ -30,20 +30,20 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<MissionApplication> GetGoalBasedMission (long userId)
         {
             DateTime today = DateTime.Now;
-            var goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Goal" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
+            List<MissionApplication> goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Goal" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
 
             return goalMissions;
         }
 
         public List<Timesheet> GetTimeBasedEntries (long userId)
         {
-            var timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time").Include(t => t.Mission).ToList();
+            List<Timesheet> timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time").Include(t => t.Mission).ToList();
             return timeBasedEntries;
         }
 
         public List<Timesheet> GetGoalBasedEntries (long userId)
         {
-            var goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal").Include(t => t.Mission).ToList();
+            List<Timesheet> goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal").Include(t => t.Mission).ToList();
             return goalBasedEnteries;
         }
 
@@ -54,14 +54,14 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public Timesheet GetEntry (long? timesheetId)
         {
-            var entry = _db.Timesheets.Where(t => t.TimesheetId == timesheetId).FirstOrDefault();
+            Timesheet entry = _db.Timesheets.Where(t => t.TimesheetId == timesheetId).FirstOrDefault();
             return entry;
         }
 
         public void AddTimeBasedEntry (TimeBasedSheetViewModel viewmodel, long userId)
         {
             TimeSpan timeSpan = new TimeSpan(viewmodel.hours, viewmodel.minutes, 0);
-            var timeBasedEntry = new Timesheet
+            Timesheet timeBasedEntry = new Timesheet
             {
                 UserId = userId,
                 MissionId = viewmodel.timeMissions,
@@ -91,7 +91,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void AddGoalBasedEntry (GoalBasedSheetViewModel viewmodel, long userId)
         {
-            var goalBasedEntry = new Timesheet
+            Timesheet goalBasedEntry = new Timesheet
             {
                 UserId = userId,
                 MissionId = viewmodel.goalMissions,
@@ -120,7 +120,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void DeleteTimesheetEntry (long id)
         {
-            var timesheet = GetEntry(id);
+            Timesheet timesheet = GetEntry(id);
             _db.Timesheets.Remove(timesheet);
             _db.SaveChanges();
         }

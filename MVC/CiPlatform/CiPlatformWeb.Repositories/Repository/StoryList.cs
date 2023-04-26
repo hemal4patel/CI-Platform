@@ -26,13 +26,13 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public User sessionUser (long userId)
         {
-            var sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            User sessionUser = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
             return sessionUser;
         }
 
         public (List<StoryListModel> stories, int count) GetStories (StoryQueryParams viewmodel)
         {
-            var stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsQueryable();
+            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -66,7 +66,7 @@ namespace CiPlatformWeb.Repositories.Repository
             .Take(viewmodel.pagesize);
 
 
-            var list = stories.Select(s => new StoryListModel()
+            IQueryable<StoryListModel> list = stories.Select(s => new StoryListModel()
             {
                 story = s,
                 mediaPath = s.StoryMedia.Where(s => s.DeletedAt == null && s.Type == "img").Select(s => s.Path).FirstOrDefault(),
@@ -108,20 +108,23 @@ namespace CiPlatformWeb.Repositories.Repository
         public void UpdateStoryUrls (long storyId, string[] url)
         {
             //delete records
-            var media = _db.StoryMedia.Where(s => s.StoryId == storyId && s.Type == "video");
+            IQueryable<StoryMedium> media = _db.StoryMedia.Where(s => s.StoryId == storyId && s.Type == "video");
             if (media.Any())
             {
-                foreach(var u in media)
+                foreach (StoryMedium u in media)
                 {
-                    u.DeletedAt = DateTime.Now;
+                    if (u != null)
+                    {
+                        u.DeletedAt = DateTime.Now;
+                    }
                 }
             }
             //add records
-            foreach (var u in url)
+            foreach (string u in url)
             {
                 if (u != null)
                 {
-                    var newMedia = new StoryMedium()
+                    StoryMedium newMedia = new StoryMedium()
                     {
                         StoryId = storyId,
                         Type = "video",
@@ -137,34 +140,37 @@ namespace CiPlatformWeb.Repositories.Repository
         public void UpdateStoryImages (long storyId, List<IFormFile> images)
         {
             //delete records
-            var media = _db.StoryMedia.Where(s => s.StoryId == storyId && s.Type == "img");
-            foreach (var m in media)
+            IQueryable<StoryMedium> media = _db.StoryMedia.Where(s => s.StoryId == storyId && s.Type == "img");
+            if (media.Any())
             {
-                if (m != null)
+                foreach (StoryMedium m in media)
                 {
-                    string fileName = m.Path;
-                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName));
-                    m.DeletedAt = DateTime.Now;
+                    if (m != null)
+                    {
+                        string fileName = m.Path;
+                        File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName));
+                        m.DeletedAt = DateTime.Now;
+                    }
                 }
             }
 
             //add records
             if (images != null)
             {
-                foreach (var u in images)
+                foreach (IFormFile u in images)
                 {
                     if (u != null)
                     {
-                        var fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName);
-                        var newMedia = new StoryMedium()
+                        string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName);
+                        StoryMedium newMedia = new StoryMedium()
                         {
                             StoryId = storyId,
                             Type = "img",
                             Path = fileName,
                             CreatedAt = DateTime.Now,
                         };
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
                         {
                             u.CopyTo(stream);
                         }
@@ -178,7 +184,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void AddNewStory (ShareStoryViewModel viewmodel, long userId)
         {
-            var newStory = new Story()
+            Story newStory = new Story()
             {
                 MissionId = viewmodel.MissionId,
                 UserId = userId,
@@ -240,7 +246,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            var list = _db.Users.Where(u => u.UserId != userId).ToList();
+            List<User> list = _db.Users.Where(u => u.UserId != userId).ToList();
             return list;
         }
 
@@ -251,7 +257,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void InviteToStory (long FromUserId, long ToUserId, long StoryId)
         {
-            var storyInvite = new StoryInvite()
+            StoryInvite storyInvite = new StoryInvite()
             {
                 FromUserId = FromUserId,
                 ToUserId = ToUserId,
@@ -273,17 +279,17 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public async Task SendInvitationToCoWorker (long ToUserId, long FromUserId, string link)
         {
-            var Email = await _db.Users.Where(u => u.UserId == ToUserId).FirstOrDefaultAsync();
+            User Email = await _db.Users.Where(u => u.UserId == ToUserId).FirstOrDefaultAsync();
 
-            var Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
+            User Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            var fromEmail = new MailAddress("ciplatformdemo@gmail.com");
-            var toEmail = new MailAddress(Email.Email);
-            var fromEmailPassword = "pdckerdmuutmdzhz";
+            MailAddress fromEmail = new MailAddress("ciplatformdemo@gmail.com");
+            MailAddress toEmail = new MailAddress(Email.Email);
+            string fromEmailPassword = "pdckerdmuutmdzhz";
             string subject = "Story Invitation";
             string body = "You Have Recieved Story Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 
-            var smtp = new SmtpClient
+            SmtpClient smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
                 Port = 587,
@@ -293,7 +299,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
             };
 
-            var message = new MailMessage(fromEmail, toEmail);
+            MailMessage message = new MailMessage(fromEmail, toEmail);
             message.Subject = subject;
             message.Body = body;
             message.IsBodyHtml = true;

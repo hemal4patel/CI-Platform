@@ -24,9 +24,13 @@ namespace CiPlatformWeb.Entities.ViewModels
     {
         public long? userId { get; set; }
 
+        [MinLength(3, ErrorMessage = "Name must be between 3 to 16 characters")]
+        [MaxLength(16, ErrorMessage = "Name must be between 3 to 16 characters")]
         [Required(ErrorMessage = "Name is required.")]
         public string firstName { get; set; }
 
+        [MinLength(3, ErrorMessage = "Surname must be between 3 to 16 characters")]
+        [MaxLength(16, ErrorMessage = "Surname must be between 3 to 16 characters")]
         [Required(ErrorMessage = "Surname is required.")]
         public string lastName { get; set; }
 
@@ -49,9 +53,13 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Role is required.")]
         public string role { get; set; }
 
+        [MinLength(6, ErrorMessage = "Employee Id must be between 6 to 16 characters")]
+        [MaxLength(16, ErrorMessage = "Employee Id must be between 6 to 16 characters")]
         [Required(ErrorMessage = "Employee Id is required.")]
         public string employeeId { get; set; }
 
+        [MinLength(2, ErrorMessage = "Department must be between 2 to 16 characters")]
+        [MaxLength(16, ErrorMessage = "Department must be between 2 to 16 characters")]
         [Required(ErrorMessage = "Department is required.")]
         public string department { get; set; }
 

@@ -56,7 +56,7 @@ namespace CiPlatformWeb.Controllers
                 }
                 else
                 {
-                    TempData["error"] = "User already exists!!!";
+                    TempData["error"] = "User " + Messages.exists;
                     return View(obj);
                 }
             }
@@ -94,7 +94,7 @@ namespace CiPlatformWeb.Controllers
                         if (user.DeletedAt == null && user.Status == 1)
                         {
                             HttpContext.Session.SetString("UserId", user.UserId.ToString());
-
+                            
                             var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
                             var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
                             HttpContext.Session.SetString("Token", token);
@@ -212,7 +212,7 @@ namespace CiPlatformWeb.Controllers
             {
                 _userRepository.UpdatePassword(obj);
                 _userRepository.expireLink(obj.Email, obj.Token);
-                TempData["success"] = "Password updated!!!";
+                TempData["success"] = "Password " + Messages.update;
                 return RedirectToAction("Index", "Home");
 
             }
@@ -231,10 +231,7 @@ namespace CiPlatformWeb.Controllers
         [AllowAnonymous]
         public IActionResult Logout ()
         {
-            //HttpContext.Session.SetString("Email", "");
-            //HttpContext.Session.SetString("UserName", "");
             HttpContext.Session.Remove("UserId");
-            //HttpContext.Session.SetString("UserAvatar", "");
             return RedirectToAction("Index", "Home");
         }
 

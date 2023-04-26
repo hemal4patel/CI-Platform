@@ -22,9 +22,9 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public MissionDetailsModel GetMissionDetails (long MissionId, long userId)
         {
-            var missions = _db.Missions.Where(m => m.MissionId == MissionId).AsQueryable();
+            IQueryable<Mission> missions = _db.Missions.Where(m => m.MissionId == MissionId).AsQueryable();
 
-            var list = missions.Select(m => new MissionDetailsModel()
+            MissionDetailsModel list = missions.Select(m => new MissionDetailsModel()
             {
                 mission = m,
                 missionId = m.MissionId,
@@ -61,7 +61,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void ApplyToMission (long missionId, long userId)
         {
-            var missionApplication = new MissionApplication()
+            MissionApplication missionApplication = new MissionApplication()
             {
                 MissionId = missionId,
                 UserId = userId,
@@ -80,9 +80,9 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId)
         {
-            var mission = _db.Missions.Where(m => m.MissionId == MissionId).FirstOrDefault();
+            Mission mission = _db.Missions.Where(m => m.MissionId == MissionId).FirstOrDefault();
 
-            var relatedMissions = _db.Missions
+            IQueryable<Mission> relatedMissions = _db.Missions
                 .Where(m => m.MissionId != MissionId && m.CityId == mission.CityId && m.DeletedAt == null)
                     .Take(3);
 
@@ -100,7 +100,7 @@ namespace CiPlatformWeb.Repositories.Repository
                         .Take(3 - relatedMissions.Count()));
             }
 
-            var list = relatedMissions.Select(m => new MissionListModel()
+            IQueryable<MissionListModel> list = relatedMissions.Select(m => new MissionListModel()
             {
                 mission = m,
                 missionId = m.MissionId,
@@ -125,8 +125,8 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public (List<MissionApplication> recentVolunteers, int count) GetRecentVolunteers (long MissionId, long userId, int pageno)
         {
-            var pagesize = 2;
-            var recentVolunteers = _db.MissionApplications
+            int pagesize = 2;
+            IQueryable<MissionApplication> recentVolunteers = _db.MissionApplications
                 .Include(u => u.User)
                 .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE");
 
@@ -143,7 +143,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void AddComment (long missionId, long userId, string comment)
         {
-            var newComment = new Comment
+            Comment newComment = new Comment
             {
                 MissionId = missionId,
                 UserId = userId,
@@ -156,7 +156,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void InviteToMission (long FromUserId, long ToUserId, long MissionId)
         {
-            var missionInvite = new MissionInvite()
+            MissionInvite missionInvite = new MissionInvite()
             {
                 FromUserId = FromUserId,
                 ToUserId = ToUserId,

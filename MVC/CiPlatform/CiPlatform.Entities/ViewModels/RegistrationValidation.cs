@@ -10,9 +10,13 @@ namespace CiPlatformWeb.Entities.ViewModels
 {
     public class RegistrationValidation
     {
+        [MinLength(3, ErrorMessage = "First Name must be between 3 to 16 characters")]
+        [MaxLength(16, ErrorMessage = "First Name must be between 3 to 16 characters")]
         [Required(ErrorMessage = "First Name is required.")]
         public string FirstName { get; set; } = null!;
 
+        [MinLength(3, ErrorMessage = "Last Name must be between 3 to 16 characters")]
+        [MaxLength(16, ErrorMessage = "Last Name must be between 3 to 16 characters")]
         [Required(ErrorMessage = "Last Name is required.")]
         public string LastName { get; set; } = null!;
 
