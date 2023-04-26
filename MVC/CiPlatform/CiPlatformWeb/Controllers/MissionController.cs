@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing.Printing;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 
 namespace CiPlatformWeb.Controllers
@@ -21,12 +22,27 @@ namespace CiPlatformWeb.Controllers
         private readonly ApplicationDbContext _db;
         private readonly IMissionList _missionlist;
         private readonly IMissionDetail _missiondetail;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly long userId;
 
-        public MissionController (ApplicationDbContext db, IMissionList missionlist, IMissionDetail missiondetail)
+        public MissionController (ApplicationDbContext db, IMissionList missionlist, IMissionDetail missiondetail, IHttpContextAccessor httpContextAccessor)
         {
             _db = db;
             _missionlist = missionlist;
             _missiondetail = missiondetail;
+
+            _httpContextAccessor = httpContextAccessor;
+            string authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string token = authorizationHeader?.Substring("Bearer ".Length).Trim();
+            if(token is not null)
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var decodedToken = tokenHandler.ReadJwtToken(token);                
+                var claims = decodedToken.Claims;
+                var customClaimString = decodedToken.Claims.FirstOrDefault(c => c.Type == "CustomClaimForUser")?.Value;
+                var customClaimValue = JsonSerializer.Deserialize<User>(customClaimString);
+                userId = customClaimValue.UserId;
+            }
         }
 
         //GET
@@ -35,9 +51,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
                 var vm = new DisplayMissionCards();
 
                 vm.CountryList = _missionlist.GetCountryList();
@@ -68,10 +81,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-                ViewBag.UserId = userId;
-
                 var vm = new DisplayMissionCards();
 
                 var data = _missionlist.GetMissions(viewmodel, userId);
@@ -103,10 +112,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-                ViewBag.UserId = userId;
-
                 var vm = new VolunteeringMissionViewModel();
 
                 vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
@@ -134,9 +139,6 @@ namespace CiPlatformWeb.Controllers
         [Authorize(Roles = "user")]
         public IActionResult showRecentVounteers(int currVolPage, long missionId)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
 
             var data = _missiondetail.GetRecentVolunteers(missionId, userId, currVolPage);
@@ -150,9 +152,6 @@ namespace CiPlatformWeb.Controllers
         [Authorize(Roles = "user")]
         public IActionResult RateMission (int rating, long missionId)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             _missionlist.RateMission(missionId, userId, rating);
 
             return Json(missionId);
@@ -162,9 +161,6 @@ namespace CiPlatformWeb.Controllers
         [Authorize(Roles = "user")]
         public IActionResult ApplyToMission (long missionId)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             _missiondetail.ApplyToMission(missionId, userId);
             return Ok(new { icon = "success", message = "Successfully applied to the mission!!!" });
 
@@ -194,9 +190,6 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult PostComment (string comment, long missionId)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             if (comment != null)
             {
                 _missiondetail.AddComment(missionId, userId, comment);
@@ -232,8 +225,6 @@ namespace CiPlatformWeb.Controllers
         [Authorize(Roles = "user")]
         public IActionResult GetInvitations ()
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
             List<MissionInvite> missionInvites = _missionlist.GetMissionInvites(userId);
             List<StoryInvite> storyInvites = _missionlist.GetStoryInvites(userId);
             var result = new { missionInvites = missionInvites, storyInvites = storyInvites };

@@ -1,7 +1,9 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace CiPlatformWeb.Views.ViewComponents
 {
@@ -22,7 +24,15 @@ namespace CiPlatformWeb.Views.ViewComponents
             string avatarName = null;
             string role = "";
 
-            userId = Convert.ToInt64(HttpContext.Session.GetString("UserId"));
+            string authorizationHeader = Request.Headers["Authorization"];
+            string token = authorizationHeader?.Substring("Bearer ".Length).Trim();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var decodedToken = tokenHandler.ReadJwtToken(token);
+            var claims = decodedToken.Claims;
+            var customClaimString = decodedToken.Claims.FirstOrDefault(c => c.Type == "CustomClaimForUser")?.Value;
+            var customClaimValue = JsonSerializer.Deserialize<User>(customClaimString);
+            userId = customClaimValue.UserId;
+
             if (userId != 0)
             {
                 User sessionUser = _db.Users.Where(user => user.UserId == userId).FirstOrDefault();

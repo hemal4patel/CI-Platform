@@ -53,6 +53,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddMvc().AddSessionStateTempDataProvider();
 builder.Services.AddSession();
 builder.Services.AddMemoryCache();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

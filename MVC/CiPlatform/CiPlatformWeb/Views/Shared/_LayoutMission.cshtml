@@ -1,11 +1,11 @@
 ﻿
+@using System.Text.Json;
 @using CiPlatformWeb.Entities.DataModels
 
 @{
-    string Email = ViewBag.Email;
-    string UserName = ViewBag.UserName;
-    var Id = Convert.ToInt64(ViewBag.UserId);
-    string UserAvatar = ViewBag.UserAvatar;
+    var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
+    var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
+    var Id = sessionUser.UserId;
     List<MissionInvite> inviteList = ViewBag.InviteList;
 }
 

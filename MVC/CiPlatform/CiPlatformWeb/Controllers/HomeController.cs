@@ -67,7 +67,8 @@ namespace CiPlatformWeb.Controllers
         [AllowAnonymous]
         public IActionResult Index ()
         {
-            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("Token");
             LoginValidation vm = new();
             vm.banners = _userRepository.GetBanners();
             return View(vm);

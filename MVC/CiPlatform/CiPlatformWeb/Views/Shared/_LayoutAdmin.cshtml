@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json;
+@using CiPlatformWeb.Entities.DataModels;
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -70,13 +72,12 @@
                         <span class="d-lg-block d-none pe-lg-3 ps-lg-0 py-lg-0 pe-2">Banner Management</span>
                     </a>
                 </li>
-
-                @*@User.FindFirst(claim=>claim.Type==System.Security.Claims.ClaimTypes.Role)?.Value*@
+                
             </ul>
         </div>
 
         <div class="main-content container-fluid">
-           
+
             @await Component.InvokeAsync("Session", new { view = "~/Views/Shared/_adminHeaderPartial.cshtml" })
 
             <div class="container-fluid">
@@ -91,7 +92,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    
+
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>

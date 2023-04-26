@@ -1,13 +1,16 @@
 ﻿@using CiPlatformWeb.Entities.DataModels;
 @using CiPlatformWeb.Entities.ViewModels;
+@using System.Text.Json;
 @{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_LayoutMission.cshtml";
 }
 
 @{
-    var Id = ViewBag.UserId;
     var volCount = ViewBag.volCount;
+    var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
+    var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
+    var Id = sessionUser.UserId;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.VolunteeringMissionViewModel

@@ -3,10 +3,13 @@ using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using CiPlatformWeb.Repositories.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -14,11 +17,26 @@ namespace CiPlatformWeb.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly IStoryList _storyList;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly long userId;
 
-        public StoryController (ApplicationDbContext db, IStoryList storyList)
+        public StoryController (ApplicationDbContext db, IStoryList storyList, IHttpContextAccessor httpContextAccessor)
         {
             _db = db;
             _storyList = storyList;
+
+            _httpContextAccessor = httpContextAccessor;
+            string authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string token = authorizationHeader?.Substring("Bearer ".Length).Trim();
+            if (token is not null)
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var decodedToken = tokenHandler.ReadJwtToken(token);
+                var claims = decodedToken.Claims;
+                var customClaimString = decodedToken.Claims.FirstOrDefault(c => c.Type == "CustomClaimForUser")?.Value;
+                var customClaimValue = JsonSerializer.Deserialize<User>(customClaimString);
+                userId = customClaimValue.UserId;
+            }
         }
 
         //GET
@@ -27,9 +45,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
                 var vm = new StoryListingViewModel();
                 vm.CountryList = _db.Countries.ToList();
                 vm.ThemeList = _db.MissionThemes.ToList();
@@ -50,9 +65,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
                 var vm = new StoryListingViewModel();
 
                 var data = _storyList.GetStories(viewmodel);
@@ -73,10 +85,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-                ViewBag.UserId = userId;
-
                 var vm = new ShareStoryViewModel();
                 vm.MissionTitles = _storyList.GetMissions(userId);
 
@@ -92,9 +100,6 @@ namespace CiPlatformWeb.Controllers
         [Authorize(Roles = "user")]
         public IActionResult GetStory (long missionId)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             var story = _storyList.GetDraftedStory(missionId, userId);
 
             return Json(story);
@@ -106,10 +111,7 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
-                var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
+                Story story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
                 if (story != null)
                 {
                     _storyList.UpdateDraftedStory(viewmodel, story);
@@ -143,10 +145,7 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
-                var story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
+                Story story = _storyList.GetDraftedStory(viewmodel.MissionId, userId);
                 if (story != null)
                 {
                     _storyList.SubmitStory(viewmodel, story);
@@ -180,13 +179,9 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-                ViewBag.UserId = userId;
-
                 _storyList.IncreaseViewCount(MissionId, UserId);
 
-                var vm = new StoryDetailViewModel();
+                StoryDetailViewModel vm = new StoryDetailViewModel();
                 vm.storyDetail = _storyList.GetStoryDetails(MissionId, UserId);
                 vm.userDetail = _storyList.GetUserList(userId);
 
@@ -207,7 +202,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> StoryInvite (long ToUserId, long StoryId, long FromUserId, long storyUserId, long storyMissionId)
         {
-            var storyInvite = _storyList.HasAlreadyInvited(ToUserId, StoryId, FromUserId);
+            StoryInvite storyInvite = _storyList.HasAlreadyInvited(ToUserId, StoryId, FromUserId);
             if (storyInvite != null)
             {
                 _storyList.ReInviteToStory(storyInvite);
@@ -216,7 +211,7 @@ namespace CiPlatformWeb.Controllers
             {
                 _storyList.InviteToStory(FromUserId, ToUserId, StoryId);
             }
-            var StoryLink = Url.Action("StoryDetail", "Story", new { MissionId = storyMissionId, UserId = storyUserId }, Request.Scheme);
+            string StoryLink = Url.Action("StoryDetail", "Story", new { MissionId = storyMissionId, UserId = storyUserId }, Request.Scheme);
             string link = StoryLink;
             await _storyList.SendInvitationToCoWorker(ToUserId, FromUserId, link);
 

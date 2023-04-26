@@ -3,9 +3,12 @@ using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using CiPlatformWeb.Repositories.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -15,14 +18,28 @@ namespace CiPlatformWeb.Controllers
         private readonly ApplicationDbContext _db;
         private readonly IUserProfile _userProfile;
         private readonly IVolunteeringTimesheet _timesheet;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly long userId;
 
-
-        public UserController (ILogger<UserController> logger, ApplicationDbContext db, IUserProfile userProfile, IVolunteeringTimesheet timesheet)
+        public UserController (ILogger<UserController> logger, ApplicationDbContext db, IUserProfile userProfile, IVolunteeringTimesheet timesheet, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _db = db;
             _userProfile = userProfile;
             _timesheet = timesheet;
+
+            _httpContextAccessor = httpContextAccessor;
+            string authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            string token = authorizationHeader?.Substring("Bearer ".Length).Trim();
+            if (token is not null)
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var decodedToken = tokenHandler.ReadJwtToken(token);
+                var claims = decodedToken.Claims;
+                var customClaimString = decodedToken.Claims.FirstOrDefault(c => c.Type == "CustomClaimForUser")?.Value;
+                var customClaimValue = JsonSerializer.Deserialize<User>(customClaimString);
+                userId = customClaimValue.UserId;
+            }
         }
 
         [Authorize(Roles = "user")]
@@ -31,9 +48,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
                 var vm = new UserProfileViewModel();
                 vm = _userProfile.GetUserDetails(userId);
                 ViewBag.UserAvatar = vm.AvatarName;
@@ -61,9 +75,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
                 if (ModelState.IsValid)
                 {
                     viewmodel = _userProfile.UpdateUserProfile(viewmodel);
@@ -102,9 +113,6 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult ChangePassword (string oldPassoword, string newPassword, string confirmPassword)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             var user = _userProfile.CheckPassword(userId, oldPassoword);
 
             if (user != null)
@@ -125,9 +133,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
                 if (userId != null)
                 {
                     _userProfile.ContactUs(userId, subject, message);
@@ -151,9 +156,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
                 var vm = new VolunteeringTimesheetViewModel();
 
                 vm.timeMissions = _timesheet.GetTimeBasedMission(userId);
@@ -176,10 +178,6 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                string userIdStr = HttpContext.Session.GetString("UserId");
-                long userId = Convert.ToInt64(userIdStr);
-
-
                 //TIME BASED
                 if (viewmodel.timeBasedSheet is not null)
                 {
@@ -253,9 +251,6 @@ namespace CiPlatformWeb.Controllers
         [Authorize(Roles = "user")]
         public IActionResult GetTimesheetData (long id)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             if (userId != null)
             {
                 var timesheet = _timesheet.GetEntry(id);
@@ -274,9 +269,6 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult DeleteTimesheetData (long id)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             if (userId != null)
             {
                 _timesheet.DeleteTimesheetEntry(id);
