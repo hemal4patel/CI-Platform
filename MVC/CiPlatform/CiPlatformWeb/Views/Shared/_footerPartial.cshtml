@@ -1,5 +1,4 @@
-﻿
-@using CiPlatformWeb.Entities.ViewModels;
+﻿@using CiPlatformWeb.Entities.ViewModels;
 @model SessionUserViewModel
 
 <footer class="bg-white border-top">
@@ -9,7 +8,11 @@
                 <a asp-action="PrivacyPolicy" asp-controller="User" class="text-decoration-none" style="color: #212529;">Privacy Policy</a>
             </div>
             <div class="ms-5">
-                <button data-bs-toggle="modal" data-bs-target="#contactUs" class="border-none resetFormButton" style="color: #212529;">Contact Us</button>
+                @if (Model.userId != 0)
+                {
+                    <button data-bs-toggle="modal" data-bs-target="#contactUs" class="border-none resetFormButton" style="color: #212529;">Contact Us</button>
+                }
+
                 <!-- Modal -->
                 <div class="modal fade" id="contactUs" tabindex="-1"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">

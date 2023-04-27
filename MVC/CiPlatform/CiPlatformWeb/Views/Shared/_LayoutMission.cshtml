@@ -1,11 +1,14 @@
-﻿
-@using System.Text.Json;
+﻿@using System.Text.Json;
 @using CiPlatformWeb.Entities.DataModels
 
 @{
+    long Id = 0;
     var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
-    var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
-    var Id = sessionUser.UserId;
+    if (customClaim is not null)
+    {
+        var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
+        Id = sessionUser.UserId;
+    }
     List<MissionInvite> inviteList = ViewBag.InviteList;
 }
 
@@ -31,7 +34,7 @@
 
     <link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
 
-  
+
 
 </head>
 
@@ -57,7 +60,7 @@
     <script src="~/js/Filters.js" asp-append-version="true"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-    
+
 
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">

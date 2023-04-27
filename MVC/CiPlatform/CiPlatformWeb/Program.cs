@@ -77,7 +77,8 @@ app.Use(async (context, next) =>
     }
     await next();
 });
-app.UseStatusCodePages(async context => {
+app.UseStatusCodePages(async context =>
+{
     var request = context.HttpContext.Request;
     var response = context.HttpContext.Response;
 

@@ -850,7 +850,13 @@ $('.deleteTheme').on('click', function () {
                     }, 1000);
                 },
                 error: function (error) {
-                    console.log(error)
+                    swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: "An error occured!",
+                        text: 'Theme is currently in use!',
+                        showConfirmButton: true
+                    })
                 }
             });
         }
@@ -931,7 +937,13 @@ $('.deleteSkill').on('click', function () {
                     }, 1000);
                 },
                 error: function (error) {
-                    console.log(error)
+                    swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: "An error occured!",
+                        text: 'Skill is currently in use!',
+                        showConfirmButton: true
+                    })
                 }
             });
         }

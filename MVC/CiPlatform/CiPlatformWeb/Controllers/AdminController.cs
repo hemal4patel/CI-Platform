@@ -32,12 +32,21 @@ namespace CiPlatformWeb.Controllers
             _adminBanner = adminBanner;
         }
 
+        [HttpGet]
         public IActionResult AdminUser ()
         {
-            AdminUserViewModel vm = new();
-            vm.users = _adminUser.GetUsers();
-            vm.countryList = _adminUser.GetCountries();
-            return View(vm);
+            if (CheckSession())
+            {
+
+                AdminUserViewModel vm = new();
+                vm.users = _adminUser.GetUsers();
+                vm.countryList = _adminUser.GetCountries();
+                return View(vm);
+            }
+            else
+            {
+                return RedirectToAction ("Index", "Home");
+            }
         }
 
         public IActionResult GetCitiesByCountry (long? countryId)
@@ -262,7 +271,8 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult DeleteTheme (long themeId)
         {
-            if (_adminTheme.DeleteTheme(themeId)){
+            if (_adminTheme.DeleteTheme(themeId))
+            {
                 return Ok();
             }
             else
@@ -332,7 +342,8 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult DeleteSkill (long skillId)
         {
-            if (_adminSkill.DeleteSkill(skillId)){
+            if (_adminSkill.DeleteSkill(skillId))
+            {
                 return Ok();
             }
             else
@@ -462,6 +473,11 @@ namespace CiPlatformWeb.Controllers
                 _adminBanner.UpdateBanner(vm.newBanner);
                 return Ok(new { icon = "success", message = "Banner " + Messages.update });
             }
+        }
+
+        public bool CheckSession ()
+        {
+            return HttpContext.User.Identity.IsAuthenticated;
         }
     }
 }

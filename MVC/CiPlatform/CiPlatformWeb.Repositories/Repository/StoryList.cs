@@ -264,7 +264,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public StoryInvite HasAlreadyInvited (long ToUserId, long StoryId, long FromUserId)
         {
-            return _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId && m.Status == "PUBLISHED").FirstOrDefault();
+            return _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId && m.Story.Status == "PUBLISHED").FirstOrDefault();
         }
 
         public void InviteToStory (long FromUserId, long ToUserId, long StoryId)

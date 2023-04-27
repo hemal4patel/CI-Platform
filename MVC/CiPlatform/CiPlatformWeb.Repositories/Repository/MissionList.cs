@@ -216,13 +216,13 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionInvite> GetMissionInvites (long userId)
         {
-            List<MissionInvite> missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Mission).ToList();
+            List<MissionInvite> missionInvites = _db.MissionInvites.Where(m => m.ToUserId == userId && m.Mission.DeletedAt == null && m.Mission.Status == 1).Include(m => m.FromUser).Include(m => m.Mission).ToList();
             return missionInvites;
         }
 
         public List<StoryInvite> GetStoryInvites (long userId)
         {
-            List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId).Include(m => m.FromUser).Include(m => m.Story).ToList();
+            List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId && m.Story.DeletedAt == null && m.Story.Status == "PUBLISHED").Include(m => m.FromUser).Include(m => m.Story).ToList();
             return storyInvites;
         }
     }
