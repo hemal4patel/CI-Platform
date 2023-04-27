@@ -32,7 +32,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public (List<StoryListModel> stories, int count) GetStories (StoryQueryParams viewmodel)
         {
-            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED").AsQueryable();
+            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" && s.DeletedAt == null).AsQueryable();
 
             if (viewmodel.CountryId != null)
             {

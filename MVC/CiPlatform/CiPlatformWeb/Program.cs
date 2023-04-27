@@ -5,6 +5,7 @@ using CiPlatformWeb.Repositories.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,6 +76,15 @@ app.Use(async (context, next) =>
         context.Request.Headers.Add("Authorization", "Bearer " + token);
     }
     await next();
+});
+app.UseStatusCodePages(async context => {
+    var request = context.HttpContext.Request;
+    var response = context.HttpContext.Response;
+
+    if (response.StatusCode == (int) HttpStatusCode.Unauthorized || response.StatusCode == (int) HttpStatusCode.Forbidden)
+    {
+        response.Redirect("/Home/Index");
+    }
 });
 
 

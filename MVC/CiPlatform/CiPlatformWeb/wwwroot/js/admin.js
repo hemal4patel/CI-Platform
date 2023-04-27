@@ -973,17 +973,14 @@ $(document).on('click', '.changeApplicationStatus', function () {
                 url: "/Admin/ChangeApplicationStatus",
                 data: { applicationId: applicationId, status: status },
                 success: function () {
-                    row.remove();
-                    swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Application ' + s + 'd successfully!!!',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                    var container = $('.showApplicationButtons-' + applicationId);
+                    container.empty();
+                    if (status == 0) {
+                        container.html('<i class="bi bi-check-circle changeApplicationStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0"  style="color: #f20707;"></i>');
+                    }
+                    else {
+                        container.html('<i class="bi bi-check-circle-fill" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeApplicationStatus" data-value="0" style="color: #f20707;"></i>');
+                    }
                 },
                 error: function (error) {
                     console.log(error)
@@ -1030,17 +1027,14 @@ $(document).on('click', '.changeStoryStatus', function () {
                 url: "/Admin/ChangeStoryStatus",
                 data: { storyId: storyId, status: status },
                 success: function () {
-                    row.remove();
-                    swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Story ' + s + 'd successfully!!!',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                    var container = $('.showStoryButtons-' + storyId);
+                    container.empty();
+                    if (status == 0) {
+                        container.html('<i class="bi bi-check-circle ms-2 changeStoryStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0" style="color: #f20707;"></i>');
+                    }
+                    else {
+                        container.html('<i class="bi bi-check-circle-fill ms-2" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeStoryStatus" data-value="0" style="color: #f20707;"></i>');
+                    }
                 },
                 error: function (error) {
                     console.log(error)
@@ -1080,16 +1074,14 @@ $(document).on('click', '.storyStatusButtons', function () {
                 url: "/Admin/ChangeStoryStatus",
                 data: { storyId: storyId, status: status },
                 success: function () {
-                    swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Story ' + s + 'd successfully!!!',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                    var container = $('.storyButtons');
+                    container.empty();
+                    if (status == 0) {
+                        container.html('<button type="button" class="btn btn-outline-success storyStatusButtons m-2" data-value="1"><i class="bi bi-check-circle me-2"></i>Approve</button><button type="button" class="btn btn-danger m-2" data-value="0"><i class="bi bi-x-circle me-2"></i>Declined</button><button type="button" class="btn btn-outline-dark m-2 delStory"><i class="bi bi-trash3 me-2"></i>Delete</button>');
+                    }
+                    else {
+                        container.html('<button type="button" class="btn btn-success m-2" data-value="1"><i class="bi bi-check-circle me-2"></i>Approved</button><button type="button" class="btn btn-outline-danger storyStatusButtons m-2" data-value="0"><i class="bi bi-x-circle me-2"></i>Decline</button><button type="button" class="btn btn-outline-dark m-2 delStory"><i class="bi bi-trash3 me-2"></i>Delete</button>');
+                    }
                 },
                 error: function (error) {
                     console.log(error)

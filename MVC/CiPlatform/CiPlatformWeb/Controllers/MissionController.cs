@@ -17,7 +17,7 @@ using System.Text.Json;
 
 namespace CiPlatformWeb.Controllers
 {
-
+    [Authorize(Roles = "user")]
     public class MissionController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -47,11 +47,8 @@ namespace CiPlatformWeb.Controllers
         }
 
         //GET
-        [Authorize(Roles = "user")]
         public IActionResult PlatformLanding ()
         {
-            if (HttpContext.Session.GetString("UserId") != null)
-            {
                 var vm = new DisplayMissionCards();
 
                 vm.CountryList = _missionlist.GetCountryList();
@@ -60,14 +57,8 @@ namespace CiPlatformWeb.Controllers
                 vm.UserList = _missionlist.GetUserList(userId);
 
                 return View(vm);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
         }
 
-        [Authorize(Roles = "user")]
         public IActionResult GetCitiesByCountry (int countryId)
         {
             var cities = _missionlist.GetCityList(countryId);
@@ -76,12 +67,9 @@ namespace CiPlatformWeb.Controllers
 
 
         //POST
-        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult PlatformLanding (MissionQueryParams viewmodel)
         {
-            if (HttpContext.Session.GetString("UserId") != null)
-            {
                 var vm = new DisplayMissionCards();
 
                 var data = _missionlist.GetMissions(viewmodel, userId);
@@ -90,18 +78,12 @@ namespace CiPlatformWeb.Controllers
                 vm.UserList = _missionlist.GetUserList(userId);
 
                 return PartialView("_MissionDisplayPartial", vm);
-            }
-            return RedirectToAction("Index", "Home");
         }
 
 
         [HttpPost]
-        [Authorize(Roles = "user")]
         public IActionResult AddToFavorites (int missionId)
         {
-            string userIdStr = HttpContext.Session.GetString("UserId");
-            long userId = Convert.ToInt64(userIdStr);
-
             _missionlist.AddToFavorites(missionId, userId);
             return Ok();
         }
@@ -128,7 +110,6 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        [Authorize(Roles = "user")]
         public IActionResult GetComments (long missionId)
         {
             VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
@@ -137,7 +118,6 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_commentsPartial", vm);
         }
 
-        [Authorize(Roles = "user")]
         public IActionResult showRecentVounteers (int currVolPage, long missionId)
         {
             VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
@@ -150,7 +130,6 @@ namespace CiPlatformWeb.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "user")]
         public IActionResult RateMission (int rating, long missionId)
         {
             _missionlist.RateMission(missionId, userId, rating);
@@ -159,7 +138,6 @@ namespace CiPlatformWeb.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "user")]
         public IActionResult ApplyToMission (long missionId)
         {
             _missiondetail.ApplyToMission(missionId, userId);
@@ -168,8 +146,6 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-
-        [Authorize(Roles = "user")]
         public IActionResult DisplayDocument (string fileName)
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
@@ -187,7 +163,6 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "user")]
         [HttpPost]
         public IActionResult PostComment (string comment, long missionId)
         {
@@ -201,7 +176,6 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        [Authorize(Roles = "user")]
         [HttpPost]
         public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
         {
@@ -222,8 +196,6 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        //[HttpPost]
-        [Authorize(Roles = "user")]
         public IActionResult GetInvitations ()
         {
             List<MissionInvite> missionInvites = _missionlist.GetMissionInvites(userId);
@@ -236,7 +208,6 @@ namespace CiPlatformWeb.Controllers
         public bool CheckSession ()
         {
             return HttpContext.User.Identity.IsAuthenticated;
-            //return isActive;
         }
     }
 }

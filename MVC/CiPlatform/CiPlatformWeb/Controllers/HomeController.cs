@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 namespace CiPlatformWeb.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -31,7 +32,6 @@ namespace CiPlatformWeb.Controllers
 
 
         //GET
-        [AllowAnonymous]
         public IActionResult Registration ()
         {
             RegistrationValidation vm = new();
@@ -40,7 +40,6 @@ namespace CiPlatformWeb.Controllers
         }
 
         //POST
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult Registration (RegistrationValidation obj)
         {
@@ -64,10 +63,8 @@ namespace CiPlatformWeb.Controllers
         }
 
         //GET
-        [AllowAnonymous]
         public IActionResult Index ()
         {
-            HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("Token");
             LoginValidation vm = new();
             vm.banners = _userRepository.GetBanners();
@@ -76,7 +73,6 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        [AllowAnonymous]
         public IActionResult Index (LoginValidation obj)
         {
             obj.banners = _userRepository.GetBanners();
@@ -94,8 +90,6 @@ namespace CiPlatformWeb.Controllers
                     {
                         if (user.DeletedAt == null && user.Status == 1)
                         {
-                            HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                            
                             var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
                             var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
                             HttpContext.Session.SetString("Token", token);
@@ -145,7 +139,6 @@ namespace CiPlatformWeb.Controllers
         }
 
         //GET
-        [AllowAnonymous]
         public IActionResult ForgotPassword ()
         {
             ForgotPasswordValidation vm = new();
@@ -155,7 +148,6 @@ namespace CiPlatformWeb.Controllers
 
         //POST
         [HttpPost]
-        [AllowAnonymous]
         public IActionResult ForgotPassword (ForgotPasswordValidation obj)
         {
             obj.banners = _userRepository.GetBanners();
@@ -180,7 +172,6 @@ namespace CiPlatformWeb.Controllers
         }
 
         //GET
-        [AllowAnonymous]
         public IActionResult ResetPassword (string email, string token)
         {
             var cutoffTime = DateTime.Now.AddHours(-4);
@@ -204,7 +195,6 @@ namespace CiPlatformWeb.Controllers
         }
 
         //POST
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult ResetPassword (ResetPasswordValidation obj, IFormCollection form)
         {
@@ -229,7 +219,6 @@ namespace CiPlatformWeb.Controllers
         }
 
         //Logout
-        [AllowAnonymous]
         public IActionResult Logout ()
         {
             HttpContext.Session.Clear();
