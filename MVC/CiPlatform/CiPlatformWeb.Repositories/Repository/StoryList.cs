@@ -220,17 +220,37 @@ namespace CiPlatformWeb.Repositories.Repository
         }
 
 
-        public void IncreaseViewCount (long MissionId, long UserId)
+        public int IncreaseViewCount (long MissionId, long UserId, long sessionUser)
         {
-            Story story = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == "PUBLISHED").FirstOrDefault();
+            int viewCount = 0;
+            long storyId = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == "PUBLISHED").Select(s=>s.StoryId).FirstOrDefault();
 
-            if (story != null)
+            //if (story != null)
+            //{
+            //    story.StoryViews = story.StoryViews + 1;
+            //    story.UpdatedAt = DateTime.Now;
+            //    _db.Update(story);
+            //    _db.SaveChanges();
+            //}
+
+            if (storyId != 0)
             {
-                story.StoryViews = story.StoryViews + 1;
-                story.UpdatedAt = DateTime.Now;
-                _db.Update(story);
-                _db.SaveChanges();
+                bool view = _db.StoryViews.Any(s => s.StoryId == storyId && s.UserId == sessionUser);
+                if(!view)
+                {
+                    StoryView storyView = new StoryView()
+                    {
+                        StoryId = storyId,
+                        UserId = sessionUser
+                    };
+                    _db.StoryViews.Add(storyView);
+                    _db.SaveChanges();
+                }
+
+                viewCount = _db.StoryViews.Count(s => s.StoryId == storyId);
             }
+
+            return viewCount;
         }
 
 

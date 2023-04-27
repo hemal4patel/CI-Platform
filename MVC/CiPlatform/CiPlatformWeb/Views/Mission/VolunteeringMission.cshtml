@@ -53,8 +53,11 @@
                         <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
                     }
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                @if (Model.MissionDetails.missionMedia.Count != 0)
+                {
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                }
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">
@@ -435,7 +438,7 @@
                     </button>
 
                     <div class="commentsContainer"></div>
-                    
+
                 </div>
             </div>
         </div>

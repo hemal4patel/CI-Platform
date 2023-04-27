@@ -59,6 +59,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<StoryMedium> StoryMedia { get; set; }
 
+    public virtual DbSet<StoryView> StoryViews { get; set; }
+
     public virtual DbSet<Timesheet> Timesheets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -828,6 +830,25 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("FK__story_med__story__55F4C372");
         });
 
+        modelBuilder.Entity<StoryView>(entity =>
+        {
+            entity.ToTable("story_views");
+
+            entity.Property(e => e.StoryViewId).HasColumnName("story_view_id");
+            entity.Property(e => e.StoryId).HasColumnName("story_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.StoryViewsNavigation)
+                .HasForeignKey(d => d.StoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_story_views_story1");
+
+            entity.HasOne(d => d.User).WithMany(p => p.StoryViews)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_story_views_user1");
+        });
+
         modelBuilder.Entity<Timesheet>(entity =>
         {
             entity.HasKey(e => e.TimesheetId).HasName("PK__timeshee__7BBF50688A8945B4");
@@ -879,6 +900,7 @@ public partial class ApplicationDbContext : DbContext
             entity.ToTable("user");
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Availability).HasColumnName("availability");
             entity.Property(e => e.Avatar)
                 .HasMaxLength(2048)
                 .IsUnicode(false)
@@ -916,6 +938,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(225)
                 .IsUnicode(false)
                 .HasColumnName("linked_in_url");
+            entity.Property(e => e.Manager).HasColumnName("manager");
             entity.Property(e => e.Password)
                 .HasMaxLength(225)
                 .IsUnicode(false)

@@ -12,5 +12,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public Story storyDetail { get; set; }
 
         public List<User> userDetail { get; set; }
+
+        public int storyViews { get; set; }
     }
 }

@@ -179,9 +179,9 @@ namespace CiPlatformWeb.Controllers
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
-                _storyList.IncreaseViewCount(MissionId, UserId);
-
                 StoryDetailViewModel vm = new StoryDetailViewModel();
+
+                vm.storyViews = _storyList.IncreaseViewCount(MissionId, UserId, userId);
                 vm.storyDetail = _storyList.GetStoryDetails(MissionId, UserId);
                 vm.userDetail = _storyList.GetUserList(userId);
 

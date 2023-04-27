@@ -53,8 +53,11 @@
                         <img src="~/Upload/StoryPhotos/no-image-found.png" class="card-img-top" alt="" />
                     }
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
+                {
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                }
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">
@@ -101,7 +104,7 @@
             <div class="d-flex justify-content-between mt-2 user-data">
                 <div class="">@Model.storyDetail.User.FirstName @Model.storyDetail.User.LastName</div>
                 <div class="border border-secondary rounded-pill px-3 py-1">
-                    <i class="bi bi-eye"></i> &nbsp; @Model.storyDetail.StoryViews Views
+                    <i class="bi bi-eye"></i> &nbsp; @Model.storyViews Views
                 </div>
             </div>
 
@@ -113,7 +116,7 @@
 
             <div class="row gy-4 buttons mt-4">
                 <div class="col-md-7">
-                    
+
 
                     @if (Model.storyDetail.Status == "DRAFT")
                     {
@@ -138,11 +141,11 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="input-group mb-3">
-                                            <span class="input-group-text bg-white border-none" id="searchIcon">
-                                                <img src="~/images/search.png" />
-                                            </span>
-                                            <input type="text" class="form-control border-none searchUserName" placeholder="Search" onkeyup="searchUser()" id="" aria-label="Search" />
-                                        </div>
+                                        <span class="input-group-text bg-white border-none" id="searchIcon">
+                                            <img src="~/images/search.png" />
+                                        </span>
+                                        <input type="text" class="form-control border-none searchUserName" placeholder="Search" onkeyup="searchUser()" id="" aria-label="Search" />
+                                    </div>
 
                                     @foreach (var u in Model.userDetail)
                                     {
@@ -168,7 +171,7 @@
                 <div class="col-md-5">
                     <button class="rounded-pill mission-btn p-2 w-100 text-decoration-none" onclick="openMission()" id="openMission">
                         Open Mission &nbsp; <i class="bi bi-arrow-right"></i>
-                    </button>                    
+                    </button>
                 </div>
             </div>
 

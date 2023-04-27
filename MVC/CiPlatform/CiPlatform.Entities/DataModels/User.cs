@@ -45,6 +45,10 @@ public partial class User
 
     public string Role { get; set; } = null!;
 
+    public string? Manager { get; set; }
+
+    public string? Availability { get; set; }
+
     public virtual City? City { get; set; }
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
@@ -68,6 +72,8 @@ public partial class User
     public virtual ICollection<StoryInvite> StoryInviteFromUsers { get; } = new List<StoryInvite>();
 
     public virtual ICollection<StoryInvite> StoryInviteToUsers { get; } = new List<StoryInvite>();
+
+    public virtual ICollection<StoryView> StoryViews { get; } = new List<StoryView>();
 
     public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
 

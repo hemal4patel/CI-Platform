@@ -35,15 +35,11 @@ $('#missionId').click(function () {
                     else {
                         var file = story.storyMedia[i];
                         var image = $('<img>').attr('src', '/Upload/StoryPhotos/' + story.storyMedia[i].path);
-                        var closebtn = $('<span>').text('x');
+                        var closebtn = $('<span>').addClass('close-icon').text('x');
                         var item = $('<div>').addClass('image-item').append(image).append(closebtn);
                         $('#image-list').append(item);
 
-
                         blobData(file)
-
-
-
                         closebtn.on('click', function () {
                             var index = $(this).parent().index();
                             allfiles.splice(index, 1);

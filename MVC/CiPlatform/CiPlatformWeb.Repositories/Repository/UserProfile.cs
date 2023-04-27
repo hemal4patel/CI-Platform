@@ -43,7 +43,9 @@ namespace CiPlatformWeb.Repositories.Repository
                 CountryId = user.CountryId,
                 ProfileText = user.ProfileText,
                 LinkedInUrl = user.LinkedInUrl,
-                Title = user.Title
+                Title = user.Title,
+                Manager = user.Manager,
+                Availability = user.Availability
             };
             return vm;
         }
@@ -106,6 +108,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 user.WhyIVolunteer = viewmodel.WhyIVolunteer;
                 user.CountryId = viewmodel.CountryId;
                 user.LinkedInUrl = viewmodel.LinkedInUrl;
+                user.Manager = viewmodel.Manager;
+                user.Availability = viewmodel.Availability;
                 user.UpdatedAt = DateTime.Now;
 
                 if (viewmodel.CityId != 0)

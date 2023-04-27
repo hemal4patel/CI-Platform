@@ -32,7 +32,7 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void SubmitStory (ShareStoryViewModel viewmodel, Story draftedStory);
 
-        public void IncreaseViewCount (long MissionId, long UserId);
+        public int IncreaseViewCount (long MissionId, long UserId, long sessionUser);
 
         public Story GetStoryDetails (long MissionId, long UserId);
 

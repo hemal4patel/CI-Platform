@@ -17,6 +17,7 @@ using System.Text.Json;
 
 namespace CiPlatformWeb.Controllers
 {
+
     public class MissionController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -34,10 +35,10 @@ namespace CiPlatformWeb.Controllers
             _httpContextAccessor = httpContextAccessor;
             string authorizationHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
             string token = authorizationHeader?.Substring("Bearer ".Length).Trim();
-            if(token is not null)
+            if (token is not null)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var decodedToken = tokenHandler.ReadJwtToken(token);                
+                var decodedToken = tokenHandler.ReadJwtToken(token);
                 var claims = decodedToken.Claims;
                 var customClaimString = decodedToken.Claims.FirstOrDefault(c => c.Type == "CustomClaimForUser")?.Value;
                 var customClaimValue = JsonSerializer.Deserialize<User>(customClaimString);
@@ -110,7 +111,7 @@ namespace CiPlatformWeb.Controllers
         [AllowAnonymous]
         public IActionResult VolunteeringMission (long MissionId)
         {
-            if (HttpContext.Session.GetString("UserId") != null)
+            if (CheckSession())
             {
                 var vm = new VolunteeringMissionViewModel();
 
@@ -128,7 +129,7 @@ namespace CiPlatformWeb.Controllers
         }
 
         [Authorize(Roles = "user")]
-        public IActionResult GetComments(long missionId)
+        public IActionResult GetComments (long missionId)
         {
             VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
 
@@ -137,7 +138,7 @@ namespace CiPlatformWeb.Controllers
         }
 
         [Authorize(Roles = "user")]
-        public IActionResult showRecentVounteers(int currVolPage, long missionId)
+        public IActionResult showRecentVounteers (int currVolPage, long missionId)
         {
             VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
 
@@ -232,5 +233,10 @@ namespace CiPlatformWeb.Controllers
             return Json(result);
         }
 
+        public bool CheckSession ()
+        {
+            return HttpContext.User.Identity.IsAuthenticated;
+            //return isActive;
+        }
     }
 }

@@ -111,9 +111,9 @@ namespace CiPlatformWeb.Controllers
 
         [Authorize(Roles = "user")]
         [HttpPost]
-        public IActionResult ChangePassword (string oldPassoword, string newPassword, string confirmPassword)
+        public IActionResult ChangePassword (string oldPassword, string newPassword)
         {
-            var user = _userProfile.CheckPassword(userId, oldPassoword);
+            var user = _userProfile.CheckPassword(userId, oldPassword);
 
             if (user != null)
             {
