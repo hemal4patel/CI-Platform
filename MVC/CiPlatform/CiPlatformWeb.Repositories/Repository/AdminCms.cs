@@ -34,12 +34,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool CmsExistsForNew (string slug)
         {
-            return _db.CmsPages.Any(c => c.Slug.ToLower().Trim().Replace(" ", "") == slug.ToLower().Trim().Replace(" ", ""));
+            return _db.CmsPages.Any(c => c.Slug.ToLower().Trim().Replace(" ", "") == slug.ToLower().Trim().Replace(" ", "") && c.DeletedAt == null);
         }
 
         public bool CmsExistsForUpdate (long? cmsId, string slug)
         {
-            return _db.CmsPages.Any(c => c.Slug.ToLower().Trim().Replace(" ", "") == slug.ToLower().Trim().Replace(" ", "") && c.CmsPageId != cmsId);
+            return _db.CmsPages.Any(c => c.Slug.ToLower().Trim().Replace(" ", "") == slug.ToLower().Trim().Replace(" ", "") && c.CmsPageId != cmsId && c.DeletedAt == null);
         }
 
         public void AddCmsPage (AdminCmsModel vm)

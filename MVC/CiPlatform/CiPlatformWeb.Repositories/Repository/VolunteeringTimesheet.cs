@@ -37,19 +37,19 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Timesheet> GetTimeBasedEntries (long userId)
         {
-            List<Timesheet> timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time").Include(t => t.Mission).ToList();
+            List<Timesheet> timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time" && t.DeletedAt == null).Include(t => t.Mission).ToList();
             return timeBasedEntries;
         }
 
         public List<Timesheet> GetGoalBasedEntries (long userId)
         {
-            List<Timesheet> goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal").Include(t => t.Mission).ToList();
+            List<Timesheet> goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal" && t.DeletedAt == null).Include(t => t.Mission).ToList();
             return goalBasedEnteries;
         }
 
         public bool TimeSheetExists (long missionId, long userId, DateTime dateVolunteered)
         {
-            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered);
+            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.DeletedAt == null);
         }
 
         public Timesheet GetEntry (long? timesheetId)
@@ -121,7 +121,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public void DeleteTimesheetEntry (long id)
         {
             Timesheet timesheet = GetEntry(id);
-            _db.Timesheets.Remove(timesheet);
+            timesheet.DeletedAt= DateTime.Now;
             _db.SaveChanges();
         }
     }

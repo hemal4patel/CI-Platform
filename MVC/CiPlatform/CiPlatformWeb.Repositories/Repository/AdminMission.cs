@@ -38,12 +38,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionTheme> GetThemes ()
         {
-            return _db.MissionThemes.Where(t => t.DeletedAt == null).ToList();
+            return _db.MissionThemes.Where(t => t.DeletedAt == null && t.Status == 1).ToList();
         }
 
         public List<Skill> GetSkills ()
         {
-            return _db.Skills.Where(s => s.DeletedAt == null).ToList();
+            return _db.Skills.Where(s => s.DeletedAt == null && s.Status == 1).ToList();
         }
 
         public AdminMissionList GetMissionToEdit (long missionId)
@@ -81,12 +81,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool MissionExistsForNew (string title, string organizationName)
         {
-            return _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", ""));
+            return _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.DeletedAt == null);
         }
 
         public bool MissionExistsForUpdate (long? missionId, string title, string organizationName)
         {
-            return _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.MissionId != missionId);
+            return _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.MissionId != missionId && m.DeletedAt == null);
         }
 
         public void AddMission (AdminMissionViewModel vm)

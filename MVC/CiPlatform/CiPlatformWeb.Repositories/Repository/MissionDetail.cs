@@ -24,7 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             IQueryable<Mission> missions = _db.Missions.Where(m => m.MissionId == MissionId).AsQueryable();
 
-            MissionDetailsModel list = missions.Select(m => new MissionDetailsModel()
+            MissionDetailsModel? list = missions.Select(m => new MissionDetailsModel()
             {
                 mission = m,
                 missionId = m.MissionId,
@@ -41,7 +41,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null).Sum(m => m.Action),
                 missionMedia = m.MissionMedia.Where(m => m.DeletedAt == null).ToList(),
                 skills = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).ToList(),
                 ApprovedComments = m.Comments.ToList(),
@@ -83,20 +83,20 @@ namespace CiPlatformWeb.Repositories.Repository
             Mission mission = _db.Missions.Where(m => m.MissionId == MissionId).FirstOrDefault();
 
             IQueryable<Mission> relatedMissions = _db.Missions
-                .Where(m => m.MissionId != MissionId && m.CityId == mission.CityId && m.DeletedAt == null)
+                .Where(m => m.MissionId != MissionId && m.CityId == mission.CityId && m.DeletedAt == null && m.Status == 1)
                     .Take(3);
 
             if (relatedMissions.Count() < 3)
             {
                 relatedMissions = relatedMissions.Union(
-                    _db.Missions.Where(m => m.MissionId != MissionId && m.CountryId == mission.CountryId && m.DeletedAt == null)
+                    _db.Missions.Where(m => m.MissionId != MissionId && m.CountryId == mission.CountryId && m.DeletedAt == null && m.Status == 1)
                         .Take(3 - relatedMissions.Count()));
             }
 
             if (relatedMissions.Count() < 3)
             {
                 relatedMissions = relatedMissions.Union(
-                    _db.Missions.Where(m => m.MissionId != MissionId && m.ThemeId == mission.ThemeId && m.DeletedAt == null)
+                    _db.Missions.Where(m => m.MissionId != MissionId && m.ThemeId == mission.ThemeId && m.DeletedAt == null && m.Status == 1)
                         .Take(3 - relatedMissions.Count()));
             }
 
@@ -115,9 +115,9 @@ namespace CiPlatformWeb.Repositories.Repository
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null).Sum(m => m.Action),
                 mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
-                skill = m.MissionSkills.Select(m => m.Skill.SkillName).FirstOrDefault()
+                skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault()
             });
 
             return list.ToList();

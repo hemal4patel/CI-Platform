@@ -48,12 +48,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool ThemeExistsForNew (string themeName)
         {
-            return _db.MissionThemes.Any(t => t.Title.ToLower().Trim().Replace(" ", "") == themeName.ToLower().Trim().Replace(" ", ""));
+            return _db.MissionThemes.Any(t => t.Title.ToLower().Trim().Replace(" ", "") == themeName.ToLower().Trim().Replace(" ", "") && t.DeletedAt == null);
         }
 
         public bool ThemeExistsForUpdate (long? themeId, string themeName)
         {
-            return _db.MissionThemes.Any(t => t.Title.ToLower().Trim().Replace(" ", "") == themeName.ToLower().Trim().Replace(" ", "") && t.MissionThemeId != themeId);
+            return _db.MissionThemes.Any(t => t.Title.ToLower().Trim().Replace(" ", "") == themeName.ToLower().Trim().Replace(" ", "") && t.MissionThemeId != themeId && t.DeletedAt == null );
         }
 
         public void AddNewTheme (AdminThemeModel vm)
@@ -80,11 +80,18 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-        public void DeleteTheme (long themeId)
+        public bool DeleteTheme (long themeId)
         {
             MissionTheme theme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == themeId);
+
+            //is used in mission
+            if(_db.Missions.Any(m => m.DeletedAt == null && m.ThemeId == themeId))
+            {
+                return false;
+            }
             theme.DeletedAt = DateTime.Now;
             _db.SaveChanges();
+            return true;
         }
 
     }

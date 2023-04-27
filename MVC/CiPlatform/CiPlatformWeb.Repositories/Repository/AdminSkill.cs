@@ -24,7 +24,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             IQueryable<AdminSkillModel> list = skills.Select(s => new AdminSkillModel()
             {
-                skillId= s.SkillId,
+                skillId = s.SkillId,
                 skillName = s.SkillName,
                 status = s.Status,
             });
@@ -34,7 +34,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public AdminSkillModel GetSkillToEdit (long skillId)
         {
-            IQueryable<Skill> skill = _db.Skills.Where(s => s.SkillId== skillId);
+            IQueryable<Skill> skill = _db.Skills.Where(s => s.SkillId == skillId);
 
             AdminSkillModel list = skill.Select(s => new AdminSkillModel()
             {
@@ -48,12 +48,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool SkillExistsForNew (string skillName)
         {
-            return _db.Skills.Any(s => s.SkillName.ToLower().Trim().Replace(" ", "") == skillName.ToLower().Trim().Replace(" ", "")); 
+            return _db.Skills.Any(s => s.SkillName.ToLower().Trim().Replace(" ", "") == skillName.ToLower().Trim().Replace(" ", "") && s.DeletedAt == null);
         }
 
         public bool SkillExistsForUpdate (long? skillId, string skillName)
         {
-            return _db.Skills.Any(s => s.SkillName.ToLower().Trim().Replace(" ", "") == skillName.ToLower().Trim().Replace(" ", "") && s.SkillId != skillId);
+            return _db.Skills.Any(s => s.SkillName.ToLower().Trim().Replace(" ", "") == skillName.ToLower().Trim().Replace(" ", "") && s.SkillId != skillId && s.DeletedAt == null);
         }
 
         public void AddNewSkill (AdminSkillModel vm)
@@ -67,7 +67,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             _db.Skills.Add(newSkill);
             _db.SaveChanges();
-        }        
+        }
 
         public void UpdateSkill (AdminSkillModel vm)
         {
@@ -80,11 +80,18 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-        public void DeleteSkill (long skillId)
+        public bool DeleteSkill (long skillId)
         {
             Skill skill = _db.Skills.FirstOrDefault(s => s.SkillId == skillId);
+
+            //is used in mission or user
+            if (_db.MissionSkills.Any(m => m.SkillId == skill.SkillId && m.DeletedAt == null) || _db.UserSkills.Any(u => u.SkillId == skill.SkillId && u.DeletedAt == null))
+            {
+                return false;
+            }
             skill.DeletedAt = DateTime.Now;
             _db.SaveChanges();
+            return true;
         }
 
     }

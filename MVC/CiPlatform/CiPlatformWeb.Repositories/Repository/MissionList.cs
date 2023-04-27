@@ -41,18 +41,18 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionTheme> GetThemeList ()
         {
-            return _db.MissionThemes.Where(m => m.DeletedAt == null).ToList();
+            return _db.MissionThemes.Where(m => m.DeletedAt == null && m.Status == 1).ToList();
         }
 
         public List<Skill> GetSkillList ()
         {
-            return _db.Skills.Where(m => m.DeletedAt == null).ToList();
+            return _db.Skills.Where(m => m.DeletedAt == null && m.Status == 1).ToList();
         }
 
         public (List<MissionListModel> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
         {
 
-            IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null).AsQueryable();
+            IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null && m.Status == 1).AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -128,9 +128,9 @@ namespace CiPlatformWeb.Repositories.Repository
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null).Sum(m => m.Action),
                 mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
-                skill = m.MissionSkills.Select(m => m.Skill.SkillName).FirstOrDefault()
+                skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault()
             });
 
 

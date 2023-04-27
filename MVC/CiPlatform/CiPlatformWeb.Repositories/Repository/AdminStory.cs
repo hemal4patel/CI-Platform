@@ -40,7 +40,7 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Stories.Where(s => s.StoryId == storyId)
                 .Include(s => s.User)
                 .Include(s => s.Mission)
-                .Include(s => s.StoryMedia)
+                .Include(s => s.StoryMedia.Where(s => s.DeletedAt == null))
                 .FirstOrDefault();
         }
 

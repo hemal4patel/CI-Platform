@@ -63,12 +63,12 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Skill> GetSkillList ()
         {
-            return _db.Skills.Where(s => s.DeletedAt == null).ToList();
+            return _db.Skills.Where(s => s.DeletedAt == null && s.Status == 1).ToList();
         }
 
         public List<UserSkill> GetUserSkills (long userId)
         {
-            return _db.UserSkills.Where(u => u.UserId == userId && u.DeletedAt == null).Include(u => u.Skill).ToList();
+            return _db.UserSkills.Where(u => u.UserId == userId && u.DeletedAt == null && u.Skill.DeletedAt == null && u.Skill.Status == 1).Include(u => u.Skill).ToList();
         }
 
 
@@ -187,7 +187,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<CmsPage> GetPolicyPages ()
         {
-            return _db.CmsPages.Where(c => c.DeletedAt == null).ToList();
+            return _db.CmsPages.Where(c => c.DeletedAt == null && c.Status == 1).ToList();
         }
     }
 }

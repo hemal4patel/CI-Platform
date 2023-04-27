@@ -21,6 +21,6 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void UpdateTheme (AdminThemeModel vm);
 
-        public void DeleteTheme (long themeId);
+        public bool DeleteTheme (long themeId);
     }
 }

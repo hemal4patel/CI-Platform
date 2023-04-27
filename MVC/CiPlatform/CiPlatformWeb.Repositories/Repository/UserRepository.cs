@@ -31,6 +31,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 Email = obj.Email,
                 Password = hashedPassword,
                 PhoneNumber = obj.PhoneNumber,
+                Role = "user",
                 CreatedAt = DateTime.Now,
             };
             _db.Users.Add(newUser);
@@ -54,14 +55,14 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void expireLink (string email, string token)
         {
-            PasswordReset data = _db.PasswordResets.Where(p => p.Email== email && p.Token == token).FirstOrDefault();
+            PasswordReset data = _db.PasswordResets.Where(p => p.Email == email && p.Token == token).FirstOrDefault();
             data.DeletedAt = DateTime.Now;
             _db.SaveChanges();
         }
 
         public CmsPage GetCmsPage (long id)
         {
-            return _db.CmsPages.Where(c => c.CmsPageId == id).FirstOrDefault();
+            return _db.CmsPages.Where(c => c.CmsPageId == id && c.Status == 1).FirstOrDefault();
         }
 
         public List<Banner> GetBanners ()
@@ -69,6 +70,6 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Banners.Where(b => b.DeletedAt == null).OrderByDescending(b => b.SortOrder).ToList();
         }
 
-        
+
     }
 }

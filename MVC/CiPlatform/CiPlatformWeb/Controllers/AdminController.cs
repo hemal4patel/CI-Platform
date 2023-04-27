@@ -262,8 +262,13 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult DeleteTheme (long themeId)
         {
-            _adminTheme.DeleteTheme(themeId);
-            return Ok();
+            if (_adminTheme.DeleteTheme(themeId)){
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -327,8 +332,13 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult DeleteSkill (long skillId)
         {
-            _adminSkill.DeleteSkill(skillId);
-            return Ok();
+            if (_adminSkill.DeleteSkill(skillId)){
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]

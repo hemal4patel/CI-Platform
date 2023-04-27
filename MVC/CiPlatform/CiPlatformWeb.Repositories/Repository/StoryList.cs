@@ -225,14 +225,6 @@ namespace CiPlatformWeb.Repositories.Repository
             int viewCount = 0;
             long storyId = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == "PUBLISHED").Select(s=>s.StoryId).FirstOrDefault();
 
-            //if (story != null)
-            //{
-            //    story.StoryViews = story.StoryViews + 1;
-            //    story.UpdatedAt = DateTime.Now;
-            //    _db.Update(story);
-            //    _db.SaveChanges();
-            //}
-
             if (storyId != 0)
             {
                 bool view = _db.StoryViews.Any(s => s.StoryId == storyId && s.UserId == sessionUser);
@@ -272,7 +264,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public StoryInvite HasAlreadyInvited (long ToUserId, long StoryId, long FromUserId)
         {
-            return _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId).FirstOrDefault();
+            return _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId && m.Status == "PUBLISHED").FirstOrDefault();
         }
 
         public void InviteToStory (long FromUserId, long ToUserId, long StoryId)
