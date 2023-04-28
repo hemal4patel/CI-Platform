@@ -5,8 +5,7 @@
 
 <link rel="stylesheet" href="~/css/story.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/slider.css" asp-append-version="true" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+
 
 <div class="container my-4">
     <div class="row d-flex mt-5">
@@ -36,8 +35,11 @@
                         <img src="~/Upload/StoryPhotos/no-image-found.png" class="card-img-top" alt="" />
                     }
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
+                {
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                }
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">

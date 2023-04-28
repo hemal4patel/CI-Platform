@@ -36,6 +36,7 @@ builder.Services.AddScoped<IAdminSkill, AdminSkill>();
 builder.Services.AddScoped<IAdminApplication, AdminApplication>();
 builder.Services.AddScoped<IAdminStory, AdminStory>();
 builder.Services.AddScoped<IAdminBanner, AdminBanner>();
+builder.Services.AddScoped<IAdminComment, AdminComment>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -75,8 +76,12 @@ app.Use(async (context, next) =>
     {
         context.Request.Headers.Add("Authorization", "Bearer " + token);
     }
+    context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+    context.Response.Headers.Add("Expires", "-1");
+    context.Response.Headers.Add("Pragma", "no-cache");
     await next();
 });
+
 app.UseStatusCodePages(async context =>
 {
     var request = context.HttpContext.Request;
@@ -84,7 +89,7 @@ app.UseStatusCodePages(async context =>
 
     if (response.StatusCode == (int) HttpStatusCode.Unauthorized || response.StatusCode == (int) HttpStatusCode.Forbidden)
     {
-        response.Redirect("/Home/Index");
+        response.Redirect("/");
     }
 });
 

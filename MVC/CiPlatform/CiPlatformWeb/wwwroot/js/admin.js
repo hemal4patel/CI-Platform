@@ -1342,6 +1342,62 @@ $('.deleteBanner').on('click', function () {
 
 
 
+//change comment status
+$(document).on('click', '.changeCommentStatus', function () {
+    var commentId = $(this).closest('tr').attr('id');
+    var row = $(this).closest('tr')
+    var status = $(this).data('value')
+    var s = "";
+    var confirmButtonColor = ''
+    if (status == 1) {
+        s = "approve"
+        confirmButtonColor = '#198754'
+    }
+    else {
+        s = "decline"
+        confirmButtonColor = '#d33'
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        //text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: confirmButtonColor,
+        cancelButtonColor: '#414141',
+        confirmButtonText: 'Yes, ' + s + ' it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ChangeCommentStatus",
+                data: { commentId: commentId, status: status },
+                success: function () {
+                    var container = $('.showCommentButtons-' + commentId);
+                    container.empty();
+                    if (status == 0) {
+                        container.html('<i class="bi bi-check-circle changeCommentStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0"  style="color: #f20707;"></i>');
+                    }
+                    else {
+                        container.html('<i class="bi bi-check-circle-fill" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeCommentStatus" data-value="0" style="color: #f20707;"></i>');
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+})
+
+
+
+
+
+
+
+
+
 //cancel button
 $(document).on('click', '.cancelButton', function () {
     window.location.reload()
@@ -1595,6 +1651,37 @@ $('#searchBanner').on('keyup', function () {
     bannerTable.search($(this).val()).draw();
 })
 
+//Admin banner table
+var commentTable = $('#commentTable').DataTable({
+    lengthChange: false,
+    ordering: false,
+    paging: true,
+    searching: true,
+    pageLength: 7,
+    pagingType: "full_numbers",
+    language: {
+        paginate: {
+            first: '<span class="image-class-first"><i class="bi bi-chevron-double-left"></i></span>',
+            previous: '<span class="image-class-previous"><i class="bi bi-chevron-left"></i></span>',
+            next: '<span class="image-class-next"><i class="bi bi-chevron-right"></i></span>',
+            last: '<span class="image-class-last"><i class="bi bi-chevron-double-right"></i></span>'
+        }
+    },
+    drawCallback: function (settings) {
+        var api = this.api();
+        var numRows = api.rows({ search: "applied" }).count();
+        if (numRows === 0) {
+            $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
+        } else {
+            $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
+        }
+    }
+});
+
+$('#searchComment').on('keyup', function () {
+    commentTable.search($(this).val()).draw();
+})
+
 
 //toggle
 $(document).ready(function () {
@@ -1627,8 +1714,11 @@ $(document).ready(function () {
     else if (location.includes('AdminStory')) {
         $("a[href='/Admin/AdminStory']").addClass("admin-nav-active");
     }
-    else {
+    else if (location.includes('AdminBanner')) {
         $("a[href='/Admin/AdminBanner']").addClass("admin-nav-active");
+    }
+    else {
+        $("a[href='/Admin/AdminComment']").addClass("admin-nav-active");
     }
 })
 

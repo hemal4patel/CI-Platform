@@ -3,6 +3,7 @@ using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
@@ -10,6 +11,8 @@ using System.Text.Json;
 namespace CiPlatformWeb.Controllers
 {
     [Authorize(Roles = "admin")]
+
+
     public class AdminController : Controller
     {
         private readonly IAdminUser _adminUser;
@@ -20,8 +23,9 @@ namespace CiPlatformWeb.Controllers
         private readonly IAdminStory _adminStory;
         private readonly IAdminCms _adminCms;
         private readonly IAdminBanner _adminBanner;
+        private readonly IAdminComment _adminComment;
 
-        public AdminController (IAdminUser adminUser, IAdminMission adminMission, IAdminTheme adminTheme, IAdminSkill adminSkill, IAdminApplication adminApplication, IAdminStory adminStory, IAdminCms adminCms, IAdminBanner adminBanner)
+        public AdminController (IAdminUser adminUser, IAdminMission adminMission, IAdminTheme adminTheme, IAdminSkill adminSkill, IAdminApplication adminApplication, IAdminStory adminStory, IAdminCms adminCms, IAdminBanner adminBanner, IAdminComment adminComment)
         {
             _adminUser = adminUser;
             _adminMission = adminMission;
@@ -29,24 +33,21 @@ namespace CiPlatformWeb.Controllers
             _adminApplication = adminApplication;
             _adminStory = adminStory;
             _adminCms = adminCms;
-            _adminBanner = adminBanner;
+            _adminBanner = adminBanner;     
+            _adminComment = adminComment;
         }
 
+       
+
+
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult AdminUser ()
         {
-            if (CheckSession())
-            {
-
-                AdminUserViewModel vm = new();
-                vm.users = _adminUser.GetUsers();
-                vm.countryList = _adminUser.GetCountries();
-                return View(vm);
-            }
-            else
-            {
-                return RedirectToAction ("Index", "Home");
-            }
+            AdminUserViewModel vm = new();
+            vm.users = _adminUser.GetUsers();
+            vm.countryList = _adminUser.GetCountries();
+            return View(vm);
         }
 
         public IActionResult GetCitiesByCountry (long? countryId)
@@ -473,6 +474,20 @@ namespace CiPlatformWeb.Controllers
                 _adminBanner.UpdateBanner(vm.newBanner);
                 return Ok(new { icon = "success", message = "Banner " + Messages.update });
             }
+        }
+
+        public IActionResult AdminComment ()
+        {
+            AdminCommentViewModel vm = new();
+            vm.comments = _adminComment.GetComments();
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeCommentStatus (long commentId, int status)
+        {
+            _adminComment.ChangeCommentStatus(commentId, status);
+            return Ok();
         }
 
         public bool CheckSession ()

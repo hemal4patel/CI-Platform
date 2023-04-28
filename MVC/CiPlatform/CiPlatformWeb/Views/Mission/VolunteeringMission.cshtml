@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="~/css/slider.css" asp-append-version="true" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
@@ -50,10 +51,10 @@
                     }
                     else
                     {
-                        <img src="~/Upload/MissionPhotos/no-image-found.png" class="card-img-top" alt="" />
+                        <img src="~/Upload/MissionPhotos/no.jpg" class="card-img-top" alt="" />
                     }
                 </div>
-                @if (Model.MissionDetails.missionMedia.Count != 0)
+                @if (Model.MissionDetails.missionMedia.Count > 1)
                 {
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
@@ -61,7 +62,7 @@
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    @if (Model.MissionDetails.missionMedia is not null)
+                    @if (Model.MissionDetails.missionMedia.Count > 1)
                     {
                         @foreach (MissionMedium media in Model.MissionDetails.missionMedia)
                         {
@@ -197,7 +198,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     </button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="max-height: 50vh!important;">
 
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-white border-none" id="searchIcon">

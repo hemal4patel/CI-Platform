@@ -26,8 +26,12 @@
         <div class="my-4">
             <div class="options d-flex justify-content-between">
                 <div class="">
-                    <label>Search : </label>
-                    <input type="text" id="searchMission" placeholder="Search" />
+                    <div class="input-group mb-3" style="width: 100%;">
+                        <span class="input-group-text bg-white border-none" id="searchIcon">
+                            <img src="~/images/search.png" />
+                        </span>
+                        <input type="text" class="form-control border-none" placeholder="Search" id="searchMission" aria-label="Search" style="border-left: none;" />
+                    </div>
                 </div>
                 <div class="">
                     <button class="addBtn rounded-pill py-1 px-2 addMission">

@@ -66,6 +66,7 @@ namespace CiPlatformWeb.Controllers
         public IActionResult Index ()
         {
             HttpContext.Session.Remove("Token");
+
             LoginValidation vm = new();
             vm.banners = _userRepository.GetBanners();
             return View(vm);
@@ -124,8 +125,16 @@ namespace CiPlatformWeb.Controllers
                         }
                         else
                         {
-                            TempData["error"] = "Login failed!!!";
-                            return RedirectToAction("Index", "Home");
+                            if (user.DeletedAt == null)
+                            {
+                                TempData["error"] = "User is blocked!!!";
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                TempData["error"] = "User is deleted!!!";
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
                     }
                     else
@@ -221,6 +230,8 @@ namespace CiPlatformWeb.Controllers
         //Logout
         public IActionResult Logout ()
         {
+            HttpContext.Session.Remove("Token");
+            HttpContext.Request.Headers.Remove("Authorization");
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }

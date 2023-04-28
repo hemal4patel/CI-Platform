@@ -75,7 +75,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Comment> GetComments (long MissionId)
         {
-            return _db.Comments.Where(c => c.DeletedAt == null && c.MissionId == MissionId).Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
+            return _db.Comments.Where(c => c.DeletedAt == null && c.ApprovalStatus == "PUBLISHED" && c.MissionId == MissionId).Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
         }
 
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId)

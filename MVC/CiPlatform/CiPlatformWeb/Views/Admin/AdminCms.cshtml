@@ -26,8 +26,12 @@
         <div class="my-4">
             <div class="options d-flex justify-content-between">
                 <div class="">
-                    <label>Search : </label>
-                    <input type="text" id="searchCms" placeholder="Search" />
+                    <div class="input-group mb-3" style="width: 100%;">
+                        <span class="input-group-text bg-white border-none" id="searchIcon">
+                            <img src="~/images/search.png" />
+                        </span>
+                        <input type="text" class="form-control border-none" placeholder="Search" id="searchCms" aria-label="Search" style="border-left: none;" />
+                    </div>
                 </div>
                 <div class="">
                     <button class="addBtn rounded-pill py-1 px-2" id="addCms">
@@ -44,28 +48,28 @@
                         <th scope="col">Title</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
-                    </tr>
+                        </tr>
                 </thead>
                 <tbody>
                     @foreach (AdminCmsModel cms in Model.cmsPages)
                     {
-                        <tr id="@cms.cmsId">
-                            <td scope="row"> @cms.title </td>
-                            <td>
-                                @if (cms.status == 1)
-                                {
-                                    <span style="color: #14C506;">Active</span>
-                                }
-                                else
-                                {
-                                    <span style="color: #f20707;">In-Active</span>
-                                }
-                            </td>
-                            <td>
+                    <tr id="@cms.cmsId">
+                        <td scope="row"> @cms.title </td>
+                        <td>
+                            @if (cms.status == 1)
+                            {
+                            <span style="color: #14C506;">Active</span>
+                            }
+                            else
+                            {
+                            <span style="color: #f20707;">In-Active</span>
+                            }
+                        </td>
+                        <td>
                             <i class="bi bi-pencil-square text-danger editCms"></i>
-                                <i class="bi bi-trash3 ms-2 deleteCms"></i>
-                            </td>
-                        </tr>
+                            <i class="bi bi-trash3 ms-2 deleteCms"></i>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -75,21 +79,21 @@
 
 @section scripts{
     @{
-        <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
     }
 }
 
 @if (TempData["message"] != null && TempData["icon"] != null)
 {
-    <script>
-        window.onload = function () {
-            swal.fire({
-                position: 'center',
-                icon: '@Html.Raw(TempData["icon"])',
-                title: '@Html.Raw(TempData["message"])',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        };
-    </script>
+<script>
+    window.onload = function () {
+        swal.fire({
+            position: 'center',
+            icon: '@Html.Raw(TempData["icon"])',
+            title: '@Html.Raw(TempData["message"])',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    };
+</script>
 }

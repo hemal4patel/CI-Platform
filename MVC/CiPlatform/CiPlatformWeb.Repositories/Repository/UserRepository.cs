@@ -40,7 +40,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public User CheckUser (string email)
         {
-            return _db.Users.FirstOrDefault(u => u.Email == email);
+            return _db.Users.FirstOrDefault(u => u.Email == email && u.DeletedAt == null);
         }
 
         public void UpdatePassword (ResetPasswordValidation obj)
@@ -67,7 +67,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Banner> GetBanners ()
         {
-            return _db.Banners.Where(b => b.DeletedAt == null).OrderByDescending(b => b.SortOrder).ToList();
+            return _db.Banners.Where(b => b.DeletedAt == null).OrderBy(b => b.SortOrder).ToList();
         }
 
 

@@ -27,7 +27,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string? imageName { get; set; }
 
         [MinLength(10, ErrorMessage = "Text must more then 10 characters")]
-        [MaxLength(16, ErrorMessage = "Text must be of less than 255 characters")]
+        [MaxLength(255, ErrorMessage = "Text must be of less than 255 characters")]
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Text is required.")]
         public string? text { get; set; }
 

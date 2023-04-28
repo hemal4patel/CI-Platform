@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 <span class="d-none" id="storyMissionId">@Model.storyDetail.MissionId</span>
 <span class="d-none" id="storyUserId">@Model.storyDetail.UserId</span>
@@ -50,7 +51,7 @@
                     }
                     else
                     {
-                        <img src="~/Upload/StoryPhotos/no-image-found.png" class="card-img-top" alt="" />
+                        <img src="~/Upload/StoryPhotos/no.jpg" class="card-img-top" alt="" />
                     }
                 </div>
                 @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
@@ -139,7 +140,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     </button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="max-height: 50vh!important;">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text bg-white border-none" id="searchIcon">
                                             <img src="~/images/search.png" />

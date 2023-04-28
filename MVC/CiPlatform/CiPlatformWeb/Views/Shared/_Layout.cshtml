@@ -18,41 +18,62 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-8 left">
-                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        @foreach(Banner banner in Model.banners)
-                        {
-                            int index = Model.banners.IndexOf(banner);
-                            <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="@index"
-                                class="@((index == 0) ? "active" : "")" aria-current="@((index == 0) ? "true" : "false")" aria-label="Slide @(index + 1)"></button>
-                        }
 
+                @if (Model.banners.Count != 0)
+                {
+                    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            @foreach (Banner banner in Model.banners)
+                            {
+                                int index = Model.banners.IndexOf(banner);
+                                <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="@index"
+                                class="@((index == 0) ? "active" : "")" aria-current="@((index == 0) ? "true" : "false")" aria-label="Slide @(index + 1)"></button>
+                            }
+
+                        </div>
+                        <div class="carousel-inner">
+                            @foreach (Banner banner in Model.banners)
+                            {
+                                int index = Model.banners.IndexOf(banner);
+                                <div class="carousel-item @((index == 0) ? "active" : "")" data-bs-interval="3000">
+                                    <img src="~/Upload/Banner/@banner.Image" class="d-block w-100 imgCarousel" alt="@banner.Image">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <p>
+                                            @Html.Raw(banner.Text)
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                    <div class="carousel-inner">
-                        @foreach (Banner banner in Model.banners)
-                        {
-                            int index = Model.banners.IndexOf(banner);
-                            <div class="carousel-item @((index == 0) ? "active" : "")" data-bs-interval="2000">
-                                <img src="~/Upload/Banner/@banner.Image" class="d-block w-100 imgCarousel" alt="@banner.Image">
+                }
+                else
+                {
+                    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="~/Upload/Banner/default.png" class="d-block w-100 imgCarousel" alt="banner">
                                 <div class="carousel-caption d-none d-md-block">
                                     <p>
-                                        @Html.Raw(banner.Text)
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                     </p>
                                 </div>
                             </div>
-                        }
+                            }
+                        </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
-                            data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
-                            data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
+                }
             </div>
 
             <div class="col-xl-4 right">
