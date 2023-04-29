@@ -11,8 +11,6 @@ using System.Text.Json;
 namespace CiPlatformWeb.Controllers
 {
     [Authorize(Roles = "admin")]
-
-
     public class AdminController : Controller
     {
         private readonly IAdminUser _adminUser;
@@ -24,17 +22,20 @@ namespace CiPlatformWeb.Controllers
         private readonly IAdminCms _adminCms;
         private readonly IAdminBanner _adminBanner;
         private readonly IAdminComment _adminComment;
+        private readonly IAdminTimesheet _adminTimesheet;
 
-        public AdminController (IAdminUser adminUser, IAdminMission adminMission, IAdminTheme adminTheme, IAdminSkill adminSkill, IAdminApplication adminApplication, IAdminStory adminStory, IAdminCms adminCms, IAdminBanner adminBanner, IAdminComment adminComment)
+        public AdminController (IAdminUser adminUser, IAdminMission adminMission, IAdminTheme adminTheme, IAdminSkill adminSkill, IAdminApplication adminApplication, IAdminStory adminStory, IAdminCms adminCms, IAdminBanner adminBanner, IAdminComment adminComment, IAdminTimesheet adminTimesheet)
         {
             _adminUser = adminUser;
             _adminMission = adminMission;
-            _adminTheme = adminTheme; _adminSkill = adminSkill;
+            _adminTheme = adminTheme; 
+            _adminSkill = adminSkill;
             _adminApplication = adminApplication;
             _adminStory = adminStory;
             _adminCms = adminCms;
             _adminBanner = adminBanner;     
             _adminComment = adminComment;
+            _adminTimesheet = adminTimesheet;
         }
 
        
@@ -487,6 +488,20 @@ namespace CiPlatformWeb.Controllers
         public IActionResult ChangeCommentStatus (long commentId, int status)
         {
             _adminComment.ChangeCommentStatus(commentId, status);
+            return Ok();
+        }
+
+        public IActionResult AdminTimesheet ()
+        {
+            AdminTimesheetViewModel vm = new();
+            vm.timesheets = _adminTimesheet.GetTimesheets();
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeTimesheetStatus (long timesheetId, int status)
+        {
+            _adminTimesheet.ChangeTimesheetStatus(timesheetId, status);
             return Ok();
         }
 

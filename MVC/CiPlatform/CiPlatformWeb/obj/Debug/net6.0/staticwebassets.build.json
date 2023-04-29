@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KWrEDZlm5fOqJfvfRDcPxRhr84bR9CdKBBVnuQNc4Nw=",
+  "Hash": "Kj6B0UzvV6Me8FC0Z7A4WaK5HN/PhguhWPvmVPTW9v8=",
   "Source": "CiPlatformWeb",
   "BasePath": "_content/CiPlatformWeb",
   "Mode": "Default",
@@ -3534,6 +3534,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\10083_teachingRural1.png"
+    },
+    {
+      "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\22a57_clean.jpg",
+      "SourceId": "CiPlatformWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\",
+      "BasePath": "_content/CiPlatformWeb",
+      "RelativePath": "Upload/MissionPhotos/22a57_clean.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\MissionPhotos\\22a57_clean.jpg"
     },
     {
       "Identity": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\2ea60_3d4bc_e1acb_animal-welfare-2.jpg",

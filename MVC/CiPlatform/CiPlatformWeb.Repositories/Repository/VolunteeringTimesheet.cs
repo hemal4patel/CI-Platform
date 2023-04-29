@@ -37,19 +37,19 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Timesheet> GetTimeBasedEntries (long userId)
         {
-            List<Timesheet> timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time" && t.DeletedAt == null).Include(t => t.Mission).ToList();
+            List<Timesheet> timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time" && t.Status != "DECLINED" && t.DeletedAt == null).Include(t => t.Mission).ToList();
             return timeBasedEntries;
         }
 
         public List<Timesheet> GetGoalBasedEntries (long userId)
         {
-            List<Timesheet> goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal" && t.DeletedAt == null).Include(t => t.Mission).ToList();
+            List<Timesheet> goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal" && t.Status != "DECLINED" && t.DeletedAt == null).Include(t => t.Mission).ToList();
             return goalBasedEnteries;
         }
 
         public bool TimeSheetExists (long missionId, long userId, DateTime dateVolunteered)
         {
-            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.DeletedAt == null);
+            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.Status != "DECLINED" && t.DeletedAt == null);
         }
 
         public Timesheet GetEntry (long? timesheetId)
@@ -69,7 +69,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 Action = null,
                 DateVolunteered = viewmodel.dateVolunteered,
                 Notes = viewmodel.message,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                Status = "PENDING"
             };
             _db.Timesheets.Add(timeBasedEntry);
             _db.SaveChanges();
@@ -84,6 +85,7 @@ namespace CiPlatformWeb.Repositories.Repository
             timeBasedEntry.DateVolunteered = viewmodel.dateVolunteered;
             timeBasedEntry.Notes = viewmodel.message;
             timeBasedEntry.UpdatedAt = DateTime.Now;
+            timeBasedEntry.Status = "PENDING";
 
             _db.Update(timeBasedEntry);
             _db.SaveChanges();
@@ -99,7 +101,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 Action = viewmodel.actions,
                 DateVolunteered = viewmodel.dateVolunteered,
                 Notes = viewmodel.message,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                Status = "PENDING"
             };
             _db.Timesheets.Add(goalBasedEntry);
             _db.SaveChanges();
@@ -113,7 +116,7 @@ namespace CiPlatformWeb.Repositories.Repository
             goalBasedEntry.DateVolunteered = viewmodel.dateVolunteered;
             goalBasedEntry.Notes = viewmodel.message;
             goalBasedEntry.UpdatedAt = DateTime.Now;
-
+            goalBasedEntry.Status = "PENDING";
             _db.Update(goalBasedEntry);
             _db.SaveChanges();
         }

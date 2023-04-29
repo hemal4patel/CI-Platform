@@ -1,0 +1,94 @@
+﻿@using CiPlatformWeb.Entities.DataModels;
+@using CiPlatformWeb.Entities.ViewModels;
+@{
+    ViewData["Title"] = "Timesheets";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model CiPlatformWeb.Entities.ViewModels.AdminTimesheetViewModel
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+
+<div class="container-fluid px-4">
+    <div class="tabs d-flex flex-column" style="font-size: 15px;">
+        <ul class="nav nav-tabs mt-3">
+            <li class="nav-item">
+                <a class="nav-link active disabled"
+                   style="font-size: 22px;">Timesheets</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="my-3">
+
+        <div class="my-4">
+            <div class="options d-flex justify-content-between">
+                <div class="">
+                    <div class="input-group mb-3" style="width: 100%;">
+                        <span class="input-group-text bg-white border-none" id="searchIcon">
+                            <img src="~/images/search.png" />
+                        </span>
+                        <input type="text" class="form-control border-none" placeholder="Search" id="searchTimesheet" aria-label="Search" style="border-left: none;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table" id="timesheetTable" style="border: 1px solid #D9D9D9;">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Mission Title</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Mission Type</th>
+                        <th scope="col">Date Volunteered</th>
+                        <th scope="col">Actions</th>
+                        <th scope="col">Time Volunteered</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (AdminTimesheetModel timesheet in Model.timesheets)
+                    {
+                        <tr id="@timesheet.timesheetId">
+                            <td scope="row">@timesheet.mission</td>
+                            <td>@timesheet.user</td>
+                            <td>@timesheet.missionType</td>
+                            <td>@timesheet.dateVolunteered</td>
+                            <td>@(timesheet.action != null ? timesheet.action : "--")</td>
+                            <td>
+                                @(timesheet.timeVolunteered != null ? timesheet.timeVolunteered.Value.ToString(@"hh\:mm") : "--")
+                            </td>
+                            <td class="showTimesheetButtons-@timesheet.timesheetId">
+                                @if (timesheet.status == "APPROVED")
+                                {
+                                    <i class="bi bi-check-circle-fill" data-value="1" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle ms-2 changeTimesheetStatus" data-value="0" style="color: #f20707;"></i>
+                                }
+                                else if (timesheet.status == "DECLINED")
+                                {
+                                    <i class="bi bi-check-circle changeTimesheetStatus" data-value="1" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle-fill ms-2" data-value="0" style="color: #f20707;"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-check-circle changeTimesheetStatus" data-value="1" style="color: #14C506;"></i>
+                                    <i class="bi bi-x-circle ms-2 changeTimesheetStatus" data-value="0" style="color: #f20707;"></i>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

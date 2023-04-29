@@ -20,5 +20,13 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string user { get; set; }
 
         public string missionType { get; set; }
+
+        public DateTime dateVolunteered { get; set; }
+
+        public int? action { get; set; }
+
+        public TimeSpan? timeVolunteered { get; set; }
+
+        public string status { get; set; }
     }
 }

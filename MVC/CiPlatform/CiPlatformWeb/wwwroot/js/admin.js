@@ -972,7 +972,6 @@ $(document).on('click', '.changeApplicationStatus', function () {
 
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: confirmButtonColor,
@@ -1026,7 +1025,6 @@ $(document).on('click', '.changeStoryStatus', function () {
 
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: confirmButtonColor,
@@ -1073,7 +1071,6 @@ $(document).on('click', '.storyStatusButtons', function () {
 
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: confirmButtonColor,
@@ -1360,7 +1357,6 @@ $(document).on('click', '.changeCommentStatus', function () {
 
     Swal.fire({
         title: 'Are you sure?',
-        //text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: confirmButtonColor,
@@ -1390,6 +1386,58 @@ $(document).on('click', '.changeCommentStatus', function () {
     })
 })
 
+
+
+
+
+
+
+//change timesheet status
+$(document).on('click', '.changeTimesheetStatus', function () {
+    var timesheetId = $(this).closest('tr').attr('id');
+    var row = $(this).closest('tr')
+    var status = $(this).data('value')
+    var s = "";
+    var confirmButtonColor = ''
+    if (status == 1) {
+        s = "approve"
+        confirmButtonColor = '#198754'
+    }
+    else {
+        s = "decline"
+        confirmButtonColor = '#d33'
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: confirmButtonColor,
+        cancelButtonColor: '#414141',
+        confirmButtonText: 'Yes, ' + s + ' it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ChangeTimesheetStatus",
+                data: { timesheetId: timesheetId, status: status },
+                success: function () {
+                    var container = $('.showTimesheetButtons-' + timesheetId);
+                    container.empty();
+                    if (status == 0) {
+                        container.html('<i class="bi bi-check-circle changeTimesheetStatus" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle-fill ms-2" data-value="0"  style="color: #f20707;"></i>');
+                    }
+                    else {
+                        container.html('<i class="bi bi-check-circle-fill" data-value="1" style="color: #14C506;"></i><i class="bi bi-x-circle ms-2 changeTimesheetStatus" data-value="0" style="color: #f20707;"></i>');
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+})
 
 
 
@@ -1651,7 +1699,7 @@ $('#searchBanner').on('keyup', function () {
     bannerTable.search($(this).val()).draw();
 })
 
-//Admin banner table
+//Admin comment table
 var commentTable = $('#commentTable').DataTable({
     lengthChange: false,
     ordering: false,
@@ -1680,6 +1728,37 @@ var commentTable = $('#commentTable').DataTable({
 
 $('#searchComment').on('keyup', function () {
     commentTable.search($(this).val()).draw();
+})
+
+//Admin timesheet table
+var timesheetTable = $('#timesheetTable').DataTable({
+    lengthChange: false,
+    ordering: false,
+    paging: true,
+    searching: true,
+    pageLength: 7,
+    pagingType: "full_numbers",
+    language: {
+        paginate: {
+            first: '<span class="image-class-first"><i class="bi bi-chevron-double-left"></i></span>',
+            previous: '<span class="image-class-previous"><i class="bi bi-chevron-left"></i></span>',
+            next: '<span class="image-class-next"><i class="bi bi-chevron-right"></i></span>',
+            last: '<span class="image-class-last"><i class="bi bi-chevron-double-right"></i></span>'
+        }
+    },
+    drawCallback: function (settings) {
+        var api = this.api();
+        var numRows = api.rows({ search: "applied" }).count();
+        if (numRows === 0) {
+            $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
+        } else {
+            $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
+        }
+    }
+});
+
+$('#searchTimesheet').on('keyup', function () {
+    timesheetTable.search($(this).val()).draw();
 })
 
 
@@ -1717,8 +1796,11 @@ $(document).ready(function () {
     else if (location.includes('AdminBanner')) {
         $("a[href='/Admin/AdminBanner']").addClass("admin-nav-active");
     }
-    else {
+    else if (location.includes('AdminComment')) {
         $("a[href='/Admin/AdminComment']").addClass("admin-nav-active");
+    }
+    else {
+        $("a[href='/Admin/AdminTimesheet']").addClass("admin-nav-active");
     }
 })
 
