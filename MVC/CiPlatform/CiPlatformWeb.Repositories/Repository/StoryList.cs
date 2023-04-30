@@ -79,8 +79,16 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionApplication> GetMissions (long userId)
         {
-            return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == "APPROVE").Include(u => u.Mission).ToList();
+            //return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == "APPROVE").Include(u => u.Mission).ToList();
+
+            return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == "APPROVE" && u.Mission.Stories.Any(s => s.Status != "PUBLISHED"))
+                .Include(u => u.Mission)
+                .ThenInclude(u => u.Stories)
+                .ToList();
+
         }
+
+
 
         public Story GetDraftedStory (long missionId, long userId)
         {

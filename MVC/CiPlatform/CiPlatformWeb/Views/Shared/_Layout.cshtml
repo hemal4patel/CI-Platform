@@ -38,7 +38,10 @@
                                 <div class="carousel-item @((index == 0) ? "active" : "")" data-bs-interval="3000">
                                     <img src="~/Upload/Banner/@banner.Image" class="d-block w-100 imgCarousel" alt="@banner.Image">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <p>
+                                        <h3 class="text-white">
+                                            @Html.Raw(banner.Title)
+                                        </h3>
+                                        <p class="text-white">
                                             @Html.Raw(banner.Text)
                                         </p>
                                     </div>

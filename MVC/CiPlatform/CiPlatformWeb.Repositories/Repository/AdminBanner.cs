@@ -28,6 +28,7 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 bannerId = b.BannerId,
                 imageName = b.Image,
+                title= b.Title,
                 text = b.Text,
                 sortOrder = b.SortOrder,
             });
@@ -41,6 +42,7 @@ namespace CiPlatformWeb.Repositories.Repository
             AdminBannerModel list = Banner.Select(b => new AdminBannerModel()
             {
                 bannerId = b.BannerId,
+                title = b.Title,
                 imageName = b.Image,
                 sortOrder = b.SortOrder,
                 text = b.Text
@@ -61,6 +63,7 @@ namespace CiPlatformWeb.Repositories.Repository
             Banner banner = new Banner()
             {
                 Image = fileName,
+                Title = vm.title,
                 Text = vm.text,
                 SortOrder = vm.sortOrder,
                 CreatedAt = DateTime.Now,
@@ -72,6 +75,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public void UpdateBanner (AdminBannerModel vm)
         {
             Banner banner = _db.Banners.FirstOrDefault(b => b.BannerId == vm.bannerId);
+            banner.Title= vm.title;
             banner.Text = vm.text;
             banner.SortOrder = vm.sortOrder;
             banner.UpdatedAt = DateTime.Now;

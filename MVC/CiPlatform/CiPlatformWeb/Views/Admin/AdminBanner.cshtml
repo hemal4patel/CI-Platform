@@ -46,7 +46,7 @@
                 <thead class="table-light">
                     <tr>
                         <th scope="col">Image</th>
-                        <th scope="col">Text</th>
+                        <th scope="col">Title</th>
                         <th scope="col">Sort Order</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -60,9 +60,9 @@
                             </td>
                             @{
                                 int maxLength = 30;
-                                string text = banner.text.Length > maxLength
-                                ? @banner.text.Substring(0, maxLength) + "..."
-                                : @banner.text;
+                                string text = banner.title.Length > maxLength
+                                ? @banner.title.Substring(0, maxLength) + "..."
+                                : @banner.title;
                             }
                             <td>@text</td>
                             <td>@banner.sortOrder</td>

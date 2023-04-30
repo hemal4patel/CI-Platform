@@ -44,8 +44,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Mission title is required")]
         public string misssionTitle { get; set; }
 
-        [MinLength(10, ErrorMessage = "Short description must be between 10 to 150 characters")]
-        [MaxLength(250, ErrorMessage = "Short description must be between 10 to 150 characters")]
+        [MinLength(10, ErrorMessage = "Short description must be between 10 to 300 characters")]
+        [MaxLength(300, ErrorMessage = "Short description must be between 10 to 300 characters")]
         [Required(ErrorMessage = "Short description is required")]
         public string shortDescription { get; set; }
 

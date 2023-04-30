@@ -31,6 +31,11 @@ namespace CiPlatformWeb.Entities.ViewModels
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Text is required.")]
         public string? text { get; set; }
 
+        [MinLength(10, ErrorMessage = "Title must more then 10 characters")]
+        [MaxLength(50, ErrorMessage = "Title must be of less than 50 characters")]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Title is required.")] 
+        public string? title { get; set; }
+
         [Range(1, int.MaxValue, ErrorMessage = "Sort order cannot be 0.")]
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Sort order is required.")]
         public int? sortOrder { get; set; }
