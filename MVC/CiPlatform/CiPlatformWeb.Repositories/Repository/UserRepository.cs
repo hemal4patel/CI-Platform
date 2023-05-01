@@ -23,26 +23,16 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void RegisterUser (RegistrationValidation obj)
         {
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(obj.Password);
-
-            //byte[] encData_byte = new byte[obj.Password.Length];
-            //encData_byte = System.Text.Encoding.UTF8.GetBytes(obj.Password);
-            //string encodedData = Convert.ToBase64String(encData_byte);
-
-            //System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
-            //System.Text.Decoder utf8Decode = encoder.GetDecoder();
-            //byte[] todecode_byte = Convert.FromBase64String(encodedData);
-            //int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
-            //char[] decoded_char = new char[charCount];
-            //utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
-            //string result = new String(decoded_char);
+            byte[] encData_byte = new byte[obj.Password.Length];
+            encData_byte = System.Text.Encoding.UTF8.GetBytes(obj.Password);
+            string encodedData = Convert.ToBase64String(encData_byte);           
 
             User newUser = new User()
             {
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
                 Email = obj.Email,
-                Password = hashedPassword,
+                Password = encodedData,
                 PhoneNumber = obj.PhoneNumber,
                 Role = "user",
                 CreatedAt = DateTime.Now,
@@ -58,14 +48,34 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void UpdatePassword (ResetPasswordValidation obj)
         {
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(obj.Password);
+            byte[] encData_byte = new byte[obj.Password.Length];
+            encData_byte = System.Text.Encoding.UTF8.GetBytes(obj.Password);
+            string encodedData = Convert.ToBase64String(encData_byte);
 
             User x = _db.Users.FirstOrDefault(e => e.Email == obj.Email);
-            x.Password = hashedPassword;
+            x.Password = encodedData;
             x.UpdatedAt = DateTime.Now;
             _db.Users.Update(x);
             _db.SaveChanges();
         }
+
+        public bool verifyPassword (string objPassword, string userPassword)
+        {
+            System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+            System.Text.Decoder utf8Decode = encoder.GetDecoder();
+            byte[] todecode_byte = Convert.FromBase64String(userPassword);
+            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+            char[] decoded_char = new char[charCount];
+            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+            string result = new String(decoded_char);
+
+            if(objPassword.Equals(result))
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         public void expireLink (string email, string token)
         {
@@ -83,7 +93,5 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             return _db.Banners.Where(b => b.DeletedAt == null).OrderBy(b => b.SortOrder).ToList();
         }
-
-
     }
 }

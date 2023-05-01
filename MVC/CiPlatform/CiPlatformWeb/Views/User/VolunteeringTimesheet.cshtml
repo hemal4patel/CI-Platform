@@ -56,7 +56,7 @@
 
                                             <input type="hidden" id="timesheetId" asp-for="@Model.timeBasedSheet.timeSheetId" />
 
-                                            <div class="modal-body py-1">
+                                            <div class="modal-body py-1 mb-5 mt-3">
                                                 <div class="form-group">
                                                     <label asp-for="@Model.timeBasedSheet.timeMissions" class="form-label">Mission<span class="required-field"></span></label>
                                                     <select asp-for="@Model.timeBasedSheet.timeMissions" id="mission" class="form-select" aria-label="Default select example">
@@ -145,16 +145,15 @@
                                                 <td> @t.DateVolunteered.Date.ToShortDateString() </td>
                                                 <td> @(t.Time.Value.Hours)h</td>
                                                 <td>@(t.Time.Value.Minutes)min</td>
-                                                <td style="display: flex; flex-direction: row-reverse;">
+                                                <td>
                                                     @if (t.Status == "APPROVED")
                                                     {
-                                                        <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
-                                                        <i class="bi bi-pencil-square text-danger editTimeTimesheet d-none"></i>
+                                                        <span class="rounded-pill px-2 py-1 viewTimesheet viewTimeTimesheet">View</span>
                                                     }
                                                     else
                                                     {
-                                                        <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
                                                         <i class="bi bi-pencil-square text-danger editTimeTimesheet"></i>
+                                                        <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
                                                     }
                                                 </td>
 
@@ -204,7 +203,7 @@
 
                                             <input type="hidden" id="GtimesheetId" asp-for="@Model.goalBasedSheet.timeSheetId" />
 
-                                            <div class="modal-body py-1">
+                                            <div class="modal-body py-1 mb-5 mt-3">
                                                 <div class="form-group">
                                                     <label asp-for="@Model.goalBasedSheet.goalMissions" class="form-label">Mission<span class="required-field"></span></label>
                                                     <select asp-for="@Model.goalBasedSheet.goalMissions" id="Gmission" class="form-select" aria-label="Default select example">
@@ -282,16 +281,15 @@
                                                 <td>@t.Mission.Title</td>
                                                 <td> @t.DateVolunteered.Date.ToShortDateString() </td>
                                                 <td> @t.Action</td>
-                                                <td style="display: flex; flex-direction: row-reverse;">
+                                                <td>
                                                     @if (t.Status == "APPROVED")
                                                     {
-                                                        <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
-                                                        <i class="bi bi-pencil-square text-danger editGoalTimesheet d-none"></i>
+                                                        <span class="rounded-pill px-2 py-1 viewTimesheet viewGoalTimesheet">View</span>
                                                     }
                                                     else
                                                     {
-                                                        <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
                                                         <i class="bi bi-pencil-square text-danger editGoalTimesheet"></i>
+                                                        <i class="bi bi-trash3 deleteTimesheet ms-2"></i>
                                                     }
                                                 </td>
                                             </tr>

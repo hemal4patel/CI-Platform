@@ -34,7 +34,9 @@
 
             <div class="form-group mt-3">
                 <label asp-for="newUser.password" class="form-label">Password<span class="required-field"></span></label>
-                <input asp-for="newUser.password" type="password" id="password" class="form-control">
+                <input asp-for="newUser.password" type="password" id="password" value="@if(Model.newUser != null){
+                <text>@Model.newUser.password</text>
+                }" class="form-control">
                 <span asp-validation-for="newUser.password" class="text-danger"></span>
             </div>
 

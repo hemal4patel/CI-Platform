@@ -32,7 +32,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public (List<StoryListModel> stories, int count) GetStories (StoryQueryParams viewmodel)
         {
-            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" && s.DeletedAt == null).AsQueryable();
+            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" && s.DeletedAt == null && s.Mission.DeletedAt == null && s.Mission.Status == 1).AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -79,16 +79,10 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionApplication> GetMissions (long userId)
         {
-            //return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == "APPROVE").Include(u => u.Mission).ToList();
-
-            return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == "APPROVE" && u.Mission.Stories.Any(s => s.Status != "PUBLISHED"))
+            return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == "APPROVE" && u.Mission.DeletedAt == null && u.Mission.Status == 1)
                 .Include(u => u.Mission)
-                .ThenInclude(u => u.Stories)
                 .ToList();
-
         }
-
-
 
         public Story GetDraftedStory (long missionId, long userId)
         {
@@ -111,7 +105,6 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.Update(draftedStory);
             _db.SaveChanges();
         }
-
 
         public void UpdateStoryUrls (long storyId, string[] url)
         {
@@ -189,7 +182,6 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-
         public void AddNewStory (ShareStoryViewModel viewmodel, long userId)
         {
             Story newStory = new Story()
@@ -227,7 +219,6 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
         }
 
-
         public int IncreaseViewCount (long MissionId, long UserId, long sessionUser)
         {
             int viewCount = 0;
@@ -253,7 +244,6 @@ namespace CiPlatformWeb.Repositories.Repository
             return viewCount;
         }
 
-
         public Story GetStoryDetails (long MissionId, long UserId)
         {
             Story storyDetails = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId)
@@ -262,7 +252,6 @@ namespace CiPlatformWeb.Repositories.Repository
                     .Include(s => s.User).FirstOrDefault();
             return storyDetails;
         }
-
 
         public List<User> GetUserList (long userId)
         {

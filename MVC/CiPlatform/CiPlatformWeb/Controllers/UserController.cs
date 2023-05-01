@@ -65,23 +65,19 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult UserProfile (UserProfileViewModel viewmodel)
         {
-            if (ModelState.IsValid)
+            viewmodel = _userProfile.UpdateUserProfile(viewmodel);
+            viewmodel.CountryList = _userProfile.GetCountryList();
+            viewmodel.SkillList = _userProfile.GetSkillList();
+            viewmodel.UserSkills = _userProfile.GetUserSkills(userId);
+            if (viewmodel.CountryId != null)
             {
-                viewmodel = _userProfile.UpdateUserProfile(viewmodel);
-                viewmodel.CountryList = _userProfile.GetCountryList();
-                viewmodel.SkillList = _userProfile.GetSkillList();
-                viewmodel.UserSkills = _userProfile.GetUserSkills(userId);
-                if (viewmodel.CountryId != null)
-                {
-                    long countryId = Convert.ToInt64(viewmodel.CountryId);
-                    viewmodel.CityList = _userProfile.GetCityList(countryId);
-                }
-
-                TempData["message"] = "Profile " + Messages.update;
-
-                return RedirectToAction("UserProfile");
+                long countryId = Convert.ToInt64(viewmodel.CountryId);
+                viewmodel.CityList = _userProfile.GetCityList(countryId);
             }
-            return View(viewmodel);
+
+            TempData["message"] = "Profile " + Messages.update;
+
+            return RedirectToAction("UserProfile");
         }
 
 
@@ -145,15 +141,15 @@ namespace CiPlatformWeb.Controllers
             //TIME BASED
             if (viewmodel.timeBasedSheet is not null)
             {
-                if (_timesheet.TimeSheetExists(viewmodel.timeBasedSheet.timeMissions, userId, viewmodel.timeBasedSheet.dateVolunteered))
+                //TIME ENTRY UPDATE
+                if (viewmodel.timeBasedSheet.timeSheetId is not null)
                 {
-                    TempData["icon"] = "error";
-                    TempData["message"] = "Entry " + Messages.exists;
-                }
-                else
-                {
-                    //EXISTING TIME ENTRY UPDATE
-                    if (viewmodel.timeBasedSheet.timeSheetId is not null)
+                    if (_timesheet.TimesheetExistsForUpdate(viewmodel.timeBasedSheet.timeMissions, userId, viewmodel.timeBasedSheet.dateVolunteered, viewmodel.timeBasedSheet.timeSheetId))
+                    {
+                        TempData["icon"] = "error";
+                        TempData["message"] = "Entry " + Messages.exists;
+                    }
+                    else
                     {
                         var timeBasedEntry = _timesheet.GetEntry(viewmodel.timeBasedSheet.timeSheetId);
                         if (timeBasedEntry is not null)
@@ -163,28 +159,37 @@ namespace CiPlatformWeb.Controllers
                         TempData["icon"] = "success";
                         TempData["message"] = "Entry " + Messages.update;
                     }
-                    //NEW TIME ENTRY ADD
+                }
+                //NEW TIME ENTRY ADD
+                else
+                {
+                    if (_timesheet.TimeSheetExists(viewmodel.timeBasedSheet.timeMissions, userId, viewmodel.timeBasedSheet.dateVolunteered))
+                    {
+                        TempData["icon"] = "error";
+                        TempData["message"] = "Entry " + Messages.exists;
+                    }
                     else
                     {
-                        _timesheet.AddTimeBasedEntry(viewmodel.timeBasedSheet, userId);
                         TempData["icon"] = "success";
                         TempData["message"] = "Entry " + Messages.add;
+                        _timesheet.AddTimeBasedEntry(viewmodel.timeBasedSheet, userId);
                     }
                 }
+                //}
             }
 
             //GOAL BASED
             else
             {
-                if (_timesheet.TimeSheetExists(viewmodel.goalBasedSheet.goalMissions, userId, viewmodel.goalBasedSheet.dateVolunteered))
+                //EXISTING GOAL ENTRY UPDATE
+                if (viewmodel.goalBasedSheet.timeSheetId is not null)
                 {
-                    TempData["icon"] = "error";
-                    TempData["message"] = "Entry " + Messages.exists;
-                }
-                else
-                {
-                    //EXISTING GOAL ENTRY UPDATE
-                    if (viewmodel.goalBasedSheet.timeSheetId is not null)
+                    if (_timesheet.TimesheetExistsForUpdate(viewmodel.goalBasedSheet.goalMissions, userId, viewmodel.goalBasedSheet.dateVolunteered, viewmodel.goalBasedSheet.timeSheetId))
+                    {
+                        TempData["icon"] = "error";
+                        TempData["message"] = "Entry " + Messages.exists;
+                    }
+                    else
                     {
                         var goalBasedEntry = _timesheet.GetEntry(viewmodel.goalBasedSheet.timeSheetId);
                         if (goalBasedEntry is not null)
@@ -194,7 +199,15 @@ namespace CiPlatformWeb.Controllers
                         TempData["icon"] = "success";
                         TempData["message"] = "Entry " + Messages.update;
                     }
-                    //NEW GOAL ENTRY ADD
+                }
+                //NEW GOAL ENTRY ADD
+                else
+                {
+                    if (_timesheet.TimeSheetExists(viewmodel.goalBasedSheet.goalMissions, userId, viewmodel.goalBasedSheet.dateVolunteered))
+                    {
+                        TempData["icon"] = "error";
+                        TempData["message"] = "Entry " + Messages.exists;
+                    }
                     else
                     {
                         _timesheet.AddGoalBasedEntry(viewmodel.goalBasedSheet, userId);
@@ -202,6 +215,7 @@ namespace CiPlatformWeb.Controllers
                         TempData["message"] = "Entry " + Messages.add;
                     }
                 }
+                //}
             }
             return RedirectToAction("VolunteeringTimesheet");
         }

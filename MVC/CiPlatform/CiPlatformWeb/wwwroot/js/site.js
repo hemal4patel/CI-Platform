@@ -67,6 +67,7 @@ function saveSkills() {
 
 $('#avatarFile').change(function () {
     var reader = new FileReader();
+    console.log(reader)
     reader.onload = function (e) {
         $('.user-image').attr('src', e.target.result);
     }
@@ -228,6 +229,16 @@ $('.editTimeTimesheet').click(function () {
             $('.field-validation-error').text('');
             $('.field-validation-valid').text('');
 
+            $('#mission').prop('disabled', false)
+            $('#hours').prop('disabled', false)
+            $('#minutes').prop('disabled', false)
+            $('#message').prop('disabled', false)
+            $('#date').prop('disabled', false)
+
+            $('.modal-footer').show()
+
+            $('.modal-title').text('Please input below Volunteering Hours')
+
             var today = new Date();
             var y = today.getFullYear();
             var m = String(today.getMonth() + 1).padStart(2, '0');
@@ -268,6 +279,15 @@ $('.editGoalTimesheet').click(function () {
         data: { id: id },
         success: function (data) {
             $("#addVolGoal").modal("show");
+
+            $('#Gmission').prop('disabled', false)
+            $('#Gaction').prop('disabled', false)
+            $('#Gmessage').prop('disabled', false)
+            $('#Gdate').prop('disabled', false)
+
+            $('.modal-footer').show()
+
+            $('.modal-title').text('Please input below Volunteering Goal')
 
             var today = new Date();
             var y = today.getFullYear();
@@ -343,6 +363,82 @@ $('#Gmission').on('change', function () {
     dateGoal.min = minDate;
 })
 
+//view time based timesheet
+$('.viewTimeTimesheet').click(function () {
+    var id = $(this).closest('tr').attr('id');
+
+    $.ajax({
+        type: "GET",
+        url: "/User/GetTimesheetData",
+        data: { id: id },
+        success: function (data) {
+            $('#addVolHours').modal('show')
+            $('.modal-title').text('Volunteeering Hours')
+            $('#mission').val(data.timesheet.missionId)
+            $('#hours').val(data.timesheet.time.split(":")[0])
+            $('#minutes').val(data.timesheet.time.split(":")[1])
+            $('#message').val(data.timesheet.notes)
+
+            const date = new Date(data.timesheet.dateVolunteered);
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
+            $('#date').val(formattedDate);
+
+            $('#mission').prop('disabled', true)
+            $('#hours').prop('disabled', true)
+            $('#minutes').prop('disabled', true)
+            $('#message').prop('disabled', true)
+            $('#date').prop('disabled', true)
+
+            $('.modal-footer').hide()
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+
+    
+})
+
+//view goal based timesheet
+$('.viewGoalTimesheet').click(function () {
+    var id = $(this).closest('tr').attr('id');
+
+    $.ajax({
+        type: "GET",
+        url: "/User/GetTimesheetData",
+        data: { id: id },
+        success: function (data) {
+            $('#addVolGoal').modal('show')
+            $('.modal-title').text('Volunteeering Goal')
+            $('#Gmission').val(data.timesheet.missionId)
+            $('#Gaction').val(data.timesheet.action)
+            $('#Gmessage').val(data.timesheet.notes)
+
+            const date = new Date(data.timesheet.dateVolunteered);
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
+            $('#Gdate').val(formattedDate);
+
+            $('#Gmission').prop('disabled', true)
+            $('#Gaction').prop('disabled', true)
+            $('#Gmessage').prop('disabled', true)
+            $('#Gdate').prop('disabled', true)
+
+            $('.modal-footer').hide()
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+
+
+})
+
 
 //reset form
 $('.resetFormButton').click(function () {
@@ -357,6 +453,23 @@ $('.resetFormButton').click(function () {
 
         $('#Gmission option').prop("disabled", false);
         $('#Gdate').removeAttr('min').removeAttr('max');
+
+        $('#mission').prop('disabled', false)
+        $('#hours').prop('disabled', false)
+        $('#minutes').prop('disabled', false)
+        $('#message').prop('disabled', false)
+        $('#date').prop('disabled', false)
+
+        $('#Gmission').prop('disabled', false)
+        $('#Gaction').prop('disabled', false)
+        $('#Gmessage').prop('disabled', false)
+        $('#Gdate').prop('disabled', false)
+
+        $('.modal-footer').show()
+
+        $('#addVolHours .modal-title').text('Please input below Volunteering Hours')
+        $('#addVolGoal .modal-title').text('Please input below Volunteering Goal')
+
     });
 })
 

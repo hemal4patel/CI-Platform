@@ -52,6 +52,11 @@ namespace CiPlatformWeb.Repositories.Repository
             return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.Status != "DECLINED" && t.DeletedAt == null);
         }
 
+        public bool TimesheetExistsForUpdate (long missionId, long userId, DateTime dateVolunteered, long? timesheetId)
+        {
+            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.Status != "DECLINED" && t.DeletedAt == null && t.TimesheetId != timesheetId);
+        }
+
         public Timesheet GetEntry (long? timesheetId)
         {
             Timesheet entry = _db.Timesheets.Where(t => t.TimesheetId == timesheetId).FirstOrDefault();

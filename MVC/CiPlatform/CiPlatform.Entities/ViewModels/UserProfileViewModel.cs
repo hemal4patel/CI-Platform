@@ -13,14 +13,16 @@ namespace CiPlatformWeb.Entities.ViewModels
     {
         public long UserId { get; set; }
 
-        [MinLength(3, ErrorMessage = "Name must be between 3 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Name must be between 3 to 16 characters")]
+        [MinLength(3, ErrorMessage = "Name must be atleast 3 characters long")]
+        [MaxLength(16, ErrorMessage = "Name cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Name is required.")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name must contain only letters.")]
         public string FirstName { get; set; }
 
-        [MinLength(3, ErrorMessage = "Surname must be between 3 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Surname must be between 3 to 16 characters")]
+        [MinLength(3, ErrorMessage = "Surname must be atleast 3 characters long")]
+        [MaxLength(16, ErrorMessage = "Surname cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Surname is required.")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Surname must contain only letters.")]
         public string LastName { get; set; }
 
         public string? AvatarName { get; set; }
@@ -29,16 +31,16 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public string? WhyIVolunteer { get; set; }
 
-        [MinLength(6, ErrorMessage = "Employee Id must be between 6 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Employee Id must be between 6 to 16 characters")] 
+        [MinLength(6, ErrorMessage = "Employee Id must be atleat 6 characters long")]
+        [MaxLength(16, ErrorMessage = "Employee Id cannot be longer than 16 characters")] 
         public string? EmployeeId { get; set; }
 
-        [MinLength(3, ErrorMessage = "Manager Name must be between 3 to 30 characters")]
-        [MaxLength(16, ErrorMessage = "Manager Name must be between 3 to 30 characters")]
+        [MinLength(3, ErrorMessage = "Manager Name must be atleat 3 characters long")]
+        [MaxLength(30, ErrorMessage = "Manager Name cannot be longer than 30 characters")]
         public string? Manager { get; set; }
 
-        [MinLength(2, ErrorMessage = "Department must be between 2 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Department must be between 2 to 16 characters")] 
+        [MinLength(2, ErrorMessage = "Department must be atleat 2 characters long")]
+        [MaxLength(16, ErrorMessage = "Department cannot be longer than 16 characters")] 
         public string? Department { get; set; }
 
         [Required(ErrorMessage = "City is required.")]
@@ -47,14 +49,14 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Country is required.")]
         public long? CountryId { get; set; }
 
-        [MinLength(3, ErrorMessage = "Profile Text must more then 10 characters")]
+        [MinLength(10, ErrorMessage = "Profile Text must be atleat 10 characters long")]
         public string? ProfileText { get; set; }
 
         [RegularExpression(@"^https?://(?:www\.)?linkedin\.com/(?:in|company)/[\w-]+/?$", ErrorMessage = "Invalid LinkedIn url.")] 
         public string? LinkedInUrl { get; set; }
 
-        [MinLength(10, ErrorMessage = "Title must more then 10 characters")]
-        [MaxLength(16, ErrorMessage = "Title must be of less than 255 characters")]
+        [MinLength(10, ErrorMessage = "Title must be atleat 10 characters long")]
+        [MaxLength(16, ErrorMessage = "Title cannot be longer than 16 characters")]
         public string? Title { get; set; }
 
         public string? Availability { get; set; }
@@ -73,6 +75,7 @@ namespace CiPlatformWeb.Entities.ViewModels
 
 
         //change password
+        
         [Required(ErrorMessage = "Old password is required")]
         public string? oldPassword { get; set; }
 

@@ -87,7 +87,7 @@ namespace CiPlatformWeb.Controllers
                 }
                 else
                 {
-                    if (BCrypt.Net.BCrypt.Verify(obj.Password, user.Password))
+                    if (_userRepository.verifyPassword(obj.Password, user.Password))
                     {
                         if (user.DeletedAt == null && user.Status == 1)
                         {

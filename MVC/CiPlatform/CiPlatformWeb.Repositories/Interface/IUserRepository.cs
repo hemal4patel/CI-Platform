@@ -16,6 +16,8 @@ namespace CiPlatformWeb.Repositories.Interface
 
         void UpdatePassword (ResetPasswordValidation obj);
 
+        bool verifyPassword (string objPassword, string userPassword);
+
         void expireLink(string email, string token);
 
         public CmsPage GetCmsPage (long id);

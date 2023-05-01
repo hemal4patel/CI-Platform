@@ -12,8 +12,7 @@ $('#missionId').click(function () {
     var missionId = $(this).val();
     allfiles.splice(0, allfiles.length);
     $('#image-list').empty();
-
-
+    console.log(allfiles.length)
     $.ajax({
         type: "GET",
         url: "/Story/GetStory",
@@ -55,7 +54,7 @@ $('#missionId').click(function () {
                 $('#date').val(formattedDate);
                 $('.note-editable').html(story.description);
                 $('#videoUrls').val(urls);
-
+              
                 $('.valMission').hide();
                 $('.valstoryTitle').hide();
                 $('.valDate').hide();
@@ -74,6 +73,7 @@ $('#missionId').click(function () {
                 $('.note-editable').text('');
                 $('#videoUrls').val('');
                 $('#image-list').empty();
+               
 
                 $('#previewStory').prop('disabled', true);
                 $('#submitStory').prop('disabled', true)
@@ -353,6 +353,7 @@ var allfiles = [];
 var fileInput = document.getElementById('file-input');
 var fileList;
 function handleFiles(e) {
+ 
     var files = e.target.files || e.originalEvent.dataTransfer.files;
     if (allfiles.length < 20) {
 

@@ -1,4 +1,5 @@
-﻿@model CiPlatformWeb.Entities.ViewModels.StoryListingViewModel
+﻿@using System.Text.RegularExpressions;
+@model CiPlatformWeb.Entities.ViewModels.StoryListingViewModel
 
 
 <span class="d-none" id="storyCount">@Model.StoryCount</span>
@@ -32,13 +33,13 @@
                         <p class="card-text">
                             @{
                                 int maxLength = 100;
-                                string description = obj.story.Description.Length > maxLength
-                                ? @obj.story.Description.Substring(0, maxLength) + "..."
-                                : @obj.story.Description;
+                                string description = Regex.Replace(obj.story.Description, "<.*?>", string.Empty);
+                                description = description.Length > maxLength
+                                ? description.Substring(0, maxLength) + "..."
+                                : description;
                             }
 
                             @Html.Raw(@description)
-
                         </p>
                         <div class="d-flex align-items-center">
 

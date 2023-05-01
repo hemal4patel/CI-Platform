@@ -182,6 +182,22 @@ td {
         background-color: #F88634;
     }
 
+.viewTimesheet {
+    border-color: #F88634;
+    color: #F88634;
+    font-size: 14px;
+    background: #F8863400 0% 0% no-repeat padding-box;
+    border: 1px solid #F88634;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+    .viewTimesheet:hover {
+        color: #fff;
+        border-color: #F88634;
+        background-color: #F88634;
+    }
+
 
 /*SCROLLBAR OF TABLES*/
 /* Style the scrollbar for the table-responsive element in X-direction */

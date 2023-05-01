@@ -75,7 +75,16 @@ namespace CiPlatformWeb.Repositories.Repository
         public User CheckPassword (long userId, string oldPassoword)
         {
             User user = _db.Users.Where(u => u.UserId == userId).FirstOrDefault();
-            if (BCrypt.Net.BCrypt.Verify(oldPassoword, user.Password))
+
+            System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+            System.Text.Decoder utf8Decode = encoder.GetDecoder();
+            byte[] todecode_byte = Convert.FromBase64String(user.Password);
+            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
+            char[] decoded_char = new char[charCount];
+            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
+            string result = new String(decoded_char);
+
+            if (result.Equals(oldPassoword))
             {
                 return user;
             }
@@ -87,8 +96,11 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void UpdatePassword (User user, string newPassoword)
         {
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassoword);
-            user.Password = hashedPassword;
+            byte[] encData_byte = new byte[newPassoword.Length];
+            encData_byte = System.Text.Encoding.UTF8.GetBytes(newPassoword);
+            string encodedData = Convert.ToBase64String(encData_byte);
+
+            user.Password = encodedData;
             user.UpdatedAt = DateTime.Now;
             _db.SaveChanges();
         }
