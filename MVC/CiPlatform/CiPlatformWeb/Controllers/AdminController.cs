@@ -40,7 +40,7 @@ namespace CiPlatformWeb.Controllers
 
        
 
-
+        //USER
         [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult AdminUser ()
@@ -125,6 +125,11 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminUser");
         }
 
+
+
+
+
+        //CMS
         public IActionResult AdminCms ()
         {
             AdminCmsViewModel vm = new();
@@ -184,6 +189,11 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminCms");
         }
 
+
+
+
+
+        //MISSION
         public IActionResult AdminMission ()
         {
             AdminMissionViewModel vm = new();
@@ -205,7 +215,7 @@ namespace CiPlatformWeb.Controllers
             AdminMissionViewModel vm = new();
             vm.newMission = _adminMission.GetMissionToEdit(missionId);
             vm.countryList = _adminUser.GetCountries();
-            if (vm.newMission.countryId != null)
+            if (vm.newMission.countryId != 0)
             {
                 long? countryId = vm.newMission.countryId;
                 vm.cityList = _adminUser.GetCitiesByCountry(countryId);
@@ -252,6 +262,12 @@ namespace CiPlatformWeb.Controllers
 
         }
 
+
+
+
+
+
+        //THEME
         public IActionResult AdminTheme ()
         {
             AdminThemeViewModel vm = new();
@@ -323,6 +339,12 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminTheme");
         }
 
+
+
+
+
+
+        //SKILL
         public IActionResult AdminSkill ()
         {
             AdminSkillViewModel vm = new();
@@ -394,6 +416,12 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("AdminSkill");
         }
 
+
+
+
+
+
+        //APPLICATION
         public IActionResult AdminApplication ()
         {
             AdminApplicationViewModel vm = new();
@@ -435,6 +463,11 @@ namespace CiPlatformWeb.Controllers
             return Ok();
         }
 
+
+
+
+
+        //BANNER
         public IActionResult AdminBanner ()
         {
             AdminBannerViewModel vm = new();
@@ -477,6 +510,12 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+
+
+
+
+
+        //COMMENT
         public IActionResult AdminComment ()
         {
             AdminCommentViewModel vm = new();
@@ -491,6 +530,12 @@ namespace CiPlatformWeb.Controllers
             return Ok();
         }
 
+
+
+
+
+
+        //TIMEHSEET
         public IActionResult AdminTimesheet ()
         {
             AdminTimesheetViewModel vm = new();
@@ -505,6 +550,11 @@ namespace CiPlatformWeb.Controllers
             return Ok();
         }
 
+
+
+
+
+        //CHECK SESSION
         public bool CheckSession ()
         {
             return HttpContext.User.Identity.IsAuthenticated;

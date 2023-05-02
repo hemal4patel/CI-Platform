@@ -24,14 +24,16 @@ namespace CiPlatformWeb.Entities.ViewModels
     {
         public long? userId { get; set; }
 
-        [MinLength(3, ErrorMessage = "Name must be between 3 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Name must be between 3 to 16 characters")]
+        [MinLength(3, ErrorMessage = "Name must be atleast 3 characters long")]
+        [MaxLength(16, ErrorMessage = "Name cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Name is required.")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name must contain only letters.")]
         public string firstName { get; set; }
 
-        [MinLength(3, ErrorMessage = "Surname must be between 3 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Surname must be between 3 to 16 characters")]
+        [MinLength(3, ErrorMessage = "Surname must be atleast 3 characters long")]
+        [MaxLength(16, ErrorMessage = "Surname cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Surname is required.")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Surname must contain only letters.")]
         public string lastName { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
@@ -40,8 +42,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        [MaxLength(16, ErrorMessage = "Password must be between 8 to 16 characters")]
-        [MinLength(8, ErrorMessage = "Password must be between 8 to 16 characters")]
+        [MinLength(8, ErrorMessage = "Password must be atleat 8 characters long")]
+        [MaxLength(16, ErrorMessage = "Password cannot be longer than 16 characters")]
         public string password { get; set; }
 
         [Required(ErrorMessage = "Phone Number is required.")]
@@ -53,13 +55,13 @@ namespace CiPlatformWeb.Entities.ViewModels
         [Required(ErrorMessage = "Role is required.")]
         public string role { get; set; }
 
-        [MinLength(6, ErrorMessage = "Employee Id must be between 6 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Employee Id must be between 6 to 16 characters")]
+        [MinLength(6, ErrorMessage = "Employee Id must be atleat 6 characters long")]
+        [MaxLength(16, ErrorMessage = "Employee Id cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Employee Id is required.")]
         public string employeeId { get; set; }
 
-        [MinLength(2, ErrorMessage = "Department must be between 2 to 16 characters")]
-        [MaxLength(16, ErrorMessage = "Department must be between 2 to 16 characters")]
+        [MinLength(2, ErrorMessage = "Department must be atleat 2 characters long")]
+        [MaxLength(16, ErrorMessage = "Department cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Department is required.")]
         public string department { get; set; }
 

@@ -66,12 +66,24 @@ function saveSkills() {
 }
 
 $('#avatarFile').change(function () {
-    var reader = new FileReader();
-    console.log(reader)
-    reader.onload = function (e) {
-        $('.user-image').attr('src', e.target.result);
+    $('.valProfileImage').hide();
+
+    var file = this.files[0];
+    var fileType = file.type.toLowerCase();
+    var fileSize = file.size;
+
+    if (fileSize <= 4 * 1024 * 1024 && (fileType === 'image/jpeg' || fileType === 'image/png' || fileType === 'image/jpg')) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('.user-image').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(this.files[0]);
     }
-    reader.readAsDataURL(this.files[0]);
+    else {
+        $('.valProfileImage').show();
+        $(this).val('')
+    }
+    console.log($('#avatarFile').val())
 });
 
 $('.edit-icon').click(function () {
@@ -83,7 +95,7 @@ $('#changePasswordForm').on('submit', function (e) {
     if ($(this).valid()) {
         var oldPassword = $('#oldPassword').val()
         var newPassword = $('#newPassword').val()
-        
+
         $.ajax({
             type: 'POST',
             url: '/User/ChangePassword',
@@ -399,7 +411,7 @@ $('.viewTimeTimesheet').click(function () {
         }
     })
 
-    
+
 })
 
 //view goal based timesheet

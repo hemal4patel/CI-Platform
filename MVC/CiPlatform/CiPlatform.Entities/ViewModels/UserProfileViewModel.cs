@@ -80,8 +80,9 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string? oldPassword { get; set; }
 
         [Required(ErrorMessage = "New password is required")]
-        [MaxLength(16, ErrorMessage = "New password must be between 8 to 16 characters")]
-        [MinLength(8, ErrorMessage = "New password must be between 8 to 16 characters")]
+        [MinLength(8, ErrorMessage = "New password must be atleat 8 characters long")]
+        [MaxLength(16, ErrorMessage = "New password cannot be longer than 16 characters")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*\d)(?=.*\W).+$", ErrorMessage = "Password must have at least one capital letter, one number, and one special character")]
         public string? newPassword { get; set; } = null!;
 
         [Required(ErrorMessage = "Password is required")]

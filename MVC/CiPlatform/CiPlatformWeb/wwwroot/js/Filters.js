@@ -4,6 +4,7 @@ var selectedCountry = null;
 var selectedSortCase = null;
 var currentUrl = window.location.href;
 let allDropdowns = $('.dropdown ul');
+var selectedExploreOption = null
 
 if (currentUrl.includes("PlatformLanding")) {
     showMissions(1);
@@ -74,6 +75,11 @@ $('#searchText').on('keyup', function () {
     }
 });
 
+$('.exploreOptions li').on('click', function () {
+    selectedExploreOption = $(this).val()
+    showMissions()
+})
+
 allDropdowns.on('change', function () {
     if (currentUrl.includes("PlatformLanding")) {
         showMissions();
@@ -90,6 +96,7 @@ function showMissions(pageNo) {
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var searchText = $("#searchText").val().toLowerCase().replace(" ", "");;
     var sortCase = selectedSortCase;
+    var exploreOption = selectedExploreOption
     var pageNo = pageNo;
     var pagesize = 6;
     $.ajax({
@@ -102,6 +109,7 @@ function showMissions(pageNo) {
             SkillId: SkillId,
             searchText: searchText,
             sortCase: sortCase,
+            exploreOption: exploreOption,
             UserId: UserId,
             pageNo: pageNo,
             pagesize: pagesize
@@ -439,15 +447,15 @@ function GetCitiesByCountry(countryId) {
             dropdown.empty();
             var items = "";
             $(data).each(function (i, item) {
-                items += `<li> <div class="dropdown-item mb-1 ms-3 form-check"> <input type="checkbox" class="form-check-input" id="exampleCheck1" value =` + item.cityId + `><label class="form-check-label" for="exampleCheck1" value=` + item.cityId + `>` + item.name + `</label></div></li>`
+                items += `<li> <div class="dropdown-item mb-1 ms-3 form-check"> <input type="checkbox" class="form-check-input" value =` + item.cityId + `><label class="form-check-label" value=` + item.cityId + `>` + item.name + `</label></div></li>`
             })
             dropdown.html(items);
 
-            var dropdown = $("#CityListAccordian");
+            var dropdown = $(".CityListAccordian");
             dropdown.empty();
             var items = "";
             $(data).each(function (i, item) {
-                items += `<li> <div class="dropdown-item mb-1 form-check"> <input type="checkbox"  class="form-check-input" id="exampleCheck1" value =` + item.cityId + `><label class="form-check-label" for="exampleCheck1" value=` + item.cityId + `>` + item.name + `</label></div></li>`
+                items += `<li> <div class="dropdown-item mb-1 form-check"> <input type="checkbox"  class="form-check-input" value =` + item.cityId + `><label class="form-check-label" value=` + item.cityId + `>` + item.name + `</label></div></li>`
 
             })
             dropdown.html(items);
@@ -626,7 +634,7 @@ $('.commentButton').click(function () {
     if (comment.length == 0 || comment.length > 600) {
         $('.valComment').show();
         $('.newComment').on('input', function () {
-            if ($('.newComment').val().trim().length >0 && $('.newComment').val().trim().length <= 600) {
+            if ($('.newComment').val().trim().length > 0 && $('.newComment').val().trim().length <= 600) {
                 $('.valComment').hide();
             }
         })
@@ -638,13 +646,13 @@ $('.commentButton').click(function () {
         data: { comment: comment, missionId: missionId },
         success: function (result) {
             $('.newComment').val('');
-            swal.fire({
-                position: 'center',
-                icon: result.icon,
-                title: result.message,
-                showConfirmButton: false,
-                timer: 3000
-            })
+            //swal.fire({
+            //    position: 'center',
+            //    icon: result.icon,
+            //    title: result.message,
+            //    showConfirmButton: false,
+            //    timer: 3000
+            //})
             showComments();
         },
         error: function (error) {

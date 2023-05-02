@@ -51,8 +51,10 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public (List<MissionListModel> missions, int count) GetMissions (MissionQueryParams viewmodel, long userId)
         {
-
             IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null && m.Status == 1).AsQueryable();
+
+            List<long> themes = missions.GroupBy(m => m.ThemeId).OrderByDescending(g => g.Count()).Take(3).Select(g => g.Key).ToList();
+
 
             if (viewmodel.CountryId != null)
             {
@@ -79,6 +81,24 @@ namespace CiPlatformWeb.Repositories.Repository
                 missions = missions.Where(m => m.Title.ToLower().Replace(" ", "").Contains(viewmodel.searchText) || m.ShortDescription.ToLower().Contains(viewmodel.searchText) || m.Description.ToLower().Contains(viewmodel.searchText));
             }
 
+            switch (viewmodel.exploreOption)
+            {
+                case 1:
+                    missions = missions.Where(m => themes.Contains(m.ThemeId));
+                    break;
+
+                case 2:
+                    missions = missions.OrderByDescending(m => m.MissionRatings.Average(r => r.Rating));
+                    break;
+
+                case 3:
+                    missions = missions.OrderByDescending(m => m.FavouriteMissions.Count());
+                    break;
+
+                case 4:
+                    missions = missions.OrderByDescending(m => m.MissionId);
+                    break;
+            }
 
             switch (viewmodel.sortCase)
             {
@@ -128,7 +148,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null).Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == "APPROVED").Sum(m => m.Action),
                 mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
                 skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault()
             });

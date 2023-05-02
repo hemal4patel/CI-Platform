@@ -1,4 +1,5 @@
-﻿<!-- FILTERS -->
+﻿
+<!-- FILTERS -->
 <div class="border-bottom border-3">
     <div class="container">
         <div class="row">
@@ -107,8 +108,8 @@
                             </h2>
                             <div id="countriesAccordion" class="accordion-collapse collapse"
                                  aria-labelledby="country" data-bs-parent="#filters">
-                                <div class="accordion-body">
-                                    <ul class="scroll-menu" id="CountryList" style="list-style: none; width: 100%;">
+                                <div class="dropdown">
+                                    <ul class="scroll-menu mt-3" id="CountryList" style="list-style: none; width: 100%;">
                                         @foreach (var obj in Model.CountryList)
                                         {
                                             <li value="@obj.CountryId">
@@ -129,8 +130,8 @@
                             </h2>
                             <div id="citiesAccordion" class="accordion-collapse collapse" aria-labelledby="city"
                                  data-bs-parent="#filters">
-                                <div class="accordion-body">
-                                    <ul class="scroll-menu" id="CityListAccordian" style="list-style: none; width: 100%;">
+                                <div class="dropdown">
+                                    <ul class="scroll-menu mt-3 CityListAccordian" id="CityList" style="list-style: none; width: 100%;">
                                     </ul>
                                 </div>
                             </div>
@@ -145,8 +146,8 @@
                             </h2>
                             <div id="themesAccordion" class="accordion-collapse collapse" aria-labelledby="theme"
                                  data-bs-parent="#filters">
-                                <div class="accordion-body">
-                                    <ul class="scroll-menu" id="ThemeList" style="list-style: none; width: 100%;">
+                                <div class="dropdown">
+                                    <ul class="scroll-menu mt-3" id="ThemeList" style="list-style: none; width: 100%;">
                                         @foreach (var obj in Model.ThemeList)
                                         {
                                             <div class="form-check">
@@ -170,8 +171,8 @@
                             </h2>
                             <div id="skillsAccordion" class="accordion-collapse collapse" aria-labelledby="skill"
                                  data-bs-parent="#filters">
-                                <div class="accordion-body">
-                                    <ul class="scroll-menu" id="SkillList" style="list-style: none; width: 100%;">
+                                <div class="dropdown">
+                                    <ul class="scroll-menu mt-3" id="SkillList" style="list-style: none; width: 100%;">
                                         @foreach (var obj in Model.SkillList)
                                         {
                                             <div class="form-check">

@@ -54,7 +54,7 @@ $('#missionId').click(function () {
                 $('#date').val(formattedDate);
                 $('.note-editable').html(story.description);
                 $('#videoUrls').val(urls);
-              
+
                 $('.valMission').hide();
                 $('.valstoryTitle').hide();
                 $('.valDate').hide();
@@ -73,7 +73,7 @@ $('#missionId').click(function () {
                 $('.note-editable').text('');
                 $('#videoUrls').val('');
                 $('#image-list').empty();
-               
+
 
                 $('#previewStory').prop('disabled', true);
                 $('#submitStory').prop('disabled', true)
@@ -128,7 +128,7 @@ function formValidation() {
     var storyTitle = $('#storyTitle').val().trim();
     var date = $('#date').val();
     var story = $('.note-editable').text().trim();
-    
+
     if (missionId == null) {
         $('.valMission').show();
         flag = false;
@@ -316,7 +316,7 @@ $('#submitStory').click(function () {
             }
         });
     }
-}); 
+});
 
 function storyInvite(ToUserId) {
     var StoryId = $('#storyId').text();
@@ -353,14 +353,18 @@ var allfiles = [];
 var fileInput = document.getElementById('file-input');
 var fileList;
 function handleFiles(e) {
- 
+
     var files = e.target.files || e.originalEvent.dataTransfer.files;
+    console.log(files)
     if (allfiles.length < 20) {
 
         for (var i = 0; i < files.length && allfiles.length < 20; i++) {
             var file = files[i];
-            var reader = new FileReader();
-            if (file.type === "image/jpeg" || file.type === "image/png") {
+            var fileType = file.type.toLowerCase();
+            var fileSize = file.size;
+
+            if (fileSize <= 4 * 1024 * 1024 && (fileType === 'image/jpeg' || fileType === 'image/png' || fileType === 'image/jpg')) {
+                var reader = new FileReader();
                 allfiles.push(files[i]);
 
                 reader.onload = (function (file) {

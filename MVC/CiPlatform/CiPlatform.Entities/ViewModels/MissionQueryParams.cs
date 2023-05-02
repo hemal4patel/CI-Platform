@@ -21,6 +21,8 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public int? sortCase { get; set; }
 
+        public int? exploreOption { get; set; }
+
         public int pageNo { get; set; }
 
         public int pagesize { get; set; }

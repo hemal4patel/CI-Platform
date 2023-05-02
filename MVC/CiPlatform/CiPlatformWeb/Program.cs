@@ -91,6 +91,12 @@ app.UseStatusCodePages(async context =>
     if (response.StatusCode == (int) HttpStatusCode.Unauthorized || response.StatusCode == (int) HttpStatusCode.Forbidden)
     {
         response.Redirect("/");
+        await response.CompleteAsync();
+    }
+    else if (response.StatusCode == (int) HttpStatusCode.NotFound)
+    {
+        response.Redirect("/"); // Redirect to the root of the application
+        await response.CompleteAsync();
     }
 });
 

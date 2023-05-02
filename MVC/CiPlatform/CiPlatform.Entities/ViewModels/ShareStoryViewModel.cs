@@ -17,7 +17,8 @@ namespace CiPlatformWeb.Entities.ViewModels
         public long MissionId { get; set; }
 
         [Required(ErrorMessage = "Story title is required.")]
-        [MaxLength(255, ErrorMessage = "Story title must be between 3 to 16 characters")]
+        [MinLength(3, ErrorMessage = "Story title must be atleat 3 characters long")]
+        [MaxLength(255, ErrorMessage = "Story title cannot be longer than 255 characters")]
         public string StoryTitle { get; set; }
 
         [Required(ErrorMessage = "Date is required.")]

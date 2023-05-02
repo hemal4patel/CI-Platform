@@ -46,7 +46,11 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        //GET
+
+
+
+
+        //GRID LIST VIEW
         public IActionResult PlatformLanding ()
         {
                 var vm = new DisplayMissionCards();
@@ -65,8 +69,6 @@ namespace CiPlatformWeb.Controllers
             return Json(cities);
         }
 
-
-        //POST
         [HttpPost]
         public IActionResult PlatformLanding (MissionQueryParams viewmodel)
         {
@@ -81,6 +83,8 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+        //FAVOURITES
         [HttpPost]
         public IActionResult AddToFavorites (int missionId)
         {
@@ -89,7 +93,10 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        //GET
+
+
+
+        //VOLUNTEERING MISSION
         [AllowAnonymous]
         public IActionResult VolunteeringMission (long MissionId)
         {
@@ -110,6 +117,10 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+
+
+
+        //COMMENTS
         public IActionResult GetComments (long missionId)
         {
             VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
@@ -118,6 +129,10 @@ namespace CiPlatformWeb.Controllers
             return PartialView("_commentsPartial", vm);
         }
 
+
+
+
+        //REENT VOLUNTEERS
         public IActionResult showRecentVounteers (int currVolPage, long missionId)
         {
             VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
@@ -128,7 +143,10 @@ namespace CiPlatformWeb.Controllers
 
             return PartialView("_RecentVolunteers", vm);
         }
+        
 
+
+        //RATE MISSION
         [HttpPost]
         public IActionResult RateMission (int rating, long missionId)
         {
@@ -137,6 +155,9 @@ namespace CiPlatformWeb.Controllers
             return Json(missionId);
         }
 
+
+
+        //APPLY TO MISSION
         [HttpPost]
         public IActionResult ApplyToMission (long missionId)
         {
@@ -146,6 +167,8 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+        //DOCUMENTS DISPLAY
         public IActionResult DisplayDocument (string fileName)
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
@@ -163,6 +186,9 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+
+        //COMMENT ADD
         [HttpPost]
         public IActionResult PostComment (string comment, long missionId)
         {
@@ -176,6 +202,9 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+
+        //INVITE TO MISSION
         [HttpPost]
         public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
         {
@@ -196,6 +225,9 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+
+        //GET INVITATIONS
         public IActionResult GetInvitations ()
         {
             List<MissionInvite> missionInvites = _missionlist.GetMissionInvites(userId);
@@ -205,6 +237,9 @@ namespace CiPlatformWeb.Controllers
             return Json(result);
         }
 
+
+
+        //CHECK SESSION
         public bool CheckSession ()
         {
             return HttpContext.User.Identity.IsAuthenticated;

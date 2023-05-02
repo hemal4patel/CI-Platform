@@ -40,7 +40,11 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        //GET
+
+
+
+
+        //STORY LIST
         public IActionResult StoryListing ()
         {
             var vm = new StoryListingViewModel();
@@ -51,7 +55,6 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-        //POST
         [HttpPost]
         public IActionResult StoryListing (StoryQueryParams viewmodel)
         {
@@ -65,6 +68,10 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+
+
+        //SHARE YOUR STORY
         public IActionResult ShareStory ()
         {
             var vm = new ShareStoryViewModel();
@@ -73,7 +80,7 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-
+        //GET STORY FOR EDIT
         public IActionResult GetStory (long missionId)
         {
             var story = _storyList.GetDraftedStory(missionId, userId);
@@ -81,6 +88,7 @@ namespace CiPlatformWeb.Controllers
             return Json(story);
         }
 
+        //SAVE STORY AS DRAFT
         [HttpPost]
         public IActionResult SaveStory (ShareStoryViewModel viewmodel)
         {
@@ -106,7 +114,7 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-
+        //SUBMIT STORY AS PENDING
         [HttpPost]
         public IActionResult SubmitStory (ShareStoryViewModel viewmodel)
         {
@@ -134,6 +142,8 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+        //STORY DETAIL
         [AllowAnonymous]
         public IActionResult StoryDetail (long MissionId, long UserId)
         {
@@ -158,6 +168,7 @@ namespace CiPlatformWeb.Controllers
 
 
 
+        //INVITE TO STORY
         [HttpPost]
         public async Task<IActionResult> StoryInvite (long ToUserId, long StoryId, long FromUserId, long storyUserId, long storyMissionId)
         {
@@ -177,6 +188,9 @@ namespace CiPlatformWeb.Controllers
             return Json(new { success = true });
         }
 
+
+
+        //CHECK SESSION
         public bool CheckSession ()
         {
             return HttpContext.User.Identity.IsAuthenticated;

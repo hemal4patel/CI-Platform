@@ -41,7 +41,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null).Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == "APPROVED").Sum(m => m.Action),
                 missionMedia = m.MissionMedia.Where(m => m.DeletedAt == null).ToList(),
                 skills = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).ToList(),
                 ApprovedComments = m.Comments.ToList(),
@@ -75,7 +75,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<Comment> GetComments (long MissionId)
         {
-            return _db.Comments.Where(c => c.DeletedAt == null && c.ApprovalStatus == "PUBLISHED" && c.MissionId == MissionId).Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
+            return _db.Comments.Where(c => c.DeletedAt == null && c.MissionId == MissionId).Include(c => c.User).OrderByDescending(c => c.CreatedAt).ToList();
         }
 
         public List<MissionListModel> GetRelatedMissions (long MissionId, long userId)
@@ -115,7 +115,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null).Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == "APPROVED").Sum(m => m.Action),
                 mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
                 skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault()
             });

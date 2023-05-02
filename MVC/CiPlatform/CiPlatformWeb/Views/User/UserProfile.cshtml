@@ -23,8 +23,9 @@
                         }
                         <div class="edit-icon"><i class="fas fa-pencil-alt"></i></div>
                         <!-- File input element -->
-                        <input asp-for="AvatarImage" type="file" id="avatarFile" class="d-none" />
+                        <input asp-for="AvatarImage" type="file" id="avatarFile" accept=".jpg,.png, .jpeg" class="d-none" />
                     </div>
+                    <span class="text-danger valProfileImage" style="display: none;">Only .jpg, .jpeg and .png files of maximum size 4MB are allowed.</span>
                     <div class="userName mt-2">
                         <span style="font-size: 23px;"> @Model.FirstName @Model.LastName </span>
                     </div>

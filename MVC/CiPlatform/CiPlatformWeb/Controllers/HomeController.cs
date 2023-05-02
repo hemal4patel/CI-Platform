@@ -31,7 +31,8 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        //GET
+
+        //REGISTER
         public IActionResult Registration ()
         {
             RegistrationValidation vm = new();
@@ -39,7 +40,6 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-        //POST
         [HttpPost]
         public IActionResult Registration (RegistrationValidation obj)
         {
@@ -62,7 +62,9 @@ namespace CiPlatformWeb.Controllers
             return View(obj);
         }
 
-        //GET
+
+
+        //LOGIN
         public IActionResult Index ()
         {
             HttpContext.Session.Remove("Token");
@@ -72,7 +74,6 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-        //POST
         [HttpPost]
         public IActionResult Index (LoginValidation obj)
         {
@@ -147,7 +148,10 @@ namespace CiPlatformWeb.Controllers
             return View(obj);
         }
 
-        //GET
+
+
+
+        //FORGOT PASSWORD
         public IActionResult ForgotPassword ()
         {
             ForgotPasswordValidation vm = new();
@@ -155,7 +159,6 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-        //POST
         [HttpPost]
         public IActionResult ForgotPassword (ForgotPasswordValidation obj)
         {
@@ -180,7 +183,12 @@ namespace CiPlatformWeb.Controllers
             return View(obj);
         }
 
-        //GET
+
+
+
+
+
+        //RESET PASSWORD
         public IActionResult ResetPassword (string email, string token)
         {
             var cutoffTime = DateTime.Now.AddHours(-4);
@@ -203,7 +211,6 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        //POST
         [HttpPost]
         public IActionResult ResetPassword (ResetPasswordValidation obj, IFormCollection form)
         {
@@ -218,7 +225,10 @@ namespace CiPlatformWeb.Controllers
             }
             return View();
         }
+        
 
+
+        //CMS PAGE LIST
         [AllowAnonymous]
         public IActionResult CmsPage (long cmsId)
         {
@@ -226,6 +236,10 @@ namespace CiPlatformWeb.Controllers
             viewmodel.selectedCmsPage = _userRepository.GetCmsPage(cmsId);
             return View(viewmodel);
         }
+
+
+
+
 
         //Logout
         public IActionResult Logout ()

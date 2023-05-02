@@ -12,8 +12,9 @@ namespace CiPlatformWeb.Entities.ViewModels
     public class ResetPasswordValidation
     {
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Password is required")]
-        [MaxLength(16, ErrorMessage = "Password must be between 8 to 16 characters")]
-        [MinLength(8, ErrorMessage = "Password must be between 8 to 16 characters")]
+        [MinLength(8, ErrorMessage = "Password must be atleat 8 characters long")]
+        [MaxLength(16, ErrorMessage = "Password cannot be longer than 16 characters")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*\d)(?=.*\W).+$", ErrorMessage = "Password must have at least one capital letter, one number, and one special character")]
         public string Password { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Password is required")]

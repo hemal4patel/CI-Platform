@@ -110,8 +110,12 @@
     padding: 30px 0;
     background-color: #fff;
     cursor: pointer;
+    height: 140px !important;
 }
 
+    .drag-drop img {
+        margin-top: 28px;
+    }
 
 #image-list {
     flex-wrap: wrap;

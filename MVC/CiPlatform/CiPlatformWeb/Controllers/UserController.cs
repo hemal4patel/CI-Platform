@@ -43,7 +43,9 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
-        //GET
+
+
+        //USER PROFILE PAGE
         public IActionResult UserProfile ()
         {
             var vm = new UserProfileViewModel();
@@ -60,7 +62,6 @@ namespace CiPlatformWeb.Controllers
 
             return View(vm);
         }
-
 
         [HttpPost]
         public IActionResult UserProfile (UserProfileViewModel viewmodel)
@@ -80,7 +81,6 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("UserProfile");
         }
 
-
         public IActionResult GetCitiesByCountry (int countryId)
         {
             var vm = new UserProfileViewModel();
@@ -89,6 +89,9 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+
+        //CHANGE PASSWORD FROM PROFILE
         [HttpPost]
         public IActionResult ChangePassword (string oldPassword, string newPassword)
         {
@@ -106,6 +109,10 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+
+
+        //CONTACT US
         [HttpPost]
         public IActionResult ContactUs (string subject, string message)
         {
@@ -121,7 +128,10 @@ namespace CiPlatformWeb.Controllers
         }
 
 
-        //GET
+
+
+
+        //GET TIMESHEETS
         public IActionResult VolunteeringTimesheet ()
         {
             var vm = new VolunteeringTimesheetViewModel();
@@ -134,7 +144,7 @@ namespace CiPlatformWeb.Controllers
             return View(vm);
         }
 
-
+        //ADD TIMESHEET
         [HttpPost]
         public IActionResult VolunteeringTimesheet (VolunteeringTimesheetViewModel viewmodel)
         {
@@ -220,7 +230,7 @@ namespace CiPlatformWeb.Controllers
             return RedirectToAction("VolunteeringTimesheet");
         }
 
-
+        //GET TIMESHEET TO EDIT
         public IActionResult GetTimesheetData (long id)
         {
             var timesheet = _timesheet.GetEntry(id);
@@ -228,8 +238,7 @@ namespace CiPlatformWeb.Controllers
             return Json(new { timesheet = timesheet, startDate = startDate });
         }
 
-
-
+        //DELETE TIMESHEET
         [HttpPost]
         public IActionResult DeleteTimesheetData (long id)
         {
@@ -244,6 +253,9 @@ namespace CiPlatformWeb.Controllers
             }
         }
 
+
+
+        //PRIVACY POLICY
         [AllowAnonymous]
         public IActionResult PrivacyPolicy ()
         {

@@ -1,5 +1,4 @@
-﻿
-@using System.Text.Json;
+﻿@using System.Text.Json;
 @using CiPlatformWeb.Entities.DataModels;
 @{
     var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
@@ -11,12 +10,24 @@
 
 <script>
     if (localStorage.getItem('view') == 1) {
-        $('#grid-view').show();
-        $('#list-view').hide();
+        $(document).ready(function () {
+            $('#grid-view').show();
+            $('#list-view').hide();
+
+            document.getElementById('grid-btn').style.backgroundColor = 'gainsboro';
+            document.getElementById('grid-btn').style.borderRadius = '50% !important';
+            document.getElementById('list-btn').style.backgroundColor = 'transparent';
+        })
     }
     else {
-        $('#list-view').show();
-        $('#grid-view').hide();
+        $(document).ready(function () {
+            $('#list-view').show();
+            $('#grid-view').hide();
+
+            document.getElementById('list-btn').style.borderRadius = '50%';
+            document.getElementById('list-btn').style.backgroundColor = 'gainsboro';
+            document.getElementById('grid-btn').style.backgroundColor = 'transparent';
+        })
     }
 </script>
 
