@@ -607,6 +607,33 @@ $('.rateMission i').click(function () {
         success: function () {
             selectedIcon.removeClass('bi-star').addClass('bi-star-fill text-warning');
             unselectedIcon.removeClass('bi-star-fill text-warning').addClass('bi-star');
+
+            //update ratings
+            $.ajax({
+                url: '/Mission/GetUpdatedRatings',
+                type: 'GET',
+                data: { missionId: missionId },
+                success: function (data) {
+                    var ratings = data.item1
+                    var volunteers = data.item2
+
+                    $('.updateRatings').empty()
+                    var html = ""
+                    for (var i = 0; i < 5; i++) {
+                        if (i < ratings) {
+                            html += '<i class="bi bi-star-fill text-warning"></i> '
+                        }
+                        else {
+                            html += '<i class="bi bi-star"></i> '
+                        }
+                    }
+                    html += '<span>(Rated by ' + volunteers + ' Volunteers)</span>'
+                    $('.updateRatings').append(html)
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
         },
         error: function () {
             console.log("error");

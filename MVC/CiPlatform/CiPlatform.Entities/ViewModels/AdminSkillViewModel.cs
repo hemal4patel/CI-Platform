@@ -19,6 +19,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public long? skillId { get; set; }
 
         [Required(ErrorMessage = "Skill name is required.")]
+        [RegularExpression(@"^(?=.*[a-zA-Z])[a-zA-Z ]+$", ErrorMessage = "Skill name is required.")]
         public string skillName { get; set; }
 
         [Required(ErrorMessage = "Status is required.")]

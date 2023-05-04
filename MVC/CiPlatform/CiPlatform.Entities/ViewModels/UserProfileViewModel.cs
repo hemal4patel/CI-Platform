@@ -16,13 +16,13 @@ namespace CiPlatformWeb.Entities.ViewModels
         [MinLength(3, ErrorMessage = "Name must be atleast 3 characters long")]
         [MaxLength(16, ErrorMessage = "Name cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Name is required.")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Name must contain only letters.")]
+        [RegularExpression(@"^(?=.*[a-zA-Z])[a-zA-Z ]+$", ErrorMessage = "Name must contain only letters.")]
         public string FirstName { get; set; }
 
         [MinLength(3, ErrorMessage = "Surname must be atleast 3 characters long")]
         [MaxLength(16, ErrorMessage = "Surname cannot be longer than 16 characters")]
         [Required(ErrorMessage = "Surname is required.")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Surname must contain only letters.")]
+        [RegularExpression(@"^(?=.*[a-zA-Z])[a-zA-Z ]+$", ErrorMessage = "Surname must contain only letters.")]
         public string LastName { get; set; }
 
         public string? AvatarName { get; set; }

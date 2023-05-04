@@ -70,7 +70,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 missionTheme = m.Theme.MissionThemeId,
                 missionSkills = string.Join(",", m.MissionSkills.Where(s => s.DeletedAt == null).Select(m => m.Skill.SkillId)),
                 availability = m.Availability,
-                videosUrl = string.Join("\n", m.MissionMedia.Where(m => m.MediaType== "vid" && m.DeletedAt == null).Select(m => m.MediaPath)),
+                videosUrl = string.Join("\n", m.MissionMedia.Where(m => m.MediaType == "vid" && m.DeletedAt == null).Select(m => m.MediaPath)),
                 imageName = string.Join(",", m.MissionMedia.Where(m => m.MediaType == "img" && m.DeletedAt == null).Select(m => $"{m.MediaPath}:{m.Default}")),
                 documentName = string.Join(",", m.MissionDocuments.Where(m => m.DeletedAt == null).Select(m => m.DocumentPath)),
                 status = m.Status
@@ -298,23 +298,26 @@ namespace CiPlatformWeb.Repositories.Repository
                 _db.SaveChanges();
             }
             //skills
-            string[] userSelectedSkillsStr = vm.newMission.missionSkills.Split(',');
-            long[] userSelectedSkills = new long[userSelectedSkillsStr.Length];
-            for (int i = 0; i < userSelectedSkillsStr.Length; i++)
+            if (vm.newMission.missionSkills is not null)
             {
-                userSelectedSkills[i] = long.Parse(userSelectedSkillsStr[i]);
-                MissionSkill newSkill = new MissionSkill()
+                string[] userSelectedSkillsStr = vm.newMission.missionSkills.Split(',');
+                long[] userSelectedSkills = new long[userSelectedSkillsStr.Length];
+                for (int i = 0; i < userSelectedSkillsStr.Length; i++)
                 {
-                    MissionId = vm.newMission.missionId,
-                    SkillId = userSelectedSkills[i],
-                    CreatedAt = DateTime.Now,
-                };
-                _db.MissionSkills.Add(newSkill);
+                    userSelectedSkills[i] = long.Parse(userSelectedSkillsStr[i]);
+                    MissionSkill newSkill = new MissionSkill()
+                    {
+                        MissionId = vm.newMission.missionId,
+                        SkillId = userSelectedSkills[i],
+                        CreatedAt = DateTime.Now,
+                    };
+                    _db.MissionSkills.Add(newSkill);
+                }
+                _db.SaveChanges();
             }
-            _db.SaveChanges();
 
             //delete old medias
-            IQueryable<MissionMedium> media = _db.MissionMedia.Where(m => m.MissionId == vm.newMission.missionId);
+            IQueryable<MissionMedium> media = _db.MissionMedia.Where(m => m.MissionId == vm.newMission.missionId && m.DeletedAt == null);
             foreach (MissionMedium m in media)
             {
                 if (m is not null)
@@ -327,7 +330,7 @@ namespace CiPlatformWeb.Repositories.Repository
                     m.DeletedAt = DateTime.Now;
                 }
             }
-            IQueryable<MissionDocument> documents = _db.MissionDocuments.Where(m => m.MissionId == vm.newMission.missionId);
+            IQueryable<MissionDocument> documents = _db.MissionDocuments.Where(m => m.MissionId == vm.newMission.missionId && m.DeletedAt == null);
             foreach (MissionDocument d in documents)
             {
                 if (d is not null)

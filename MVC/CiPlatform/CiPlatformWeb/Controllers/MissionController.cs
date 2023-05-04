@@ -156,6 +156,13 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+        //GET UPDATED RATINGS
+        public IActionResult GetUpdatedRatings (long missionId)
+        {
+            (int ratings, int volunteers) data = _missiondetail.GetUpdatedRatings(missionId);
+            return Json(data);
+        }
+
 
         //APPLY TO MISSION
         [HttpPost]

@@ -30,7 +30,7 @@ namespace CiPlatformWeb.Auth
                 jwtSetting.Issuer,
                 jwtSetting.Audience,
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(20), 
+                expires: DateTime.UtcNow.AddMinutes(60), 
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

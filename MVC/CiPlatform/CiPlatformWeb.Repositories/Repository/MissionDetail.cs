@@ -175,5 +175,12 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.Update(MissionInvite);
             _db.SaveChanges();
         }
+
+        public (int ratings, int volunteers) GetUpdatedRatings (long missionId)
+        {
+            int ratings = (int) _db.MissionRatings.Where(r => r.MissionId == missionId).Average(r => r.Rating);
+            int volunteers = _db.MissionRatings.Where(r => r.MissionId == missionId).Count();
+            return (ratings, volunteers);
+        }
     }
 }

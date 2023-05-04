@@ -388,7 +388,7 @@ $('#addMissionForm').on('submit', function (e) {
 
         //organization detail        
         formData.append("orgDetail", orgDetail);
-
+        
         $.ajax({
             type: 'POST',
             url: '/Admin/AdminMission',
@@ -396,6 +396,7 @@ $('#addMissionForm').on('submit', function (e) {
             contentType: false,
             processData: false,
             success: function (data) {
+                
                 swal.fire({
                     position: 'center',
                     icon: data.icon,

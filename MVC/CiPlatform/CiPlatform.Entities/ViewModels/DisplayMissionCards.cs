@@ -59,5 +59,7 @@ namespace CiPlatformWeb.Entities.ViewModels
         public string? mediaPath { get; set; }
 
         public string? skill { get; set; }
+
+        public int? totalVolunteers { get; set; }
     }
 }

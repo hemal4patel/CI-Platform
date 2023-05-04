@@ -18,6 +18,7 @@ namespace CiPlatformWeb.Entities.ViewModels
     {
         public long? themeId { get; set; }
 
+        [RegularExpression(@"^(?=.*[a-zA-Z])[a-zA-Z ]+$", ErrorMessage = "Theme name is required.")]
         [Required(ErrorMessage = "Theme name is required.")]
         public string themeName { get; set; }
 

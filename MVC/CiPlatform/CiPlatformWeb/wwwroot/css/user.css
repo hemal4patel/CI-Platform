@@ -88,6 +88,23 @@ div {
         background-color: #F88634;
     }
 
+.loginBtn {
+    width: 100%;
+    border: 2px solid #F88634;
+    border-radius: 24px;
+    font-size: 17px;
+    letter-spacing: 0px;
+    color: #F88634;
+    opacity: 1;
+    background: #F88634;
+    color: white;
+}
+
+    .loginBtn:hover {
+        border: 2px solid #e5670c;
+        background: #e5670c;
+    }
+
 .modal-header {
     border-bottom: none;
 }

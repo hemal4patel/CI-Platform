@@ -27,5 +27,7 @@ namespace CiPlatformWeb.Repositories.Interface
         public void InviteToMission (long FromUserId, long ToUserId, long MissionId);
 
         public void ReInviteToMission (MissionInvite MissionInvite);
+
+        public (int ratings, int volunteers) GetUpdatedRatings (long missionId);
     }
 }

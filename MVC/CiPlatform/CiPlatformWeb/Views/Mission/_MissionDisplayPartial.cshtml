@@ -53,16 +53,16 @@
                                 <img src="~/Upload/MissionPhotos/no.jpg" class="card-img-top" alt="" />
                             }
 
-                            @if (obj.hasApplied)
-                            {
-                                <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
-                                    <span>APPLIED</span>
-                                </div>
-                            }
-                            else if (obj.mission.MissionType.Equals("Time") && (obj.hasDeadlinePassed || obj.haEndDatePassed))
+                            @if (obj.mission.MissionType.Equals("Time") && (obj.hasDeadlinePassed || obj.haEndDatePassed))
                             {
                                 <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
                                     <span>CLOSED</span>
+                                </div>
+                            }
+                            else if (obj.hasApplied)
+                            {
+                                <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                                    <span>APPLIED</span>
                                 </div>
                             }
 
@@ -131,7 +131,7 @@
 
                         <div class="card-body pt-4">
                             <h4 class="card-title" id="card-title">@obj.mission.Title</h4>
-                            <p class="card-text">
+                            <p class="card-text" style="text-align: justify;">
                                 @{
                                     int maxLength = 100;
                                     string description = obj.mission.ShortDescription.Length > maxLength
@@ -190,31 +190,45 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-around mt-1 seats-left">
-                                <div class="d-flex align-items-center">
-                                    <img src="~/images/Seats-left.png" alt=""
+                            @if (obj.mission.MissionType.Equals("Time"))
+                            {
+                                <div class="d-flex justify-content-around mt-1 seats-left">
+                                    <div class="d-flex align-items-center">
+                                        <img src="~/images/Seats-left.png" alt=""
                                      style="margin-right: 10px; width: 30px; height: 30px" />
-                                    <div class="d-flex flex-column">
-                                        <span>@obj.seatsLeft</span>
-                                        <span>Seats Left</span>
+                                        <div class="d-flex flex-column">
+                                            <span>@obj.seatsLeft</span>
+                                            <span>Seats Left</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    @if (obj.mission.MissionType.Equals("Time"))
-                                    {
+                                    <div class="d-flex align-items-center">
                                         <img src="~/images/calender.png" alt=""
                                      style="margin-right: 10px; width: 30px; height: 30px" />
                                         <div class="d-flex flex-column">
                                             <span>@obj.mission.StartDate.Value.AddDays(-1).ToShortDateString() </span>
                                             <span>Deadline</span>
                                         </div>
-                                    }
-                                    else
-                                    {
-                                        double? percent = 0;
-                                        if (obj.achievedGoal is not null)
-                                        {
-                                            percent = ((double) obj.achievedGoal / obj.totalGoal) * 100;
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex justify-content-around mt-1 seats-left">
+                                    <div class="d-flex align-items-center">
+                                        <img src="~/images/Already-volunteered.png" alt=""
+                                     style="margin-right: 10px; width: 30px; height: 30px" />
+                                        <div class="d-flex flex-column">
+                                            <span>@obj.totalVolunteers</span>
+                                            <span>Total Volunteers</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        @{
+                                            double? percent = 0;
+                                            if (obj.achievedGoal is not null)
+                                            {
+                                                percent = ((double) obj.achievedGoal / obj.totalGoal) * 100;
+                                            }
                                         }
                                         <img src="~/images/achieved.png" alt="deadline"
                                      style="margin-right: 10px; width: 30px; height: 30px;">
@@ -227,9 +241,9 @@
                                             </div>
                                             <span> @obj.achievedGoal achieved </span>
                                         </div>
-                                    }
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             <hr>
                             @if ((obj.mission.MissionType.Equals("Time") && (obj.hasDeadlinePassed || obj.haEndDatePassed)) || obj.hasApplied)
@@ -280,19 +294,18 @@
                             <img src="~/Upload/MissionPhotos/no.jpg" class="card-img-top" alt="" />
                         }
 
-                        @if (obj.hasApplied)
-                        {
-                            <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
-                                <span>APPLIED</span>
-                            </div>
-                        }
-                        else if (obj.mission.MissionType.Equals("Time") && (obj.hasDeadlinePassed || obj.haEndDatePassed))
+                        @if (obj.mission.MissionType.Equals("Time") && (obj.hasDeadlinePassed || obj.haEndDatePassed))
                         {
                             <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:red 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
                                 <span>CLOSED</span>
                             </div>
                         }
-
+                        else if (obj.hasApplied)
+                        {
+                            <div class="mt-1 position-absolute top-0 start-0 text-white p-2" style="background:green 0% 0% no-repeat; border-radius: 0px 50px 50px 0px">
+                                <span>APPLIED</span>
+                            </div>
+                        }
 
                         <div class="mt-1 me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
                             <div class="text-decoration-none text-white">
@@ -388,7 +401,7 @@
                             </div>
 
                             <h4 class="card-title pt-3 mt-3">@obj.mission.Title</h4>
-                            <p class="card-text">
+                            <p class="card-text" style="text-align: justify;">
                                 @{
                                     int maxLength = 200;
                                     string description = obj.mission.ShortDescription.Length > maxLength
