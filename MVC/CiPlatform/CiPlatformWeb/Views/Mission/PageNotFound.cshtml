@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Error 404";
+    Layout = "~/Views/Shared/_LayoutMission.cshtml";
+}
+
+<style>
+    .home {
+        border-color: #F88634;
+        color: #F88634;
+        font-weight: 500;
+        background: #F8863400 0% 0% no-repeat padding-box;
+        border: 2px solid #F88634;
+        letter-spacing: 0px;
+        opacity: 1;
+    }
+
+        .home:hover {
+            color: #fff;
+            border-color: #F88634;
+            background-color: #F88634;
+        }
+</style>
+
+<div class="container text-center" style="margin-top: 150px;">
+
+    <h1 class="mt-5">404</h1>
+    <h4 class="mt-2 mb-5">PAGE NOT FOUND</h4>
+
+    <a asp-controller="Mission" asp-action="PlatformLanding" class="home px-3 py-2 text-decoration-none rounded-pill mt-5">
+        Home
+    </a>
+
+</div>

@@ -4,9 +4,11 @@ using CiPlatformWeb.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -59,6 +61,16 @@ namespace CiPlatformWeb.Repositories.Repository
                 story.PublishedAt = DateTime.Now;
             }
             story.UpdatedAt = DateTime.Now;
+
+            //UserNotification notification = new UserNotification()
+            //{
+            //    ToUserId = story.UserId,
+            //    StoryId = storyId,
+            //    Status = false,
+            //    CreatedAt = DateTime.Now,
+            //    UserSettingId = (long) notifications.story
+            //};
+            //_db.UserNotifications.Add(notification);
 
             _db.SaveChanges();
         }

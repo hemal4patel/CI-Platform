@@ -53,14 +53,14 @@ namespace CiPlatformWeb.Controllers
         //GRID LIST VIEW
         public IActionResult PlatformLanding ()
         {
-                var vm = new DisplayMissionCards();
+            var vm = new DisplayMissionCards();
 
-                vm.CountryList = _missionlist.GetCountryList();
-                vm.ThemeList = _missionlist.GetThemeList();
-                vm.SkillList = _missionlist.GetSkillList();
-                vm.UserList = _missionlist.GetUserList(userId);
+            vm.CountryList = _missionlist.GetCountryList();
+            vm.ThemeList = _missionlist.GetThemeList();
+            vm.SkillList = _missionlist.GetSkillList();
+            vm.UserList = _missionlist.GetUserList(userId);
 
-                return View(vm);
+            return View(vm);
         }
 
         public IActionResult GetCitiesByCountry (int countryId)
@@ -72,14 +72,14 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult PlatformLanding (MissionQueryParams viewmodel)
         {
-                var vm = new DisplayMissionCards();
+            var vm = new DisplayMissionCards();
 
-                var data = _missionlist.GetMissions(viewmodel, userId);
-                vm.MissionList = data.Item1;
-                vm.MissionCount = data.Item2;
-                vm.UserList = _missionlist.GetUserList(userId);
+            var data = _missionlist.GetMissions(viewmodel, userId);
+            vm.MissionList = data.Item1;
+            vm.MissionCount = data.Item2;
+            vm.UserList = _missionlist.GetUserList(userId);
 
-                return PartialView("_MissionDisplayPartial", vm);
+            return PartialView("_MissionDisplayPartial", vm);
         }
 
 
@@ -102,13 +102,20 @@ namespace CiPlatformWeb.Controllers
         {
             if (CheckSession())
             {
-                var vm = new VolunteeringMissionViewModel();
+                if (_missiondetail.IsValidMissionId(MissionId))
+                {
+                    var vm = new VolunteeringMissionViewModel();
 
-                vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
-                vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId, userId);
-                vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
+                    vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
+                    vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId, userId);
+                    vm.UserList = _missionlist.GetUserList(Convert.ToInt64(userId));
 
-                return View(vm);
+                    return View(vm);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
@@ -143,7 +150,7 @@ namespace CiPlatformWeb.Controllers
 
             return PartialView("_RecentVolunteers", vm);
         }
-        
+
 
 
         //RATE MISSION
@@ -215,15 +222,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> MissionInvite (long ToUserId, long MissionId, long FromUserId)
         {
-            var MissionInvite = _missionlist.HasAlreadyInvited(ToUserId, MissionId, FromUserId);
-            if (MissionInvite != null)
-            {
-                _missiondetail.ReInviteToMission(MissionInvite);
-            }
-            else
-            {
-                _missiondetail.InviteToMission(FromUserId, ToUserId, MissionId);
-            }
+            _missiondetail.InviteToMission(FromUserId, ToUserId, MissionId);
+
             var MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
             string link = MissionLink;
             await _missionlist.SendInvitationToCoWorker(ToUserId, FromUserId, link);
@@ -242,6 +242,29 @@ namespace CiPlatformWeb.Controllers
             var result = new { missionInvites = missionInvites, storyInvites = storyInvites };
 
             return Json(result);
+        }
+
+
+
+
+        //PAGE NOT FOUND
+        [AllowAnonymous]
+        public IActionResult PageNotFound ()
+        {
+            return View();
+        }
+
+
+        public IActionResult ChangeNotificationStatus (long id)
+        {
+            _missionlist.ChangeNotificationStatus(id);
+            return Ok();
+        }
+
+        public IActionResult ClearAllNotifications ()
+        {
+            _missionlist.ClearAllNotifications(userId);
+            return Ok();
         }
 
 

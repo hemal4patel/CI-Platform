@@ -102,7 +102,7 @@ app.UseStatusCodePages(async context =>
     }
     else if (response.StatusCode == (int) HttpStatusCode.NotFound)
     {
-        response.Redirect("/"); // Redirect to the root of the application
+        response.Redirect("/Mission/PageNotFound");
         await response.CompleteAsync();
     }
 });

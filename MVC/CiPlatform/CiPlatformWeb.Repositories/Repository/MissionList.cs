@@ -159,7 +159,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            List<User> recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null).ToList();
+            List<User> recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == "user").Include(u => u.MissionInviteFromUsers).Include(u => u.MissionInviteToUsers).ToList();
 
             return recentVolunteers;
         }
@@ -245,5 +245,23 @@ namespace CiPlatformWeb.Repositories.Repository
             List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId && m.Story.DeletedAt == null && m.Story.Status == "PUBLISHED").Include(m => m.FromUser).Include(m => m.Story).ToList();
             return storyInvites;
         }
+
+        public void ChangeNotificationStatus (long id)
+        {
+            UserNotification notification = _db.UserNotifications.FirstOrDefault(n => n.NotificationId == id);
+            notification.Status = true;
+            _db.SaveChanges();
+        }
+
+        public void ClearAllNotifications (long userId)
+        {
+            List<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId== userId).ToList();
+            foreach(var n in notifications)
+            {
+                n.DeletedAt = DateTime.Now;
+            }
+            _db.SaveChanges();
+        }
+
     }
 }

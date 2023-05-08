@@ -12,6 +12,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -22,6 +23,11 @@ namespace CiPlatformWeb.Repositories.Repository
         public StoryList (ApplicationDbContext db)
         {
             _db = db;
+        }
+
+        public bool IsValidStoryId (long MissionId, long userId)
+        {
+            return _db.Stories.Any(s => s.MissionId == MissionId && s.UserId == userId && s.DeletedAt == null && (s.Status == "PUBLISHED" || s.Status == "DRAFT"));
         }
 
         public User sessionUser (long userId)
@@ -222,12 +228,12 @@ namespace CiPlatformWeb.Repositories.Repository
         public int IncreaseViewCount (long MissionId, long UserId, long sessionUser)
         {
             int viewCount = 0;
-            long storyId = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == "PUBLISHED").Select(s=>s.StoryId).FirstOrDefault();
+            long storyId = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == "PUBLISHED").Select(s => s.StoryId).FirstOrDefault();
 
             if (storyId != 0)
             {
                 bool view = _db.StoryViews.Any(s => s.StoryId == storyId && s.UserId == sessionUser);
-                if(!view)
+                if (!view)
                 {
                     StoryView storyView = new StoryView()
                     {
@@ -255,7 +261,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            List<User> list = _db.Users.Where(u => u.UserId != userId).ToList();
+            List<User> list = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == "user").Include(u => u.StoryInviteToUsers).Include(u => u.StoryInviteFromUsers).ToList();
             return list;
         }
 
@@ -274,8 +280,19 @@ namespace CiPlatformWeb.Repositories.Repository
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
             };
-
             _db.StoryInvites.Add(storyInvite);
+
+            UserNotification notification = new UserNotification()
+            {
+                ToUserId = ToUserId,
+                FromUserId = FromUserId,
+                RecommendedStooyId = StoryId,
+                Status = false,
+                CreatedAt = DateTime.Now,
+                UserSettingId = (long) notifications.recommendedStory
+            };
+            _db.UserNotifications.Add(notification);
+
             _db.SaveChanges();
         }
 

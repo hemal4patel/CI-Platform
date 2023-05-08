@@ -20,6 +20,11 @@ namespace CiPlatformWeb.Repositories.Repository
             _db = db;
         }
 
+        public bool IsValidMissionId (long missionId)
+        {
+            return _db.Missions.Any(m => m.MissionId == missionId && m.DeletedAt == null && m.Status == 1);
+        }
+
         public MissionDetailsModel GetMissionDetails (long MissionId, long userId)
         {
             IQueryable<Mission> missions = _db.Missions.Where(m => m.MissionId == MissionId).AsQueryable();
@@ -48,7 +53,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 MissionDocuments = m.MissionDocuments.Where(m => m.DeletedAt == null).ToList(),
                 hasAppliedApprove = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "APPROVE"),
                 hasAppliedPending = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "PENDING"),
-                hasAppliedDecline = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "DECLINE")
+                hasAppliedDecline = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "DECLINE"),
+                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count()
             }).FirstOrDefault();
 
             return list;
@@ -117,7 +123,8 @@ namespace CiPlatformWeb.Repositories.Repository
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
                 achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == "APPROVED").Sum(m => m.Action),
                 mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
-                skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault()
+                skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault(),
+                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count()
             });
 
             return list.ToList();
@@ -164,8 +171,19 @@ namespace CiPlatformWeb.Repositories.Repository
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
             };
-
             _db.MissionInvites.Add(missionInvite);
+
+            UserNotification notification = new UserNotification()
+            {
+                ToUserId = ToUserId,
+                FromUserId = FromUserId,
+                RecommendedMissionId = MissionId,
+                Status = false,
+                CreatedAt = DateTime.Now,
+                UserSettingId = 1
+            };
+            _db.UserNotifications.Add(notification);
+
             _db.SaveChanges();
         }
 

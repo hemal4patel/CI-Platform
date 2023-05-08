@@ -11,6 +11,7 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IStoryList
     {
+        public bool IsValidStoryId (long MissionId, long userId);
 
         public User sessionUser (long userId);
 

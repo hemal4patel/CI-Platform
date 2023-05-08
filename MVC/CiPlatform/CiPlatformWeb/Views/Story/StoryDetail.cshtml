@@ -157,9 +157,17 @@
 
 
                                             <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@Model.storyDetail.StoryId">
-                                                <button onclick="storyInvite(@u.UserId)" class="btn btn-outline-primary model-button">
-                                                    Invite
-                                                </button>
+
+                                                @if (u.StoryInviteToUsers.Any(m => m.ToUserId == u.UserId && m.StoryId == Model.storyDetail.StoryId))
+                                                {
+                                                    <button disabled class="btn btn-success disabled model-button">Already Invited</button>
+                                                }
+                                                else
+                                                {
+                                                    <button onclick="storyInvite(@u.UserId)" class="btn btn-outline-primary model-button">
+                                                        Invite
+                                                    </button>
+                                                }
                                             </span>
 
                                         </div>

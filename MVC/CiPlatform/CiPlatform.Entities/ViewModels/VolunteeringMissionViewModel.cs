@@ -62,6 +62,8 @@ namespace CiPlatformWeb.Entities.ViewModels
 
         public int? achievedGoal { get; set; }
 
+        public int? totalVolunteers { get; set; }
+
         public List<MissionMedium>? missionMedia { get; set; }
 
         public List<string>? skills { get; set; }

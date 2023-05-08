@@ -329,7 +329,7 @@ function storyInvite(ToUserId) {
         url: "/Story/StoryInvite",
         data: { ToUserId: ToUserId, StoryId: StoryId, FromUserId: FromUserId, storyUserId: storyUserId, storyMissionId: storyMissionId },
         success: function () {
-            $('.Invited-' + ToUserId + '.Invited-' + StoryId).html(' <button class="btn btn-outline-success">Invited</button>');
+            $('.Invited-' + ToUserId + '.Invited-' + StoryId).html(' <button disabled class="btn disabled btn-success">Invited</button>');
         }
     });
 }

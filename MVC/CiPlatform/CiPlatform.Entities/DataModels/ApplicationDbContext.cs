@@ -49,6 +49,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<MissionTheme> MissionThemes { get; set; }
 
+    public virtual DbSet<NotificationSetting> NotificationSettings { get; set; }
+
     public virtual DbSet<PasswordReset> PasswordResets { get; set; }
 
     public virtual DbSet<Skill> Skills { get; set; }
@@ -64,6 +66,10 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Timesheet> Timesheets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserNotification> UserNotifications { get; set; }
+
+    public virtual DbSet<UserSetting> UserSettings { get; set; }
 
     public virtual DbSet<UserSkill> UserSkills { get; set; }
 
@@ -665,6 +671,20 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnName("updated_at");
         });
 
+        modelBuilder.Entity<NotificationSetting>(entity =>
+        {
+            entity.HasKey(e => e.SettingId);
+
+            entity.ToTable("notification_settings");
+
+            entity.Property(e => e.SettingId).HasColumnName("setting_id");
+            entity.Property(e => e.IsEnabled)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled");
+            entity.Property(e => e.SettingName).HasColumnName("setting_name");
+        });
+
         modelBuilder.Entity<PasswordReset>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__password__3213E83FBEFACCF2");
@@ -975,6 +995,93 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Country).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CountryId)
                 .HasConstraintName("FK__user__country_id__6B24EA82");
+        });
+
+        modelBuilder.Entity<UserNotification>(entity =>
+        {
+            entity.HasKey(e => e.NotificationId);
+
+            entity.ToTable("user_notifications");
+
+            entity.Property(e => e.NotificationId).HasColumnName("notification_id");
+            entity.Property(e => e.CommentId).HasColumnName("comment_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeletedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("deleted_at");
+            entity.Property(e => e.FromUserId).HasColumnName("from_user_id");
+            entity.Property(e => e.MissionApplicationId).HasColumnName("mission_application_id");
+            entity.Property(e => e.NewMissionId).HasColumnName("new_mission_id");
+            entity.Property(e => e.RecommendedMissionId).HasColumnName("recommended_mission_id");
+            entity.Property(e => e.RecommendedStooyId).HasColumnName("recommended_stooy_id");
+            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.StoryId).HasColumnName("story_id");
+            entity.Property(e => e.TimesheetId).HasColumnName("timesheet_id");
+            entity.Property(e => e.ToUserId).HasColumnName("to_user_id");
+            entity.Property(e => e.UserSettingId).HasColumnName("user_setting_id");
+
+            entity.HasOne(d => d.Comment).WithMany(p => p.UserNotifications)
+                .HasForeignKey(d => d.CommentId)
+                .HasConstraintName("FK_user_notifications_comment");
+
+            entity.HasOne(d => d.FromUser).WithMany(p => p.UserNotificationFromUsers)
+                .HasForeignKey(d => d.FromUserId)
+                .HasConstraintName("FK_user_notifications_user1");
+
+            entity.HasOne(d => d.MissionApplication).WithMany(p => p.UserNotifications)
+                .HasForeignKey(d => d.MissionApplicationId)
+                .HasConstraintName("FK_user_notifications_mission_application");
+
+            entity.HasOne(d => d.NewMission).WithMany(p => p.UserNotificationNewMissions)
+                .HasForeignKey(d => d.NewMissionId)
+                .HasConstraintName("FK_user_notifications_mission1");
+
+            entity.HasOne(d => d.RecommendedMission).WithMany(p => p.UserNotificationRecommendedMissions)
+                .HasForeignKey(d => d.RecommendedMissionId)
+                .HasConstraintName("FK_user_notifications_mission");
+
+            entity.HasOne(d => d.RecommendedStooy).WithMany(p => p.UserNotificationRecommendedStooys)
+                .HasForeignKey(d => d.RecommendedStooyId)
+                .HasConstraintName("FK_user_notifications_story1");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.UserNotificationStories)
+                .HasForeignKey(d => d.StoryId)
+                .HasConstraintName("FK_user_notifications_story");
+
+            entity.HasOne(d => d.Timesheet).WithMany(p => p.UserNotifications)
+                .HasForeignKey(d => d.TimesheetId)
+                .HasConstraintName("FK_user_notifications_timesheet");
+
+            entity.HasOne(d => d.ToUser).WithMany(p => p.UserNotificationToUsers)
+                .HasForeignKey(d => d.ToUserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_user_notifications_user");
+
+            entity.HasOne(d => d.UserSetting).WithMany(p => p.UserNotifications)
+                .HasForeignKey(d => d.UserSettingId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_user_notifications_user_settings");
+        });
+
+        modelBuilder.Entity<UserSetting>(entity =>
+        {
+            entity.ToTable("user_settings");
+
+            entity.Property(e => e.UserSettingId).HasColumnName("user_setting_id");
+            entity.Property(e => e.IsEnabled)
+                .IsRequired()
+                .HasDefaultValueSql("((1))")
+                .HasColumnName("is_enabled");
+            entity.Property(e => e.SettingId).HasColumnName("setting_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserSettings)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_user_settings_user");
         });
 
         modelBuilder.Entity<UserSkill>(entity =>

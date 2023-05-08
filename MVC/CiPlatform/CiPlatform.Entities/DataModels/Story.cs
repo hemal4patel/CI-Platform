@@ -36,4 +36,8 @@ public partial class Story
     public virtual ICollection<StoryView> StoryViewsNavigation { get; } = new List<StoryView>();
 
     public virtual User User { get; set; } = null!;
+
+    public virtual ICollection<UserNotification> UserNotificationRecommendedStooys { get; } = new List<UserNotification>();
+
+    public virtual ICollection<UserNotification> UserNotificationStories { get; } = new List<UserNotification>();
 }

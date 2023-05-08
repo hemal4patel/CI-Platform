@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -49,6 +50,16 @@ namespace CiPlatformWeb.Repositories.Repository
                 missionApplication.ApprovalStatus = "APPROVE";
             }
             missionApplication.UpdatedAt = DateTime.Now;
+
+            //UserNotification notification = new UserNotification()
+            //{
+            //    ToUserId = missionApplication.UserId,
+            //    MissionApplicationId = applicationId,
+            //    Status = false,
+            //    CreatedAt = DateTime.Now,
+            //    UserSettingId = (long) notifications.missionApplication
+            //};
+            //_db.UserNotifications.Add(notification);
 
             _db.SaveChanges();
         }

@@ -149,13 +149,20 @@ namespace CiPlatformWeb.Controllers
         {
             if (CheckSession())
             {
-                StoryDetailViewModel vm = new StoryDetailViewModel();
+                if (_storyList.IsValidStoryId(MissionId, UserId))
+                {
+                    StoryDetailViewModel vm = new StoryDetailViewModel();
 
-                vm.storyViews = _storyList.IncreaseViewCount(MissionId, UserId, userId);
-                vm.storyDetail = _storyList.GetStoryDetails(MissionId, UserId);
-                vm.userDetail = _storyList.GetUserList(userId);
+                    vm.storyViews = _storyList.IncreaseViewCount(MissionId, UserId, userId);
+                    vm.storyDetail = _storyList.GetStoryDetails(MissionId, UserId);
+                    vm.userDetail = _storyList.GetUserList(userId);
 
-                return View(vm);
+                    return View(vm);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {
@@ -172,15 +179,8 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> StoryInvite (long ToUserId, long StoryId, long FromUserId, long storyUserId, long storyMissionId)
         {
-            StoryInvite storyInvite = _storyList.HasAlreadyInvited(ToUserId, StoryId, FromUserId);
-            if (storyInvite != null)
-            {
-                _storyList.ReInviteToStory(storyInvite);
-            }
-            else
-            {
-                _storyList.InviteToStory(FromUserId, ToUserId, StoryId);
-            }
+            _storyList.InviteToStory(FromUserId, ToUserId, StoryId);
+
             string StoryLink = Url.Action("StoryDetail", "Story", new { MissionId = storyMissionId, UserId = storyUserId }, Request.Scheme);
             string link = StoryLink;
             await _storyList.SendInvitationToCoWorker(ToUserId, FromUserId, link);

@@ -77,5 +77,11 @@ public partial class User
 
     public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
 
+    public virtual ICollection<UserNotification> UserNotificationFromUsers { get; } = new List<UserNotification>();
+
+    public virtual ICollection<UserNotification> UserNotificationToUsers { get; } = new List<UserNotification>();
+
+    public virtual ICollection<UserSetting> UserSettings { get; } = new List<UserSetting>();
+
     public virtual ICollection<UserSkill> UserSkills { get; } = new List<UserSkill>();
 }

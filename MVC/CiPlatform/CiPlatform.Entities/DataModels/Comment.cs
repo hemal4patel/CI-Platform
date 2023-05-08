@@ -24,4 +24,6 @@ public partial class Comment
     public virtual Mission Mission { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
+
+    public virtual ICollection<UserNotification> UserNotifications { get; } = new List<UserNotification>();
 }

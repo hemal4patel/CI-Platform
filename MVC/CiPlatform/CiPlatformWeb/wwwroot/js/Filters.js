@@ -1,5 +1,4 @@
 ﻿
-
 var selectedCountry = null;
 var selectedSortCase = null;
 var currentUrl = window.location.href;
@@ -65,6 +64,40 @@ function showRecentVounteers(currVolPage) {
     });
 }
 
+$('#notificationDropdownList li').on('click', function () {
+    var id = $(this).attr('id');
+    console.log(id)
+    $.ajax({
+        type: 'POST',
+        url: '/Mission/ChangeNotificationStatus',
+        data: { id: id },
+        success: function () {
+          
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
+
+$('.clearAllNotifications').on('click', function () {
+
+    $.ajax({
+        type: 'POST',
+        url: '/Mission/ClearAllNotifications',
+        success: function () {
+            console.log('called')
+            $('#notificationDropdownList .clearNotification').next('hr').remove()
+            $('#notificationDropdownList .clearNotification').remove()
+
+            var html = '<img src="/images/bell-big.png" class="mx-auto d-block" /><li class="text-center" style="font-size: 21px;">You do not have any new notifications</li>'
+            $('#notificationDropdownList').append(html)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
 
 $('#searchText').on('keyup', function () {
     if (currentUrl.includes("PlatformLanding")) {
@@ -696,7 +729,7 @@ function recommendToCoWorker(ToUserId, MissionId, FromUserId) {
         url: "/Mission/MissionInvite",
         data: { ToUserId: ToUserId, MissionId: MissionId, FromUserId: FromUserId },
         success: function () {
-            $('.Invited-' + ToUserId + '.Invited-' + MissionId).html(' <button class="btn btn-outline-success" data-mission-Id="@Model.MissionDetails.MissionId">Invited</button>');
+            $('.Invited-' + ToUserId + '.Invited-' + MissionId).html(' <button disabled class="btn disabled btn-success">Invited</button>');
         }
     });
 }
@@ -778,42 +811,42 @@ function search() {
     })
 }
 
-$('#notificationDropdown').click(function () {
-    $.ajax({
-        type: "GET",
-        url: "/Mission/GetInvitations",
-        success: function (result) {
-            $('#invitesDropdown').empty();
-            var items = "";
-            var combinedList = $.merge(result.missionInvites, result.storyInvites);
-            combinedList.sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1);
+//$('#notificationDropdown').click(function () {
+//    $.ajax({
+//        type: "GET",
+//        url: "/Mission/GetInvitations",
+//        success: function (result) {
+//            $('#invitesDropdown').empty();
+//            var items = "";
+//            var combinedList = $.merge(result.missionInvites, result.storyInvites);
+//            combinedList.sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1);
 
-            if (combinedList.length != 0) {
+//            if (combinedList.length != 0) {
 
-                $(combinedList).each(function (i, item) {
-                    var url = "";
-                    if (item.missionId) {
-                        url = '/Mission/VolunteeringMission?MissionId=' + item.missionId
-                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this mission - <strong>' + item.mission.title + '</strong></a></li>'
-                        items += '<li><hr class="dropdown-divider"></li>'
-                    }
-                    else {
-                        url = '/Story/StoryDetail?MissionId=' + item.story.missionId + '&UserId=' + item.story.userId
-                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this story - <strong>' + item.story.title + '</strong></a></li>'
-                        items += '<li><hr class="dropdown-divider"></li>'
-                    }
+//                $(combinedList).each(function (i, item) {
+//                    var url = "";
+//                    if (item.missionId) {
+//                        url = '/Mission/VolunteeringMission?MissionId=' + item.missionId
+//                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this mission - <strong>' + item.mission.title + '</strong></a></li>'
+//                        items += '<li><hr class="dropdown-divider"></li>'
+//                    }
+//                    else {
+//                        url = '/Story/StoryDetail?MissionId=' + item.story.missionId + '&UserId=' + item.story.userId
+//                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this story - <strong>' + item.story.title + '</strong></a></li>'
+//                        items += '<li><hr class="dropdown-divider"></li>'
+//                    }
 
-                })
-            }
-            else {
-                items = '<li class="text-center" style="font-size: 21px;">No invites</li>'
-            }
-            $('#invitesDropdown').html(items);
-        },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-})
+//                })
+//            }
+//            else {
+//                items = '<li class="text-center" style="font-size: 21px;">No invites</li>'
+//            }
+//            $('#invitesDropdown').html(items);
+//        },
+//        error: function (error) {
+//            console.log(error);
+//        }
+//    });
+//})
 
 

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CiPlatformWeb.Repositories.EnumStats;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -46,6 +48,16 @@ namespace CiPlatformWeb.Repositories.Repository
                 comment.ApprovalStatus = "PUBLISHED";
             }
             comment.UpdatedAt = DateTime.Now;
+
+            //UserNotification notification = new UserNotification()
+            //{
+            //    ToUserId = comment.UserId,
+            //    CommentId = commentId,
+            //    Status = false,
+            //    CreatedAt = DateTime.Now,
+            //    UserSettingId = (long) notifications.comment
+            //};
+            //_db.UserNotifications.Add(notification);
 
             _db.SaveChanges();
         }

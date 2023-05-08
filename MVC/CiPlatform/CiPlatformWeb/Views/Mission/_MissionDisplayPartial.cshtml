@@ -66,7 +66,7 @@
                                 </div>
                             }
 
-                            <div class="mt-1 me-2 btn bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
+                            <div class="mt-1 me-2 bg-black bg-opacity-50 position-absolute top-0 end-0 p-2 rounded-pill text-decoration-none text-white">
                                 <div class="text-decoration-none text-white">
                                     <img src="~/images/pin.png" alt="" class="img-fluid"> &nbsp;
                                     <span class="mission-city">@obj.cityName</span>
@@ -113,7 +113,15 @@
                                                     <span class="me-4 userName-@obj.missionId">@u.FirstName @u.LastName</span>
 
                                                     <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@obj.missionId">
-                                                        <button onclick="recommendToCoWorker(@u.UserId, @obj.missionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@obj.missionId">Invite</button>
+
+                                                        @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId))
+                                                        {
+                                                            <button disabled class="btn btn-success disabled model-button">Already Invited</button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button onclick="recommendToCoWorker(@u.UserId, @obj.missionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@obj.missionId">Invite</button>
+                                                        }
                                                     </span>
 
                                                 </div>
@@ -354,7 +362,14 @@
 
 
                                                 <span style="margin-left : 6%;" class="invited-@u.UserId Invited-@obj.missionId">
-                                                    <button onclick="recommendToCoWorker(@u.UserId, @obj.missionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@obj.missionId">Invite</button>
+                                                    @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId))
+                                                    {
+                                                        <button disabled class="btn btn-success disabled model-button">Already Invited</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button onclick="recommendToCoWorker(@u.UserId, @obj.missionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@obj.missionId">Invite</button>
+                                                    }
                                                 </span>
 
                                             </div>

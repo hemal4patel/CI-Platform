@@ -10,6 +10,8 @@ namespace CiPlatformWeb.Repositories.Interface
 {
     public interface IMissionDetail
     {
+        public bool IsValidMissionId (long missionId);
+
         public MissionDetailsModel GetMissionDetails (long MissionId, long userId);
 
         public bool HasAlreadyApplied (long missionId, long userId);
