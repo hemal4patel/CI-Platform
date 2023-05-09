@@ -45,23 +45,23 @@ namespace CiPlatformWeb.Repositories.Repository
 
             if (status == 0)
             {
-                timesheet.Status = "DECLINED";
+                timesheet.Status = timesheetStatus.declined.ToString().ToUpper();
             }
             else
             {
-                timesheet.Status = "APPROVED";
+                timesheet.Status = timesheetStatus.approved.ToString().ToUpper();
             }
             timesheet.UpdatedAt = DateTime.Now;
 
-            //UserNotification notification = new UserNotification()
-            //{
-            //    ToUserId = timesheet.UserId,
-            //    TimesheetId = timesheetId,
-            //    Status = false,
-            //    CreatedAt = DateTime.Now,
-            //    UserSettingId = (long) notifications.timesheet
-            //};
-            //_db.UserNotifications.Add(notification);
+            UserNotification notification = new UserNotification()
+            {
+                ToUserId = timesheet.UserId,
+                TimesheetId = timesheetId,
+                Status = false,
+                CreatedAt = DateTime.Now,
+                UserSettingId = (long) notifications.timesheet
+            };
+            _db.UserNotifications.Add(notification);
 
             _db.SaveChanges();
         }

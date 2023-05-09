@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -39,22 +40,22 @@ namespace CiPlatformWeb.Repositories.Repository
                 ratingByUser = m.MissionRatings.Where(m => m.UserId == userId).Select(m => m.Rating).FirstOrDefault(),
                 ratingByAll = m.MissionRatings.Any() ? m.MissionRatings.Average(m => m.Rating) : 0,
                 ratedByVols = m.MissionRatings.Count(),
-                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count(),
+                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()).Count(),
                 hasDeadlinePassed = m.StartDate.Value.AddDays(-1) < DateTime.Now,
                 haEndDatePassed = m.EndDate < DateTime.Now,
                 isOngoing = (m.StartDate < DateTime.Now) && (m.EndDate > DateTime.Now),
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == "APPROVED").Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == timesheetStatus.approved.ToString().ToUpper()).Sum(m => m.Action),
                 missionMedia = m.MissionMedia.Where(m => m.DeletedAt == null).ToList(),
                 skills = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).ToList(),
                 ApprovedComments = m.Comments.ToList(),
                 MissionDocuments = m.MissionDocuments.Where(m => m.DeletedAt == null).ToList(),
-                hasAppliedApprove = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "APPROVE"),
-                hasAppliedPending = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "PENDING"),
-                hasAppliedDecline = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == "DECLINE"),
-                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count()
+                hasAppliedApprove = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()),
+                hasAppliedPending = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == applicationStatus.pending.ToString().ToUpper()),
+                hasAppliedDecline = m.MissionApplications.Any(m => m.UserId == userId && m.ApprovalStatus == applicationStatus.decline.ToString().ToUpper()),
+                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()).Count()
             }).FirstOrDefault();
 
             return list;
@@ -71,7 +72,7 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 MissionId = missionId,
                 UserId = userId,
-                ApprovalStatus = "PENDING",
+                ApprovalStatus = applicationStatus.pending.ToString().ToUpper(),
                 CreatedAt = DateTime.Now,
                 AppliedAt = DateTime.Now
             };
@@ -114,17 +115,17 @@ namespace CiPlatformWeb.Repositories.Repository
                 themeName = m.Theme.Title,
                 isFavorite = m.FavouriteMissions.Any(m => m.UserId == userId),
                 rating = m.MissionRatings.Select(m => m.Rating).FirstOrDefault(),
-                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count(),
+                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()).Count(),
                 hasDeadlinePassed = m.StartDate.Value.AddDays(-1) < DateTime.Now,
                 haEndDatePassed = m.EndDate < DateTime.Now,
                 isOngoing = (m.StartDate < DateTime.Now) && (m.EndDate > DateTime.Now),
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == "APPROVED").Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == timesheetStatus.approved.ToString().ToUpper()).Sum(m => m.Action),
                 mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
                 skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault(),
-                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count()
+                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()).Count()
             });
 
             return list.ToList();
@@ -135,13 +136,13 @@ namespace CiPlatformWeb.Repositories.Repository
             int pagesize = 2;
             IQueryable<MissionApplication> recentVolunteers = _db.MissionApplications
                 .Include(u => u.User)
-                .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE");
+                .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == applicationStatus.approve.ToString().ToUpper());
 
             int count = recentVolunteers.Count();
 
             recentVolunteers = _db.MissionApplications
                 .Include(u => u.User)
-                .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == "APPROVE").OrderByDescending(u => u.CreatedAt)
+                .Where(u => u.MissionId == MissionId && u.UserId != userId && u.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()).OrderByDescending(u => u.CreatedAt)
                 .Skip(Math.Max((pageno - 1) * pagesize, 0))
                 .Take(pagesize);
 
@@ -180,7 +181,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 RecommendedMissionId = MissionId,
                 Status = false,
                 CreatedAt = DateTime.Now,
-                UserSettingId = 1
+                UserSettingId = (long) notifications.recommendedMission
             };
             _db.UserNotifications.Add(notification);
 

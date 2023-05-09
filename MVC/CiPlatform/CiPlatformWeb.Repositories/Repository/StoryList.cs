@@ -27,7 +27,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool IsValidStoryId (long MissionId, long userId)
         {
-            return _db.Stories.Any(s => s.MissionId == MissionId && s.UserId == userId && s.DeletedAt == null && (s.Status == "PUBLISHED" || s.Status == "DRAFT"));
+            return _db.Stories.Any(s => s.MissionId == MissionId && s.UserId == userId && s.DeletedAt == null && (s.Status == storyStatus.published.ToString().ToUpper() || s.Status == storyStatus.draft.ToString().ToUpper()));
         }
 
         public User sessionUser (long userId)
@@ -38,7 +38,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public (List<StoryListModel> stories, int count) GetStories (StoryQueryParams viewmodel)
         {
-            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == "PUBLISHED" && s.DeletedAt == null && s.Mission.DeletedAt == null && s.Mission.Status == 1).AsQueryable();
+            IQueryable<Story> stories = _db.Stories.Where(s => s.Status == storyStatus.published.ToString().ToUpper() && s.DeletedAt == null && s.Mission.DeletedAt == null && s.Mission.Status == 1).AsQueryable();
 
             if (viewmodel.CountryId != null)
             {
@@ -85,28 +85,28 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<MissionApplication> GetMissions (long userId)
         {
-            return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == "APPROVE" && u.Mission.DeletedAt == null && u.Mission.Status == 1)
+            return _db.MissionApplications.Where(u => u.UserId == userId && u.ApprovalStatus == applicationStatus.approve.ToString().ToUpper() && u.Mission.DeletedAt == null && u.Mission.Status == 1)
                 .Include(u => u.Mission)
                 .ToList();
         }
 
         public Story GetDraftedStory (long missionId, long userId)
         {
-            return _db.Stories.Where(s => s.MissionId == missionId && s.UserId == userId && s.Status == "DRAFT")
+            return _db.Stories.Where(s => s.MissionId == missionId && s.UserId == userId && s.Status == storyStatus.draft.ToString().ToUpper())
                 .Include(s => s.StoryMedia.Where(s => s.DeletedAt == null))
                 .FirstOrDefault();
         }
 
         public bool CheckPublishedStory (long MissionId, long userId)
         {
-            return _db.Stories.Any(s => s.MissionId == MissionId && s.UserId == userId && s.Status != "DRAFT");
+            return _db.Stories.Any(s => s.MissionId == MissionId && s.UserId == userId && s.Status != storyStatus.draft.ToString().ToUpper());
         }
 
         public void UpdateDraftedStory (ShareStoryViewModel viewmodel, Story draftedStory)
         {
             draftedStory.Title = viewmodel.StoryTitle;
             draftedStory.Description = viewmodel.StoryDescription;
-            draftedStory.Status = "DRAFT";
+            draftedStory.Status = storyStatus.draft.ToString().ToUpper();
             draftedStory.UpdatedAt = DateTime.Now;
             _db.Update(draftedStory);
             _db.SaveChanges();
@@ -196,7 +196,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 UserId = userId,
                 Title = viewmodel.StoryTitle,
                 Description = viewmodel.StoryDescription,
-                Status = "DRAFT",
+                Status = storyStatus.draft.ToString().ToUpper(),
                 CreatedAt = DateTime.Now,
             };
             _db.Stories.Add(newStory);
@@ -219,7 +219,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             draftedStory.Title = viewmodel.StoryTitle;
             draftedStory.Description = viewmodel.StoryDescription;
-            draftedStory.Status = "PENDING";
+            draftedStory.Status = storyStatus.pending.ToString().ToUpper();
             draftedStory.UpdatedAt = DateTime.Now;
             _db.Update(draftedStory);
             _db.SaveChanges();
@@ -228,7 +228,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public int IncreaseViewCount (long MissionId, long UserId, long sessionUser)
         {
             int viewCount = 0;
-            long storyId = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == "PUBLISHED").Select(s => s.StoryId).FirstOrDefault();
+            long storyId = _db.Stories.Where(s => s.MissionId == MissionId && s.UserId == UserId && s.Status == storyStatus.published.ToString().ToUpper()).Select(s => s.StoryId).FirstOrDefault();
 
             if (storyId != 0)
             {
@@ -261,13 +261,13 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            List<User> list = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == "user").Include(u => u.StoryInviteToUsers).Include(u => u.StoryInviteFromUsers).ToList();
+            List<User> list = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == userRole.user.ToString()).Include(u => u.StoryInviteToUsers).Include(u => u.StoryInviteFromUsers).ToList();
             return list;
         }
 
         public StoryInvite HasAlreadyInvited (long ToUserId, long StoryId, long FromUserId)
         {
-            return _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId && m.Story.Status == "PUBLISHED").FirstOrDefault();
+            return _db.StoryInvites.Where(m => m.StoryId == StoryId && m.ToUserId == ToUserId && m.FromUserId == FromUserId && m.Story.Status == storyStatus.published.ToString().ToUpper()).FirstOrDefault();
         }
 
         public void InviteToStory (long FromUserId, long ToUserId, long StoryId)

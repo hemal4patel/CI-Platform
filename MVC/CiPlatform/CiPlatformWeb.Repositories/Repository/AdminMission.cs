@@ -10,6 +10,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using static CiPlatformWeb.Repositories.EnumStats;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -112,7 +113,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 CreatedAt = DateTime.Now
             };
             //time
-            if (mission.MissionType == "Time")
+            if (mission.MissionType == missionType.Time.ToString())
             {
                 mission.TotalSeats = vm.newMission.totalSeats;
                 mission.RegistrationDeadline = vm.newMission.registrationDeadline;
@@ -127,7 +128,7 @@ namespace CiPlatformWeb.Repositories.Repository
             long missionId = mission.MissionId;
 
             //goal
-            if (mission.MissionType == "Goal")
+            if (mission.MissionType == missionType.Goal.ToString())
             {
                 GoalMission goal = new GoalMission()
                 {
@@ -241,6 +242,25 @@ namespace CiPlatformWeb.Repositories.Repository
                 _db.SaveChanges();
             }
 
+            AddNotificationForAllUsers(missionId);
+        }
+
+        public void AddNotificationForAllUsers (long missionId)
+        {
+            List<long> userIds = _db.Users.Where(u => u.DeletedAt == null).Select(u => u.UserId).ToList();
+            foreach (long userId in userIds)
+            {
+                UserNotification notification = new UserNotification()
+                {
+                    ToUserId = userId,
+                    NewMissionId = missionId,
+                    Status = false,
+                    CreatedAt = DateTime.Now,
+                    UserSettingId = (long) notifications.newMission
+                };
+                _db.UserNotifications.Add(notification);
+            }
+            _db.SaveChanges();
         }
 
         public void EditMission (AdminMissionViewModel vm)
@@ -261,7 +281,7 @@ namespace CiPlatformWeb.Repositories.Repository
             {
                 mission.EndDate = vm.newMission.endDate;
             }
-            if (mission.MissionType == "Time")
+            if (mission.MissionType == missionType.Time.ToString())
             {
                 if (vm.newMission.registrationDeadline is not null)
                 {
@@ -281,7 +301,7 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.SaveChanges();
 
             //goal
-            if (vm.newMission.missionType == "Goal")
+            if (vm.newMission.missionType == missionType.Goal.ToString())
             {
                 GoalMission goal = _db.GoalMissions.Where(g => g.MissionId == mission.MissionId).FirstOrDefault();
                 goal.GoalValue = vm.newMission.goalValue;

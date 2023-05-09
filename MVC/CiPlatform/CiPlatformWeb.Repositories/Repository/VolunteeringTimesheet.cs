@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -22,7 +23,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<MissionApplication> GetTimeBasedMission (long userId)
         {
             DateTime today = DateTime.Now;
-            List<MissionApplication> timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Time" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
+            List<MissionApplication> timeMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == missionType.Time.ToString() && m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper() && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
 
             return timeMissions;
         }
@@ -30,31 +31,31 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<MissionApplication> GetGoalBasedMission (long userId)
         {
             DateTime today = DateTime.Now;
-            List<MissionApplication> goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == "Goal" && m.ApprovalStatus == "APPROVE" && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
+            List<MissionApplication> goalMissions = _db.MissionApplications.Where(m => m.UserId == userId && m.Mission.MissionType == missionType.Goal.ToString() && m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper() && m.Mission.StartDate <= today && m.Mission.EndDate >= today).Include(m => m.Mission).ToList();
 
             return goalMissions;
         }
 
         public List<Timesheet> GetTimeBasedEntries (long userId)
         {
-            List<Timesheet> timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Time" && t.Status != "DECLINED" && t.DeletedAt == null).Include(t => t.Mission).ToList();
+            List<Timesheet> timeBasedEntries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == missionType.Time.ToString() && t.Status != timesheetStatus.declined.ToString().ToUpper() && t.DeletedAt == null).Include(t => t.Mission).ToList();
             return timeBasedEntries;
         }
 
         public List<Timesheet> GetGoalBasedEntries (long userId)
         {
-            List<Timesheet> goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == "Goal" && t.Status != "DECLINED" && t.DeletedAt == null).Include(t => t.Mission).ToList();
+            List<Timesheet> goalBasedEnteries = _db.Timesheets.Where(t => t.UserId == userId && t.Mission.MissionType == missionType.Goal.ToString() && t.Status != timesheetStatus.declined.ToString().ToUpper() && t.DeletedAt == null).Include(t => t.Mission).ToList();
             return goalBasedEnteries;
         }
 
         public bool TimeSheetExists (long missionId, long userId, DateTime dateVolunteered)
         {
-            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.Status != "DECLINED" && t.DeletedAt == null);
+            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.Status != timesheetStatus.declined.ToString().ToUpper() && t.DeletedAt == null);
         }
 
         public bool TimesheetExistsForUpdate (long missionId, long userId, DateTime dateVolunteered, long? timesheetId)
         {
-            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.Status != "DECLINED" && t.DeletedAt == null && t.TimesheetId != timesheetId);
+            return _db.Timesheets.Any(t => t.MissionId == missionId && t.UserId == userId && t.DateVolunteered == dateVolunteered && t.Status != timesheetStatus.declined.ToString().ToUpper() && t.DeletedAt == null && t.TimesheetId != timesheetId);
         }
 
         public Timesheet GetEntry (long? timesheetId)
@@ -75,7 +76,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 DateVolunteered = viewmodel.dateVolunteered,
                 Notes = viewmodel.message,
                 CreatedAt = DateTime.Now,
-                Status = "PENDING"
+                Status = timesheetStatus.pending.ToString().ToUpper()
             };
             _db.Timesheets.Add(timeBasedEntry);
             _db.SaveChanges();
@@ -90,7 +91,7 @@ namespace CiPlatformWeb.Repositories.Repository
             timeBasedEntry.DateVolunteered = viewmodel.dateVolunteered;
             timeBasedEntry.Notes = viewmodel.message;
             timeBasedEntry.UpdatedAt = DateTime.Now;
-            timeBasedEntry.Status = "PENDING";
+            timeBasedEntry.Status = timesheetStatus.pending.ToString().ToUpper();
 
             _db.Update(timeBasedEntry);
             _db.SaveChanges();
@@ -107,7 +108,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 DateVolunteered = viewmodel.dateVolunteered,
                 Notes = viewmodel.message,
                 CreatedAt = DateTime.Now,
-                Status = "PENDING"
+                Status = timesheetStatus.pending.ToString().ToUpper()
             };
             _db.Timesheets.Add(goalBasedEntry);
             _db.SaveChanges();
@@ -121,7 +122,7 @@ namespace CiPlatformWeb.Repositories.Repository
             goalBasedEntry.DateVolunteered = viewmodel.dateVolunteered;
             goalBasedEntry.Notes = viewmodel.message;
             goalBasedEntry.UpdatedAt = DateTime.Now;
-            goalBasedEntry.Status = "PENDING";
+            goalBasedEntry.Status = timesheetStatus.pending.ToString().ToUpper();
             _db.Update(goalBasedEntry);
             _db.SaveChanges();
         }

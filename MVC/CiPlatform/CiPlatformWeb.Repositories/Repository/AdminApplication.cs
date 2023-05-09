@@ -42,24 +42,24 @@ namespace CiPlatformWeb.Repositories.Repository
             MissionApplication missionApplication = _db.MissionApplications.Where(m => m.MissionApplicationId == applicationId).FirstOrDefault();
 
             if (status == 0)
-            {
-                missionApplication.ApprovalStatus = "DECLINE";
+            {                
+                missionApplication.ApprovalStatus = applicationStatus.decline.ToString().ToUpper();
             }
             else
             {
-                missionApplication.ApprovalStatus = "APPROVE";
+                missionApplication.ApprovalStatus = applicationStatus.approve.ToString().ToUpper();
             }
             missionApplication.UpdatedAt = DateTime.Now;
 
-            //UserNotification notification = new UserNotification()
-            //{
-            //    ToUserId = missionApplication.UserId,
-            //    MissionApplicationId = applicationId,
-            //    Status = false,
-            //    CreatedAt = DateTime.Now,
-            //    UserSettingId = (long) notifications.missionApplication
-            //};
-            //_db.UserNotifications.Add(notification);
+            UserNotification notification = new UserNotification()
+            {
+                ToUserId = missionApplication.UserId,
+                MissionApplicationId = applicationId,
+                Status = false,
+                CreatedAt = DateTime.Now,
+                UserSettingId = (long) notifications.missionApplication
+            };
+            _db.UserNotifications.Add(notification);
 
             _db.SaveChanges();
         }

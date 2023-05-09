@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CiPlatformWeb.Entities.ViewModels;
 using System.Drawing.Printing;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -53,7 +54,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             IQueryable<Mission> missions = _db.Missions.Where(m => m.DeletedAt == null && m.Status == 1).AsQueryable();
 
-            List<long> themes = missions.GroupBy(m => m.ThemeId).OrderByDescending(g => g.Count()).Take(3).Select(g => g.Key).ToList();
+            List<long> themes = missions.GroupBy(m => m.ThemeId).OrderByDescending(g => g.Count()).Take(1).Select(g => g.Key).ToList();
 
 
             if (viewmodel.CountryId != null)
@@ -111,11 +112,11 @@ namespace CiPlatformWeb.Repositories.Repository
                     break;
 
                 case 3:
-                    missions = missions.Where(m => m.MissionType == "Time").OrderBy(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    missions = missions.Where(m => m.MissionType == missionType.Time.ToString()).OrderBy(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == applicationStatus.approve.ToString().ToUpper())));
                     break;
 
                 case 4:
-                    missions = missions.Where(m => m.MissionType == "Time").OrderByDescending(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == "APPROVE")));
+                    missions = missions.Where(m => m.MissionType == missionType.Time.ToString()).OrderByDescending(m => (m.TotalSeats - m.MissionApplications.Count(ma => ma.ApprovalStatus == applicationStatus.approve.ToString().ToUpper())));
                     break;
 
                 case 5:
@@ -141,17 +142,17 @@ namespace CiPlatformWeb.Repositories.Repository
                 themeName = m.Theme.Title,
                 isFavorite = m.FavouriteMissions.Any(m => m.UserId == userId),
                 rating = m.MissionRatings.Any() ? m.MissionRatings.Average(m => m.Rating) : 0,
-                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count(),
+                seatsLeft = m.TotalSeats - m.MissionApplications.Where(m => m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()).Count(),
                 hasDeadlinePassed = m.StartDate.Value.AddDays(-1) < DateTime.Now,
                 haEndDatePassed = m.EndDate < DateTime.Now,
                 isOngoing = (m.StartDate < DateTime.Now) && (m.EndDate > DateTime.Now),
                 hasApplied = m.MissionApplications.Any(m => m.UserId == userId),
                 goalObjectiveText = m.GoalMissions.Select(m => m.GoalObjectiveText).FirstOrDefault(),
                 totalGoal = m.GoalMissions.Select(m => m.GoalValue).FirstOrDefault(),
-                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == "APPROVED").Sum(m => m.Action),
+                achievedGoal = m.Timesheets.Where(m => m.DeletedAt == null && m.Status == timesheetStatus.approved.ToString().ToUpper()).Sum(m => m.Action),
                 mediaPath = m.MissionMedia.Where(m => m.Default == 1 && m.DeletedAt == null).Select(m => m.MediaPath).FirstOrDefault(),
                 skill = m.MissionSkills.Where(m => m.DeletedAt == null).Select(m => m.Skill.SkillName).FirstOrDefault(),
-                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == "APPROVE").Count()
+                totalVolunteers = m.MissionApplications.Where(m => m.ApprovalStatus == applicationStatus.approve.ToString().ToUpper()).Count()
             });
 
             return (list.ToList(), count);
@@ -159,7 +160,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<User> GetUserList (long userId)
         {
-            List<User> recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == "user").Include(u => u.MissionInviteFromUsers).Include(u => u.MissionInviteToUsers).ToList();
+            List<User> recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == userRole.user.ToString()).Include(u => u.MissionInviteFromUsers).Include(u => u.MissionInviteToUsers).ToList();
 
             return recentVolunteers;
         }
@@ -242,15 +243,60 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<StoryInvite> GetStoryInvites (long userId)
         {
-            List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId && m.Story.DeletedAt == null && m.Story.Status == "PUBLISHED").Include(m => m.FromUser).Include(m => m.Story).ToList();
+            List<StoryInvite> storyInvites = _db.StoryInvites.Where(m => m.ToUserId == userId && m.Story.DeletedAt == null && m.Story.Status == storyStatus.published.ToString().ToUpper()).Include(m => m.FromUser).Include(m => m.Story).ToList();
             return storyInvites;
         }
 
-        public void ChangeNotificationStatus (long id)
+        public List<NotificationParams> GetAllNotifications (long userId)
         {
+            IQueryable<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null).OrderByDescending(u => u.CreatedAt).AsQueryable();
+
+            var list = notifications.Select(n => new NotificationParams()
+            {
+                notificationId = n.NotificationId,
+                toUserId = userId,
+                fromUserId = n.FromUserId.HasValue ? n.FromUserId : 0,
+                recommendedMissionId = n.RecommendedMissionId.HasValue ? n.RecommendedMissionId : 0,
+                recommendedStoryId = n.RecommendedStooyId.HasValue ? n.RecommendedStooyId : 0,
+                newMissionId = n.NewMissionId.HasValue ? n.NewMissionId : 0,
+                storyId = n.StoryId.HasValue ? n.StoryId : 0,
+                timesheetId = n.TimesheetId.HasValue ? n.TimesheetId : 0,
+                commentId = n.CommentId.HasValue ? n.CommentId : 0,
+                MissionApplicationId = n.MissionApplicationId.HasValue ? n.MissionApplicationId : 0,
+                status = n.Status,
+                createdAt = n.CreatedAt,
+                fromUserName = n.FromUserId.HasValue ? n.FromUser.FirstName + " " + n.FromUser.LastName : "",
+                fromUserAvatar = n.FromUserId.HasValue ? n.FromUser.Avatar : "",
+                newMissionTitle = n.NewMissionId.HasValue ? n.NewMission.Title : "",
+                recommendedMissionTitle = n.RecommendedMissionId.HasValue ? n.RecommendedMission.Title : "",
+                timesheetMissionTitle = n.TimesheetId.HasValue ? n.Timesheet.Mission.Title : "",
+                commentMissionTitle = n.CommentId.HasValue ? n.Comment.Mission.Title : "",
+                applicationMissionTitle = n.MissionApplicationId.HasValue ? n.MissionApplication.Mission.Title : "",
+                approvedStoryTitle = n.StoryId.HasValue ? n.Story.Title : "",
+                recommendedStoryTitle = n.RecommendedStooyId.HasValue ? n.RecommendedStooy.Title : "",
+                recommendedStoryMissionId = n.RecommendedStooyId.HasValue ? n.RecommendedStooy.Mission.MissionId : 0,
+                recommendedStoryUserId = n.RecommendedStooyId.HasValue ? n.RecommendedStooy.User.UserId : 0,
+                timesheetApprovalStatus = n.TimesheetId.HasValue ? n.Timesheet.Status : "",
+                commentApprovalStatus = n.CommentId.HasValue ? n.Comment.ApprovalStatus : "",
+                applicationApprovalStatus = n.MissionApplicationId.HasValue ? n.MissionApplication.ApprovalStatus : "",
+                storyapprovalStatus = n.StoryId.HasValue ? n.Story.Status : ""
+            });
+
+            return list.ToList();
+        }
+
+
+        public int ChangeNotificationStatus (long id)
+        {
+            int flag = 1;
             UserNotification notification = _db.UserNotifications.FirstOrDefault(n => n.NotificationId == id);
+            if(notification.Status == true)
+            {
+                flag = 0;
+            }
             notification.Status = true;
             _db.SaveChanges();
+            return flag;
         }
 
         public void ClearAllNotifications (long userId)

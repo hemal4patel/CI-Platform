@@ -40,24 +40,24 @@ namespace CiPlatformWeb.Repositories.Repository
             Comment comment = _db.Comments.FirstOrDefault(c => c.CommentId == commentId);
 
             if (status == 0)
-            {
-                comment.ApprovalStatus = "DECLINED";
+            {                
+                comment.ApprovalStatus = commentStatus.declined.ToString().ToUpper();
             }
             else
             {
-                comment.ApprovalStatus = "PUBLISHED";
+                comment.ApprovalStatus = commentStatus.published.ToString().ToUpper();
             }
             comment.UpdatedAt = DateTime.Now;
 
-            //UserNotification notification = new UserNotification()
-            //{
-            //    ToUserId = comment.UserId,
-            //    CommentId = commentId,
-            //    Status = false,
-            //    CreatedAt = DateTime.Now,
-            //    UserSettingId = (long) notifications.comment
-            //};
-            //_db.UserNotifications.Add(notification);
+            UserNotification notification = new UserNotification()
+            {
+                ToUserId = comment.UserId,
+                CommentId = commentId,
+                Status = false,
+                CreatedAt = DateTime.Now,
+                UserSettingId = (long) notifications.comment
+            };
+            _db.UserNotifications.Add(notification);
 
             _db.SaveChanges();
         }

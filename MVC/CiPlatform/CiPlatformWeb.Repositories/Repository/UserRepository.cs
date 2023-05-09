@@ -3,12 +3,14 @@ using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -25,7 +27,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             byte[] encData_byte = new byte[obj.Password.Length];
             encData_byte = System.Text.Encoding.UTF8.GetBytes(obj.Password);
-            string encodedData = Convert.ToBase64String(encData_byte);           
+            string encodedData = Convert.ToBase64String(encData_byte);
 
             User newUser = new User()
             {
@@ -34,10 +36,22 @@ namespace CiPlatformWeb.Repositories.Repository
                 Email = obj.Email,
                 Password = encodedData,
                 PhoneNumber = obj.PhoneNumber,
-                Role = "user",
+                Role = userRole.user.ToString(),
                 CreatedAt = DateTime.Now,
             };
             _db.Users.Add(newUser);
+
+            for(int i = 1; i <= 7; i++)
+            {
+                UserSetting userSetting = new UserSetting()
+                {
+                    SettingId = i,
+                    UserId = newUser.UserId,
+                    IsEnabled = true,
+                };
+                _db.UserSettings.Add(userSetting);
+            }
+           
             _db.SaveChanges();
         }
 
@@ -69,7 +83,7 @@ namespace CiPlatformWeb.Repositories.Repository
             utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
             string result = new String(decoded_char);
 
-            if(objPassword.Equals(result))
+            if (objPassword.Equals(result))
             {
                 return true;
             }

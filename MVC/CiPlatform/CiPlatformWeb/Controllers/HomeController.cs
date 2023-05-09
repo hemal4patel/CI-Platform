@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -96,7 +97,7 @@ namespace CiPlatformWeb.Controllers
                             var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
                             HttpContext.Session.SetString("Token", token);
 
-                            if (user.Role == "user")
+                            if (user.Role == userRole.user.ToString())
                             {
                                 TempData["success"] = "Logged In!!!";
                                 var missionId = HttpContext.Session.GetString("MissionId");

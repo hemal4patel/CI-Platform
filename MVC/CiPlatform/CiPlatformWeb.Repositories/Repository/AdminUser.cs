@@ -111,8 +111,19 @@ namespace CiPlatformWeb.Repositories.Repository
                 Status = user.status,
                 CreatedAt = DateTime.Now
             };
-
             _db.Users.Add(newUser);
+
+            for (int i = 1; i <= 7; i++)
+            {
+                UserSetting userSetting = new UserSetting()
+                {
+                    SettingId = i,
+                    UserId = newUser.UserId,
+                    IsEnabled = true,
+                };
+                _db.UserSettings.Add(userSetting);
+            }
+
             _db.SaveChanges();
         }
 

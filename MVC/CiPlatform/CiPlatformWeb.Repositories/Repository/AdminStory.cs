@@ -23,7 +23,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<AdminStoryModel> GetStories ()
         {
-            IQueryable<Story> stories = _db.Stories.Where(s => s.Status != "DRAFT" && s.DeletedAt == null).AsQueryable();
+            IQueryable<Story> stories = _db.Stories.Where(s => s.Status != storyStatus.draft.ToString().ToUpper() && s.DeletedAt == null).AsQueryable();
 
             IQueryable<AdminStoryModel> list = stories.Select(s => new AdminStoryModel()
             {
@@ -52,25 +52,25 @@ namespace CiPlatformWeb.Repositories.Repository
 
             if(status == 0)
             {
-                story.Status = "DECLINED";
+                story.Status = storyStatus.declined.ToString().ToUpper();
                 story.PublishedAt = null;
             }
             else
             {
-                story.Status = "PUBLISHED";
+                story.Status = storyStatus.published.ToString().ToUpper();
                 story.PublishedAt = DateTime.Now;
             }
             story.UpdatedAt = DateTime.Now;
 
-            //UserNotification notification = new UserNotification()
-            //{
-            //    ToUserId = story.UserId,
-            //    StoryId = storyId,
-            //    Status = false,
-            //    CreatedAt = DateTime.Now,
-            //    UserSettingId = (long) notifications.story
-            //};
-            //_db.UserNotifications.Add(notification);
+            UserNotification notification = new UserNotification()
+            {
+                ToUserId = story.UserId,
+                StoryId = storyId,
+                Status = false,
+                CreatedAt = DateTime.Now,
+                UserSettingId = (long) notifications.story
+            };
+            _db.UserNotifications.Add(notification);
 
             _db.SaveChanges();
         }

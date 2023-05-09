@@ -64,15 +64,38 @@ function showRecentVounteers(currVolPage) {
     });
 }
 
+//$('#notificationDropdown').on('click', function () {
+//    console.log('callled')
+//    $.ajax({
+//        type: 'POST',
+//        url: '/Mission/GetAllNotifications',
+//        success: function (data) {
+//            console.log(data)
+//            $('.showNotifications').empty()
+//            $('.showNotifications').append(data)
+//        },
+//        error: function (error) {
+//            console.log(error)
+//        }
+//    });
+//})
+
+//mark notification as read
 $('#notificationDropdownList li').on('click', function () {
     var id = $(this).attr('id');
-    console.log(id)
+   
     $.ajax({
         type: 'POST',
         url: '/Mission/ChangeNotificationStatus',
         data: { id: id },
-        success: function () {
-          
+        success: function (flag) {
+            if (flag == 1) {
+                $('.statusPill-' + id).empty()
+                $('.statusPill-' + id).append('<i class="bi bi-check-circle-fill" style="color: #757575; font-size: 13px;"></i>')
+                var count = $('.notificationCount').text()
+                if (count > 0)
+                    $('.notificationCount').text(count - 1)
+            }
         },
         error: function (error) {
             console.log(error)
@@ -80,6 +103,7 @@ $('#notificationDropdownList li').on('click', function () {
     });
 });
 
+//clear all notifications
 $('.clearAllNotifications').on('click', function () {
 
     $.ajax({
@@ -91,12 +115,25 @@ $('.clearAllNotifications').on('click', function () {
             $('#notificationDropdownList .clearNotification').remove()
 
             var html = '<img src="/images/bell-big.png" class="mx-auto d-block" /><li class="text-center" style="font-size: 21px;">You do not have any new notifications</li>'
-            $('#notificationDropdownList').append(html)
+            $('#notificationUl').append(html)
         },
         error: function (error) {
             console.log(error)
         }
     });
+})
+
+//show notification settings
+$('.notificationSettings').on('click', function () {
+    console.log('called')
+    $('#notificationUl').hide()
+    $('#settingsUl').show()
+})
+
+//go back to notifications
+$('.cancelNotification').click(function () {
+    $('#settingsUl').hide()
+    $('#notificationUl').show()
 })
 
 $('#searchText').on('keyup', function () {

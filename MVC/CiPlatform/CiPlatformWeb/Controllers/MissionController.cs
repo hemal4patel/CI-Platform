@@ -255,17 +255,32 @@ namespace CiPlatformWeb.Controllers
         }
 
 
+
+
+
+
+        //public IActionResult GetAllNotifications ()
+        //{
+        //    List<NotificationParams> list = _missionlist.GetAllNotifications(userId);
+        //    return PartialView("userNotificationsPartial", list);
+        //}
+
+        //MARK NOTIFICATION AS READ
         public IActionResult ChangeNotificationStatus (long id)
         {
-            _missionlist.ChangeNotificationStatus(id);
-            return Ok();
+            int flag = _missionlist.ChangeNotificationStatus(id);
+            return Json(flag);
         }
 
+        //CLEAR ALL NOTIFICATIONS
         public IActionResult ClearAllNotifications ()
         {
             _missionlist.ClearAllNotifications(userId);
             return Ok();
         }
+
+
+
 
 
 
