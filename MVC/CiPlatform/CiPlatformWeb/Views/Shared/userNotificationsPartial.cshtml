@@ -29,7 +29,7 @@
                                     <img src="~/Upload/UserProfile/@notification.fromUserAvatar" class="notificationIcon" />
                                 </div>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> @notification.fromUserName - Recommends this mission - @notification.recommendedMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> @notification.fromUserName - Recommends this mission - <strong>@notification.recommendedMissionTitle</strong> </p>
                                 </div>
                                 <div>
                                     @if (notification.status == true)
@@ -52,7 +52,7 @@
                                     <img src="~/Upload/UserProfile/@notification.fromUserAvatar" class="notificationIcon" />
                                 </div>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> @notification.fromUserName - Recommends this story - @notification.recommendedStoryTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> <strong>@notification.fromUserName</strong> - Recommends this story - <strong>@notification.recommendedStoryTitle</strong> </p>
                                 </div>
                                 <div>
                                     @if (notification.status == true)
@@ -74,14 +74,14 @@
                             {
                                 <i class="bi bi-check2-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Timesheet has been approved for this mission: @notification.timesheetMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Timesheet has been approved for this mission: <strong>@notification.timesheetMissionTitle</strong> </p>
                                 </div>
                             }
                             else
                             {
                                 <i class="bi bi-x-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Timesheet has been declined for this mission: @notification.timesheetMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Timesheet has been declined for this mission: <strong>@notification.timesheetMissionTitle</strong> </p>
                                 </div>
                             }
                             <div class="statusPill-@notification.notificationId">
@@ -103,14 +103,14 @@
                             {
                                 <i class="bi bi-check2-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Comment has been approved for this mission: @notification.commentMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Comment has been approved for this mission: <strong>@notification.commentMissionTitle</strong> </p>
                                 </div>
                             }
                             else
                             {
                                 <i class="bi bi-x-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Comment has been declined for this mission: @notification.commentMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Comment has been declined for this mission: <strong>@notification.commentMissionTitle</strong> </p>
                                 </div>
                             }
                             <div class="statusPill-@notification.notificationId">
@@ -132,14 +132,14 @@
                             {
                                 <i class="bi bi-check2-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Story - @notification.approvedStoryTitle has been approved </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Story - <strong>@notification.approvedStoryTitle</strong> has been approved </p>
                                 </div>
                             }
                             else
                             {
                                 <i class="bi bi-x-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Story - @notification.approvedStoryTitle has been declined </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Story - <strong>@notification.approvedStoryTitle</strong> has been declined </p>
                                 </div>
                             }
                             <div class="statusPill-@notification.notificationId">
@@ -160,7 +160,7 @@
                             <div class="d-flex justify-content-between">
                                 <i class="bi bi-plus-circle"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> New mission - @notification.newMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> New mission - <strong>@notification.newMissionTitle</strong> </p>
                                 </div>
                                 <div>
                                     @if (notification.status == true)
@@ -182,14 +182,14 @@
                             {
                                 <i class="bi bi-check2-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Volunteering request has been approved for this mission: @notification.applicationMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Volunteering request has been approved for this mission: <strong>@notification.applicationMissionTitle</strong> </p>
                                 </div>
                             }
                             else
                             {
                                 <i class="bi bi-x-square" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
-                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Volunteering request has been declined for this mission: @notification.applicationMissionTitle </p>
+                                    <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> Volunteering request has been declined for this mission: <strong>@notification.applicationMissionTitle</strong> </p>
                                 </div>
                             }
                             <div class="statusPill-@notification.notificationId">
