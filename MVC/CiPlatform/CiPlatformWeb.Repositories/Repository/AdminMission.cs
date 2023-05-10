@@ -253,7 +253,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             foreach (long userId in userIds)
             {
-                var userSettingId = _db.UserSettings.Where(u => u.UserId == userId && u.SettingId == (long) 6).FirstOrDefault();
+                var userSettingId = _db.UserSettings.Where(u => u.UserId == userId && u.SettingId == (long) notifications.newMission).FirstOrDefault();
 
                 UserNotification notification = new UserNotification()
                 {
