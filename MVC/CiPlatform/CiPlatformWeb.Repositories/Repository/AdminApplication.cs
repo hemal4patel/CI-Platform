@@ -42,7 +42,7 @@ namespace CiPlatformWeb.Repositories.Repository
             MissionApplication missionApplication = _db.MissionApplications.Where(m => m.MissionApplicationId == applicationId).FirstOrDefault();
 
             if (status == 0)
-            {                
+            {
                 missionApplication.ApprovalStatus = applicationStatus.decline.ToString().ToUpper();
             }
             else
@@ -51,15 +51,26 @@ namespace CiPlatformWeb.Repositories.Repository
             }
             missionApplication.UpdatedAt = DateTime.Now;
 
-            UserNotification notification = new UserNotification()
+            UserSetting userSettingId = _db.UserSettings.Where(u => u.UserId == missionApplication.UserId && u.SettingId == (long) notifications.missionApplication).FirstOrDefault();
+
+            if (_db.UserNotifications.Any(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.MissionApplicationId == applicationId))
             {
-                ToUserId = missionApplication.UserId,
-                MissionApplicationId = applicationId,
-                Status = false,
-                CreatedAt = DateTime.Now,
-                UserSettingId = (long) notifications.missionApplication
-            };
-            _db.UserNotifications.Add(notification);
+                UserNotification notification = _db.UserNotifications.FirstOrDefault(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.MissionApplicationId == applicationId);
+                notification.Status = false;
+                notification.CreatedAt = DateTime.Now;
+            }
+            else
+            {
+                UserNotification notification = new UserNotification()
+                {
+                    ToUserId = missionApplication.UserId,
+                    MissionApplicationId = applicationId,
+                    Status = false,
+                    CreatedAt = DateTime.Now,
+                    UserSettingId = userSettingId.UserSettingId
+                };
+                _db.UserNotifications.Add(notification);
+            }
 
             _db.SaveChanges();
         }

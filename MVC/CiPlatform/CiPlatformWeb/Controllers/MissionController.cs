@@ -14,6 +14,7 @@ using System.Data;
 using System.Drawing.Printing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
+using static CiPlatformWeb.Repositories.EnumStats;
 
 namespace CiPlatformWeb.Controllers
 {
@@ -259,11 +260,18 @@ namespace CiPlatformWeb.Controllers
 
 
 
-        //public IActionResult GetAllNotifications ()
-        //{
-        //    List<NotificationParams> list = _missionlist.GetAllNotifications(userId);
-        //    return PartialView("userNotificationsPartial", list);
-        //}
+        public IActionResult GetAllNotifications ()
+        {
+            List<NotificationParams> list = _missionlist.GetAllNotifications(userId);
+            int unread = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null && u.Status == false).Count();
+
+            NotificationModel vm = new NotificationModel
+            {
+                userNotifications = list,
+                UnreadCount = unread
+            };
+            return PartialView("userNotificationsPartial", vm);
+        }
 
         //MARK NOTIFICATION AS READ
         public IActionResult ChangeNotificationStatus (long id)
@@ -277,6 +285,20 @@ namespace CiPlatformWeb.Controllers
         {
             _missionlist.ClearAllNotifications(userId);
             return Ok();
+        }
+
+        //GET USER SETTING FOR NOTIFICATIONS
+        public IActionResult GetUserNotificationChanges ()
+        {
+            long[] settingIds =  _missionlist.GetUserNotificationChanges(userId);
+            return Json(settingIds);
+        }
+
+        //save user settings for notifications
+        public IActionResult SaveUserNotificationChanges (long[] settingIds)
+        {
+            _missionlist.SaveUserNotificationChanges(userId, settingIds);
+            return Ok ();
         }
 
 

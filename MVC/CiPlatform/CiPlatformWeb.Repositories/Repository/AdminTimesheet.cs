@@ -53,15 +53,26 @@ namespace CiPlatformWeb.Repositories.Repository
             }
             timesheet.UpdatedAt = DateTime.Now;
 
-            UserNotification notification = new UserNotification()
+            UserSetting userSettingId = _db.UserSettings.Where(u => u.UserId == timesheet.UserId && u.SettingId == (long) notifications.timesheet).FirstOrDefault();
+
+            if (_db.UserNotifications.Any(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.TimesheetId == timesheetId))
             {
-                ToUserId = timesheet.UserId,
-                TimesheetId = timesheetId,
-                Status = false,
-                CreatedAt = DateTime.Now,
-                UserSettingId = (long) notifications.timesheet
-            };
-            _db.UserNotifications.Add(notification);
+                UserNotification notification = _db.UserNotifications.FirstOrDefault(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.TimesheetId == timesheetId);
+                notification.Status = false;
+                notification.CreatedAt = DateTime.Now;
+            }
+            else
+            {
+                UserNotification notification = new UserNotification()
+                {
+                    ToUserId = timesheet.UserId,
+                    TimesheetId = timesheetId,
+                    Status = false,
+                    CreatedAt = DateTime.Now,
+                    UserSettingId = userSettingId.UserSettingId
+                };
+                _db.UserNotifications.Add(notification);
+            }
 
             _db.SaveChanges();
         }

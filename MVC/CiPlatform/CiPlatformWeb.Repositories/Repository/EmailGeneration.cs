@@ -11,18 +11,24 @@ using System.Threading.Tasks;
 using CiPlatformWeb.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CiPlatformWeb.Entities.Auth;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
     public class EmailGeneration : IEmailGeneration
     {
         private readonly ApplicationDbContext _db;
-       
+        private readonly EmailConfiguration _emailConfig;
 
-        public EmailGeneration (ApplicationDbContext db)
+
+
+        public EmailGeneration (ApplicationDbContext db, IOptions<EmailConfiguration> emailConfig)
         {
             _db = db;
-        }  
+            _emailConfig = emailConfig.Value;
+        }
 
         public string GenerateToken ()
         {
@@ -46,7 +52,7 @@ namespace CiPlatformWeb.Repositories.Repository
             return token;
         }
         public void GenerateEmail (string token, string PasswordResetLink, ForgotPasswordValidation obj)
-        {            
+        {
             PasswordReset ResetPasswordInfo = new PasswordReset()
             {
                 Email = obj.Email,
@@ -55,9 +61,10 @@ namespace CiPlatformWeb.Repositories.Repository
             _db.Add(ResetPasswordInfo);
             _db.SaveChanges();
 
-            MailAddress fromEmail = new MailAddress("ciplatformdemo@gmail.com");
+            EmailConfiguration EmailConfiguration = _emailConfig;
+            MailAddress fromEmail = new MailAddress(EmailConfiguration.fromEmail);
+            string fromEmailPassword = EmailConfiguration.fromEmailPassword;
             MailAddress toEmail = new MailAddress(obj.Email);
-            string fromEmailPassword = "pdckerdmuutmdzhz"; 
             string subject = "Reset Password";
             string body = PasswordResetLink;
 
@@ -79,6 +86,6 @@ namespace CiPlatformWeb.Repositories.Repository
             smtp.Send(message);
         }
 
-  
+
     }
 }

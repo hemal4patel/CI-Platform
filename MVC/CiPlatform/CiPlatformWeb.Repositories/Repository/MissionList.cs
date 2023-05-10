@@ -11,16 +11,20 @@ using System.Threading.Tasks;
 using CiPlatformWeb.Entities.ViewModels;
 using System.Drawing.Printing;
 using static CiPlatformWeb.Repositories.EnumStats;
+using CiPlatformWeb.Entities.Auth;
+using Microsoft.Extensions.Options;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
     public class MissionList : IMissionList
     {
         private readonly ApplicationDbContext _db;
+        private readonly EmailConfiguration _emailConfig;
 
-        public MissionList (ApplicationDbContext db)
+        public MissionList (ApplicationDbContext db, IOptions<EmailConfiguration> emailConfig)
         {
             _db = db;
+            _emailConfig = emailConfig.Value;
         }
 
         public User sessionUser (long userId)
@@ -176,9 +180,10 @@ namespace CiPlatformWeb.Repositories.Repository
 
             User Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            MailAddress fromEmail = new MailAddress("ciplatformdemo@gmail.com");
+            EmailConfiguration EmailConfiguration = _emailConfig;
+            MailAddress fromEmail = new MailAddress(EmailConfiguration.fromEmail);
+            string fromEmailPassword = EmailConfiguration.fromEmailPassword;
             MailAddress toEmail = new MailAddress(Email.Email);
-            string fromEmailPassword = "pdckerdmuutmdzhz";
             string subject = "Mission Invitation";
             string body = "You Have Recieved Mission Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 
@@ -249,7 +254,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<NotificationParams> GetAllNotifications (long userId)
         {
-            IQueryable<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null).OrderByDescending(u => u.CreatedAt).AsQueryable();
+            IQueryable<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null && u.UserSetting.IsEnabled == true).OrderByDescending(u => u.CreatedAt).AsQueryable();
 
             var list = notifications.Select(n => new NotificationParams()
             {
@@ -280,7 +285,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 commentApprovalStatus = n.CommentId.HasValue ? n.Comment.ApprovalStatus : "",
                 applicationApprovalStatus = n.MissionApplicationId.HasValue ? n.MissionApplication.ApprovalStatus : "",
                 storyapprovalStatus = n.StoryId.HasValue ? n.Story.Status : ""
-            });
+            });            
 
             return list.ToList();
         }
@@ -290,7 +295,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             int flag = 1;
             UserNotification notification = _db.UserNotifications.FirstOrDefault(n => n.NotificationId == id);
-            if(notification.Status == true)
+            if (notification.Status == true)
             {
                 flag = 0;
             }
@@ -301,13 +306,35 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void ClearAllNotifications (long userId)
         {
-            List<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId== userId).ToList();
-            foreach(var n in notifications)
+            List<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId).ToList();
+            foreach (var n in notifications)
             {
                 n.DeletedAt = DateTime.Now;
             }
             _db.SaveChanges();
         }
 
+        public long[] GetUserNotificationChanges (long userId)
+        {
+            long[] settingIds = _db.UserSettings.Where(u => u.UserId == userId && u.IsEnabled == true).Select(u => u.SettingId).ToArray();
+            return settingIds;
+        }
+
+        public void SaveUserNotificationChanges (long userId, long[] settingIds)
+        {
+            for (int i = 1; i <= 7; i++)
+            {
+                UserSetting setting = _db.UserSettings.FirstOrDefault(u => u.UserId == userId && u.SettingId == i);
+                if (settingIds.Contains(setting.SettingId))
+                {
+                    setting.IsEnabled = true;
+                }
+                else
+                {
+                    setting.IsEnabled = false;
+                }
+            }
+            _db.SaveChanges();
+        }
     }
 }

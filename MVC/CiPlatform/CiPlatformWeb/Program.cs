@@ -1,4 +1,5 @@
 
+using CiPlatformWeb.Entities.Auth;
 using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Repositories.Interface;
 using CiPlatformWeb.Repositories.Repository;
@@ -15,6 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Load email configuration from appsettings.json
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
+
+
 
 builder.Services.AddControllersWithViews()
 .AddNewtonsoftJson(options =>

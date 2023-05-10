@@ -42,5 +42,9 @@ namespace CiPlatformWeb.Repositories.Interface
         public int ChangeNotificationStatus (long id);
 
         public void ClearAllNotifications (long userId);
+
+        public long[] GetUserNotificationChanges(long userId);
+
+        public void SaveUserNotificationChanges(long userId, long[] settingIds);
     }
 }

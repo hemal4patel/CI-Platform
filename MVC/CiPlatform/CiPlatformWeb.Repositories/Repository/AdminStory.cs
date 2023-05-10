@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static CiPlatformWeb.Repositories.EnumStats;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
@@ -37,7 +38,7 @@ namespace CiPlatformWeb.Repositories.Repository
             return list.ToList();
         }
 
-        public Story GetStoryDetails(long storyId)
+        public Story GetStoryDetails (long storyId)
         {
             return _db.Stories.Where(s => s.StoryId == storyId)
                 .Include(s => s.User)
@@ -50,7 +51,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             Story story = _db.Stories.Where(s => s.StoryId == storyId).FirstOrDefault();
 
-            if(status == 0)
+            if (status == 0)
             {
                 story.Status = storyStatus.declined.ToString().ToUpper();
                 story.PublishedAt = null;
@@ -62,15 +63,26 @@ namespace CiPlatformWeb.Repositories.Repository
             }
             story.UpdatedAt = DateTime.Now;
 
-            UserNotification notification = new UserNotification()
+            UserSetting userSettingId = _db.UserSettings.Where(u => u.UserId == story.UserId && u.SettingId == (long) notifications.story).FirstOrDefault();
+
+            if (_db.UserNotifications.Any(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.StoryId == storyId))
             {
-                ToUserId = story.UserId,
-                StoryId = storyId,
-                Status = false,
-                CreatedAt = DateTime.Now,
-                UserSettingId = (long) notifications.story
-            };
-            _db.UserNotifications.Add(notification);
+                UserNotification notification = _db.UserNotifications.FirstOrDefault(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.StoryId == storyId);
+                notification.Status = false;
+                notification.CreatedAt = DateTime.Now;
+            }
+            else
+            {
+                UserNotification notification = new UserNotification()
+                {
+                    ToUserId = story.UserId,
+                    StoryId = storyId,
+                    Status = false,
+                    CreatedAt = DateTime.Now,
+                    UserSettingId = userSettingId.UserSettingId
+                };
+                _db.UserNotifications.Add(notification);
+            }
 
             _db.SaveChanges();
         }

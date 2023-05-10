@@ -71,8 +71,8 @@ div {
 }
 
 .scroll-menu-notification {
-    height: 30vh;
-    max-height: 30vh;
+    height: 45vh;
+    max-height: 45vh;
     overflow-y: scroll;
     width: fit-content;
 }
@@ -206,8 +206,8 @@ div {
 
     .dropdown-position {
         position: absolute;
-        left: -150px !important;
-        right: 0px !important;
+        left: -149px !important;
+        width: 300px !important;
     }
 }
 

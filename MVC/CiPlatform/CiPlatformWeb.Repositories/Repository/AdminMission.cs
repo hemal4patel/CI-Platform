@@ -248,15 +248,18 @@ namespace CiPlatformWeb.Repositories.Repository
         public void AddNotificationForAllUsers (long missionId)
         {
             List<long> userIds = _db.Users.Where(u => u.DeletedAt == null).Select(u => u.UserId).ToList();
+
             foreach (long userId in userIds)
             {
+                long userSettingId = _db.UserSettings.Where(u => u.UserId == userId && u.SettingId == (long) notifications.newMission).Select(u => u.UserSettingId).FirstOrDefault();
+
                 UserNotification notification = new UserNotification()
                 {
                     ToUserId = userId,
                     NewMissionId = missionId,
                     Status = false,
                     CreatedAt = DateTime.Now,
-                    UserSettingId = (long) notifications.newMission
+                    UserSettingId = userSettingId
                 };
                 _db.UserNotifications.Add(notification);
             }

@@ -15,6 +15,7 @@ else if (currentUrl.includes("StoryListing")) {
 var currVolPage = 1;
 showRecentVounteers(1);
 showComments();
+showNotification();
 
 function showRecentVounteers(currVolPage) {
     var missionId = $('.missionId').text();
@@ -64,38 +65,43 @@ function showRecentVounteers(currVolPage) {
     });
 }
 
-//$('#notificationDropdown').on('click', function () {
-//    console.log('callled')
-//    $.ajax({
-//        type: 'POST',
-//        url: '/Mission/GetAllNotifications',
-//        success: function (data) {
-//            console.log(data)
-//            $('.showNotifications').empty()
-//            $('.showNotifications').append(data)
-//        },
-//        error: function (error) {
-//            console.log(error)
-//        }
-//    });
-//})
+//display notification dropdown content
+function showNotification() {
+    $.ajax({
+        type: 'POST',
+        url: '/Mission/GetAllNotifications',
+        success: function (data) {
+            $('.userNotificationsPartial').empty()
+            $('.userNotificationsPartial').append(data)
+            $('#notificationUl').show()
+            $('#settingsUl').hide()
+
+            $('.notificationCount').text($('#UnreadCount').val())
+            if ($('#UnreadCount').val() == 0) {
+                $('.clearAllBtn').hide()
+            }
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+}
+
+$('#notificationDropdown').on('click', function () {
+    showNotification();
+})
 
 //mark notification as read
-$('#notificationDropdownList li').on('click', function () {
+$(document).on('click', '#notificationDropdownList li', function () {
     var id = $(this).attr('id');
-   
+
     $.ajax({
         type: 'POST',
         url: '/Mission/ChangeNotificationStatus',
         data: { id: id },
-        success: function (flag) {
-            if (flag == 1) {
-                $('.statusPill-' + id).empty()
-                $('.statusPill-' + id).append('<i class="bi bi-check-circle-fill" style="color: #757575; font-size: 13px;"></i>')
-                var count = $('.notificationCount').text()
-                if (count > 0)
-                    $('.notificationCount').text(count - 1)
-            }
+        success: function () {
+            showNotification();
         },
         error: function (error) {
             console.log(error)
@@ -104,18 +110,13 @@ $('#notificationDropdownList li').on('click', function () {
 });
 
 //clear all notifications
-$('.clearAllNotifications').on('click', function () {
+$(document).on('click', '.clearAllNotifications', function () {
 
     $.ajax({
         type: 'POST',
         url: '/Mission/ClearAllNotifications',
         success: function () {
-            console.log('called')
-            $('#notificationDropdownList .clearNotification').next('hr').remove()
-            $('#notificationDropdownList .clearNotification').remove()
-
-            var html = '<img src="/images/bell-big.png" class="mx-auto d-block" /><li class="text-center" style="font-size: 21px;">You do not have any new notifications</li>'
-            $('#notificationUl').append(html)
+            showNotification();
         },
         error: function (error) {
             console.log(error)
@@ -124,17 +125,60 @@ $('.clearAllNotifications').on('click', function () {
 })
 
 //show notification settings
-$('.notificationSettings').on('click', function () {
-    console.log('called')
+$(document).on('click', '.notificationSettings', function () {
+
     $('#notificationUl').hide()
     $('#settingsUl').show()
-})
+
+    $.ajax({
+        type: 'GET',
+        url: '/Mission/GetUserNotificationChanges',
+        success: function (data) {
+            $('.allSettingsDiv input[type="checkbox"]').prop('checked', false);
+            data.forEach(function (id) {
+                $('.allSettingsDiv input[type="checkbox"][value="' + id + '"]').prop('checked', true);
+            });
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
 
 //go back to notifications
-$('.cancelNotification').click(function () {
-    $('#settingsUl').hide()
-    $('#notificationUl').show()
+$(document).on('click', '.cancelNotification', function () {
+    showNotification()
 })
+
+//save notification settings for user
+$(document).on('click', '.saveNotification', function () {
+    var settingIds = $('.allSettingsDiv input[type="checkbox"]:checked').map(function () {
+        return $(this).val();
+    }).get();
+
+    $.ajax({
+        type: 'POST',
+        url: '/Mission/SaveUserNotificationChanges',
+        data: { settingIds: settingIds },
+        success: function () {
+            Swal.fire({
+                title: 'Changes saved!!!',
+                showDenyButton: false,
+                showCancelButton: false,
+                showConfirmButton: false,
+                timer: 1500,
+                position: 'top-end',
+            })
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+
+})
+
+
+
 
 $('#searchText').on('keyup', function () {
     if (currentUrl.includes("PlatformLanding")) {
@@ -848,42 +892,6 @@ function search() {
     })
 }
 
-//$('#notificationDropdown').click(function () {
-//    $.ajax({
-//        type: "GET",
-//        url: "/Mission/GetInvitations",
-//        success: function (result) {
-//            $('#invitesDropdown').empty();
-//            var items = "";
-//            var combinedList = $.merge(result.missionInvites, result.storyInvites);
-//            combinedList.sort((a, b) => (a.updatedAt > b.updatedAt) ? -1 : 1);
 
-//            if (combinedList.length != 0) {
-
-//                $(combinedList).each(function (i, item) {
-//                    var url = "";
-//                    if (item.missionId) {
-//                        url = '/Mission/VolunteeringMission?MissionId=' + item.missionId
-//                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this mission - <strong>' + item.mission.title + '</strong></a></li>'
-//                        items += '<li><hr class="dropdown-divider"></li>'
-//                    }
-//                    else {
-//                        url = '/Story/StoryDetail?MissionId=' + item.story.missionId + '&UserId=' + item.story.userId
-//                        items += '<li><a class="dropdown-item text-wrap" href="' + url + '"><i class="bi bi-person-circle"></i>&nbsp; ' + item.fromUser.firstName + ' ' + item.fromUser.lastName + ': Recommended this story - <strong>' + item.story.title + '</strong></a></li>'
-//                        items += '<li><hr class="dropdown-divider"></li>'
-//                    }
-
-//                })
-//            }
-//            else {
-//                items = '<li class="text-center" style="font-size: 21px;">No invites</li>'
-//            }
-//            $('#invitesDropdown').html(items);
-//        },
-//        error: function (error) {
-//            console.log(error);
-//        }
-//    });
-//})
 
 

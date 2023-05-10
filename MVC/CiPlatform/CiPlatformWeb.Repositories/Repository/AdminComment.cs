@@ -40,7 +40,7 @@ namespace CiPlatformWeb.Repositories.Repository
             Comment comment = _db.Comments.FirstOrDefault(c => c.CommentId == commentId);
 
             if (status == 0)
-            {                
+            {
                 comment.ApprovalStatus = commentStatus.declined.ToString().ToUpper();
             }
             else
@@ -49,15 +49,26 @@ namespace CiPlatformWeb.Repositories.Repository
             }
             comment.UpdatedAt = DateTime.Now;
 
-            UserNotification notification = new UserNotification()
+            UserSetting userSettingId = _db.UserSettings.Where(u => u.UserId == comment.UserId && u.SettingId == (long) notifications.comment).FirstOrDefault();
+
+            if (_db.UserNotifications.Any(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.CommentId == commentId))
             {
-                ToUserId = comment.UserId,
-                CommentId = commentId,
-                Status = false,
-                CreatedAt = DateTime.Now,
-                UserSettingId = (long) notifications.comment
-            };
-            _db.UserNotifications.Add(notification);
+                UserNotification notification = _db.UserNotifications.FirstOrDefault(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.CommentId == commentId);
+                notification.Status = false;
+                notification.CreatedAt = DateTime.Now;
+            }
+            else
+            {
+                UserNotification notification = new UserNotification()
+                {
+                    ToUserId = comment.UserId,
+                    CommentId = commentId,
+                    Status = false,
+                    CreatedAt = DateTime.Now,
+                    UserSettingId = userSettingId.UserSettingId
+                };
+                _db.UserNotifications.Add(notification);
+            }
 
             _db.SaveChanges();
         }

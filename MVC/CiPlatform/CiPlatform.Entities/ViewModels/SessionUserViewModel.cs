@@ -27,6 +27,13 @@ namespace CiPlatformWeb.Entities.ViewModels
         public List<NotificationParams> userNotifications { get; set; }
     }
 
+    public class NotificationModel
+    {
+        public List<NotificationParams> userNotifications { get; set; }
+
+        public int UnreadCount { get; set; }
+    }
+
     public class NotificationParams
     {
         public long notificationId { get; set; }

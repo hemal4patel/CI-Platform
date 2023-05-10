@@ -61,14 +61,14 @@ namespace CiPlatformWeb.Views.ViewComponents
             vm.role = role;
             vm.avatarName = avatarName;
             vm.cmsPages = _db.CmsPages.Where(cms => cms.DeletedAt == null).ToList();
-            vm.userNotifications = getUserNotification(userId);
+            //vm.userNotifications = getUserNotification(userId);
 
             return View(view, vm);
         }
 
         public List<NotificationParams> getUserNotification (long userId)
         {
-            IQueryable<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null).OrderByDescending(u => u.CreatedAt).AsQueryable();
+            IQueryable<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null && u.UserSetting.IsEnabled == true).OrderByDescending(u => u.CreatedAt).AsQueryable();
 
             var list = notifications.Select(n => new NotificationParams()
             {

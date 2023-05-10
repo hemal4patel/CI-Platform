@@ -13,16 +13,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using static CiPlatformWeb.Repositories.EnumStats;
+using CiPlatformWeb.Entities.Auth;
+using Microsoft.Extensions.Options;
 
 namespace CiPlatformWeb.Repositories.Repository
 {
     public class StoryList : IStoryList
     {
         private readonly ApplicationDbContext _db;
+        private readonly EmailConfiguration _emailConfig;
 
-        public StoryList (ApplicationDbContext db)
+
+        public StoryList (ApplicationDbContext db, IOptions<EmailConfiguration> emailConfig)
         {
             _db = db;
+            _emailConfig = emailConfig.Value;
         }
 
         public bool IsValidStoryId (long MissionId, long userId)
@@ -282,6 +287,8 @@ namespace CiPlatformWeb.Repositories.Repository
             };
             _db.StoryInvites.Add(storyInvite);
 
+            long userSettingId = _db.UserSettings.Where(u => u.UserId == ToUserId && u.SettingId == (long) notifications.recommendedStory).Select(u => u.UserSettingId).FirstOrDefault();
+
             UserNotification notification = new UserNotification()
             {
                 ToUserId = ToUserId,
@@ -289,7 +296,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 RecommendedStooyId = StoryId,
                 Status = false,
                 CreatedAt = DateTime.Now,
-                UserSettingId = (long) notifications.recommendedStory
+                UserSettingId = userSettingId
             };
             _db.UserNotifications.Add(notification);
 
@@ -309,9 +316,10 @@ namespace CiPlatformWeb.Repositories.Repository
 
             User Sender = await _db.Users.Where(s => s.UserId == FromUserId).FirstOrDefaultAsync();
 
-            MailAddress fromEmail = new MailAddress("ciplatformdemo@gmail.com");
+            EmailConfiguration EmailConfiguration = _emailConfig;
+            MailAddress fromEmail = new MailAddress(EmailConfiguration.fromEmail);
+            string fromEmailPassword = EmailConfiguration.fromEmailPassword;
             MailAddress toEmail = new MailAddress(Email.Email);
-            string fromEmailPassword = "pdckerdmuutmdzhz";
             string subject = "Story Invitation";
             string body = "You Have Recieved Story Invitation From " + Sender.FirstName + " " + Sender.LastName + " For:\n\n" + link;
 

@@ -174,6 +174,8 @@ namespace CiPlatformWeb.Repositories.Repository
             };
             _db.MissionInvites.Add(missionInvite);
 
+            long userSettingId = _db.UserSettings.Where(u => u.UserId == ToUserId && u.SettingId == (long) notifications.recommendedMission).Select(u => u.UserSettingId).FirstOrDefault();
+
             UserNotification notification = new UserNotification()
             {
                 ToUserId = ToUserId,
@@ -181,7 +183,7 @@ namespace CiPlatformWeb.Repositories.Repository
                 RecommendedMissionId = MissionId,
                 Status = false,
                 CreatedAt = DateTime.Now,
-                UserSettingId = (long) notifications.recommendedMission
+                UserSettingId = userSettingId
             };
             _db.UserNotifications.Add(notification);
 
