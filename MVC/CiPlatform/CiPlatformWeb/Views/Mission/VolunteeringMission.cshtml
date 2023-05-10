@@ -124,49 +124,6 @@
                 </div>
             </div>
 
-            <!-- SEATS LEFT -->
-            @*<div class="d-flex seats-left justify-content-around mt-4">
-            <div class="d-flex align-items-center">
-            <img src="~/images/Seats-left.png" alt=""
-            style="margin-right: 10px; width: 30px; height: 30px">
-            <div class="d-flex flex-column">
-            <span>@Model.MissionDetails.seatsLeft</span>
-            <span>Seats Left</span>
-            </div>
-            </div>
-
-            <div class="d-flex align-items-center">
-            @if (Model.MissionDetails.mission.MissionType.Equals("Time"))
-            {
-            <img src="~/images/calender.png" alt=""
-            style="margin-right: 10px; width: 30px; height: 30px" />
-            <div class="d-flex flex-column">
-            <span>@Model.MissionDetails.mission.StartDate.Value.AddDays(-1).ToShortDateString() </span>
-            <span>Deadline</span>
-            </div>
-            }
-            else
-            {
-            double? percent = 0;
-            if (Model.MissionDetails.achievedGoal is not null)
-            {
-            percent = ((double) Model.MissionDetails.achievedGoal / Model.MissionDetails.totalGoal) * 100;
-            }
-            <img src="~/images/achieved.png" alt="deadline"
-            style="margin-right: 10px; width: 30px; height: 30px;">
-            <div class="card-detail-text">
-            <div class="progress" style="width: 150px">
-            <div class="progress-bar" role="progressbar" aria-label="Warning example"
-            style="background-color: #F88634; width: @percent%"
-            aria-valuemin="0" aria-valuemax="100">
-            </div>
-            </div>
-            <span> @Model.MissionDetails.achievedGoal achieved </span>
-            </div>
-            }
-            </div>
-            </div>*@
-
             @if (Model.MissionDetails.mission.MissionType.Equals("Time"))
             {
                 <div class="d-flex justify-content-around mt-1 seats-left">
@@ -264,15 +221,12 @@
 
                                     @foreach (User u in Model.UserList)
                                     {
-
                                         <div class="mt-2 bg-opacity-25" style="display : flex; justify-content : space-between;">
 
                                             <span class="me-4 userName">@u.FirstName @u.LastName</span>
-
-
                                             <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@Model.MissionDetails.missionId">
 
-                                                @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == Model.MissionDetails.missionId))
+                                                @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == Model.MissionDetails.missionId && m.FromUserId == Id))
                                                 {
                                                     <button disabled class="btn btn-success disabled model-button">Already Invited</button>
                                                 }
@@ -281,7 +235,6 @@
                                                     <button onclick="recommendToCoWorker(@u.UserId, @Model.MissionDetails.missionId, @Id)" class="btn btn-outline-primary model-button" data-mission-Id="@Model.MissionDetails.missionId">Invite</button>
                                                 }
                                             </span>
-
                                         </div>
                                     }
                                 </div>
@@ -648,8 +601,8 @@
                                                     <span class="me-4 userName-@obj.missionId">@u.FirstName @u.LastName</span>
 
                                                     <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@obj.missionId">
-                                                        
-                                                        @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId))
+
+                                                        @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId && m.FromUser.UserId == Id))
                                                         {
                                                             <button disabled class="btn btn-success disabled model-button">Already Invited</button>
                                                         }

@@ -36,15 +36,5 @@ namespace CiPlatformWeb.Repositories.Interface
         public List<MissionInvite> GetMissionInvites (long userId);
 
         public List<StoryInvite> GetStoryInvites (long userId);
-
-        public List<NotificationParams> GetAllNotifications (long userId);
-
-        public int ChangeNotificationStatus (long id);
-
-        public void ClearAllNotifications (long userId);
-
-        public long[] GetUserNotificationChanges(long userId);
-
-        public void SaveUserNotificationChanges(long userId, long[] settingIds);
     }
 }

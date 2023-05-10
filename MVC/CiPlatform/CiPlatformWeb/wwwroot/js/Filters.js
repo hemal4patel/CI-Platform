@@ -4,6 +4,7 @@ var selectedSortCase = null;
 var currentUrl = window.location.href;
 let allDropdowns = $('.dropdown ul');
 var selectedExploreOption = null
+var currVolPage = 1;
 
 if (currentUrl.includes("PlatformLanding")) {
     showMissions(1);
@@ -12,10 +13,128 @@ else if (currentUrl.includes("StoryListing")) {
     showStories(1);
 }
 
-var currVolPage = 1;
 showRecentVounteers(1);
 showComments();
 showNotification();
+
+
+
+
+//display notification dropdown content
+function showNotification() {
+    $.ajax({
+        type: 'POST',
+        url: '/Notification/GetAllNotifications',
+        success: function (data) {
+            $('.userNotificationsPartial').empty()
+            $('.userNotificationsPartial').append(data)
+            $('#notificationUl').show()
+            $('#settingsUl').hide()
+
+            $('.notificationCount').text($('#UnreadCount').val())
+            if ($('#UnreadCount').val() == 0) {
+                $('.clearAllBtn').hide()
+            }
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+}
+
+$('#notificationDropdown').on('click', function () {
+    showNotification();
+})
+
+//mark notification as read
+$(document).on('click', '#notificationDropdownList li', function () {
+    var id = $(this).attr('id');
+
+    $.ajax({
+        type: 'POST',
+        url: '/Notification/ChangeNotificationStatus',
+        data: { id: id },
+        success: function () {
+            showNotification();
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
+
+//clear all notifications
+$(document).on('click', '.clearAllNotifications', function () {
+
+    $.ajax({
+        type: 'POST',
+        url: '/Notification/ClearAllNotifications',
+        success: function () {
+            showNotification();
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+})
+
+//show notification settings
+$(document).on('click', '.notificationSettings', function () {
+
+    $('#notificationUl').hide()
+    $('#settingsUl').show()
+
+    $.ajax({
+        type: 'GET',
+        url: '/Notification/GetUserNotificationChanges',
+        success: function (data) {
+            $('.allSettingsDiv input[type="checkbox"]').prop('checked', false);
+            data.forEach(function (id) {
+                $('.allSettingsDiv input[type="checkbox"][value="' + id + '"]').prop('checked', true);
+            });
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+});
+
+//go back to notifications
+$(document).on('click', '.cancelNotification', function () {
+    showNotification()
+})
+
+//save notification settings for user
+$(document).on('click', '.saveNotification', function () {
+    var settingIds = $('.allSettingsDiv input[type="checkbox"]:checked').map(function () {
+        return $(this).val();
+    }).get();
+
+    $.ajax({
+        type: 'POST',
+        url: '/Notification/SaveUserNotificationChanges',
+        data: { settingIds: settingIds },
+        success: function () {
+            Swal.fire({
+                title: 'Changes saved!!!',
+                showDenyButton: false,
+                showCancelButton: false,
+                showConfirmButton: false,
+                timer: 1500,
+                position: 'top-end',
+            })
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+
+})
+
+
+
+
 
 function showRecentVounteers(currVolPage) {
     var missionId = $('.missionId').text();
@@ -64,118 +183,6 @@ function showRecentVounteers(currVolPage) {
         }
     });
 }
-
-//display notification dropdown content
-function showNotification() {
-    $.ajax({
-        type: 'POST',
-        url: '/Mission/GetAllNotifications',
-        success: function (data) {
-            $('.userNotificationsPartial').empty()
-            $('.userNotificationsPartial').append(data)
-            $('#notificationUl').show()
-            $('#settingsUl').hide()
-
-            $('.notificationCount').text($('#UnreadCount').val())
-            if ($('#UnreadCount').val() == 0) {
-                $('.clearAllBtn').hide()
-            }
-
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    });
-}
-
-$('#notificationDropdown').on('click', function () {
-    showNotification();
-})
-
-//mark notification as read
-$(document).on('click', '#notificationDropdownList li', function () {
-    var id = $(this).attr('id');
-
-    $.ajax({
-        type: 'POST',
-        url: '/Mission/ChangeNotificationStatus',
-        data: { id: id },
-        success: function () {
-            showNotification();
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    });
-});
-
-//clear all notifications
-$(document).on('click', '.clearAllNotifications', function () {
-
-    $.ajax({
-        type: 'POST',
-        url: '/Mission/ClearAllNotifications',
-        success: function () {
-            showNotification();
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    });
-})
-
-//show notification settings
-$(document).on('click', '.notificationSettings', function () {
-
-    $('#notificationUl').hide()
-    $('#settingsUl').show()
-
-    $.ajax({
-        type: 'GET',
-        url: '/Mission/GetUserNotificationChanges',
-        success: function (data) {
-            $('.allSettingsDiv input[type="checkbox"]').prop('checked', false);
-            data.forEach(function (id) {
-                $('.allSettingsDiv input[type="checkbox"][value="' + id + '"]').prop('checked', true);
-            });
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    });
-});
-
-//go back to notifications
-$(document).on('click', '.cancelNotification', function () {
-    showNotification()
-})
-
-//save notification settings for user
-$(document).on('click', '.saveNotification', function () {
-    var settingIds = $('.allSettingsDiv input[type="checkbox"]:checked').map(function () {
-        return $(this).val();
-    }).get();
-
-    $.ajax({
-        type: 'POST',
-        url: '/Mission/SaveUserNotificationChanges',
-        data: { settingIds: settingIds },
-        success: function () {
-            Swal.fire({
-                title: 'Changes saved!!!',
-                showDenyButton: false,
-                showCancelButton: false,
-                showConfirmButton: false,
-                timer: 1500,
-                position: 'top-end',
-            })
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    });
-
-})
 
 
 
@@ -230,6 +237,7 @@ function showMissions(pageNo) {
         },
         success: function (data) {
             var view = $(".partialViews");
+          
             view.empty();
             view.append(data);
             search();

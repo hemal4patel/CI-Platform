@@ -36,7 +36,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             IQueryable<Skill> skill = _db.Skills.Where(s => s.SkillId == skillId);
 
-            AdminSkillModel list = skill.Select(s => new AdminSkillModel()
+            AdminSkillModel? list = skill.Select(s => new AdminSkillModel()
             {
                 skillId = s.SkillId,
                 skillName = s.SkillName,
@@ -71,7 +71,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void UpdateSkill (AdminSkillModel vm)
         {
-            Skill existingSkill = _db.Skills.Where(s => s.SkillId == vm.skillId).FirstOrDefault();
+            Skill? existingSkill = _db.Skills.Where(s => s.SkillId == vm.skillId).FirstOrDefault();
 
             existingSkill.SkillName = vm.skillName;
             existingSkill.Status = vm.status;
@@ -82,7 +82,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool DeleteSkill (long skillId)
         {
-            Skill skill = _db.Skills.FirstOrDefault(s => s.SkillId == skillId);
+            Skill? skill = _db.Skills.FirstOrDefault(s => s.SkillId == skillId);
 
             //is used in mission or user
             if (_db.MissionSkills.Any(m => m.SkillId == skill.SkillId && m.DeletedAt == null) || _db.UserSkills.Any(u => u.SkillId == skill.SkillId && u.DeletedAt == null))

@@ -47,7 +47,7 @@ namespace CiPlatformWeb.Controllers
         //STORY LIST
         public IActionResult StoryListing ()
         {
-            var vm = new StoryListingViewModel();
+            StoryListingViewModel vm = new StoryListingViewModel();
             vm.CountryList = _db.Countries.ToList();
             vm.ThemeList = _db.MissionThemes.ToList();
             vm.SkillList = _db.Skills.ToList();
@@ -58,7 +58,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult StoryListing (StoryQueryParams viewmodel)
         {
-            var vm = new StoryListingViewModel();
+            StoryListingViewModel vm = new StoryListingViewModel();
 
             var data = _storyList.GetStories(viewmodel);
             vm.StoryList = data.Item1;
@@ -74,7 +74,7 @@ namespace CiPlatformWeb.Controllers
         //SHARE YOUR STORY
         public IActionResult ShareStory ()
         {
-            var vm = new ShareStoryViewModel();
+            ShareStoryViewModel vm = new ShareStoryViewModel();
             vm.MissionTitles = _storyList.GetMissions(userId);
 
             return View(vm);
@@ -83,7 +83,7 @@ namespace CiPlatformWeb.Controllers
         //GET STORY FOR EDIT
         public IActionResult GetStory (long missionId)
         {
-            var story = _storyList.GetDraftedStory(missionId, userId);
+            Story story = _storyList.GetDraftedStory(missionId, userId);
 
             return Json(story);
         }

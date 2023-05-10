@@ -96,7 +96,7 @@ namespace CiPlatformWeb.Repositories.Repository
             encData_byte = System.Text.Encoding.UTF8.GetBytes(user.password);
             string encodedData = Convert.ToBase64String(encData_byte);
 
-            User newUser = new User()
+            User? newUser = new User()
             {
                 FirstName = user.firstName,
                 LastName = user.lastName,
@@ -129,7 +129,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void UpdateUser (AdminUserModel user)
         {
-            User existingUser = _db.Users.Where(u => u.UserId == user.userId).FirstOrDefault();
+            User? existingUser = _db.Users.Where(u => u.UserId == user.userId).FirstOrDefault();
             byte[] encData_byte = new byte[user.password.Length];
             encData_byte = System.Text.Encoding.UTF8.GetBytes(user.password);
             string encodedData = Convert.ToBase64String(encData_byte);
@@ -152,7 +152,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void DeleteUser (long userId)
         {
-            User user = _db.Users.FirstOrDefault(u => u.UserId == userId);
+            User? user = _db.Users.FirstOrDefault(u => u.UserId == userId);
             user.DeletedAt = DateTime.Now;
             _db.SaveChanges();
         }

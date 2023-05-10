@@ -158,7 +158,7 @@
 
                                             <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@Model.storyDetail.StoryId">
 
-                                                @if (u.StoryInviteToUsers.Any(m => m.ToUserId == u.UserId && m.StoryId == Model.storyDetail.StoryId))
+                                                @if (u.StoryInviteToUsers.Any(m => m.ToUserId == u.UserId && m.StoryId == Model.storyDetail.StoryId && m.FromUserId == Id))
                                                 {
                                                     <button disabled class="btn btn-success disabled model-button">Already Invited</button>
                                                 }

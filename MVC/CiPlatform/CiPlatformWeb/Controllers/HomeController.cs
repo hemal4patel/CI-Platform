@@ -47,7 +47,7 @@ namespace CiPlatformWeb.Controllers
             obj.banners = _userRepository.GetBanners();
             if (ModelState.IsValid)
             {
-                var user = _userRepository.CheckUser(obj.Email);
+                User user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
                     _userRepository.RegisterUser(obj);
@@ -81,7 +81,7 @@ namespace CiPlatformWeb.Controllers
             obj.banners = _userRepository.GetBanners();
             if (ModelState.IsValid)
             {
-                var user = _userRepository.CheckUser(obj.Email);
+                User user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
                     TempData["error"] = "User does not exist!!!";
@@ -93,16 +93,16 @@ namespace CiPlatformWeb.Controllers
                     {
                         if (user.DeletedAt == null && user.Status == 1)
                         {
-                            var jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
-                            var token = JwtTokenHelper.GenerateToken(jwtSettings, user);
+                            JwtSetting jwtSettings = _configuration.GetSection(nameof(JwtSetting)).Get<JwtSetting>();
+                            string token = JwtTokenHelper.GenerateToken(jwtSettings, user);
                             HttpContext.Session.SetString("Token", token);
 
                             if (user.Role == userRole.user.ToString())
                             {
                                 TempData["success"] = "Logged In!!!";
-                                var missionId = HttpContext.Session.GetString("MissionId");
-                                var storyMissionId = HttpContext.Session.GetString("StoryMissionId");
-                                var storyUserId = HttpContext.Session.GetString("StoryUserId");
+                                string missionId = HttpContext.Session.GetString("MissionId");
+                                string storyMissionId = HttpContext.Session.GetString("StoryMissionId");
+                                string storyUserId = HttpContext.Session.GetString("StoryUserId");
                                 if (!string.IsNullOrEmpty(missionId))
                                 {
                                     HttpContext.Session.Remove("MissionId");
@@ -166,7 +166,7 @@ namespace CiPlatformWeb.Controllers
             obj.banners = _userRepository.GetBanners();
             if (ModelState.IsValid)
             {
-                var user = _userRepository.CheckUser(obj.Email);
+                User user = _userRepository.CheckUser(obj.Email);
                 if (user == null)
                 {
                     TempData["error"] = "User does not exist!!!";
@@ -192,8 +192,8 @@ namespace CiPlatformWeb.Controllers
         //RESET PASSWORD
         public IActionResult ResetPassword (string email, string token)
         {
-            var cutoffTime = DateTime.Now.AddHours(-4);
-            var ResetPasswordData = _db.PasswordResets.Any(e => e.Email == email && e.Token == token && e.CreatedAt >= cutoffTime && e.DeletedAt == null);
+            DateTime cutoffTime = DateTime.Now.AddHours(-4);
+            bool ResetPasswordData = _db.PasswordResets.Any(e => e.Email == email && e.Token == token && e.CreatedAt >= cutoffTime && e.DeletedAt == null);
 
             if (ResetPasswordData)
             {
@@ -233,7 +233,7 @@ namespace CiPlatformWeb.Controllers
         [AllowAnonymous]
         public IActionResult CmsPage (long cmsId)
         {
-            var viewmodel = new SessionUserViewModel();
+            SessionUserViewModel viewmodel = new SessionUserViewModel();
             viewmodel.selectedCmsPage = _userRepository.GetCmsPage(cmsId);
             return View(viewmodel);
         }
@@ -242,7 +242,7 @@ namespace CiPlatformWeb.Controllers
 
 
 
-        //Logout
+        //LOGOUT
         public IActionResult Logout ()
         {
             HttpContext.Session.Remove("Token");

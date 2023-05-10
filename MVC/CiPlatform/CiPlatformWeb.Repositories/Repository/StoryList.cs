@@ -160,7 +160,11 @@ namespace CiPlatformWeb.Repositories.Repository
                     if (m != null)
                     {
                         string fileName = m.Path;
-                        File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName));
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "StoryPhotos", fileName);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
                         m.DeletedAt = DateTime.Now;
                     }
                 }

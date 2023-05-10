@@ -48,7 +48,7 @@ namespace CiPlatformWeb.Controllers
         //USER PROFILE PAGE
         public IActionResult UserProfile ()
         {
-            var vm = new UserProfileViewModel();
+            UserProfileViewModel vm = new UserProfileViewModel();
             vm = _userProfile.GetUserDetails(userId);
             ViewBag.UserAvatar = vm.AvatarName;
             vm.CountryList = _userProfile.GetCountryList();
@@ -83,7 +83,7 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult GetCitiesByCountry (int countryId)
         {
-            var vm = new UserProfileViewModel();
+            UserProfileViewModel vm = new UserProfileViewModel();
             vm.CityList = _userProfile.GetCityList(countryId);
             return Json(vm.CityList);
         }
@@ -95,7 +95,7 @@ namespace CiPlatformWeb.Controllers
         [HttpPost]
         public IActionResult ChangePassword (string oldPassword, string newPassword)
         {
-            var user = _userProfile.CheckPassword(userId, oldPassword);
+            User user = _userProfile.CheckPassword(userId, oldPassword);
 
             if (user != null)
             {
@@ -134,7 +134,7 @@ namespace CiPlatformWeb.Controllers
         //GET TIMESHEETS
         public IActionResult VolunteeringTimesheet ()
         {
-            var vm = new VolunteeringTimesheetViewModel();
+            VolunteeringTimesheetViewModel vm = new VolunteeringTimesheetViewModel();
 
             vm.timeMissions = _timesheet.GetTimeBasedMission(userId);
             vm.goalMissions = _timesheet.GetGoalBasedMission(userId);
@@ -161,7 +161,7 @@ namespace CiPlatformWeb.Controllers
                     }
                     else
                     {
-                        var timeBasedEntry = _timesheet.GetEntry(viewmodel.timeBasedSheet.timeSheetId);
+                        Timesheet timeBasedEntry = _timesheet.GetEntry(viewmodel.timeBasedSheet.timeSheetId);
                         if (timeBasedEntry is not null)
                         {
                             _timesheet.UpdateTimeBasedEntry(timeBasedEntry, viewmodel.timeBasedSheet);
@@ -201,7 +201,7 @@ namespace CiPlatformWeb.Controllers
                     }
                     else
                     {
-                        var goalBasedEntry = _timesheet.GetEntry(viewmodel.goalBasedSheet.timeSheetId);
+                        Timesheet goalBasedEntry = _timesheet.GetEntry(viewmodel.goalBasedSheet.timeSheetId);
                         if (goalBasedEntry is not null)
                         {
                             _timesheet.UpdateGoalBasedEntry(goalBasedEntry, viewmodel.goalBasedSheet);
@@ -233,8 +233,8 @@ namespace CiPlatformWeb.Controllers
         //GET TIMESHEET TO EDIT
         public IActionResult GetTimesheetData (long id)
         {
-            var timesheet = _timesheet.GetEntry(id);
-            var startDate = _db.Missions.Where(m => m.MissionId == timesheet.MissionId).Select(m => m.StartDate).FirstOrDefault();
+            Timesheet timesheet = _timesheet.GetEntry(id);
+            DateTime? startDate = _db.Missions.Where(m => m.MissionId == timesheet.MissionId).Select(m => m.StartDate).FirstOrDefault();
             return Json(new { timesheet = timesheet, startDate = startDate });
         }
 

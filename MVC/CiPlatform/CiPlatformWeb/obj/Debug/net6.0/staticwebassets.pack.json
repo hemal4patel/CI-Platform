@@ -53,10 +53,6 @@
       "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\317df_b7283_c8546_c7650_document2.pdf"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\3d101_b9a1d_0d07e_document5.pdf",
-      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\3d101_b9a1d_0d07e_document5.pdf"
-    },
-    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\3e57c_39e56_89854_cc780_document4.pdf",
       "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\3e57c_39e56_89854_cc780_document4.pdf"
     },
@@ -73,8 +69,20 @@
       "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\83124_489ea_72126_Final_Report_506.pdf"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\94ce9_Final_Report_506.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\94ce9_Final_Report_506.pdf"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\a27fc_0d68e_8c00e_dc954_document1.pdf",
       "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\a27fc_0d68e_8c00e_dc954_document1.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\cac36_3d101_b9a1d_0d07e_document5.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\cac36_3d101_b9a1d_0d07e_document5.pdf"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\d2004_Final_Report_506.pdf",
+      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\d2004_Final_Report_506.pdf"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document10.pdf",
@@ -91,10 +99,6 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\document8.pdf",
       "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\document8.pdf"
-    },
-    {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionDocuments\\ed365_13745_749d7_varun internship report.pdf",
-      "PackagePath": "staticwebassets\\Upload\\MissionDocuments\\ed365_13745_749d7_varun internship report.pdf"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\08004_fe092_feedHomeless1.jfif",
@@ -117,8 +121,20 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\141b4_1de17_d1037_0bb41_847c6_6d6e6_ad8c5_4c7fb_animalShelter1.jpg"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\179d7_water.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\179d7_water.jpg"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\17c29_cleanCommunity4.jfif",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\17c29_cleanCommunity4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\1aee9_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\1aee9_22a57_clean.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\1c983_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\1c983_22a57_clean.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\1e43e_disaster2.jfif",
@@ -131,6 +147,14 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\265c4_246a4_plantTrees3.jfif",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\265c4_246a4_plantTrees3.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\28767_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\28767_9f4f1_51b28_440d4_plantTrees2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\2fa24_plant-tree.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\2fa24_plant-tree.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\30379_e5c41_e3f4e_bf239_envClean2.jfif",
@@ -149,16 +173,48 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\3490f_aab13_fb9c7_4b4e5_Nourish-the-Children-in--African-country-1.png"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\44220_83371_e80a6_home2.jfif",
-      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\44220_83371_e80a6_home2.jfif"
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\367bd_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\367bd_22a57_clean.jpg"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\47b7a_6f78c_8902b_home1.jpg",
-      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\47b7a_6f78c_8902b_home1.jpg"
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\3d5db_44220_83371_e80a6_home2.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\3d5db_44220_83371_e80a6_home2.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\3f8f3_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\3f8f3_9f4f1_51b28_440d4_plantTrees2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\4169c_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\4169c_9f4f1_51b28_440d4_plantTrees2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\44083_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\44083_plant-trees.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\4596f_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\4596f_22a57_clean.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\4777e_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\4777e_22a57_clean.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\506f3_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\506f3_22a57_clean.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\50c31_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\50c31_22a57_clean.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\5434e_a267f_7b6bf_44e86_teachingRural2.png",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\5434e_a267f_7b6bf_44e86_teachingRural2.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\57650_8fb84_6efa1_be2e3_home3.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\57650_8fb84_6efa1_be2e3_home3.jfif"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\60909_c18b1_Grow-Trees-On-the-path-to-environment-sustainability-1.png",
@@ -177,12 +233,20 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\68f07_cleanCommunity3.png"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\6db09_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\6db09_9f4f1_51b28_440d4_plantTrees2.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\6fcc9_338b2_448fe_6f78c_8902b_home1.jpg",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\6fcc9_338b2_448fe_6f78c_8902b_home1.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\7665d_9c2ce_52dc3_cb233_a1efd_6484b_b6689_4ac8e_578fc_plantTrees1.png",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\7665d_9c2ce_52dc3_cb233_a1efd_6484b_b6689_4ac8e_578fc_plantTrees1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\7cfe8_d7a12_49160_d3de1_home4.jfif",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\7cfe8_d7a12_49160_d3de1_home4.jfif"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\85e22_disaster1.jfif",
@@ -195,6 +259,10 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\8660c_dd925_plantTrees4.jfif",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\8660c_dd925_plantTrees4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\8a6e9_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\8a6e9_plant-trees.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\8bc08_disaster3.jfif",
@@ -213,8 +281,8 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\8ceb3_f6a26_1b927_8a9b1_envClean4.jfif"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\8fb84_6efa1_be2e3_home3.jfif",
-      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\8fb84_6efa1_be2e3_home3.jfif"
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\985cd_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\985cd_9f4f1_51b28_440d4_plantTrees2.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\9f4f1_51b28_440d4_plantTrees2.png",
@@ -237,8 +305,16 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\a9111_f2e36_aabfb_animal-welfare.jpg"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\ac64b_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\ac64b_9f4f1_51b28_440d4_plantTrees2.png"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\aeed3_4594b_plantTrees1.png",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\aeed3_4594b_plantTrees1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\af8e0_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\af8e0_plant-trees.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\animalShelter1.jpg",
@@ -285,8 +361,24 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\b1ca3_73f55_animal-welfare.jpg"
     },
     {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\bb684_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\bb684_plant-trees.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\bcc25_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\bcc25_plant-trees.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\c1faa_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\c1faa_plant-trees.jpg"
+    },
+    {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\c3b20_40492_438b7_51355_teachingRural4.jfif",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\c3b20_40492_438b7_51355_teachingRural4.jfif"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\c4b4f_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\c4b4f_9f4f1_51b28_440d4_plantTrees2.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\c6989_0f872_Nourish-the-Children-in--African-country-1.png",
@@ -295,6 +387,10 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\c91be_494e3_44b94_10083_teachingRural1.png",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\c91be_494e3_44b94_10083_teachingRural1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\cd31d_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\cd31d_clean.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\cfe80_91f36_feedHomeless2.jfif",
@@ -309,12 +405,16 @@
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\d075e_b07cb_feedHomeless4.jfif"
     },
     {
-      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\d7a12_49160_d3de1_home4.jfif",
-      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\d7a12_49160_d3de1_home4.jfif"
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\d7b9c_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\d7b9c_plant-trees.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\d95e0_feed.jpg",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\d95e0_feed.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\d9dc1_9f4f1_51b28_440d4_plantTrees2.png",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\d9dc1_9f4f1_51b28_440d4_plantTrees2.png"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\dda0a_d47b2_feedHomeless3.jfif",
@@ -323,6 +423,18 @@
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\e790d_4cc0f_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png",
       "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\e790d_4cc0f_CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\eb69f_22a57_clean.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\eb69f_22a57_clean.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\fac6c_plant-trees.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\fac6c_plant-trees.jpg"
+    },
+    {
+      "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\fda2a_47b7a_6f78c_8902b_home1.jpg",
+      "PackagePath": "staticwebassets\\Upload\\MissionPhotos\\fda2a_47b7a_6f78c_8902b_home1.jpg"
     },
     {
       "Id": "C:\\Users\\pci94\\Desktop\\Project\\CI Platform\\MVC\\CiPlatform\\CiPlatformWeb\\wwwroot\\Upload\\MissionPhotos\\fec5b_a7395_578fc_plantTrees1.png",

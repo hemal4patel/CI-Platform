@@ -84,12 +84,14 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool MissionExistsForNew (string title, string organizationName)
         {
-            return _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.DeletedAt == null);
+            var status = _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.DeletedAt == null);
+            return status;
         }
 
         public bool MissionExistsForUpdate (long? missionId, string title, string organizationName)
         {
-            return _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.MissionId != missionId && m.DeletedAt == null);
+            var status = _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.MissionId != missionId && m.DeletedAt == null);
+            return status;
         }
 
         public void AddMission (AdminMissionViewModel vm)
@@ -247,11 +249,11 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void AddNotificationForAllUsers (long missionId)
         {
-            List<long> userIds = _db.Users.Where(u => u.DeletedAt == null).Select(u => u.UserId).ToList();
+            List<long> userIds = _db.Users.Where(u => u.DeletedAt == null && u.Role == userRole.user.ToString()).Select(u => u.UserId).ToList();
 
             foreach (long userId in userIds)
             {
-                long userSettingId = _db.UserSettings.Where(u => u.UserId == userId && u.SettingId == (long) notifications.newMission).Select(u => u.UserSettingId).FirstOrDefault();
+                var userSettingId = _db.UserSettings.Where(u => u.UserId == userId && u.SettingId == (long) 6).FirstOrDefault();
 
                 UserNotification notification = new UserNotification()
                 {
@@ -259,7 +261,7 @@ namespace CiPlatformWeb.Repositories.Repository
                     NewMissionId = missionId,
                     Status = false,
                     CreatedAt = DateTime.Now,
-                    UserSettingId = userSettingId
+                    UserSettingId = userSettingId.UserSettingId
                 };
                 _db.UserNotifications.Add(notification);
             }
@@ -351,7 +353,11 @@ namespace CiPlatformWeb.Repositories.Repository
                     if (m.MediaType == "img")
                     {
                         string fileName = m.MediaPath;
-                        File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName));
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName);
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
                     }
                     m.DeletedAt = DateTime.Now;
                 }
@@ -362,9 +368,13 @@ namespace CiPlatformWeb.Repositories.Repository
                 if (d is not null)
                 {
                     string fileName = d.DocumentPath;
-                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionDocuments", fileName));
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionDocuments", fileName);
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                    d.DeletedAt = DateTime.Now;
                 }
-                d.DeletedAt = DateTime.Now;
             }
             _db.SaveChanges();
 

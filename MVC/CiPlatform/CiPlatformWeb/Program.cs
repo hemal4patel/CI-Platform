@@ -51,6 +51,7 @@ builder.Services.AddScoped<IAdminStory, AdminStory>();
 builder.Services.AddScoped<IAdminBanner, AdminBanner>();
 builder.Services.AddScoped<IAdminComment, AdminComment>();
 builder.Services.AddScoped<IAdminTimesheet, AdminTimesheet>();
+builder.Services.AddScoped<INotification, Notification>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

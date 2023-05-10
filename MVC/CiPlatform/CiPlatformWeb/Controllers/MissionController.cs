@@ -54,7 +54,7 @@ namespace CiPlatformWeb.Controllers
         //GRID LIST VIEW
         public IActionResult PlatformLanding ()
         {
-            var vm = new DisplayMissionCards();
+            DisplayMissionCards vm = new DisplayMissionCards();
 
             vm.CountryList = _missionlist.GetCountryList();
             vm.ThemeList = _missionlist.GetThemeList();
@@ -66,14 +66,14 @@ namespace CiPlatformWeb.Controllers
 
         public IActionResult GetCitiesByCountry (int countryId)
         {
-            var cities = _missionlist.GetCityList(countryId);
+            List<City> cities = _missionlist.GetCityList(countryId);
             return Json(cities);
         }
 
         [HttpPost]
         public IActionResult PlatformLanding (MissionQueryParams viewmodel)
         {
-            var vm = new DisplayMissionCards();
+            DisplayMissionCards vm = new DisplayMissionCards();
 
             var data = _missionlist.GetMissions(viewmodel, userId);
             vm.MissionList = data.Item1;
@@ -105,7 +105,7 @@ namespace CiPlatformWeb.Controllers
             {
                 if (_missiondetail.IsValidMissionId(MissionId))
                 {
-                    var vm = new VolunteeringMissionViewModel();
+                    VolunteeringMissionViewModel vm = new VolunteeringMissionViewModel();
 
                     vm.MissionDetails = _missiondetail.GetMissionDetails(MissionId, userId);
                     vm.RelatedMissions = _missiondetail.GetRelatedMissions(MissionId, userId);
@@ -186,16 +186,16 @@ namespace CiPlatformWeb.Controllers
         //DOCUMENTS DISPLAY
         public IActionResult DisplayDocument (string fileName)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(),
             "wwwroot/Upload/MissionDocuments", fileName);
             if (Path.GetExtension(filePath).ToLower() == ".pdf")
             {
-                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
                 return new FileStreamResult(fileStream, "application/pdf");
             }
             else
             {
-                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+                byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
                 return File(fileBytes, "application/octet-stream", fileName);
             }
         }
@@ -225,7 +225,7 @@ namespace CiPlatformWeb.Controllers
         {
             _missiondetail.InviteToMission(FromUserId, ToUserId, MissionId);
 
-            var MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
+            string MissionLink = Url.Action("VolunteeringMission", "Mission", new { MissionId = MissionId }, Request.Scheme);
             string link = MissionLink;
             await _missionlist.SendInvitationToCoWorker(ToUserId, FromUserId, link);
 
@@ -254,55 +254,6 @@ namespace CiPlatformWeb.Controllers
         {
             return View();
         }
-
-
-
-
-
-
-        public IActionResult GetAllNotifications ()
-        {
-            List<NotificationParams> list = _missionlist.GetAllNotifications(userId);
-            int unread = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null && u.Status == false).Count();
-
-            NotificationModel vm = new NotificationModel
-            {
-                userNotifications = list,
-                UnreadCount = unread
-            };
-            return PartialView("userNotificationsPartial", vm);
-        }
-
-        //MARK NOTIFICATION AS READ
-        public IActionResult ChangeNotificationStatus (long id)
-        {
-            int flag = _missionlist.ChangeNotificationStatus(id);
-            return Json(flag);
-        }
-
-        //CLEAR ALL NOTIFICATIONS
-        public IActionResult ClearAllNotifications ()
-        {
-            _missionlist.ClearAllNotifications(userId);
-            return Ok();
-        }
-
-        //GET USER SETTING FOR NOTIFICATIONS
-        public IActionResult GetUserNotificationChanges ()
-        {
-            long[] settingIds =  _missionlist.GetUserNotificationChanges(userId);
-            return Json(settingIds);
-        }
-
-        //save user settings for notifications
-        public IActionResult SaveUserNotificationChanges (long[] settingIds)
-        {
-            _missionlist.SaveUserNotificationChanges(userId, settingIds);
-            return Ok ();
-        }
-
-
-
 
 
 

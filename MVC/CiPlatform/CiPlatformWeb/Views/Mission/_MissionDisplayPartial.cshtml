@@ -114,7 +114,7 @@
 
                                                     <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@obj.missionId">
 
-                                                        @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId))
+                                                        @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId && m.FromUserId == Id))
                                                         {
                                                             <button disabled class="btn btn-success disabled model-button">Already Invited</button>
                                                         }
@@ -362,7 +362,7 @@
 
 
                                                 <span style="margin-left : 6%;" class="invited-@u.UserId Invited-@obj.missionId">
-                                                    @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId))
+                                                    @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId && m.FromUserId == Id))
                                                     {
                                                         <button disabled class="btn btn-success disabled model-button">Already Invited</button>
                                                     }

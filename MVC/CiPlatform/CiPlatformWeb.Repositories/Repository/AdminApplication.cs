@@ -39,7 +39,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public void ChangeApplicationStatus (long applicationId, int status)
         {
-            MissionApplication missionApplication = _db.MissionApplications.Where(m => m.MissionApplicationId == applicationId).FirstOrDefault();
+            MissionApplication? missionApplication = _db.MissionApplications.Where(m => m.MissionApplicationId == applicationId).FirstOrDefault();
 
             if (status == 0)
             {
@@ -51,17 +51,17 @@ namespace CiPlatformWeb.Repositories.Repository
             }
             missionApplication.UpdatedAt = DateTime.Now;
 
-            UserSetting userSettingId = _db.UserSettings.Where(u => u.UserId == missionApplication.UserId && u.SettingId == (long) notifications.missionApplication).FirstOrDefault();
+            UserSetting? userSettingId = _db.UserSettings.Where(u => u.UserId == missionApplication.UserId && u.SettingId == (long) notifications.missionApplication).FirstOrDefault();
 
             if (_db.UserNotifications.Any(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.MissionApplicationId == applicationId))
             {
-                UserNotification notification = _db.UserNotifications.FirstOrDefault(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.MissionApplicationId == applicationId);
+                UserNotification? notification = _db.UserNotifications.FirstOrDefault(u => u.UserSettingId == userSettingId.UserSettingId && u.DeletedAt == null && u.MissionApplicationId == applicationId);
                 notification.Status = false;
                 notification.CreatedAt = DateTime.Now;
             }
             else
             {
-                UserNotification notification = new UserNotification()
+                UserNotification? notification = new UserNotification()
                 {
                     ToUserId = missionApplication.UserId,
                     MissionApplicationId = applicationId,
