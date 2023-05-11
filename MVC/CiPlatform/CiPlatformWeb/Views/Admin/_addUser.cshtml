@@ -75,7 +75,7 @@
                 <label asp-for="newUser.countryId" class="form-label">Country<span class="required-field"></span></label>
                 <select asp-for="newUser.countryId" id="countryId" class="form-select countryList">
                     <option value="">Select country</option>
-                    @foreach (var country in Model.countryList)
+                    @foreach (Country country in Model.countryList)
                     {
                         <option value="@country.CountryId">@country.Name</option>
                     }
@@ -90,7 +90,7 @@
                     <option value="">Select city</option>
                     @if (Model.cityList is not null)
                     {
-                        @foreach (var city in Model.cityList)
+                        @foreach (City city in Model.cityList)
                         {
                             <option value="@city.CityId">@city.Name</option>
                         }

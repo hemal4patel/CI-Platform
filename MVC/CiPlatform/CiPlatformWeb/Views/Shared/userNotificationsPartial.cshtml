@@ -5,7 +5,7 @@
 @model NotificationModel
 
 @{
-    var today = DateTime.Today.ToString("yyyy-MM-dd");
+    string today = DateTime.Today.ToString("yyyy-MM-dd");
 }
 
 <input id="UnreadCount" value="@Model.UnreadCount" class="d-none" />
@@ -166,14 +166,14 @@
                     {
                         <a class="text-decoration-none text-dark" href="@Url.Action("VolunteeringMission", "Mission", new {  MissionId = notification.newMissionId})">
                             <div class="d-flex justify-content-between">
-                                <i class="bi bi-plus-circle"></i>
+                                <i class="bi bi-plus-circle" style="font-size: 38px; color: #757575;"></i>
                                 <div class="ms-2 me-2">
                                     <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> New mission -  <strong>@notification.newMissionTitle</strong> </p>
                                 </div>
-                                <div>
+                                <div class="statusPill-@notification.notificationId">
                                     @if (notification.status == true)
                                     {
-                                        <i class="bi bi-check-circle-fill" style="color: #414141; font-size: 13px;"></i>
+                                        <i class="bi bi-check-circle-fill" style="color: #757575; font-size: 13px;"></i>
                                     }
                                     else
                                     {
@@ -183,7 +183,7 @@
                             </div>
                         </a>
                     }
-                    else
+                    else if (notification.MissionApplicationId != 0)
                     {
                         <div class="d-flex justify-content-between">
                             @if (notification.applicationApprovalStatus == applicationStatus.approve.ToString().ToUpper())
@@ -363,14 +363,14 @@
                         {
                             <a class="text-decoration-none text-dark" href="@Url.Action("VolunteeringMission", "Mission", new {  MissionId = notification.newMissionId})">
                                 <div class="d-flex justify-content-between">
-                                    <i class="bi bi-plus-circle"></i>
+                                    <i class="bi bi-plus-circle" style="font-size: 38px; color: #757575;"></i>
                                     <div class="ms-2 me-2">
                                         <p class="lh-sm" style="margin-bottom: 0; text-align: justify;"> New mission -  <strong>@notification.newMissionTitle</strong> </p>
                                     </div>
-                                    <div>
+                                    <div class="statusPill-@notification.notificationId">
                                         @if (notification.status == true)
                                         {
-                                            <i class="bi bi-check-circle-fill" style="color: #414141; font-size: 13px;"></i>
+                                            <i class="bi bi-check-circle-fill" style="color: #757575; font-size: 13px;"></i>
                                         }
                                         else
                                         {
@@ -380,7 +380,7 @@
                                 </div>
                             </a>
                         }
-                        else
+                        else if (notification.MissionApplicationId != 0)
                         {
                             <div class="d-flex justify-content-between">
                                 @if (notification.applicationApprovalStatus == applicationStatus.approve.ToString().ToUpper())

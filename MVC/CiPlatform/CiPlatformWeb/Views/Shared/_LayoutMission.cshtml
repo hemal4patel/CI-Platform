@@ -3,10 +3,10 @@
 
 @{
     long Id = 0;
-    var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
+    string customClaim = User.FindFirst("CustomClaimForUser")?.Value;
     if (customClaim is not null)
     {
-        var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
+        User? sessionUser = JsonSerializer.Deserialize<User>(customClaim);
         Id = sessionUser.UserId;
     }
     List<MissionInvite> inviteList = ViewBag.InviteList;

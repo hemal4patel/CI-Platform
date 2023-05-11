@@ -2,6 +2,7 @@
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -84,13 +85,13 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public bool MissionExistsForNew (string title, string organizationName)
         {
-            var status = _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.DeletedAt == null);
+            bool status = _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.DeletedAt == null);
             return status;
         }
 
         public bool MissionExistsForUpdate (long? missionId, string title, string organizationName)
         {
-            var status = _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.MissionId != missionId && m.DeletedAt == null);
+            bool status = _db.Missions.Any(m => m.Title.ToLower().Trim().Replace(" ", "") == title.ToLower().Trim().Replace(" ", "") && m.OrganizationName.ToLower().Trim().Replace(" ", "") == organizationName.ToLower().Trim().Replace(" ", "") && m.MissionId != missionId && m.DeletedAt == null);
             return status;
         }
 
@@ -169,7 +170,7 @@ namespace CiPlatformWeb.Repositories.Repository
                     {
                         string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName);
-                        var onlyName = Path.GetFileNameWithoutExtension(fileName);
+                        string onlyName = Path.GetFileNameWithoutExtension(fileName);
                         MissionMedium newMedia = new MissionMedium()
                         {
                             MissionId = missionId,
@@ -244,26 +245,33 @@ namespace CiPlatformWeb.Repositories.Repository
                 _db.SaveChanges();
             }
 
-            AddNotificationForAllUsers(missionId);
+            AddNotificationForAllUsers(mission);
         }
 
-        public void AddNotificationForAllUsers (long missionId)
+        public void AddNotificationForAllUsers (Mission mission)
         {
-            List<long> userIds = _db.Users.Where(u => u.DeletedAt == null && u.Role == userRole.user.ToString()).Select(u => u.UserId).ToList();
+            List<User> users = _db.Users.Where(u => u.DeletedAt == null && u.Role == userRole.user.ToString()).ToList();
 
-            foreach (long userId in userIds)
+            foreach (User user in users)
             {
-                var userSettingId = _db.UserSettings.Where(u => u.UserId == userId && u.SettingId == (long) notifications.newMission).FirstOrDefault();
+                IQueryable<long> userSkills = _db.UserSkills.Where(us => us.UserId == user.UserId && us.DeletedAt == null).Select(us => us.SkillId);
+                IQueryable<long> missionSkills = _db.MissionSkills.Where(ms => ms.MissionId == mission.MissionId && ms.DeletedAt == null).Select(ms => ms.SkillId);
+                IQueryable<long> commonSkills = userSkills.Intersect(missionSkills);
 
-                UserNotification notification = new UserNotification()
+                if (commonSkills.Any() || user.Availability == mission.Availability)
                 {
-                    ToUserId = userId,
-                    NewMissionId = missionId,
-                    Status = false,
-                    CreatedAt = DateTime.Now,
-                    UserSettingId = userSettingId.UserSettingId
-                };
-                _db.UserNotifications.Add(notification);
+                    UserSetting userSettingId = _db.UserSettings.Where(u => u.UserId == user.UserId && u.SettingId == (long) notifications.newMission).FirstOrDefault();
+
+                    UserNotification notification = new UserNotification()
+                    {
+                        ToUserId = user.UserId,
+                        NewMissionId = mission.MissionId,
+                        Status = false,
+                        CreatedAt = DateTime.Now,
+                        UserSettingId = userSettingId.UserSettingId
+                    };
+                    _db.UserNotifications.Add(notification);
+                }
             }
             _db.SaveChanges();
         }
@@ -388,7 +396,7 @@ namespace CiPlatformWeb.Repositories.Repository
                     {
                         string fileName = Guid.NewGuid().ToString("N").Substring(0, 5) + "_" + u.FileName;
                         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Upload", "MissionPhotos", fileName);
-                        var onlyName = Path.GetFileNameWithoutExtension(fileName);
+                        string onlyName = Path.GetFileNameWithoutExtension(fileName);
                         MissionMedium newMedia = new MissionMedium()
                         {
                             MissionId = vm.newMission.missionId,

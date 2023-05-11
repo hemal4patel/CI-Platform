@@ -22,9 +22,9 @@ namespace CiPlatformWeb.Repositories.Repository
 
         public List<AdminCommentModel> GetComments ()
         {
-            var comments = _db.Comments.Where(c => c.DeletedAt == null);
+            IQueryable<Comment> comments = _db.Comments.Where(c => c.DeletedAt == null);
 
-            var list = comments.Select(c => new AdminCommentModel()
+            IQueryable<AdminCommentModel> list = comments.Select(c => new AdminCommentModel()
             {
                 commentId = c.CommentId,
                 mission = c.Mission.Title,

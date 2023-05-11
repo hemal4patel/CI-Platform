@@ -1,4 +1,5 @@
 ﻿@using System.Text.RegularExpressions;
+@using CiPlatformWeb.Entities.ViewModels;
 @model CiPlatformWeb.Entities.ViewModels.StoryListingViewModel
 
 
@@ -6,7 +7,7 @@
 
 <div class="container my-5 pb-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        @foreach (var obj in Model.StoryList)
+        @foreach (StoryListModel obj in Model.StoryList)
         {
             <div class="col">
                 <div class="card h-100">

@@ -22,7 +22,7 @@ namespace CiPlatformWeb.Repositories.Repository
         {
             IQueryable<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null && u.UserSetting.IsEnabled == true).OrderByDescending(u => u.CreatedAt).AsQueryable();
 
-            var list = notifications.Select(n => new NotificationParams()
+            IQueryable<NotificationParams> list = notifications.Select(n => new NotificationParams()
             {
                 notificationId = n.NotificationId,
                 toUserId = userId,
@@ -77,7 +77,7 @@ namespace CiPlatformWeb.Repositories.Repository
         public void ClearAllNotifications (long userId)
         {
             List<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId).ToList();
-            foreach (var n in notifications)
+            foreach (UserNotification n in notifications)
             {
                 n.DeletedAt = DateTime.Now;
             }

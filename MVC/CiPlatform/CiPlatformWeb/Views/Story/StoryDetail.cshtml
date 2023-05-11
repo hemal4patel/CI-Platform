@@ -7,9 +7,9 @@
 @using System.Text.Json;
 @using CiPlatformWeb.Entities.DataModels;
 @{
-    var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
-    var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
-    var Id = sessionUser.UserId;
+    string customClaim = User.FindFirst("CustomClaimForUser")?.Value;
+    User sessionUser = JsonSerializer.Deserialize<User>(customClaim);
+    long Id = sessionUser.UserId;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.StoryDetailViewModel
@@ -33,7 +33,7 @@
                 <div class="swiper-wrapper">
                     @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
                     {
-                        @foreach (var image in Model.storyDetail.StoryMedia)
+                        @foreach (StoryMedium image in Model.storyDetail.StoryMedia)
                         {
                             if (image.Type == "img")
                             {
@@ -64,7 +64,7 @@
                 <div class="swiper-wrapper">
                     @if (Model.storyDetail.StoryMedia.Any(s => s.StoryId == Model.storyDetail.StoryId))
                     {
-                        @foreach (var image in Model.storyDetail.StoryMedia)
+                        @foreach (StoryMedium image in Model.storyDetail.StoryMedia)
                         {
                             if (image.Type == "img")
                             {
@@ -148,7 +148,7 @@
                                         <input type="text" class="form-control border-none searchUserName" placeholder="Search" onkeyup="searchUser()" id="" aria-label="Search" />
                                     </div>
 
-                                    @foreach (var u in Model.userDetail)
+                                    @foreach (User u in Model.userDetail)
                                     {
 
                                         <div class="mt-2" style="display : flex; justify-content : space-between;">

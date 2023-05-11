@@ -1,4 +1,5 @@
-﻿@{
+﻿@using CiPlatformWeb.Entities.DataModels;
+@{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_LayoutMission.cshtml";
 }
@@ -6,7 +7,7 @@
 @model CiPlatformWeb.Entities.ViewModels.VolunteeringTimesheetViewModel
 
 @{
-    var todaysDate = DateTime.Now.ToShortDateString();
+    string todaysDate = DateTime.Now.ToShortDateString();
 }
 
 <link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
@@ -65,7 +66,7 @@
                                                         </option>
                                                         @if (Model.timeMissions is not null)
                                                         {
-                                                            foreach (var m in Model.timeMissions)
+                                                            foreach (MissionApplication m in Model.timeMissions)
                                                             {
                                                                 <option value="@m.MissionId" data-value="@m.Mission.StartDate">@m.Mission.Title</option>
                                                             }
@@ -138,7 +139,7 @@
                                 <tbody>
                                     @if (Model.timeBasedEntries is not null)
                                     {
-                                        foreach (var t in Model.timeBasedEntries)
+                                        foreach (Timesheet t in Model.timeBasedEntries)
                                         {
                                             <tr id="@t.TimesheetId">
                                                 <td>@t.Mission.Title</td>
@@ -212,7 +213,7 @@
                                                         </option>
                                                         @if (Model.goalMissions is not null)
                                                         {
-                                                            foreach (var m in Model.goalMissions)
+                                                            foreach (MissionApplication m in Model.goalMissions)
                                                             {
                                                                 <option data-value="@m.Mission.StartDate" value="@m.MissionId">@m.Mission.Title</option>
                                                             }
@@ -275,7 +276,7 @@
 
                                     @if (Model.goalBasedEnteries is not null)
                                     {
-                                        foreach (var t in Model.goalBasedEnteries)
+                                        foreach (Timesheet t in Model.goalBasedEnteries)
                                         {
                                             <tr id="@t.TimesheetId">
                                                 <td>@t.Mission.Title</td>

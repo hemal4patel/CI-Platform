@@ -5,9 +5,9 @@
 @using System.Text.Json;
 @using CiPlatformWeb.Entities.DataModels;
 @{
-    var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
-    var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
-    var Id = sessionUser.UserId;
+    string customClaim = User.FindFirst("CustomClaimForUser")?.Value;
+    User sessionUser = JsonSerializer.Deserialize<User>(customClaim);
+    long Id = sessionUser.UserId;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.ShareStoryViewModel
@@ -36,7 +36,7 @@
                 <label asp-for="MissionId" class="form-label">Select Mission</label><span class="required-field"></span>
                 <select asp-for="MissionId" class="form-select" aria-label="Default select example" id="missionId">
                     <option selected disabled value="default">Select your mission</option>
-                    @foreach (var m in Model.MissionTitles)
+                    @foreach (MissionApplication m in Model.MissionTitles)
                     {
                         <option value="@m.Mission.MissionId">@m.Mission.Title</option>
                     }

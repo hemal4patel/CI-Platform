@@ -1,4 +1,5 @@
-﻿@{
+﻿@using CiPlatformWeb.Entities.DataModels;
+@{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_LayoutMission.cshtml";
 }
@@ -127,7 +128,7 @@
                                     <option value="">
                                         Select your country
                                     </option>
-                                    @foreach (var country in Model.CountryList)
+                                    @foreach (Country country in Model.CountryList)
                                     {
                                         <option value="@country.CountryId">@country.Name</option>
                                     }
@@ -143,7 +144,7 @@
                                     </option>
                                     @if (Model.CountryId != null)
                                     {
-                                        @foreach (var city in Model.CityList)
+                                        @foreach (City city in Model.CityList)
                                         {
                                             <option value="@city.CityId">@city.Name</option>
                                         }
@@ -202,7 +203,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="skillsContainer d-flex flex-column border border-secondary p-2">
-                                    @foreach (var s in Model.UserSkills)
+                                    @foreach (UserSkill s in Model.UserSkills)
                                     {
                                         <div class="userSkill" data-value="@s.SkillId">@s.Skill.SkillName</div>
                                     }
@@ -232,7 +233,7 @@
                                     <div class="row">
                                         <div class="col col-5 skillOptions">
                                             <select class="form-select" size="10" multiple>
-                                                @foreach (var s in Model.SkillList)
+                                                @foreach (Skill s in Model.SkillList)
                                                 {
                                                     if (s.UserSkills.Any(us => us.SkillId == s.SkillId))
                                                     {
@@ -255,7 +256,7 @@
                                         </div>
                                         <div class="col col-5 selectedSkills">
                                             <select class="form-select" size="10" multiple>
-                                                @foreach (var s in Model.UserSkills)
+                                                @foreach (UserSkill s in Model.UserSkills)
                                                 {
                                                     <option value="@s.Skill.SkillId"> @s.Skill.SkillName </option>
                                                 }

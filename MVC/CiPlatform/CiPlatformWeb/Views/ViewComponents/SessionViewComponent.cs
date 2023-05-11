@@ -61,47 +61,8 @@ namespace CiPlatformWeb.Views.ViewComponents
             vm.role = role;
             vm.avatarName = avatarName;
             vm.cmsPages = _db.CmsPages.Where(cms => cms.DeletedAt == null).ToList();
-            //vm.userNotifications = getUserNotification(userId);
-
+            
             return View(view, vm);
-        }
-
-        public List<NotificationParams> getUserNotification (long userId)
-        {
-            IQueryable<UserNotification> notifications = _db.UserNotifications.Where(u => u.ToUserId == userId && u.DeletedAt == null && u.UserSetting.IsEnabled == true).OrderByDescending(u => u.CreatedAt).AsQueryable();
-
-            var list = notifications.Select(n => new NotificationParams()
-            {
-                notificationId = n.NotificationId,
-                toUserId = userId,
-                fromUserId = n.FromUserId.HasValue ? n.FromUserId : 0,
-                recommendedMissionId = n.RecommendedMissionId.HasValue ? n.RecommendedMissionId : 0,
-                recommendedStoryId = n.RecommendedStooyId.HasValue ? n.RecommendedStooyId : 0,
-                newMissionId = n.NewMissionId.HasValue ? n.NewMissionId : 0,
-                storyId = n.StoryId.HasValue ? n.StoryId : 0,
-                timesheetId = n.TimesheetId.HasValue ? n.TimesheetId : 0,
-                commentId = n.CommentId.HasValue ? n.CommentId : 0,
-                MissionApplicationId = n.MissionApplicationId.HasValue ? n.MissionApplicationId : 0,
-                status = n.Status,
-                createdAt = n.CreatedAt,
-                fromUserName = n.FromUserId.HasValue ? n.FromUser.FirstName + " " + n.FromUser.LastName : "",
-                fromUserAvatar = n.FromUserId.HasValue ? n.FromUser.Avatar : "",
-                newMissionTitle = n.NewMissionId.HasValue ? n.NewMission.Title : "",
-                recommendedMissionTitle = n.RecommendedMissionId.HasValue ? n.RecommendedMission.Title : "",
-                timesheetMissionTitle = n.TimesheetId.HasValue ? n.Timesheet.Mission.Title : "",
-                commentMissionTitle = n.CommentId.HasValue ? n.Comment.Mission.Title: "",
-                applicationMissionTitle = n.MissionApplicationId.HasValue ? n.MissionApplication.Mission.Title : "",
-                approvedStoryTitle = n.StoryId.HasValue ? n.Story.Title : "",
-                recommendedStoryTitle = n.RecommendedStooyId.HasValue ? n.RecommendedStooy.Title : "",
-                recommendedStoryMissionId = n.RecommendedStooyId.HasValue ? n.RecommendedStooy.Mission.MissionId : 0,
-                recommendedStoryUserId = n.RecommendedStooyId.HasValue ? n.RecommendedStooy.User.UserId : 0,
-                timesheetApprovalStatus = n.TimesheetId.HasValue ? n.Timesheet.Status : "",
-                commentApprovalStatus = n.CommentId.HasValue ? n.Comment.ApprovalStatus : "",
-                applicationApprovalStatus = n.MissionApplicationId.HasValue ? n.MissionApplication.ApprovalStatus : "",
-                storyapprovalStatus = n.StoryId.HasValue ? n.Story.Status : ""
-            });
-
-            return list.ToList();
         }
     }
 }

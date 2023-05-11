@@ -67,7 +67,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             if (viewmodel.searchText != null)
             {
-                stories = stories.Where(s => s.Title.ToLower().Replace(" ", "").Contains(viewmodel.searchText) || s.Description.ToLower().Contains(viewmodel.searchText));
+                stories = stories.Where(s => s.Title.ToLower().Replace(" ", "").Contains(viewmodel.searchText.ToLower().Replace(" ", "")) || s.Description.ToLower().Contains(viewmodel.searchText.ToLower().Replace(" ", "")));
             }
 
             int count = stories.Count();

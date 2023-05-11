@@ -22,7 +22,7 @@ namespace CiPlatformWeb.Repositories.Interface
 
         public void AddMission (AdminMissionViewModel model);
 
-        public void AddNotificationForAllUsers (long missionId);
+        public void AddNotificationForAllUsers (Mission mission);
 
         public AdminMissionList GetMissionToEdit (long missionId);
 

@@ -83,7 +83,7 @@ namespace CiPlatformWeb.Repositories.Repository
 
             if (viewmodel.searchText != null)
             {
-                missions = missions.Where(m => m.Title.ToLower().Replace(" ", "").Contains(viewmodel.searchText) || m.ShortDescription.ToLower().Contains(viewmodel.searchText) || m.Description.ToLower().Contains(viewmodel.searchText));
+                missions = missions.Where(m => m.Title.ToLower().Replace(" ", "").Contains(viewmodel.searchText.ToLower().Replace(" ", "")) || m.ShortDescription.ToLower().Replace(" ", "").Contains(viewmodel.searchText.ToLower().Replace(" ", "")) || m.Description.ToLower().Replace(" ", "").Contains(viewmodel.searchText.ToLower().Replace(" ", "")));
             }
 
             switch (viewmodel.exploreOption)

@@ -36,7 +36,7 @@
                 <label asp-for="newMission.countryId" class="form-label">Country<span class="required-field"></span></label>
                 <select asp-for="newMission.countryId" id="missionCountryId" class="form-select countryList">
                     <option value="">Select country</option>
-                    @foreach (var country in Model.countryList)
+                    @foreach (Country country in Model.countryList)
                     {
                         <option value="@country.CountryId">@country.Name</option>
                     }
@@ -50,7 +50,7 @@
                     <option value="">Select city</option>
                     @if (Model.cityList is not null)
                     {
-                        @foreach (var city in Model.cityList)
+                        @foreach (City city in Model.cityList)
                         {
                             <option value="@city.CityId">@city.Name</option>
                         }
@@ -121,7 +121,7 @@
                 <label asp-for="newMission.missionTheme" class="form-label">Mission Theme<span class="required-field"></span></label>
                 <select asp-for="newMission.missionTheme" id="missionTheme" class="form-select">
                     <option value="">Select theme</option>
-                    @foreach (var theme in Model.themeList)
+                    @foreach (MissionTheme theme in Model.themeList)
                     {
                         <option value="@theme.MissionThemeId">@theme.Title</option>
                     }
@@ -132,7 +132,7 @@
             <div class="form-group mt-3">
                 <label asp-for="newMission.missionSkills" class="form-label">Mission Skills<span class="required-field"></span></label>
                 <div class="allSkills border rounded p-2" style="border-color: #cdd2d8 !important">
-                    @foreach (var skill in Model.skillList)
+                    @foreach (Skill skill in Model.skillList)
                     {
                         <div class="form-check">
                             <input type="checkbox" value="@skill.SkillId" id="skill-@skill.SkillId" class="form-check-input">

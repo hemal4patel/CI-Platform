@@ -8,9 +8,9 @@
 
 @{
     var volCount = ViewBag.volCount;
-    var customClaim = User.FindFirst("CustomClaimForUser")?.Value;
-    var sessionUser = JsonSerializer.Deserialize<User>(customClaim);
-    var Id = sessionUser.UserId;
+    string customClaim = User.FindFirst("CustomClaimForUser")?.Value;
+    User sessionUser = JsonSerializer.Deserialize<User>(customClaim);
+    long Id = sessionUser.UserId;
 }
 
 @model CiPlatformWeb.Entities.ViewModels.VolunteeringMissionViewModel
@@ -602,7 +602,7 @@
 
                                                     <span style="margin-left : 6%;" class="Invited-@u.UserId Invited-@obj.missionId">
 
-                                                        @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId && m.FromUser.UserId == Id))
+                                                        @if (u.MissionInviteToUsers.Any(m => m.ToUserId == u.UserId && m.MissionId == obj.missionId && m.FromUserId == Id))
                                                         {
                                                             <button disabled class="btn btn-success disabled model-button">Already Invited</button>
                                                         }

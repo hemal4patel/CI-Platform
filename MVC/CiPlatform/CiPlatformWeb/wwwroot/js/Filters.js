@@ -32,10 +32,7 @@ function showNotification() {
             $('#settingsUl').hide()
 
             $('.notificationCount').text($('#UnreadCount').val())
-            if ($('#UnreadCount').val() == 0) {
-                $('.clearAllBtn').hide()
-            }
-
+            
         },
         error: function (error) {
             console.log(error)
