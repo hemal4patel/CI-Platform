@@ -20,7 +20,7 @@
             <div class="policyNavigation">
                 @foreach (CmsPage page in Model.PolicyPages)
                 {
-                    <div class="p-2">
+                    <div class="p-2 link">
                         <a type="button" href="#@(page.Slug)" class="d-flex justify-content-between align-items-center text-decoration-none text-dark">
                             <span class="Pactive"> @(page.Title) </span>
                             <img src="~/images/arrow.png" class="" alt="@(page.Title)" />

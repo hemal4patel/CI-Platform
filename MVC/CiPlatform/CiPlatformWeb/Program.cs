@@ -27,11 +27,11 @@ builder.Services.AddControllersWithViews()
 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
 
-builder.Services.AddScoped<CountryCityActionFilter>();
-builder.Services.AddControllersWithViews(options =>
-{
-    options.Filters.AddService<CountryCityActionFilter>();
-});
+//builder.Services.AddScoped<CountryCityActionFilter>();
+//builder.Services.AddControllersWithViews(options =>
+//{
+//    options.Filters.AddService<CountryCityActionFilter>();
+//});
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();

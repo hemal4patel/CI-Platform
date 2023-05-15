@@ -1,13 +1,14 @@
 ﻿
 
-$("#countryDropdown").click(function () {
+$("#countryDropdown").on('change', function () {
     var countryId = $(this).val();
-
+  
     $.ajax({
         type: "GET",
         url: "/User/GetCitiesByCountry",
         data: { countryId: countryId },
         success: function (data) {
+        
             var dropdown = $("#CityDropdown");
             dropdown.empty();
             var items = "";

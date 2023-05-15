@@ -174,7 +174,6 @@ namespace CiPlatformWeb.Repositories.Repository
         public List<User> GetUserList (long userId)
         {
             List<User> list = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == userRole.user.ToString()).Include(u => u.MissionInviteToUsers).Include(u => u.MissionInviteFromUsers).ToList();
-            //List<User> recentVolunteers = _db.Users.Where(u => u.UserId != userId && u.DeletedAt == null && u.Role == userRole.user.ToString()).Include(u => u.MissionInviteFromUsers).Include(u => u.MissionInviteToUsers).ToList();
 
             return list;
         }

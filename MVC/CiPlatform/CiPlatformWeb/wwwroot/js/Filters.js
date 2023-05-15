@@ -2,9 +2,11 @@
 var selectedCountry = null;
 var selectedSortCase = null;
 var currentUrl = window.location.href;
-let allDropdowns = $('.dropdown ul');
+var allDropdownsForFilter = $('.filterDropdown ul');
 var selectedExploreOption = null
 var currVolPage = 1;
+var filterPills = $('#filter-pills');
+
 
 if (currentUrl.includes("PlatformLanding")) {
     showMissions(1);
@@ -198,7 +200,7 @@ $('.exploreOptions li').on('click', function () {
     showMissions()
 })
 
-allDropdowns.on('change', function () {
+allDropdownsForFilter.on('change', function () {
     if (currentUrl.includes("PlatformLanding")) {
         showMissions();
     }
@@ -365,7 +367,7 @@ function showStories(pageNo) {
     var ThemeId = $('#ThemeList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var SkillId = $('#SkillList input[type="checkbox"]:checked').map(function () { return $(this).val(); }).get();
     var searchText = $("#searchText").val().toLowerCase().replace(" ", "");;
-    var pagesize = 3;
+    var pagesize = 6;
     var pageNo = pageNo;
 
     $.ajax({
@@ -541,7 +543,7 @@ $("#sortList li").click(function () {
 });
 
 $("#CountryList li").click(function () {
-    allDropdowns.find('input[type="checkbox"]').prop('checked', false);
+    allDropdownsForFilter.find('input[type="checkbox"]').prop('checked', false);
     $('.filter-pills').empty();
     var countryId = $(this).val();
     selectedCountry = countryId;
@@ -582,8 +584,7 @@ function GetCitiesByCountry(countryId) {
     });
 }
 
-let filterPills = $('.filter-pills');
-allDropdowns.each(function () {
+allDropdownsForFilter.each(function () {
     let dropdown = $(this);
     $(this).on('change', 'input[type="checkbox"]', function () {
 
@@ -627,7 +628,7 @@ allDropdowns.each(function () {
             if (closeAllButton.length === 0) {
                 filterPills.append('<div class=" closeAll"><span>Close All</span></div>');
                 filterPills.children('.closeAll').click(function () {
-                    allDropdowns.find('input[type="checkbox"]').prop('checked', false);
+                    allDropdownsForFilter.find('input[type="checkbox"]').prop('checked', false);
                     filterPills.empty();
                     if (currentUrl.includes("PlatformLanding")) {
                         showMissions();

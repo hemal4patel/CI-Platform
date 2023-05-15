@@ -19,7 +19,7 @@
             <div class="filter-options col-md-8">
                 <div class="row h-100">
                     <div class="col-md-3 p-3 border-end">
-                        <div class="dropdown">
+                        <div class="dropdown filterDropdown">
                             <button class="nav-link dropdown-toggle border-none" type="button" id="countryDropdown"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 Country
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 p-3 border-end">
-                        <div class="dropdown">
+                        <div class="dropdown filterDropdown">
                             <button class="nav-link dropdown-toggle border-none" type="button" id="themeDropdown"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 Theme
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 p-3 border-end">
-                        <div class="dropdown">
+                        <div class="dropdown filterDropdown">
                             <div class="dropdown">
                                 <button class="nav-link dropdown-toggle border-none" type="button" id="skillDropdown"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -108,7 +108,7 @@
                             </h2>
                             <div id="countriesAccordion" class="accordion-collapse collapse"
                                  aria-labelledby="country" data-bs-parent="#filters">
-                                <div class="dropdown">
+                                <div class="dropdown filterDropdown">
                                     <ul class="scroll-menu mt-3" id="CountryList" style="list-style: none; width: 100%;">
                                         @foreach (var obj in Model.CountryList)
                                         {
@@ -130,7 +130,7 @@
                             </h2>
                             <div id="citiesAccordion" class="accordion-collapse collapse" aria-labelledby="city"
                                  data-bs-parent="#filters">
-                                <div class="dropdown">
+                                <div class="dropdown filterDropdown">
                                     <ul class="scroll-menu mt-3 CityListAccordian" id="CityList" style="list-style: none; width: 100%;">
                                     </ul>
                                 </div>
@@ -146,7 +146,7 @@
                             </h2>
                             <div id="themesAccordion" class="accordion-collapse collapse" aria-labelledby="theme"
                                  data-bs-parent="#filters">
-                                <div class="dropdown">
+                                <div class="dropdown filterDropdown">
                                     <ul class="scroll-menu mt-3" id="ThemeList" style="list-style: none; width: 100%;">
                                         @foreach (var obj in Model.ThemeList)
                                         {
@@ -171,7 +171,7 @@
                             </h2>
                             <div id="skillsAccordion" class="accordion-collapse collapse" aria-labelledby="skill"
                                  data-bs-parent="#filters">
-                                <div class="dropdown">
+                                <div class="dropdown filterDropdown">
                                     <ul class="scroll-menu mt-3" id="SkillList" style="list-style: none; width: 100%;">
                                         @foreach (var obj in Model.SkillList)
                                         {
