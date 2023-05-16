@@ -28,6 +28,7 @@ function showNotification() {
         type: 'POST',
         url: '/Notification/GetAllNotifications',
         success: function (data) {
+            
             $('.userNotificationsPartial').empty()
             $('.userNotificationsPartial').append(data)
             $('#notificationUl').show()

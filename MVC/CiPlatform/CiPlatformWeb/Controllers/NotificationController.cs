@@ -37,9 +37,16 @@ namespace CiPlatformWeb.Controllers
         //SHOW ALL NOTIFICATIONS
         public IActionResult GetAllNotifications ()
         {
-            List<NotificationParams> list = _notification.GetAllNotifications(userId);
-            int unread = _notification.GetUnreadNotificationsCount(userId);
-
+            //List<NotificationParams> list = _notification.GetAllNotifications(userId);
+            //int unread = _notification.GetUnreadNotificationsCount(userId);
+            //NotificationModel vm = new NotificationModel
+            //{
+            //    userNotifications = list,
+            //    UnreadCount = unread
+            //};
+            var data = _notification.GetUserNotifications(userId);
+            List<NotificationParams> list = data.AllNotifications;
+            int unread = data.UnreadCount;
             NotificationModel vm = new NotificationModel
             {
                 userNotifications = list,

@@ -11,6 +11,8 @@ namespace CiPlatformWeb.Repositories.Interface
     {
         public List<NotificationParams> GetAllNotifications (long userId);
 
+        public (List<NotificationParams> AllNotifications, int UnreadCount) GetUserNotifications (long userId);
+
         public int GetUnreadNotificationsCount (long userId);
 
         public int ChangeNotificationStatus (long id);

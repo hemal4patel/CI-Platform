@@ -1,9 +1,12 @@
 ﻿using CiPlatformWeb.Entities.DataModels;
 using CiPlatformWeb.Entities.ViewModels;
 using CiPlatformWeb.Repositories.Interface;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +57,44 @@ namespace CiPlatformWeb.Repositories.Repository
             });
 
             return list.ToList();
+        }
+
+        public (List<NotificationParams> AllNotifications, int UnreadCount) GetUserNotifications (long userId)
+        {
+            List<NotificationParams> AllNotifications = new List<NotificationParams>();
+            int UnreadCount = 0;
+
+            using (SqlConnection conn = new SqlConnection("Server=PCI94\\SQL2017; Database=CiPlatform; User Id=sa; Password=Tatva@123; Trusted_Connection=True; TrustServerCertificate=true; Encrypt=False; Integrated Security=False;"))
+            {
+                SqlCommand cmd = new SqlCommand("spGetUserNotifications", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                conn.Open();
+                cmd.Parameters.Add("@userId", SqlDbType.BigInt).Value = userId;
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    NotificationParams notification = new NotificationParams();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        string columnName = reader.GetName(i);
+                        PropertyInfo property = notification.GetType().GetProperty(columnName);
+                        if (property != null && reader.IsDBNull(i) == false)
+                        {
+                            object value = reader.GetValue(i);
+                            property.SetValue(notification, value);
+                        }
+                    }
+                    AllNotifications.Add(notification);
+                }
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    UnreadCount = (Int32) (reader["UnreadCount"]);
+                }
+                reader.Close();
+                conn.Close();
+            }
+            return (AllNotifications, UnreadCount);
         }
 
         public int GetUnreadNotificationsCount (long userId)

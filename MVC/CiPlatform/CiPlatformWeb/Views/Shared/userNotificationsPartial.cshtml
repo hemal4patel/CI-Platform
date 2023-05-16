@@ -34,7 +34,7 @@
             @foreach (NotificationParams notification in Model.userNotifications.Where(n => n.createdAt.Value.ToString("yyyy-MM-dd") == today))
             {
                 <li class="clearNotification readNotification px-2 pt-3" id="@notification.notificationId">
-                    @if (notification.recommendedMissionId != 0)
+                    @if (notification.recommendedMissionId != null)
                     {
                         <a class="text-decoration-none text-dark" href="@Url.Action("VolunteeringMission", "Mission", new {  MissionId = notification.recommendedMissionId})">
                             <div class="d-flex justify-content-between">
@@ -57,7 +57,7 @@
                             </div>
                         </a>
                     }
-                    else if (notification.recommendedStoryId != 0)
+                    else if (notification.recommendedStoryId != null)
                     {
                         <a class="text-decoration-none text-dark" href="@Url.Action("StoryDetail", "Story", new {  MissionId = notification.recommendedStoryMissionId, UserId = notification.recommendedStoryUserId })">
                             <div class="d-flex justify-content-between">
@@ -80,7 +80,7 @@
                             </div>
                         </a>
                     }
-                    else if (notification.timesheetId != 0)
+                    else if (notification.timesheetId != null)
                     {
                         <div class="d-flex justify-content-between">
                             @if (notification.timesheetApprovalStatus == timesheetStatus.approved.ToString().ToUpper())
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                     }
-                    else if (notification.commentId != 0)
+                    else if (notification.commentId != null)
                     {
                         <div class="d-flex justify-content-between">
                             @if (notification.commentApprovalStatus == commentStatus.published.ToString().ToUpper())
@@ -138,7 +138,7 @@
                             </div>
                         </div>
                     }
-                    else if (notification.storyId != 0)
+                    else if (notification.storyId != null)
                     {
                         <div class="d-flex justify-content-between">
                             @if (notification.storyapprovalStatus == storyStatus.published.ToString().ToUpper())
@@ -167,7 +167,7 @@
                             </div>
                         </div>
                     }
-                    else if (notification.newMissionId != 0)
+                    else if (notification.newMissionId != null)
                     {
                         <a class="text-decoration-none text-dark" href="@Url.Action("VolunteeringMission", "Mission", new {  MissionId = notification.newMissionId})">
                             <div class="d-flex justify-content-between">
@@ -188,7 +188,7 @@
                             </div>
                         </a>
                     }
-                    else if (notification.MissionApplicationId != 0)
+                    else if (notification.MissionApplicationId != null)
                     {
                         <div class="d-flex justify-content-between">
                             @if (notification.applicationApprovalStatus == applicationStatus.approve.ToString().ToUpper())
@@ -231,7 +231,7 @@
                 @foreach (NotificationParams notification in Model.userNotifications.Where(n => n.createdAt.Value.ToString("yyyy-MM-dd") != today))
                 {
                     <li class="clearNotification readNotification px-2" id="@notification.notificationId">
-                        @if (notification.recommendedMissionId != 0)
+                        @if (notification.recommendedMissionId != null)
                         {
                             <a class="text-decoration-none text-dark" href="@Url.Action("VolunteeringMission", "Mission", new {  MissionId = notification.recommendedMissionId})">
                                 <div class="d-flex justify-content-between">
@@ -254,7 +254,7 @@
                                 </div>
                             </a>
                         }
-                        else if (notification.recommendedStoryId != 0)
+                        else if (notification.recommendedStoryId != null)
                         {
                             <a class="text-decoration-none text-dark" href="@Url.Action("StoryDetail", "Story", new {  MissionId = notification.recommendedStoryMissionId, UserId = notification.recommendedStoryUserId })">
                                 <div class="d-flex justify-content-between">
@@ -277,7 +277,7 @@
                                 </div>
                             </a>
                         }
-                        else if (notification.timesheetId != 0)
+                        else if (notification.timesheetId != null)
                         {
                             <div class="d-flex justify-content-between">
                                 @if (notification.timesheetApprovalStatus == timesheetStatus.approved.ToString().ToUpper())
@@ -306,7 +306,7 @@
                                 </div>
                             </div>
                         }
-                        else if (notification.commentId != 0)
+                        else if (notification.commentId != null)
                         {
                             <div class="d-flex justify-content-between">
                                 @if (notification.commentApprovalStatus == commentStatus.published.ToString().ToUpper())
@@ -335,7 +335,7 @@
                                 </div>
                             </div>
                         }
-                        else if (notification.storyId != 0)
+                        else if (notification.storyId != null)
                         {
                             <div class="d-flex justify-content-between">
                                 @if (notification.storyapprovalStatus == storyStatus.published.ToString().ToUpper())
@@ -364,7 +364,7 @@
                                 </div>
                             </div>
                         }
-                        else if (notification.newMissionId != 0)
+                        else if (notification.newMissionId != null)
                         {
                             <a class="text-decoration-none text-dark" href="@Url.Action("VolunteeringMission", "Mission", new {  MissionId = notification.newMissionId})">
                                 <div class="d-flex justify-content-between">
@@ -385,7 +385,7 @@
                                 </div>
                             </a>
                         }
-                        else if (notification.MissionApplicationId != 0)
+                        else if (notification.MissionApplicationId != null)
                         {
                             <div class="d-flex justify-content-between">
                                 @if (notification.applicationApprovalStatus == applicationStatus.approve.ToString().ToUpper())
